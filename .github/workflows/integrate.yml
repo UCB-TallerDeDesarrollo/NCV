@@ -6,11 +6,15 @@ jobs:
     name: Unit and end-to-end tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Install Dependencies
         run: npm ci
+
       - name: Unit Tests
         run: npm test -- --watchAll=false  --passWithNoTests
+
       - name: E2E Tests
         uses: cypress-io/github-action@v4
         with:
