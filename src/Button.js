@@ -1,7 +1,8 @@
 export default function Button(props) {
+  const {children, ...rest} = props;
   return (
     <>
-      <button id={props.id}>{props.children}</button>
+      <button {...rest}>{children}</button>
     </>
   );
 }

@@ -1,8 +1,9 @@
 export default function InputWithLabel(props) {
+  const {id, children, ...rest} = props;
   return (
     <>
-      <label for={props.id}>{props.children}</label>
-      <input type={props.type} id={props.id}></input>
+      <label for={id}>{children}</label>
+      <input id={id} {...rest} />
     </>
   );
 }
