@@ -1,7 +1,7 @@
 import InputWithLabel from './InputWithLabel';
 import Button from './Button';
 function Sumador() {
-  function handleButton(event) {
+  function handleButtonClicked(event) {
     event.preventDefault();
     console.log('Activado Boton');
   }
@@ -23,7 +23,7 @@ function Sumador() {
         >
           Numero2:
         </InputWithLabel>
-        <Button id="sumar-btn" onClick={handleButton}>
+        <Button id="sumar-btn" onClick={handleButtonClicked}>
           Sumar
         </Button>
       </form>
