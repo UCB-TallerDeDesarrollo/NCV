@@ -1,13 +1,13 @@
+import InputWithLabel from './InputWithLabel';
+import Button from './Button';
 function Sumador() {
   return (
     <div className="Sumador">
       <h3>Sumador</h3>
       <form>
-        <label for="numero1">Numero 1:</label>
-        <input type="number" id="numero1"></input>
-        <label for="numero2">Numero 2:</label>
-        <input type="number" id="numero2"></input>
-        <button id="sumar-btn">Sumar</button>
+        <InputWithLabel type="number">Numero1:</InputWithLabel>
+        <InputWithLabel type="number">Numero2:</InputWithLabel>
+        <Button id="sumar-btn">Sumar</Button>
       </form>
     </div>
   );
