@@ -1,32 +1,39 @@
 import InputWithLabel from './InputWithLabel';
 import Button from './Button';
+import {useState} from 'react';
+
 function Sumador() {
-  function handleButtonClicked(event) {
+  const [numero1, setNumero1] = useState('');
+  const [numero2, setNumero2] = useState('');
+  const [resultado, setResultado] = useState('');
+
+  function handleFormSubmit(event) {
     event.preventDefault();
-    console.log('Activado Boton');
+    setResultado(parseInt(numero1) + parseInt(numero2));
   }
   return (
     <div className="Sumador">
       <h3>Sumador</h3>
-      <form>
+      <form onSubmit={handleFormSubmit}>
         <InputWithLabel
           type="number"
           id="numero1"
-          onChange={() => console.log('Activado numero 1')}
+          value={numero1}
+          onChange={event => setNumero1(event.target.value)}
         >
           Numero1:
         </InputWithLabel>
         <InputWithLabel
           type="number"
           id="numero2"
-          onChange={() => console.log('Activado numero 2')}
+          value={numero2}
+          onChange={event => setNumero2(event.target.value)}
         >
           Numero2:
         </InputWithLabel>
-        <Button id="sumar-btn" onClick={handleButtonClicked}>
-          Sumar
-        </Button>
+        <Button id="sumar-btn">Sumar</Button>
       </form>
+      <div>La suma de los numeros es:{resultado}</div>
     </div>
   );
 }
