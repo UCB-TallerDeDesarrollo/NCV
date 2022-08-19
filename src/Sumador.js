@@ -33,7 +33,7 @@ function Sumador() {
         </InputWithLabel>
         <Button id="sumar-btn">Sumar</Button>
       </form>
-      <div>La suma de los numeros es:{resultado}</div>
+      <div id="mensaje-suma">La suma de los numeros es:{resultado}</div>
     </div>
   );
 }
