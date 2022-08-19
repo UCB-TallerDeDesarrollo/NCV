@@ -2,7 +2,7 @@ import InputWithLabel from './InputWithLabel';
 import Button from './Button';
 import {useState} from 'react';
 
-function Sumador() {
+function SumadorForm() {
   const [numero1, setNumero1] = useState('');
   const [numero2, setNumero2] = useState('');
   const [resultado, setResultado] = useState('');
@@ -12,7 +12,7 @@ function Sumador() {
     setResultado(parseInt(numero1) + parseInt(numero2));
   }
   return (
-    <div className="Sumador">
+    <div className="SumadorForm">
       <h3>Sumador</h3>
       <form onSubmit={handleFormSubmit}>
         <InputWithLabel
@@ -37,4 +37,4 @@ function Sumador() {
     </div>
   );
 }
-export default Sumador;
+export default SumadorForm;
