@@ -1,6 +1,7 @@
 import InputWithLabel from './InputWithLabel';
 import Button from './Button';
 import {useState} from 'react';
+import sumar from './sumador.js';
 
 function SumadorForm() {
   const [numero1, setNumero1] = useState('');
@@ -9,7 +10,8 @@ function SumadorForm() {
 
   function handleFormSubmit(event) {
     event.preventDefault();
-    setResultado(parseInt(numero1) + parseInt(numero2));
+    const result = sumar(parseInt(numero1), parseInt(numero2));
+    setResultado(result);
   }
   return (
     <div className="SumadorForm">
