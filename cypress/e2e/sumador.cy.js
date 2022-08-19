@@ -1,4 +1,4 @@
-describe('Smoke test', () => {
+describe('Sumador end to end tests', () => {
   it('no muestra ningun resultado al iniciar', () => {
     cy.visit('/');
     cy.get('#mensaje-suma').should('contain', '');
@@ -11,7 +11,7 @@ describe('Smoke test', () => {
 
     cy.get('#sumar-btn').click();
 
-    cy.contains('5');
-    //cy.get('#resultado').should('contain', '5');
+    //cy.contains('5');
+    cy.get('#mensaje-suma').should('contain', '5');
   });
 });
