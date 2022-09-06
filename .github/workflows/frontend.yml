@@ -1,10 +1,13 @@
-name: Integrate
+name: Front-end-ci
 on: [push]
 
 jobs:
-  test:
+  ci:
     name: Unit and end-to-end tests
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web-ui
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -19,4 +22,4 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           start: npm start
-          wait-on: 'http://localhost:3000'
+          wait-on: "http://localhost:3000"
