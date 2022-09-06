@@ -1,15 +1,16 @@
+#=== FRONT END ====
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
+web-ui/node_modules
+web-ui/.pnp
+web-ui/.pnp.js
 
 # testing
-/coverage
+web-ui/coverage
 
 # production
-/build
+web-ui/build
 
 # misc
 .DS_Store
@@ -23,4 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # cypress
-cypress/videos/*.*
+web-ui/cypress/videos/*.*
+#======= END FRONT END ===========
