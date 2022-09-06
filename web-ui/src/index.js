@@ -1,6 +1,6 @@
 //import React from 'react';
 import ReactDOM from 'react-dom/client';
-import SumadorForm from './SumadorForm';
+import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<SumadorForm />);
+root.render(<App />);
