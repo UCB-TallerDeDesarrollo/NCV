@@ -21,5 +21,6 @@ jobs:
       - name: E2E Tests
         uses: cypress-io/github-action@v4
         with:
+          working-directory: web-ui/
           start: npm start
           wait-on: "http://localhost:3000"
