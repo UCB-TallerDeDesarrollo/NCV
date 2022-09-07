@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import InputText from './InputText';
+import '../styles.css';
 
 function LoginForm() {
     const [username, setUsername] = useState("");
@@ -22,28 +23,37 @@ function LoginForm() {
 
     }
 
-    return ( 
-        <form onSubmit={handleLoginForm}>
-            <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header text-center">
-                            <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body mx-3">
-                            <InputText type="text" id="input-text-username" label="Username:" onChange={handleUsernameChange} />
-                            <InputText type="password" id="input-text-password" label="Password:" onChange={handlePasswordChange} />
-                        </div> 
-                        <div class="modal-footer d-flex justify-content-center">
-                            <input type="submit" value="Log-In" class="btn btn-default" />
+    return (
+        <section className="vh-100" style={{backgroundColor: "#023E73"}}>
+            <div className="container py-5 h-100">
+                <div className="row d-flex justify-content-center align-items-center h-100">
+                    <div className="col col-xl-10">
+                        <div className="card cardCustom">
+                            <div className="row g-0">
+                                <div className="col-md-6 col-lg-5 d-none d-md-block">
+                                    <img src="https://ayudaenaccion.org/uploads/2022/02/historias-para-ninos-que-educan-en-valores.jpg" alt="login form" className="img-fluid imageCustom"/>
+                                </div>
+                                <div className='col-md-6 col-lg-7 d-flex align-items-center'>
+                                    <div className="card-body p-4 p-lg-5 text-black">
+                                        <form onSubmit={handleLoginForm}>
+                                        <img src="https://ninosconvalor.org.bo/wp-content/uploads/2020/01/NCV-Logos-Whites.png" alt="login form" className="img-fluid iconCustom"/>
+
+                                            <h5 className="fw-normal mb-3 pb-3">Ingresa con tu cuenta</h5>
+
+                                            <InputText type="text" id="input-text-username" label="Nombre de usuario:" onChange={handleUsernameChange} />
+                                            <InputText type="password" id="input-text-password" label="Contraseña:" onChange={handlePasswordChange} />
+                                            <div className="pt-1 mb-4">
+                                                <input type="submit" value="Log-In" className="btn btn-dark btn-lg btn-block" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+        </section>
      );
 }
 
