@@ -1,10 +1,14 @@
-.gradient-custom {
-  /* fallback for old browsers */
-  background: #6a11cb;
-  
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
-  
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
-  }
+.imageCustom {
+  border-radius: 1rem 0 0 1rem;
+  height: 536px;
+}
+
+.cardCustom {
+  background: rgb(91,204,217);
+  background: linear-gradient(180deg, rgba(91,204,217,1) 0%, rgba(206,236,242,1) 40%);
+  border-radius: 1rem;
+}
+
+.iconCustom {
+  height: 100px;
+}
