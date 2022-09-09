@@ -3,16 +3,11 @@ import InputText from './InputText';
 import '../styles.css';
 
 function LoginForm() {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    useEffect(() => {
-        console.log(username);
-        console.log(password);
-    }, [username, password]);
-
-    function handleUsernameChange(event) {
-        setUsername(event.target.value);
+    function handleEmailChange(event) {
+        setEmail(event.target.value);
     }
 
     function handlePasswordChange(event) {
@@ -20,7 +15,34 @@ function LoginForm() {
     }
 
     function handleLoginForm(){
-
+        let user = {
+            email: email,
+            password: password
+        }
+        /*
+        fetch("url_here", {
+            headers: { 
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            method: 'POST',
+            body: JSON.stringify(user)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            if(data.isSuccess) {
+                sessionStorage.setItem("jwt", data.token);
+                //Ahora accedieria a la pagina principal
+            } else {
+                var errors = data.errors.join("\n") ?? ""
+                alert(data.token + errors);
+            }
+        })
+        .catch((error) => {
+            console.log(`Error: ${error}`);
+            alert(error);
+        })
+        */
     }
 
     return (
@@ -40,7 +62,7 @@ function LoginForm() {
 
                                             <h5 className="fw-normal mb-3 pb-3">Ingresa con tu cuenta</h5>
 
-                                            <InputText type="text" id="input-text-username" label="Nombre de usuario:" onChange={handleUsernameChange} />
+                                            <InputText type="text" id="input-text-email" label="E-mail:" onChange={handleEmailChange} />
                                             <InputText type="password" id="input-text-password" label="Contraseña:" onChange={handlePasswordChange} />
                                             <div className="pt-1 mb-4">
                                                 <input type="submit" value="Log-In" className="btn btn-dark btn-lg btn-block" />
