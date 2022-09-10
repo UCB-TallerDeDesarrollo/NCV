@@ -1,7 +1,13 @@
 describe('Home Page end to end tests', () => {
-  cy.visit('/');
-    cy.get('button').should('have.class', 'btn-files').and('contain','Files');
-    cy.get('button').should('have.class', 'btn-activosFijos').and('contain','Activos Fijos');
+  
+
+    it('Busca los Botones en la Home Page', () => {
+      cy.visit('/');
+      cy.get('button').should('have.class', 'btn-files').and('contain','Files');
+      cy.get('button').should('have.class', 'btn-activosFijos').and('contain','Activos Fijos');
+    });
+  
+
 });
 /**it('no muestra ningun resultado al iniciar', () => {
     cy.visit('/');
