@@ -19,6 +19,8 @@ builder.Services.AddTransient<IFixedAssetService, FixedAssetService>();
 builder.Services.AddTransient<IKidService, KidService>();
 builder.Services.AddTransient<IHealthReportService, HealthReportService>();
 builder.Services.AddTransient<INCVRepository, NCVRepository>();
+builder.Services.AddTransient<IKidService, KidService>();
+builder.Services.AddTransient<IKidRepository, KidRepository>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 //entity framework config
