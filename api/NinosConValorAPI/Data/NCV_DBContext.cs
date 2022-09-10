@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿/*using Microsoft.EntityFrameworkCore;
 using NinosConValorAPI.Data.Entity;
 
 namespace NinosConValorAPI.Data
@@ -30,3 +30,4 @@ namespace NinosConValorAPI.Data
         }
     }
 }
+*/

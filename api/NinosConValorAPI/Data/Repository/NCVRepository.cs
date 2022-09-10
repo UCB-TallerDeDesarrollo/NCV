@@ -1,20 +1,43 @@
 ﻿using NinosConValorAPI.Data.Entity;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NinosConValorAPI.Data.Repository
 {
     public class NCVRepository:INCVRepository
     {
-        private NCV_DBContext _dbContext;
-        public NCVRepository(NCV_DBContext NCV_DBContext)
+        private IList<ChildEntity> _children;
+         public NCVRepository()
         {
-            _dbContext = NCV_DBContext;
+            _children = new List<ChildEntity>();
+            _children.Add(new ChildEntity()
+            {
+                Id = 1,
+                FirstName = "Manuel",
+                LastName = "Flores",
+                CI = "1234567",
+                Birthdate = new DateTime(2010, 8, 12),
+                programHouseId = 1,
+                BirthPlace = new DateTime(2020, 8, 12),
+                Gender = "Masculino"
+            });
+           
         }
 
-        public void CreateFixedAsset(FixedAssetEntity fixedAsset)
+          public ChildEntity CreateChild(ChildEntity child)
         {
-            _dbContext.FixedAssets.Add(fixedAsset);
+            var lastChild = _children.OrderByDescending(r => r.Id).FirstOrDefault();
+            int nextId = lastChild != null ? lastChild.Id + 1 : 1;
+            child.Id = nextId;
+            _children.Add(child);
+            return child;
         }
-
+         public ChildEntity GetChild(int childId)
+        {
+            var child = _children.FirstOrDefault(r => r.Id == childId);
+            return child;
+        }
+        /*
         public async Task<bool> SaveChangesAsync()
         {
             try
@@ -26,6 +49,6 @@ namespace NinosConValorAPI.Data.Repository
             {
                 throw ex;
             }
-        }
+        }*/
     }
 }

@@ -8,7 +8,7 @@ namespace NinosConValorAPI
     {
         public AutomapperProfile()
         {
-            this.CreateMap<FixedAssetEntity, FixedAssetModel>()
+            this.CreateMap<ChildEntity, ChildModel>()
                 .ReverseMap();
         }
     }

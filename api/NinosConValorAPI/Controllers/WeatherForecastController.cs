@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace NinosConValorAPI.Controllers
 {
-    [ApiController]
+    //[ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class WeatherForecastController : Controller
     {
         private static readonly string[] Summaries = new[]
         {
