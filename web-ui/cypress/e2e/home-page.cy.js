@@ -1,5 +1,9 @@
-describe('Sumador end to end tests', () => {
-  it('no muestra ningun resultado al iniciar', () => {
+describe('Home Page end to end tests', () => {
+  cy.visit('/');
+    cy.get('button').should('have.class', 'btn-files').and('contain','Files');
+    cy.get('button').should('have.class', 'btn-activosFijos').and('contain','Activos Fijos');
+});
+/**it('no muestra ningun resultado al iniciar', () => {
     cy.visit('/');
     cy.get('#mensaje-suma').should('contain', '');
   });
@@ -13,5 +17,4 @@ describe('Sumador end to end tests', () => {
 
     //cy.contains('5');
     cy.get('#mensaje-suma').should('contain', '5');
-  });
-});
+  }); */
