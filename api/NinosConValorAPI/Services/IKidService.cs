@@ -6,5 +6,6 @@ namespace NinosConValorAPI.Services
     {
         KidModel GetKid(int kidId);
         KidModel CreateKid(KidModel kid);
+        public IEnumerable<KidModel> GetKids();
     }
 }

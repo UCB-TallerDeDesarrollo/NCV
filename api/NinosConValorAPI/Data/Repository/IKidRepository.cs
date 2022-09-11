@@ -6,5 +6,6 @@ namespace NinosConValorAPI.Data.Repository
     {
         KidEntity GetKid(int kidId);
         KidEntity CreateKid(KidEntity kid);
+        IEnumerable<KidEntity> GetKids();
     }
 }

@@ -29,6 +29,21 @@ namespace NinosConValorAPI.Controllers
             }
         }
 
+       
+        [HttpGet]
+        public ActionResult<IEnumerable<KidModel>> GetKids()
+        {
+            try
+            {
+                var kids = _kidService.GetKids(); // aqui
+                return Ok(kids);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
+            }
+        }
+
         [HttpPost]
         public ActionResult<KidModel> PostKid([FromBody] KidModel kid)
         {

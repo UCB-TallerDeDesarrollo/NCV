@@ -31,6 +31,13 @@ namespace NinosConValorAPI.Services
 
             return _mapper.Map<KidModel>(kid);
         }
+
+        public IEnumerable<KidModel> GetKids()
+        {
+            var KidsEntityList = _kidRepository.GetKids();
+            return _mapper.Map<IEnumerable<KidModel>>(KidsEntityList);
+        }
+
        
     }
 }
