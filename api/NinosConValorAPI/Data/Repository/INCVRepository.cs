@@ -6,5 +6,6 @@ namespace NinosConValorAPI.Data.Repository
     {
         Task<bool> SaveChangesAsync();
         public void CreateFixedAsset(FixedAssetEntity fixedAsset);
+        Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync();
     }
 }
