@@ -1,7 +1,9 @@
-name: backEndTest
+name: backEndDeploy
 
-on: [push]
-
+on:
+  push:
+    branches:
+      - main
 jobs:
   build:
 
@@ -21,3 +23,8 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY_DEPLOY}}
+        heroku_app_name: "ncv-api" #Must be unique in Heroku
+        heroku_email: "ncv.application@gmail.com"
