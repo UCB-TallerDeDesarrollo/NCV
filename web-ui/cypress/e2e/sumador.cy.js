@@ -1,3 +1,4 @@
+/*
 describe('Sumador end to end tests', () => {
   it('no muestra ningun resultado al iniciar', () => {
     cy.visit('/');
@@ -15,3 +16,4 @@ describe('Sumador end to end tests', () => {
     cy.get('#mensaje-suma').should('contain', '5');
   });
 });
+*/
