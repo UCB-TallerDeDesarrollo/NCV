@@ -14,6 +14,11 @@ namespace NinosConValorAPI.Data.Repository
         {
             _dbContext.FixedAssets.Add(fixedAsset);
         }
+        public void CreateKid(KidEntity kid)
+        {
+            _dbContext.Kids.Add(kid);
+        }
+
 
         public async Task<bool> SaveChangesAsync()
         {
