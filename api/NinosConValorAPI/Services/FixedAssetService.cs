@@ -25,5 +25,11 @@ namespace NinosConValorAPI.Services
             }
             throw new Exception("Database Error");
         }
+
+        public async Task<IEnumerable<FixedAssetModel>> GetFixedAssetsAsync()
+        {
+            var fixedAssetEntityList = await _NCVRepository.GetFixedAssetsAsync();
+            return _mapper.Map<IEnumerable<FixedAssetModel>>(fixedAssetEntityList);
+        }
     }
 }
