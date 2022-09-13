@@ -8,5 +8,6 @@ namespace NinosConValorAPI.Data.Repository
         public void CreateFixedAsset(FixedAssetEntity fixedAsset);
         public void CreateKid(KidEntity kid);
         Task<KidEntity> GetKidAsync(int kidId);
+        Task<IEnumerable<KidEntity>> GetKidsAsync();
     }
 }
