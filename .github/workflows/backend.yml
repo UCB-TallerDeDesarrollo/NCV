@@ -1,7 +1,9 @@
 name: backEnd-ci
 
-on: [push]
-
+on:
+  push:
+    branches:
+      - main
 jobs:
   build:
 
