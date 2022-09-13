@@ -36,5 +36,52 @@ namespace UnitTests.NCVRepositoryUT
             Assert.True(result);
         }
 
+        [Fact]
+        public async Task GetFixedAssets_ReturnListOfFixedAssets()
+        {
+            // CREATE 1 FIXED ASSET
+            var repository = new NCVRepository(ctx);
+            var fixedAsset = new FixedAssetEntity()
+            {
+                Id = 1,
+                Name = "Computadora",
+                Description = "Computadora de escritorio",
+                EntryDate = new DateTime(2001, 3, 2),
+                Price = 100.58m,
+                Features = "8Gb de RAM",
+                Quantity = 5
+            };
+            repository.CreateFixedAsset(fixedAsset);
+            var result = await repository.SaveChangesAsync();
+
+            // NUMBER OF FIXED ASSETS
+            var listFixedAssets = await repository.GetFixedAssetsAsync();
+            var numberOfFixedAssets = listFixedAssets.Count();
+            Assert.Equal(1,numberOfFixedAssets);
+        }
+
+        [Fact]
+        public async Task GetFixedAssets_ReturnFixedAssetName()
+        {
+            // CREATE 1 FIXED ASSET
+            var repository = new NCVRepository(ctx);
+            var fixedAsset = new FixedAssetEntity()
+            {
+                Id = 1,
+                Name = "Computadora",
+                Description = "Computadora de escritorio",
+                EntryDate = new DateTime(2001, 3, 2),
+                Price = 100.58m,
+                Features = "8Gb de RAM",
+                Quantity = 5
+            };
+            repository.CreateFixedAsset(fixedAsset);
+            var result = await repository.SaveChangesAsync();
+
+            // NUMBER OF FIXED ASSETS
+            var listFixedAssets = await repository.GetFixedAssetsAsync();
+            //var numberOfFixedAssets = listFixedAssets.Count();
+            Assert.Equal("Computadora", listFixedAssets.First().Name);
+        }
     }
 }
