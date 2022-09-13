@@ -10,6 +10,8 @@ namespace NinosConValorAPI
         {
             this.CreateMap<FixedAssetEntity, FixedAssetModel>()
                 .ReverseMap();
+            this.CreateMap<KidEntity, KidModel>()
+                .ReverseMap();
         }
     }
 }
