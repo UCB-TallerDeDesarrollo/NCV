@@ -36,5 +36,12 @@ namespace NinosConValorAPI.Data.Repository
             var result = await query.ToListAsync();
             return result;
         }
+
+        public async Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId)
+        {
+            IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
+            query = query.AsNoTracking();
+            return await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
+        }
     }
 }
