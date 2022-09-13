@@ -30,5 +30,19 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<FixedAssetModel>>> GetFixedAssetsAsync()
+        {
+            try
+            {
+                var fixedAssets = await _fixedAssetService.GetFixedAssetsAsync();
+                return Ok(fixedAssets);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
+            }
+        }
     }
 }

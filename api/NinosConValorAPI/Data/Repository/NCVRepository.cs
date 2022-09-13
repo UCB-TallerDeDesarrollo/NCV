@@ -1,6 +1,6 @@
+
 ﻿using Microsoft.EntityFrameworkCore;
 using NinosConValorAPI.Data.Entity;
-
 namespace NinosConValorAPI.Data.Repository
 {
     public class NCVRepository:INCVRepository
@@ -44,6 +44,21 @@ namespace NinosConValorAPI.Data.Repository
             {
                 throw ex;
             }
+        }
+
+        public async Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync()
+        {
+            IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
+            query = query.AsNoTracking();
+            var result = await query.ToListAsync();
+            return result;
+        }
+
+        public async Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId)
+        {
+            IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
+            query = query.AsNoTracking();
+            return await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
         }
     }
 }
