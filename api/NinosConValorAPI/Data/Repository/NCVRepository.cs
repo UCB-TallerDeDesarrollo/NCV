@@ -22,6 +22,13 @@ namespace NinosConValorAPI.Data.Repository
 
             return await query.FirstOrDefaultAsync(c => c.Id == kidId);
         }
+        public async Task<IEnumerable<KidEntity>> GetKidsAsync()
+        {
+            IQueryable<KidEntity> query = _dbContext.Kids;
+            query = query.AsNoTracking();
+
+            return await query.ToListAsync() ;
+        }
         public void CreateKid(KidEntity kid)
         {
             _dbContext.Kids.Add(kid);

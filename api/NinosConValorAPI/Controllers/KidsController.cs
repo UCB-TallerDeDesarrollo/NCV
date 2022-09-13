@@ -43,6 +43,18 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Something happend: {ex.Message}");
             }
         }
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<KidModel>>> GetKidsAync()
+        {   
+            try
+            {
+                return Ok (await _kidService.GetKidsAsync());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happend: {ex.Message}");
+            }
+        }
     }
 
 }

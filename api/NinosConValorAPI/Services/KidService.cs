@@ -32,7 +32,10 @@ namespace NinosConValorAPI.Services
 
             return _mapper.Map<KidModel>(kid);
         }
-
+        public async Task<IEnumerable<KidModel>> GetKidsAsync(){
+            var listKids = await _NCVRepository.GetKidsAsync();
+            return _mapper.Map<IEnumerable<KidModel>>(listKids);
+        }
 
     }
 }
