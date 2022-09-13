@@ -1,4 +1,5 @@
-﻿using NinosConValorAPI.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
+using NinosConValorAPI.Data.Entity;
 
 namespace NinosConValorAPI.Data.Repository
 {
@@ -14,7 +15,17 @@ namespace NinosConValorAPI.Data.Repository
         {
             _dbContext.FixedAssets.Add(fixedAsset);
         }
+        public async Task<KidEntity> GetKidAsync(int kidId)
+        {
+            IQueryable<KidEntity> query = _dbContext.Kids;
+            query = query.AsNoTracking();
 
+            return await query.FirstOrDefaultAsync(c => c.Id == kidId);
+        }
+        public void CreateKid(KidEntity kid)
+        {
+            _dbContext.Kids.Add(kid);
+        }
         public async Task<bool> SaveChangesAsync()
         {
             try
