@@ -9,15 +9,18 @@ import Typography from '@mui/material/Typography';
 
 
 export default function BasicChildInfo(){
-   let [kids, setKids] = useState([]);
-   const LinkKids = 'https://ncv-api.herokuapp.com/api/kids'
+    var id='1';
+    var firtName = 'Default Name';
+    let [kid, setKid] = useState('');
+    const LinkKids = 'https://ncv-api.herokuapp.com/api/kids/'+id;
+    //const LinkKids = 'https://ucb-tde-ninos-con-valor-api.herokuapp.com/api/kids';
 
-   useEffect(() => {
+  useEffect(() => {
     fetch(LinkKids)
       .then(res => res.json())
       .then(
         (result) => {
-          setKids(result);
+          setKid(result);
         }
       )
   }, [])
@@ -27,16 +30,19 @@ export default function BasicChildInfo(){
       <CardMedia
         component="img"
         height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
-        alt="green iguana"
+        image="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
+        alt="child picture"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+            {kid.firstName} {kid.lastName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+            Ci: {kid.ci} <br />
+            Fecha de Nacimiento: {kid.birthDate} <br />
+            Casa: {kid.programHouse} <br />
+            Lugar de Nacimiento: {kid.birthPlace} <br />
+            Genero: {kid.gender} <br />
         </Typography>
       </CardContent>
       <CardActions>
