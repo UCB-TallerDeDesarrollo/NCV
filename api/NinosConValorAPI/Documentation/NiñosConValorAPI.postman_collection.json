@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "b7f9cdc9-167e-4a7a-8630-c5b04f3659ae",
+		"name": "NiñosConValorAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20240656"
+	},
+	"item": [
+		{
+			"name": "Security",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Email\": \"mariatorrez@gmail.com\",\r\n    \"Password\": \"012345ABCd.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/auth/Login",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "hostname",
+			"value": "http://localhost:3108",
+			"type": "string"
+		}
+	]
+}
