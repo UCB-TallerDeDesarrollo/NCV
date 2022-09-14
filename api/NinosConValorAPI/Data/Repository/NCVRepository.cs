@@ -1,6 +1,8 @@
 
 ﻿using Microsoft.EntityFrameworkCore;
 using NinosConValorAPI.Data.Entity;
+using System.Security.Cryptography;
+
 namespace NinosConValorAPI.Data.Repository
 {
     public class NCVRepository:INCVRepository
@@ -15,7 +17,8 @@ namespace NinosConValorAPI.Data.Repository
 
         public async Task<HealthReportEntity> CreateHealthReportAsync(HealthReportEntity healthReport)
         {
-            throw new NotImplementedException();
+            await _dbContext.HealthReports.AddAsync(healthReport);
+            return healthReport;
         }
 
         // FIXED ASSET
