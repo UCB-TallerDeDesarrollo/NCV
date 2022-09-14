@@ -22,14 +22,12 @@ function ShowFilesForm() {
     <div className="SumadorForm">
       <h3>FILES DE LOS NENES</h3>
       <div>
-            <div id="mensaje-suma">Los nenes:
-                <ul>
+            <div id="lista-nenes">Los nenes:
                 {ListKids.map(ListKids => (
-                    <li key={ListKids.id}>
+                    <div>
                     <CardFileKid KidName={ListKids.firstName} KidCi={ListKids.ci}></CardFileKid>
-                    </li>
+                    </div> 
                 ))}
-                </ul>
             </div>
         </div>
     </div>
