@@ -1,14 +1,17 @@
 import React from 'react';
-import LoginForm from './components/LoginForm';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePageForm from './HomePageForm';
+import CrearActivoFijoForm from './components/CrearActivoFijoForm';
 
-function App(props){
-    const { children, ...rest } = props;
-
-    return ( 
-        <>
-            <LoginForm />
-        </>
-     );
+function App(){
+  return(
+    <Router>
+      <Routes>
+        <Route path='/crear-activo-fijo' element={<CrearActivoFijoForm/>}></Route>
+        <Route exact path='/' element={<HomePageForm/>}></Route>
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
