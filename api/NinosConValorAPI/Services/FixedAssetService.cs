@@ -35,12 +35,12 @@ namespace NinosConValorAPI.Services
 
         public async Task<FixedAssetModel> GetFixedAssetAsync(int fixedAssetId)
         {
-            var franchise = await _NCVRepository.GetFixedAssetAsync(fixedAssetId);
+            var fixedAsset = await _NCVRepository.GetFixedAssetAsync(fixedAssetId);
 
-            if (franchise == null)
+            if (fixedAsset == null)
                 throw new NotFoundElementException($"El Activo fijo con id:{fixedAssetId} no existe.");
 
-            return _mapper.Map<FixedAssetModel>(franchise);
+            return _mapper.Map<FixedAssetModel>(fixedAsset);
         }
     }
 }

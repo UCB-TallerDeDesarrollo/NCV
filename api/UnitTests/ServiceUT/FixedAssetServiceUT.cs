@@ -3,6 +3,7 @@ using Moq;
 using NinosConValorAPI;
 using NinosConValorAPI.Data.Entity;
 using NinosConValorAPI.Data.Repository;
+using NinosConValorAPI.Exceptions;
 using NinosConValorAPI.Models;
 using NinosConValorAPI.Services;
 using System;
@@ -84,5 +85,48 @@ namespace UnitTests.ServiceUT
             var listFixedAssets = await fixedAssetService.GetFixedAssetsAsync();
             Assert.Equal(2, listFixedAssets.Count());
         }
+
+        [Fact]
+        public async Task GetFixedAsset_ReturnIdFixedAsset()
+        {
+            var fixedAsset1 = new FixedAssetEntity()
+            {
+                Id = 1,
+                Name = "Computadora",
+                Description = "Computadora de escritorio",
+                EntryDate = new DateTime(2001, 3, 2),
+                Price = 100.58m,
+                Features = "8Gb de RAM",
+                Quantity = 5
+            };
+
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
+            var mapper = config.CreateMapper();
+            var fixedAssetRepositoryMock = new Mock<INCVRepository>();
+            fixedAssetRepositoryMock.Setup(r => r.GetFixedAssetAsync(1)).ReturnsAsync(fixedAsset1);
+
+            var fixedAssetService = new FixedAssetService(fixedAssetRepositoryMock.Object, mapper);
+            var fixedAsset = await fixedAssetService.GetFixedAssetAsync(1);
+            Assert.Equal(1, fixedAsset.Id);
+        }
+
+        /*
+        [Fact]
+        public async Task GetFixedAsset_ReturnNotFoundIdFixedAsset()
+        {
+            FixedAssetEntity fixedAsset1 = null;
+
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
+            var mapper = config.CreateMapper();
+            var fixedAssetRepositoryMock = new Mock<INCVRepository>();
+            fixedAssetRepositoryMock.Setup(r => r.GetFixedAssetAsync(2)).ReturnsAsync(fixedAsset1);
+
+            var fixedAssetService = new FixedAssetService(fixedAssetRepositoryMock.Object, mapper);
+            var fixedAsset = await fixedAssetService.GetFixedAssetAsync(2);
+
+            //Assert.Equal("El Activo fijo con id:2 no existe.", fixedAsset);
+            Assert.ThrowsAsync<NotFoundElementException>(async() => await fixedAssetService.GetFixedAssetAsync(2));
+        }
+        */
     }
 }
