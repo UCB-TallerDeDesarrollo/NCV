@@ -18,8 +18,6 @@ namespace UnitTests.ControllersUT
         public async Task CreateHealthReportAsync_HealthReportAddedToACreatedKid_ReturnsSameHealthReportWithId()
         {
             // ARRANGE
-
-            var healthProblems = new List<string>() { "Problema 1", "Problema 2" } as List<string>;
             var healthReportModel = new HealthReportModel()
             {
                 CIDiscapacidad = "11111222",
@@ -27,7 +25,7 @@ namespace UnitTests.ControllersUT
                 PsychologicalDiagnosis = "Este es un ejemplo de diagnostico",
                 SpecialDiagnosis = "Este es un diagnostico especial",
                 BloodType = "ORH+",
-                HealthProblems = healthProblems
+                HealthProblems = "Problema 1, Problema 2"
             };
             
             int kidId = 1;
@@ -41,7 +39,7 @@ namespace UnitTests.ControllersUT
                 PsychologicalDiagnosis = "Este es un ejemplo de diagnostico",
                 SpecialDiagnosis = "Este es un diagnostico especial",
                 BloodType = "ORH+",
-                HealthProblems = healthProblems
+                HealthProblems = "Problema 1, Problema 2"
             });
 
             var healthReportsController = new HealthReportsController(healthReportServiceMock.Object);
