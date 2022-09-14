@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace NinosConValorAPI.Exceptions
 {
-    public class NotFoundElementException:Exception
+    public class InvalidElementOperationException : Exception
     {
-        public NotFoundElementException(string message) : base(message) { }
-
+        public InvalidElementOperationException(string message) : base(message) { }
     }
 }

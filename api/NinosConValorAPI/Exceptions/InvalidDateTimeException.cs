@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace NinosConValorAPI.Exceptions
 {
-    public class NotFoundElementException:Exception
+    public class InvalidDateTimeException : Exception
     {
-        public NotFoundElementException(string message) : base(message) { }
-
+        public InvalidDateTimeException(string message) : base(message) { }
     }
 }

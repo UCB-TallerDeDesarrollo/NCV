@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace NinosConValorAPI.Exceptions
 {
-    public class NotFoundElementException:Exception
+    public class NegativeTargetAmountException:Exception
     {
-        public NotFoundElementException(string message) : base(message) { }
-
+        public NegativeTargetAmountException(string message) : base(message) { }
     }
 }
