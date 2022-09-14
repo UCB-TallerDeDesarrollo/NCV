@@ -13,6 +13,7 @@ namespace NinosConValorAPI.Data.Entity
         public int KidId { get; set; }
         public virtual KidEntity Kid { get; set; }
         public string? BloodType { get; set; }
+        //TO DO: Change for CIDisability (Include test but AWARE with migrations)
         public string? CIDiscapacidad { get; set; }
         public string? PsychologicalDiagnosis { get; set; }
         public string? NeurologicalDiagnosis { get; set; }
