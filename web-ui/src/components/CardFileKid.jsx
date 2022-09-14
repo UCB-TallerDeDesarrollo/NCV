@@ -3,10 +3,9 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import { red } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-const Card1 = ({KidName, KidCi}) =>{
+const CardFileKid = ({KidName, KidCi}) =>{
     return(
         <Card sx={{ maxWidth: 345 }}>
         <CardHeader
@@ -25,6 +24,6 @@ const Card1 = ({KidName, KidCi}) =>{
     )
 }
 
-export default Card1;
+export default CardFileKid;
 
  
