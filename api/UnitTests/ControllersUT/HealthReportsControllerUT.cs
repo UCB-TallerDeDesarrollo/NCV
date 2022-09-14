@@ -17,7 +17,7 @@ namespace UnitTests.ControllersUT
         [Fact]
         public async Task CreateHealthReportAsync_HealthReportAddedToACreatedKid_ReturnsSameHealthReportWithId()
         {
-            //ARRANGE
+            // ARRANGE
 
             var healthProblems = new List<string>() { "Problema 1", "Problema 2" } as List<string>;
             var healthReportModel = new HealthReportModel()
@@ -29,9 +29,10 @@ namespace UnitTests.ControllersUT
                 BloodType = "ORH+",
                 HealthProblems = healthProblems
             };
-
+            
+            int kidId = 1;
             var healthReportServiceMock = new Mock<IHealthReportService>();
-            healthReportServiceMock.Setup(r => r.CreateHealthReportAsync(1,healthReportModel)).ReturnsAsync(new HealthReportModel()
+            healthReportServiceMock.Setup(r => r.CreateHealthReportAsync(kidId,healthReportModel)).ReturnsAsync(new HealthReportModel()
             {
                 Id = 1,
                 KidId = 1,
@@ -42,13 +43,15 @@ namespace UnitTests.ControllersUT
                 BloodType = "ORH+",
                 HealthProblems = healthProblems
             });
-            int kidId = 1;
+
             var healthReportsController = new HealthReportsController(healthReportServiceMock.Object);
             
+            // ACT
             var response = await healthReportsController.CreateHealthReportAsync(kidId,healthReportModel);
             var status = response.Result as CreatedResult;
             var healthReportCreated = status.Value as HealthReportModel;
 
+            // ASSERT
             Assert.Equal(1, healthReportCreated.KidId);
             Assert.Equal("ORH+", healthReportCreated.BloodType);
             Assert.Equal(1, healthReportCreated.Id);
