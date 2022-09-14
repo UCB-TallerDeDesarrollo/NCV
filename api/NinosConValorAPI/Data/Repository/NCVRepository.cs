@@ -11,6 +11,15 @@ namespace NinosConValorAPI.Data.Repository
             _dbContext = NCV_DBContext;
         }
 
+        // HEALTH REPORT
+
+        public async Task<HealthReportEntity> CreateHealthReport(HealthReportEntity healthReport)
+        {
+            throw new NotImplementedException();
+        }
+
+        // FIXED ASSET
+
         public void CreateFixedAsset(FixedAssetEntity fixedAsset)
         {
             _dbContext.FixedAssets.Add(fixedAsset);
@@ -60,5 +69,6 @@ namespace NinosConValorAPI.Data.Repository
             query = query.AsNoTracking();
             return await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
         }
+
     }
 }

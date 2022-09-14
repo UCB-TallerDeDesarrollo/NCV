@@ -4,6 +4,11 @@ namespace NinosConValorAPI.Data.Repository
 {
     public interface INCVRepository
     {
+        // HEALTH REPORT
+        public Task<HealthReportEntity> CreateHealthReport(HealthReportEntity healthReport);
+
+        //FIXED ASSET
+
         Task<bool> SaveChangesAsync();
         public void CreateFixedAsset(FixedAssetEntity fixedAsset);
 
