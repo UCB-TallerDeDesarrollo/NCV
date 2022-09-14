@@ -46,7 +46,7 @@ namespace NinosConValorAPI.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{fixedAssetId:int}")]
         public async Task<ActionResult<FixedAssetModel>> GetFixedAssetAsync(int fixedAssetId)
         {
             try
@@ -60,7 +60,7 @@ namespace NinosConValorAPI.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
             }
         }
     }
