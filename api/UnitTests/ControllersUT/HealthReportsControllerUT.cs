@@ -60,7 +60,7 @@ namespace UnitTests.ControllersUT
             var status = response.Result as CreatedResult;
             var healthReportCreated = status.Value as HealthReportModel;
 
-            Assert.Equal("ORH-", healthReportCreated.BloodType);
+            Assert.Equal("ORH+", healthReportCreated.BloodType);
             Assert.Equal(1, healthReportCreated.Id);
             Assert.Equal(201, status.StatusCode);
         }
