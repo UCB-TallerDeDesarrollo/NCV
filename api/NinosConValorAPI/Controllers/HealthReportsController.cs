@@ -16,6 +16,8 @@ namespace NinosConValorAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<HealthReportModel>> CreateHealthReportAsync(int kidId,[FromBody] HealthReportModel kid)
         {
+            //TO DO: Exception Especializada para cuando alguien intenta crear un reporte sobre un niño que ya tiene un reporte 
+            //TO DO: Exception Not found para cuando no existe el niño para el que se quiere crear el reporte 
             try
             {
                 if (!ModelState.IsValid)
