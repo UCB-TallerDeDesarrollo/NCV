@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using NinosConValorAPI.Data.Entity;
 using NinosConValorAPI.Data.Repository;
+using NinosConValorAPI.Exceptions;
 using NinosConValorAPI.Models;
 
 namespace NinosConValorAPI.Services
@@ -30,6 +31,16 @@ namespace NinosConValorAPI.Services
         {
             var fixedAssetEntityList = await _NCVRepository.GetFixedAssetsAsync();
             return _mapper.Map<IEnumerable<FixedAssetModel>>(fixedAssetEntityList);
+        }
+
+        public async Task<FixedAssetModel> GetFixedAssetAsync(int fixedAssetId)
+        {
+            var fixedAsset = await _NCVRepository.GetFixedAssetAsync(fixedAssetId);
+
+            if (fixedAsset == null)
+                throw new NotFoundElementException($"El Activo fijo con id:{fixedAssetId} no existe.");
+
+            return _mapper.Map<FixedAssetModel>(fixedAsset);
         }
     }
 }
