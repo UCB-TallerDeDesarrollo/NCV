@@ -4,7 +4,7 @@ using NinosConValorAPI.Services;
 
 namespace NinosConValorAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/kids/{kidId:int}/[controller]")]
     public class HealthReportsController : Controller
     {
         IHealthReportService _healthReportService;
@@ -14,14 +14,14 @@ namespace NinosConValorAPI.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult<HealthReportModel>> CreateHealthReportAsync([FromBody] HealthReportModel kid)
+        public async Task<ActionResult<HealthReportModel>> CreateHealthReportAsync(int kidId,[FromBody] HealthReportModel kid)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
-                var newHealthReport = await _healthReportService.CreateHealthReportAsync(kid);
-                return Created($"/api/kids/{newHealthReport.Id}", newHealthReport);
+                var newHealthReport = await _healthReportService.CreateHealthReportAsync(kidId,kid);
+                return Created($"/api/kids/{newHealthReport.KidId}/[controllers]/{newHealthReport.Id}", newHealthReport);
             }
             //catch (NotFoundElementException ex)
             //{
