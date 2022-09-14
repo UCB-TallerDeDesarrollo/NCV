@@ -14,11 +14,14 @@ function LoginForm() {
         setPassword(event.target.value);
     }
 
-    function handleLoginForm(){
+    function handleLoginForm(event){
+        event.preventDefault();
         let user = {
             email: email,
             password: password
         }
+        console.log("in login");
+        window.location.href = "/home-ncv";
         /*
         fetch("url_here", {
             headers: { 
@@ -32,7 +35,7 @@ function LoginForm() {
             console.log(data);
             if(data.isSuccess) {
                 sessionStorage.setItem("jwt", data.token);
-                //Ahora accedieria a la pagina principal
+                
             } else {
                 var errors = data.errors.join("\n") ?? ""
                 alert(data.token + errors);

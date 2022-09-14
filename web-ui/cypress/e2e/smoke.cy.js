@@ -1,8 +1,6 @@
-/*
 describe('Smoke test', () => {
-  it('muestra la pagina principal', () => {
+  it('muestra la pagina de login', () => {
     cy.visit('/');
-    cy.contains('Niños con Valor org');
+    cy.contains('Ingresa con tu cuenta');
   });
 });
-*/
