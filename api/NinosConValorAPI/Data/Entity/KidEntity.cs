@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NinosConValorAPI.Data.Entity
 {
@@ -14,5 +15,7 @@ namespace NinosConValorAPI.Data.Entity
         public string? ProgramHouse { get; set; }
         public string? BirthPlace { get; set; }
         public string? Gender { get; set; }
+
+        public virtual HealthReportEntity? HealthReport { get; set; }
     }
 }

@@ -18,6 +18,72 @@ namespace UnitTests.AutomapperUT
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
             _mapper = config.CreateMapper();
         }
+
+        // HEALTH REPORTS
+
+        [Fact]
+        public void AutomapperProfile_HealthReportModel_ReturnsHealthReportEntity()
+        {
+            // ARRANGE
+            var healthReportModel = new HealthReportModel()
+            {
+                Id = 1,
+                KidId = 1,
+                CIDiscapacidad = "11111222",
+                NeurologicalDiagnosis = "Este es un ejemplo de diagnostico",
+                PsychologicalDiagnosis = "Este es un ejemplo de diagnostico",
+                SpecialDiagnosis = "Este es un diagnostico especial",
+                BloodType = "ORH+",
+                HealthProblems = "Problema 1, Problema 2"
+            };
+
+            HealthReportEntity healthReportEntity = new HealthReportEntity();
+            var typeOfHealthReportEntity = healthReportEntity.GetType().ToString();
+
+
+            // ACT
+            var actual = _mapper.Map<HealthReportEntity>(healthReportModel);
+            var actualType = actual.GetType().ToString();
+
+            // ASSERT
+            Assert.Equal(typeOfHealthReportEntity, actualType);
+            Assert.Equal(healthReportModel.CIDiscapacidad, actual.CIDiscapacidad);
+            Assert.Equal(healthReportModel.Id, actual.Id);
+
+        }
+        [Fact]
+        public void AutomapperProfile_HealthReportEntity_ReturnsHealthReportModel()
+        {
+            // ARRANGE
+            var healthReportEntity = new HealthReportEntity()
+            {
+                Id = 1,
+                KidId = 1,
+                CIDiscapacidad = "11111222",
+                NeurologicalDiagnosis = "Este es un ejemplo de diagnostico",
+                PsychologicalDiagnosis = "Este es un ejemplo de diagnostico",
+                SpecialDiagnosis = "Este es un diagnostico especial",
+                BloodType = "ORH+",
+                HealthProblems = "Problema 1, Problema 2"
+            };
+
+            HealthReportModel healthReportModel = new HealthReportModel();
+            var typeOfHealthReportModel = healthReportModel.GetType().ToString();
+
+
+            // ACT
+            var actual = _mapper.Map<HealthReportModel>(healthReportEntity);
+            var actualType = actual.GetType().ToString();
+
+            // ASSERT
+            Assert.Equal(typeOfHealthReportModel, actualType);
+            Assert.Equal(healthReportEntity.CIDiscapacidad, actual.CIDiscapacidad);
+            Assert.Equal(healthReportEntity.Id, actual.Id);
+
+        }
+
+        // FIXED ASSETS
+
         public FixedAssetEntity CreateDefaultFixedAssetEntity()
         {
             var fixedAssetEntity = new FixedAssetEntity() {

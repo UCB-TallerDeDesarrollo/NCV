@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddTransient<IFixedAssetService, FixedAssetService>();
 builder.Services.AddTransient<IKidService, KidService>();
+builder.Services.AddTransient<IHealthReportService, HealthReportService>();
 builder.Services.AddTransient<INCVRepository, NCVRepository>();
 
 builder.Services.AddAutoMapper(typeof(Program));
