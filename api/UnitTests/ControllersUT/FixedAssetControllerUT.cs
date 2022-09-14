@@ -92,5 +92,28 @@ namespace UnitTests.ControllersUT
             Assert.Equal(2, countFixedAssetsList);
             Assert.Equal(200, status.StatusCode);
         }
+
+        [Fact]
+        public async Task GetFixedAsset_ReturnStatusFixedAsset()
+        {
+            var fixedAsset1 = new FixedAssetModel()
+            {
+                Id = 1,
+                Name = "Computadora",
+                Description = "Computadora de escritorio",
+                EntryDate = new DateTime(2001, 3, 2),
+                Price = 100.58m,
+                Features = "8Gb de RAM",
+                Quantity = 5
+            };
+
+            var fixedAssetServiceMock = new Mock<IFixedAssetService>();
+            fixedAssetServiceMock.Setup(r => r.GetFixedAssetAsync(1)).ReturnsAsync(fixedAsset1);
+
+            var fixedAssetController = new FixedAssetsController(fixedAssetServiceMock.Object);
+            var response = await fixedAssetController.GetFixedAssetAsync(1);
+            var status = (OkObjectResult)response.Result;
+            Assert.Equal(200, status.StatusCode);
+        }
     }
 }
