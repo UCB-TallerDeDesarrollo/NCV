@@ -35,6 +35,8 @@ namespace UnitTests.ServiceUT
             };
             var healthReportEntity = new HealthReportEntity()
             {
+                Id = 1,
+                KidId = 1,
                 CIDiscapacidad = "11111222",
                 NeurologicalDiagnosis = "Este es un ejemplo de diagnostico",
                 PsychologicalDiagnosis = "Este es un ejemplo de diagnostico",
@@ -45,13 +47,19 @@ namespace UnitTests.ServiceUT
 
             int kidId = 1;
             var ncvRepositoryMock = new Mock<INCVRepository>();
-            ncvRepositoryMock.Setup(r => r.CreateHealthReport(healthReportEntity)).ReturnsAsync(healthReportEntity);
+            
+            ncvRepositoryMock.Setup(r => r.CreateHealthReportAsync(It.IsAny<HealthReportEntity>())).ReturnsAsync(healthReportEntity);
             ncvRepositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(true);
+            //It.IsAny<HealthReportEntity>() // define la firma del metodo
+            //Para que la llamada al interior al metodo simulado del repo CreateHealthReportAsync() reciba el parametro
+            //https://stackoverflow.com/a/53649215/18366207
+            //To understant It.IsAny (min 8 parece) https://docs.microsoft.com/en-us/shows/visual-studio-toolbox/unit-testing-moq-framework
 
-            var healthReportsController = new HealthReportService(ncvRepositoryMock.Object,mapper);
+
+            var healthReportsService = new HealthReportService(ncvRepositoryMock.Object,mapper);
 
             // ACT
-            var healthReportCreated = await healthReportsController.CreateHealthReportAsync(kidId, healthReportModel);
+            var healthReportCreated = await healthReportsService.CreateHealthReportAsync(kidId, healthReportModel);
 
             // ASSERT
             Assert.Equal(1, healthReportCreated.KidId);

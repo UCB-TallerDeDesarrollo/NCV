@@ -13,7 +13,7 @@ namespace NinosConValorAPI.Data.Repository
 
         // HEALTH REPORT
 
-        public async Task<HealthReportEntity> CreateHealthReport(HealthReportEntity healthReport)
+        public async Task<HealthReportEntity> CreateHealthReportAsync(HealthReportEntity healthReport)
         {
             throw new NotImplementedException();
         }
