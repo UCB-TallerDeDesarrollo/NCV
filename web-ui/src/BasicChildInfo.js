@@ -46,8 +46,8 @@ export default function BasicChildInfo(){
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button size="medium">Ver Salud</Button>
+        <Button size="medium">Más Info</Button>
       </CardActions>
     </Card>
   );
