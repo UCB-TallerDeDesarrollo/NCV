@@ -1,6 +1,8 @@
 
 ﻿using Microsoft.EntityFrameworkCore;
 using NinosConValorAPI.Data.Entity;
+using System.Security.Cryptography;
+
 namespace NinosConValorAPI.Data.Repository
 {
     public class NCVRepository:INCVRepository
@@ -10,6 +12,16 @@ namespace NinosConValorAPI.Data.Repository
         {
             _dbContext = NCV_DBContext;
         }
+
+        // HEALTH REPORT
+
+        public async Task<HealthReportEntity> CreateHealthReportAsync(HealthReportEntity healthReport)
+        {
+            await _dbContext.HealthReports.AddAsync(healthReport);
+            return healthReport;
+        }
+
+        // FIXED ASSET
 
         public void CreateFixedAsset(FixedAssetEntity fixedAsset)
         {
@@ -59,6 +71,24 @@ namespace NinosConValorAPI.Data.Repository
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
             return await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
+        }
+
+        public async Task<HealthReportEntity> GetHealthReportAsync(int kidId)
+        {
+            IQueryable<HealthReportEntity> query = _dbContext.HealthReports;
+            query = query.AsNoTracking();
+            var healthReport = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            return healthReport;
+        }
+
+        public Task DeleteHealthReportAsync(int kidId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HealthReportEntity> UpdateHealthReportAsync(int kidId, HealthReportEntity healthReport)
+        {
+            throw new NotImplementedException();
         }
     }
 }

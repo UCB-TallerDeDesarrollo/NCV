@@ -53,6 +53,43 @@ namespace NinosConValorAPI.Migrations
                     b.ToTable("FixedAsset", (string)null);
                 });
 
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.HealthReportEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BloodType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CIDiscapacidad")
+                        .HasColumnType("text");
+
+                    b.Property<string>("HealthProblems")
+                        .HasColumnType("text");
+
+                    b.Property<int>("KidId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("NeurologicalDiagnosis")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PsychologicalDiagnosis")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SpecialDiagnosis")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KidId")
+                        .IsUnique();
+
+                    b.ToTable("HealthReports", (string)null);
+                });
+
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.KidEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -85,6 +122,22 @@ namespace NinosConValorAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Kid", (string)null);
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.HealthReportEntity", b =>
+                {
+                    b.HasOne("NinosConValorAPI.Data.Entity.KidEntity", "Kid")
+                        .WithOne("HealthReport")
+                        .HasForeignKey("NinosConValorAPI.Data.Entity.HealthReportEntity", "KidId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Kid");
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.KidEntity", b =>
+                {
+                    b.Navigation("HealthReport");
                 });
 #pragma warning restore 612, 618
         }

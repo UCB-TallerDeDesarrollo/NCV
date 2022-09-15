@@ -12,6 +12,8 @@ namespace NinosConValorAPI
                 .ReverseMap();
             this.CreateMap<KidEntity, KidModel>()
                 .ReverseMap();
+            this.CreateMap<HealthReportEntity, HealthReportModel>()
+                .ReverseMap();
         }
     }
 }
