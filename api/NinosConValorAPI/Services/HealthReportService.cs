@@ -28,5 +28,20 @@ namespace NinosConValorAPI.Services
             }
             throw new Exception("Database Error");
         }
+
+        public Task DeleteHealthReportAsync(int kidId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HealthReportModel> GetHealthReportAsync(int kidId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HealthReportModel> UpdateHealthReportAsync(int kidId, HealthReportModel qr)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

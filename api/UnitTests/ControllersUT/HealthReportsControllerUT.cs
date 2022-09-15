@@ -71,7 +71,7 @@ namespace UnitTests.ControllersUT
 
             int kidId = 1;
             var healthReportServiceMock = new Mock<IHealthReportService>();
-            healthReportServiceMock.Setup(r => r.CreateHealthReportAsync(kidId, healthReportModel)).ReturnsAsync(new HealthReportModel()
+            healthReportServiceMock.Setup(r => r.GetHealthReportAsync(kidId)).ReturnsAsync(new HealthReportModel()
             {
                 Id = 1,
                 KidId = 1,
@@ -94,7 +94,7 @@ namespace UnitTests.ControllersUT
             Assert.Equal(1, healthReportCreated.KidId);
             Assert.Equal("ORH+", healthReportCreated.BloodType);
             Assert.Equal(1, healthReportCreated.Id);
-            Assert.Equal(201, status.StatusCode);
+            Assert.Equal(200, status.StatusCode);
         }
     }
 }

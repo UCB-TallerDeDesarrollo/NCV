@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NinosConValorAPI.Exceptions;
 using NinosConValorAPI.Models;
 using NinosConValorAPI.Services;
 
@@ -41,7 +42,21 @@ namespace NinosConValorAPI.Controllers
 
         public async Task<ActionResult<HealthReportModel>> GetHealthReportAsync(int kidId)
         {
-            throw new NotImplementedException();
+            ActionResult<HealthReportModel> response;
+            try
+            {
+                var healthReportModel = await _healthReportService.GetHealthReportAsync(kidId);
+                response = Ok(healthReportModel);
+            }
+            catch (NotFoundElementException ex)
+            {
+                response = NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                response = StatusCode(StatusCodes.Status500InternalServerError, "General exception: Something happened");
+            }
+            return response;
         }
     }
 }
