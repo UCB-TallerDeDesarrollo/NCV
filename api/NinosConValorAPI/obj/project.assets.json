@@ -3235,19 +3235,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\diego\\.nuget\\packages\\": {}
+    "C:\\Users\\Kevin\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\diego\\OneDrive\\Documentos\\DIEGO UNIV\\8vo Semestre 2-2022\\Taller de desarrollo de Software\\Repositorios\\NCV\\api\\NinosConValorAPI\\NinosConValorAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Kevin\\Documents\\University\\8vo Semestre\\TDE_Taller_de_Desarrollo_de_software\\NCV\\api\\NinosConValorAPI\\NinosConValorAPI.csproj",
       "projectName": "NinosConValorAPI",
-      "projectPath": "C:\\Users\\diego\\OneDrive\\Documentos\\DIEGO UNIV\\8vo Semestre 2-2022\\Taller de desarrollo de Software\\Repositorios\\NCV\\api\\NinosConValorAPI\\NinosConValorAPI.csproj",
-      "packagesPath": "C:\\Users\\diego\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\diego\\OneDrive\\Documentos\\DIEGO UNIV\\8vo Semestre 2-2022\\Taller de desarrollo de Software\\Repositorios\\NCV\\api\\NinosConValorAPI\\obj\\",
+      "projectPath": "C:\\Users\\Kevin\\Documents\\University\\8vo Semestre\\TDE_Taller_de_Desarrollo_de_software\\NCV\\api\\NinosConValorAPI\\NinosConValorAPI.csproj",
+      "packagesPath": "C:\\Users\\Kevin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Kevin\\Documents\\University\\8vo Semestre\\TDE_Taller_de_Desarrollo_de_software\\NCV\\api\\NinosConValorAPI\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\diego\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Kevin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3255,7 +3260,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
