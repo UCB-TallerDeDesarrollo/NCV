@@ -1,5 +1,6 @@
 import Button from './components/Button';
 import CrearActivoFijoForm from './components/CrearActivoFijoForm';
+import ShowFilesForm from './ShowFilesForm'
 import Logo from './components/Logo';
 
 import './HomePage.css';
@@ -9,7 +10,7 @@ import './HomePage.css';
 function HomePageForm() {
   /*Borrar cuando las vistas esten conectadas*/
   const responsViewFile = () =>{
-    console.log("mostrar pagina de vista files")
+    window.location.href = "/files-nenes";
   }
   const responsActivosFijos = () =>{
     window.location.href = "/crear-activo-fijo";
