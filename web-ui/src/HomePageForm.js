@@ -13,7 +13,7 @@ function HomePageForm() {
     window.location.href = "/files-nenes";
   }
   const responsActivosFijos = () =>{
-    window.location.href = "/crear-activo-fijo";
+    window.location.href = "/activos-fijos";
   }
   /* */
   const aboutButton = {
