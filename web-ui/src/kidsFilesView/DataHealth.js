@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { makeStyles } from '@mui/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,47 +8,47 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-function createData(name, calories) {
-  return { name, calories };
+function createData(name, description) {
+  return { name, description };
 }
 
 const rows=[
     createData("CI",  "3333333"),
-    createData( "Nombre",  "firstName"),
-    createData("Apellido",  "lastName"),
-    createData("Tipo de Sangre",  "bloodType"),
-    createData("CI de discapacidad",  "cIDiscapacidad"),
-    createData("Diagnóstico psicológico ",  "psychologicalDiagnosis"),
-    createData("Diagnóstico nerológico",  "neurologicalDiagnosis"),
-    createData("Diagnóstico especial",  "specialDiagnosis"),
-    createData("Problemas de salud",  "healthProblems"),
-];
-const rows_2 = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+    createData("Tipo de Sangre",  "ORH-"),
+    createData("CI de discapacidad",  "33333333"),
+    createData("Diagnóstico psicológico ",  "Este es un ejemplo de diagnostico"),
+    createData("Diagnóstico nerológico",  "Este es un ejemplo de diagnostico"),
+    createData("Diagnóstico especial",  "Este es un ejemplo de diagnostico"),
+    createData("Problemas de salud",  "Problema 1, Problema 2"),
 ];
 
+const useStyles = makeStyles({
+  table: {
+    width: '50%',
+    height: 50,
+    margin: "auto"
+  }
+ });
+
 export default function DataHealth() {
+
+  const classes = useStyles();
+  const nameKid = "Pedro";
   return (
-    <div>
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableBody>
+    <div style={{ width: '100%' }}>
+    <h1> {nameKid}  -> Información de salud </h1>
+    <TableContainer component={Paper} >
+      <Table aria-label="simple table">
+        <TableBody >
           {rows.map((row) => (
-            <TableRow
+            <TableRow 
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row" className={classes.table}>
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right" >{row.description}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -56,3 +57,4 @@ export default function DataHealth() {
     </div>
   );
 }
+
