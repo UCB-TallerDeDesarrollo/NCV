@@ -8,6 +8,10 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Grid from '@mui/material/Grid';
+import positions from '@mui/system';
+
 
 export default class ShowFixedAssets extends Component{
   state ={
@@ -16,9 +20,6 @@ export default class ShowFixedAssets extends Component{
   async componentDidMount(){
     const res = await axios.get('https://ncv-api.herokuapp.com/api/fixedAssets');
     this.setState({ assets: res.data});
-    // this.state.assets = res.data;
-    //this.state.assets.map(asset => (console.log(asset.name)))
-    //console.log(this.state.assets[0].id);
   }
   render(){
     return (
@@ -29,20 +30,35 @@ export default class ShowFixedAssets extends Component{
             ></IconButton>
             </Toolbar>
         </AppBar>
-        <div>
-        <ul>
-          
+        <div style={{ marginLeft: '7%' }}>
+          <div>
+            <h1>ACTIVOS FIJOS</h1>
+          </div>
           {
-            this.state.assets.map( asset => {
-              return <Card> <li>
-                <CardHeader title= {asset.name} />
+          this.state.assets.map( asset => {
+          return <Grid style={{ minHeight: '60vh'}}>
+            <Card sx={{ p: 2, maxWidth: 1300 }} key={asset.id}>
+              <Box sx={{ display: 'flex'}}>
+              <CardHeader title= {asset.name} />
+              </Box>
+              <Box sx={{display: 'inline-block'}} >
+                <CardMedia component="img" 
+                image="https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg"
+                sx={{ width: 400 }}></CardMedia>
+              </Box>
+              <Box sx={{display: 'inline-block', position:'absolute', right: '30%'}}> 
                 <CardContent>
-                  {asset.description}
+                  <h4>Descripción: {asset.description} </h4>
+                  <h4>Fecha de entrada: {asset.entryDate} </h4>
+                  <h4>Características: {asset.features} </h4>
+                  <h4>Precio: {asset.price} </h4>
+                  <h4>Cantidad: {asset.quantity}</h4>
                 </CardContent>
-                 </li></Card>
+              </Box>
+            </Card>
+          </Grid>
             })
           } 
-        </ul>
       </div>
       </div>
     )
