@@ -66,5 +66,49 @@ namespace UnitTests.ServiceUT
             Assert.Equal("ORH+", healthReportCreated.BloodType);
             Assert.Equal(1, healthReportCreated.Id);
         }
+        [Fact]
+        public async Task GetHealthReportAsync_GetAnExistingHealthReport_ReturnsHealthReportModel()
+        {
+            // ARRANGE
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
+            var mapper = config.CreateMapper();
+            var healthReportModel = new HealthReportModel()
+            {
+                CIDiscapacidad = "11111222",
+                NeurologicalDiagnosis = "Este es un ejemplo de diagnostico",
+                PsychologicalDiagnosis = "Este es un ejemplo de diagnostico",
+                SpecialDiagnosis = "Este es un diagnostico especial",
+                BloodType = "ORH+",
+                HealthProblems = "Problema 1, Problema 2"
+            };
+            var healthReportEntity = new HealthReportEntity()
+            {
+                Id = 1,
+                KidId = 1,
+                CIDiscapacidad = "11111222",
+                NeurologicalDiagnosis = "Este es un ejemplo de diagnostico",
+                PsychologicalDiagnosis = "Este es un ejemplo de diagnostico",
+                SpecialDiagnosis = "Este es un diagnostico especial",
+                BloodType = "ORH+",
+                HealthProblems = "Problema 1, Problema 2"
+            };
+
+            int kidId = 1;
+
+            var ncvRepositoryMock = new Mock<INCVRepository>();
+
+
+            ncvRepositoryMock.Setup(r => r.GetHealthReportAsync(kidId)).ReturnsAsync(healthReportEntity);
+
+            var healthReportsService = new HealthReportService(ncvRepositoryMock.Object,mapper);
+
+            // ACT
+            var returnedHealthReport = await healthReportsService.GetHealthReportAsync(kidId);
+
+            // ASSERT
+            Assert.Equal(1, returnedHealthReport.KidId);
+            Assert.Equal("ORH+", returnedHealthReport.BloodType);
+            Assert.Equal(1, returnedHealthReport.Id);
+        }
     }
 }
