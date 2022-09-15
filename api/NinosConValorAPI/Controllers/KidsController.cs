@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
+using NinosConValorAPI.Exceptions;
 using NinosConValorAPI.Models;
 using NinosConValorAPI.Services;
 using System.Security.Cryptography;
@@ -36,11 +37,16 @@ namespace NinosConValorAPI.Controllers
         {
             try
             {
-                return await _kidService.GetKidAsync(kidId);
+                var kid = await _kidService.GetKidAsync(kidId);
+                return Ok(kid);
             }
-            catch (Exception ex)
+            catch (NotFoundElementException ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happend: {ex.Message}");
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
             }
         }
         [HttpGet]
