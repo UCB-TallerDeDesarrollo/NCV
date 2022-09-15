@@ -173,6 +173,35 @@ namespace UnitTests.AutomapperUT
             Assert.Equal(kidModel.Id, actual.Id);
 
         }
+        [Fact]
+        public void AutomapperProfile_KidEntity_ReturnsKidModel()
+        {
+            // ARRANGE
+            var kidEntity = new KidEntity()
+            {
+                Id = 1,
+                FirstName = "Manuel",
+                LastName = "Flores",
+                CI = "1234567",
+                BirthDate = new DateTime(2010, 9, 12),
+                ProgramHouse = "SDA",
+                BirthPlace = "Cochabamba",
+                Gender = "masculino"
+            };
 
+            KidModel kidModel = new KidModel();
+            var typeOfKidModel = kidModel.GetType().ToString();
+
+
+            // ACT
+            var actual = _mapper.Map<KidModel>(kidEntity);
+            var actualType = actual.GetType().ToString();
+
+            // ASSERT
+            Assert.Equal(typeOfKidModel, actualType);
+            Assert.Equal(kidEntity.CI, actual.CI);
+            Assert.Equal(kidEntity.Id, actual.Id);
+
+        }
     }
 }
