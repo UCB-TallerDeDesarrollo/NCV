@@ -36,10 +36,10 @@ export default class ShowFixedAssets extends Component{
           </div>
           {
           this.state.assets.map( asset => {
-          return <Grid style={{ minHeight: '60vh'}}>
+          return <Grid id="lista-activos-fijos" style={{ minHeight: '60vh'}}>
             <Card sx={{ p: 2, maxWidth: 1300 }} key={asset.id}>
               <Box sx={{ display: 'flex'}}>
-              <CardHeader title= {asset.name} />
+              <CardHeader id="Name" title= {asset.name} />
               </Box>
               <Box sx={{display: 'inline-block'}} >
                 <CardMedia component="img" 
