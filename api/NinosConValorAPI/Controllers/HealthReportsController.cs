@@ -38,5 +38,10 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
             }
         }
+
+        public async Task<ActionResult<HealthReportModel>> GetHealthReportAsync(int kidId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
