@@ -1,5 +1,7 @@
 import Button from './components/Button';
+import CrearActivoFijoForm from './components/CrearActivoFijoForm';
 import Logo from './components/Logo';
+
 import './HomePage.css';
 
 //uso de componentes
@@ -10,7 +12,7 @@ function HomePageForm() {
     console.log("mostrar pagina de vista files")
   }
   const responsActivosFijos = () =>{
-    console.log("mostrar pagina de vista de Activos Fijos")
+    window.location.href = "/crear-activo-fijo";
   }
   /* */
   const aboutButton = {
@@ -35,6 +37,7 @@ function HomePageForm() {
               <Button about ={aboutButtonB}/>
         </div>
       </header>
+      
     </div>
   );
 }

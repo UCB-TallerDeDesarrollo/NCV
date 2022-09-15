@@ -38,5 +38,33 @@ namespace UnitTests.NCVRepositoryUT
             Assert.Equal(1,healthReportEntity.KidId);
             Assert.Equal("11111222", healthReportEntity.CIDiscapacidad);
         }
+        [Fact]
+        public async Task GetHealthReportAsync_GetAnExistingHealthReport_ReturnsHealthReportEntity()
+        {
+            // ARRANGE
+            var repository = new NCVRepository(ctx);
+            var healthReportEntity = new HealthReportEntity()
+            {
+                KidId = 1,
+                CIDiscapacidad = "11111222",
+                NeurologicalDiagnosis = "Este es un ejemplo de diagnostico",
+                PsychologicalDiagnosis = "Este es un ejemplo de diagnostico",
+                SpecialDiagnosis = "Este es un diagnostico especial",
+                BloodType = "ORH+",
+                HealthProblems = "Problema 1, Problema 2"
+            };
+            int kidId = 1;
+
+            repository.CreateHealthReportAsync(healthReportEntity);
+            var result = await repository.SaveChangesAsync();
+
+            // ACT 
+            healthReportEntity = await repository.GetHealthReportAsync(kidId);
+
+            // ASSERT
+            Assert.Equal(1, healthReportEntity.Id);
+            Assert.Equal(kidId, healthReportEntity.KidId);
+            Assert.Equal("11111222", healthReportEntity.CIDiscapacidad);
+        }
     }
 }

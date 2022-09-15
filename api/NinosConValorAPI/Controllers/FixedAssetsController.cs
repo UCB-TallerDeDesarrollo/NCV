@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NinosConValorAPI.Exceptions;
 using NinosConValorAPI.Models;
 using NinosConValorAPI.Services;
 
@@ -38,6 +39,24 @@ namespace NinosConValorAPI.Controllers
             {
                 var fixedAssets = await _fixedAssetService.GetFixedAssetsAsync();
                 return Ok(fixedAssets);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
+            }
+        }
+
+        [HttpGet("{fixedAssetId:int}")]
+        public async Task<ActionResult<FixedAssetModel>> GetFixedAssetAsync(int fixedAssetId)
+        {
+            try
+            {
+                var fixedAsset = await _fixedAssetService.GetFixedAssetAsync(fixedAssetId);
+                return Ok(fixedAsset);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception)
             {
