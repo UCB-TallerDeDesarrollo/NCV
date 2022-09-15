@@ -13,6 +13,8 @@ const healtReport = {
 };
 
 function  AddHealthReport (){
+
+    var url = "https://ucb-tde-ninos-con-valor-api.herokuapp.com/api/kids/1/healthreports";
     
   const [formReport, setformReport] = useState(healtReport);
 
@@ -28,9 +30,21 @@ function  AddHealthReport (){
     event.preventDefault();
     console.log("Subiendo...");
     console.log(formReport);
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formReport)
+    };
+    fetch(url, requestOptions)
+        .then(response => response.json())
+        .then(res => console.log(res));
 }
 
+
+
   return (
+    <div>
+        FORMULARIO PARA AÑADIR REPORTE DE SALUD A NENE
       <Box
         component="form"
         sx={{
@@ -99,6 +113,7 @@ function  AddHealthReport (){
 
         <Button variant="text" onClick={handleFormSubmit}>Guardar</Button>
         </Box>
+    </div>
   );
 };
 export default AddHealthReport;
