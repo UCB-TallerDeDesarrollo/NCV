@@ -1,5 +1,3 @@
-import InputWithLabel from './InputWithLabel';
-import Button from './Button'; 
 import CardFileKid from './components/CardFileKid';
 import {useState, useEffect} from 'react';
 
