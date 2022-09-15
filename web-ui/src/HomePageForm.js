@@ -1,7 +1,7 @@
 import Button from './components/Button';
 import CrearActivoFijoForm from './components/CrearActivoFijoForm';
 import Logo from './components/Logo';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+
 import './HomePage.css';
 
 //uso de componentes
