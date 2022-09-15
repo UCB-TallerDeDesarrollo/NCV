@@ -20,8 +20,12 @@ function ShowFilesForm() {
   function VerFile(neneId){
     var idnene = neneId;
     var url = "https://ncv-api.herokuapp.com/api/kids/" + idnene;
-    console.log("Mostrando opciones mundito...");
-    console.log(url);
+    window.location.href = "/kidHealth";
+  }
+
+  function AddReport(neneId){
+    var idnene = neneId;
+    var url = "https://ncv-api.herokuapp.com/api/kids/" + idnene;
     window.location.href = "/add-reporte-nene";
   }
 
@@ -33,7 +37,8 @@ function ShowFilesForm() {
                 {ListKids.map(ListKids => (
                     <div key={ListKids.id}>
                       <CardFileKid KidName={ListKids.firstName} KidCi={ListKids.ci} KidId={ListKids.id}></CardFileKid>
-                      <Button variant="text" onClick={e => VerFile(ListKids.id)}>Ver File2</Button> 
+                      <Button variant="text" onClick={e => VerFile(ListKids.id)}>Ver File</Button> 
+                      <Button variant="text" onClick={e => AddReport(ListKids.id)}>Aumentar Reporte de Salud</Button> 
                     </div>
                 ))}
             </div>

@@ -25,7 +25,7 @@ export default function DataHealth() {
   const nameKid = "Pedro";
   return (
     <div style={{ width: '100%' }}>
-    <h1> {nameKid}  -> Información de salud </h1>
+    <h1> {nameKid}  : Información de salud </h1>
     <TableContainer component={Paper} >
       <Table aria-label="simple table">
         <TableBody >
