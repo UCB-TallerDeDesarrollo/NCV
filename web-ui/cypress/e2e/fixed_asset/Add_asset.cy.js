@@ -1,29 +1,4 @@
 describe('Add fixed asset end to end tests', () => {
-  /*it('No muestra ningun resultado al iniciar en el espacio Name', () => {
-    cy.visit('/');
-    cy.get('#Name').should('contain', '');
-  });
-  it('No muestra ningun resultado al iniciar en el espacio Description', () => {
-    cy.visit('/');
-    cy.get('#Description').should('contain', '');
-  });
-  it('No muestra ningun resultado al iniciar en el espacio EntryDate', () => {
-    cy.visit('/');
-    cy.get('#EntryDate').should('contain', '');
-  });
-  it('No muestra ningun resultado al iniciar en el espacio Price', () => {
-    cy.visit('/');
-    cy.get('#Price').should('contain', '');
-  });
-  it('No muestra ningun resultado al iniciar en el espacio Features', () => {
-    cy.visit('/');
-    cy.get('#Features').should('contain', '');
-  });
-  it('No muestra ningun resultado al iniciar en el espacio Quantity', () => {
-    cy.visit('/');
-    cy.get('#Quantity').should('contain', '');
-  });*/
-
   it('Crea un activo fijo', () => {
     cy.visit('/crear-activo-fijo');
     cy.get('#Name').type('Teclado');
