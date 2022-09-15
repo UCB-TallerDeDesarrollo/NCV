@@ -73,9 +73,12 @@ namespace NinosConValorAPI.Data.Repository
             return await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
         }
 
-        public Task<HealthReportEntity> GetHealthReportAsync(int kidId)
+        public async Task<HealthReportEntity> GetHealthReportAsync(int kidId)
         {
-            throw new NotImplementedException();
+            IQueryable<HealthReportEntity> query = _dbContext.HealthReports;
+            query = query.AsNoTracking();
+            var healthReport = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            return healthReport;
         }
 
         public Task DeleteHealthReportAsync(int kidId)

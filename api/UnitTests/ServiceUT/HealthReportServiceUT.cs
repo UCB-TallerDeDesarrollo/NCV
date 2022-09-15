@@ -72,15 +72,6 @@ namespace UnitTests.ServiceUT
             // ARRANGE
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
             var mapper = config.CreateMapper();
-            var healthReportModel = new HealthReportModel()
-            {
-                CIDiscapacidad = "11111222",
-                NeurologicalDiagnosis = "Este es un ejemplo de diagnostico",
-                PsychologicalDiagnosis = "Este es un ejemplo de diagnostico",
-                SpecialDiagnosis = "Este es un diagnostico especial",
-                BloodType = "ORH+",
-                HealthProblems = "Problema 1, Problema 2"
-            };
             var healthReportEntity = new HealthReportEntity()
             {
                 Id = 1,
