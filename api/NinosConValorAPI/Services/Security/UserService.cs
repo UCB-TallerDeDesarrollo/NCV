@@ -17,11 +17,13 @@ namespace NinosConValorAPI.Services.Security
     public class UserService : IUserService
     {
         private UserManager<IdentityAppUser> userManager;
+        private RoleManager<IdentityRole> roleManager;
         private IConfiguration configuration;
 
         public UserService(UserManager<IdentityAppUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             this.userManager = userManager;
+            this.roleManager = roleManager;
             this.configuration = configuration;
         }
 
@@ -83,6 +85,37 @@ namespace NinosConValorAPI.Services.Security
                 Token = tokenAsString,
                 IsSuccess = true,
                 ExpireDate = token.ValidTo
+            };
+        }
+
+
+
+        public async Task<UserManagerResponse> CreateRoleAsync(CreateRoleViewModel model)
+        {
+
+            var identityRole = new IdentityRole()
+            {
+                Name = model.Name,
+                NormalizedName = model.NormalizedName//,
+                //State = 1
+            };
+
+            var result = await roleManager.CreateAsync(identityRole);
+
+            if (result.Succeeded)
+            {
+                return new UserManagerResponse
+                {
+                    Token = "Role created successfully!",
+                    IsSuccess = true,
+                };
+            }
+
+            return new UserManagerResponse
+            {
+                Token = "Role did not create",
+                IsSuccess = false,
+                Errors = result.Errors.Select(e => e.Description)
             };
         }
     }
