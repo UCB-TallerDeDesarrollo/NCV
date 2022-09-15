@@ -92,6 +92,12 @@ namespace UnitTests.ServiceUT
                 BloodType = "ORH+",
                 HealthProblems = "Problema 1, Problema 2"
             };
+            var kidEntity = new KidEntity()
+            {
+                Id = 1,
+                FirstName = "Checo",
+                LastName = "Perez"
+            };
 
             int kidId = 1;
 
@@ -99,6 +105,7 @@ namespace UnitTests.ServiceUT
 
 
             ncvRepositoryMock.Setup(r => r.GetHealthReportAsync(kidId)).ReturnsAsync(healthReportEntity);
+            ncvRepositoryMock.Setup(r => r.GetKidAsync(kidId)).ReturnsAsync(kidEntity);
 
             var healthReportsService = new HealthReportService(ncvRepositoryMock.Object,mapper);
 
