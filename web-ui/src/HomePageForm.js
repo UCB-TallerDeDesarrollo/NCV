@@ -1,30 +1,30 @@
-import Button from './components/Button';
-import CrearActivoFijoForm from './components/CrearActivoFijoForm';
+import Button from './components/Button'
+import CrearActivoFijoForm from './components/CrearActivoFijoForm'
 import ShowFilesForm from './ShowFilesForm'
-import Logo from './components/Logo';
+import Logo from './components/Logo'
 
-import './HomePage.css';
+import './HomePage.css'
 
-//uso de componentes
+// uso de componentes
 
-function HomePageForm() {
-  /*Borrar cuando las vistas esten conectadas*/
-  const responsViewFile = () =>{
-    window.location.href = "/files-nenes";
+function HomePageForm () {
+  /* Borrar cuando las vistas esten conectadas */
+  const responsViewFile = () => {
+    window.location.href = '/files-nenes'
   }
-  const responsActivosFijos = () =>{
-    window.location.href = "/activos-fijos";
+  const responsActivosFijos = () => {
+    window.location.href = '/activos-fijos'
   }
   /* */
   const aboutButton = {
-    texto:"Files",
-    nameClass: "btn-files",
+    texto: 'Files',
+    nameClass: 'btn-files',
     action: responsViewFile
   }
 
   const aboutButtonB = {
-    texto:"Activos Fijos",
-    nameClass: "btn-activosFijos",
+    texto: 'Activos Fijos',
+    nameClass: 'btn-activosFijos',
     action: responsActivosFijos
   }
 
@@ -38,9 +38,8 @@ function HomePageForm() {
               <Button about ={aboutButtonB}/>
         </div>
       </header>
-      
     </div>
-  );
+  )
 }
 
-export default HomePageForm;
+export default HomePageForm
