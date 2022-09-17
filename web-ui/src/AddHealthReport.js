@@ -1,46 +1,43 @@
-import React, { useState } from "react";
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
+import React, { useState } from 'react'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 
 const healtReport = {
-  BloodType: "",
-  CIDiscapacidad: "",
-  PsychologicalDiagnosis: "",
-  NeurologicalDiagnosis: "",
-  SpecialDiagnosis: "",
-  HealthProblems:"",
-};
-
-function  AddHealthReport (){
-
-    var url = "https://ucb-tde-ninos-con-valor-api.herokuapp.com/api/kids/1/healthreports";
-    
-  const [formReport, setformReport] = useState(healtReport);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setformReport({
-      ...formReport,
-      [name]: value,
-    });
-  };
-
-  function handleFormSubmit(event) {
-    event.preventDefault();
-    console.log("Subiendo...");
-    console.log(formReport);
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formReport)
-    };
-    fetch(url, requestOptions)
-        .then(response => response.json())
-        .then(res => console.log(res));
+  BloodType: '',
+  CIDiscapacidad: '',
+  PsychologicalDiagnosis: '',
+  NeurologicalDiagnosis: '',
+  SpecialDiagnosis: '',
+  HealthProblems: ''
 }
 
+function AddHealthReport () {
+  const url = 'https://ucb-tde-ninos-con-valor-api.herokuapp.com/api/kids/1/healthreports'
 
+  const [formReport, setformReport] = useState(healtReport)
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setformReport({
+      ...formReport,
+      [name]: value
+    })
+  }
+
+  function handleFormSubmit (event) {
+    event.preventDefault()
+    console.log('Subiendo...')
+    console.log(formReport)
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formReport)
+    }
+    fetch(url, requestOptions)
+      .then(response => response.json())
+      .then(res => console.log(res))
+  }
 
   return (
     <div>
@@ -48,7 +45,7 @@ function  AddHealthReport (){
       <Box
         component="form"
         sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
+          '& .MuiTextField-root': { m: 1, width: '25ch' }
         }}
         noValidate
         autoComplete="off"
@@ -114,6 +111,6 @@ function  AddHealthReport (){
         <Button variant="text" onClick={handleFormSubmit}>Guardar</Button>
         </Box>
     </div>
-  );
+  )
 };
-export default AddHealthReport;
+export default AddHealthReport

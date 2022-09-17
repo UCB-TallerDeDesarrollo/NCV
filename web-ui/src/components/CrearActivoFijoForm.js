@@ -1,81 +1,79 @@
-/* eslint-disable prettier/prettier */
-import React,{useState} from 'react';
-import Axios from 'axios';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Input from '@mui/material/Input';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-import Alert from '@mui/material/Alert';
+import React, { useState } from 'react'
+import Axios from 'axios'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
+import Grid from '@mui/material/Grid'
+import Input from '@mui/material/Input'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
 
-function CrearActivoFijoForm(props) {
-  const url = "https://ncv-api.herokuapp.com/api/fixedAssets"
-  const [open, setOpen] = useState(false);
+function CrearActivoFijoForm (props) {
+  const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
+  const [open, setOpen] = useState(false)
   const [data, setData] = useState({
-    Name: "", //string
-    Description: "", //string
-    EntryDate: "", //dateTime
-    Price: "", //decimal
-    Features: "", //string
-    Quantity: "" //int
+    Name: '', // string
+    Description: '', // string
+    EntryDate: '', // dateTime
+    Price: '', // decimal
+    Features: '', // string
+    Quantity: '' // int
   })
-  function handle(e){
-    const newData = {...data}
+  function handle (e) {
+    const newData = { ...data }
     newData[e.target.id] = e.target.value
     setData(newData)
     console.log(newData)
   }
-  function handleClick(){
-    setOpen(true);
+  function handleClick () {
+    setOpen(true)
   }
-  function handleClose(event, reason){
-    if (reason === 'clickaway'){
-      return;
+  function handleClose (event, reason) {
+    if (reason === 'clickaway') {
+      return
     }
-    setOpen(false);
+    setOpen(false)
   }
-  function submit(e){
-    e.preventDefault();
-    Axios.post(url,{
+  function submit (e) {
+    e.preventDefault()
+    Axios.post(url, {
       Name: data.Name,
-      Description: data.Description, //string
-      EntryDate: data.EntryDate, //dateTime
-      Price: data.Price, //decimal
-      Features: data.Features, //string
-      Quantity: data.Quantity //int
-    }).then(res =>{
-      if(res.status == 201){
-        setOpen(true);
+      Description: data.Description, // string
+      EntryDate: data.EntryDate, // dateTime
+      Price: data.Price, // decimal
+      Features: data.Features, // string
+      Quantity: data.Quantity // int
+    }).then(res => {
+      if (res.status == 201) {
+        setOpen(true)
       }
       console.log(res.status)
     })
   }
   return (
     <Box sx={{
-      '& .MuiTextField-root': { m: 1, width: '45ch' },
+      '& .MuiTextField-root': { m: 1, width: '45ch' }
     }}>
       <Grid container direction="column" alignItems="center" justify="center" style={{ minHeight: '100vh' }}>
         <Grid item xs={3}>
-        <Card sx={{ maxWidth: 450}}>
+        <Card sx={{ maxWidth: 450 }}>
           <div>
             <CardHeader style={{ textAlign: 'center' }} title="Crear activo fijo" />
             <CardContent>
-              <form onSubmit={(e)=> submit(e)}>
-                <TextField required onChange={(e)=>handle(e)} id="Name" value={data.Name} placeholder='Nombre' type='text' variant="filled"/><br/>
-                <TextField onChange={(e)=>handle(e)} id="Description" value={data.Description} placeholder='Descripción' type='text' variant="filled"/><br/>
-                <TextField required onChange={(e)=>handle(e)} id="EntryDate" value={data.EntryDate} placeholder='Fecha de entrada' type='date' variant="filled"/><br/>
-                <TextField required onChange={(e)=>handle(e)} id="Price" value={data.Price} placeholder='Precio' type='number'  variant="filled"/><br/>
-                <TextField onChange={(e)=>handle(e)} id="Features" value={data.Features} placeholder='Características' type='text' variant="filled"/><br/>
-                <TextField required onChange={(e)=>handle(e)} id="Quantity" value={data.Quantity} placeholder='Cantidad' type='number' variant="filled"/><br/>
-                <CardActions style={{justifyContent: 'center'}}>
+              <form onSubmit={(e) => submit(e)}>
+                <TextField required onChange={(e) => handle(e)} id="Name" value={data.Name} placeholder='Nombre' type='text' variant="filled"/><br/>
+                <TextField onChange={(e) => handle(e)} id="Description" value={data.Description} placeholder='Descripción' type='text' variant="filled"/><br/>
+                <TextField required onChange={(e) => handle(e)} id="EntryDate" value={data.EntryDate} placeholder='Fecha de entrada' type='date' variant="filled"/><br/>
+                <TextField required onChange={(e) => handle(e)} id="Price" value={data.Price} placeholder='Precio' type='number' variant="filled"/><br/>
+                <TextField onChange={(e) => handle(e)} id="Features" value={data.Features} placeholder='Características' type='text' variant="filled"/><br/>
+                <TextField required onChange={(e) => handle(e)} id="Quantity" value={data.Quantity} placeholder='Cantidad' type='number' variant="filled"/><br/>
+                <CardActions style={{ justifyContent: 'center' }}>
                   <Button variant="outlined">
-                      <Input type="submit" onClick={handleClick} id={"submit_button"}>
+                      <Input type="submit" onClick={handleClick} id={'submit_button'}>
                                 Submit
                       </Input>
                   </Button>
@@ -93,7 +91,7 @@ function CrearActivoFijoForm(props) {
         </Grid>
       </Grid>
     </Box>
-  );
+  )
 }
 
-export default CrearActivoFijoForm;
+export default CrearActivoFijoForm

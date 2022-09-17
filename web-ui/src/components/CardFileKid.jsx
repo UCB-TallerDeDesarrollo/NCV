@@ -1,26 +1,23 @@
-import React from "react";
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import Avatar from '@mui/material/Avatar';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Button from '@mui/material/Button';
-import CardContent from '@mui/material/CardContent';
+import React from 'react'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import Avatar from '@mui/material/Avatar'
+import IconButton, { IconButtonProps } from '@mui/material/IconButton'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import Button from '@mui/material/Button'
+import CardContent from '@mui/material/CardContent'
 
+const CardFileKid = ({ KidName, KidCi, KidId }) => {
+  const renderFilterRequest = () => {
+    console.log('Mostrando opciones...')
+  }
 
+  const renderFilterRequest2 = (neneId) => {
+    console.log('dirigiendo al file den nene...')
+    console.log(neneId)
+  }
 
-const CardFileKid = ({KidName, KidCi, KidId}) =>{    
-
-    const renderFilterRequest = () => {
-        console.log("Mostrando opciones...");
-    }
-    
-    const renderFilterRequest2 = (neneId) =>{
-        console.log("dirigiendo al file den nene...");
-        console.log(neneId);
-    }
-
-    return(
+  return (
         <Card sx={{ maxWidth: 600 }}>
             <CardHeader
                 avatar={
@@ -35,13 +32,11 @@ const CardFileKid = ({KidName, KidCi, KidId}) =>{
                 subheader={KidCi}
             />
             <CardContent>
-                <Button variant="text" onClick={renderFilterRequest2(KidId)}>Ver File</Button>    
+                <Button variant="text" onClick={renderFilterRequest2(KidId)}>Ver File</Button>
             </CardContent>
         </Card>
-         
-    )
+
+  )
 }
 
-export default CardFileKid;
-
- 
+export default CardFileKid
