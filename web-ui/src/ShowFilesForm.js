@@ -1,32 +1,31 @@
-import CardFileKid from './components/CardFileKid';
-import {useState, useEffect} from 'react';
-import Button from '@mui/material/Button';
+import CardFileKid from './components/CardFileKid'
+import { useState, useEffect } from 'react'
+import Button from '@mui/material/Button'
 
-function ShowFilesForm() {
-
-  const [ListKids, setListKids] = useState([]);
-  var urlKids = "https://ncv-api.herokuapp.com/api/kids";
+function ShowFilesForm () {
+  const [ListKids, setListKids] = useState([])
+  const urlKids = 'https://ncv-api.herokuapp.com/api/kids'
 
   useEffect(() => {
     fetch(urlKids)
       .then(res => res.json())
       .then(
         (result) => {
-            setListKids(result);
+          setListKids(result)
         }
       )
   }, [])
 
-  function VerFile(neneId){
-    var idnene = neneId;
-    var url = "https://ncv-api.herokuapp.com/api/kids/" + idnene;
-    window.location.href = "/kidHealth";
+  function VerFile (neneId) {
+    const idnene = neneId
+    const url = 'https://ncv-api.herokuapp.com/api/kids/' + idnene
+    window.location.href = '/kidHealth'
   }
 
-  function AddReport(neneId){
-    var idnene = neneId;
-    var url = "https://ncv-api.herokuapp.com/api/kids/" + idnene;
-    window.location.href = "/add-reporte-nene";
+  function AddReport (neneId) {
+    const idnene = neneId
+    const url = 'https://ncv-api.herokuapp.com/api/kids/' + idnene
+    window.location.href = '/add-reporte-nene'
   }
 
   return (
@@ -37,13 +36,13 @@ function ShowFilesForm() {
                 {ListKids.map(ListKids => (
                     <div key={ListKids.id}>
                       <CardFileKid KidName={ListKids.firstName} KidCi={ListKids.ci} KidId={ListKids.id}></CardFileKid>
-                      <Button variant="text" onClick={e => VerFile(ListKids.id)}>Ver File</Button> 
-                      <Button variant="text" onClick={e => AddReport(ListKids.id)}>Aumentar Reporte de Salud</Button> 
+                      <Button variant="text" onClick={e => VerFile(ListKids.id)}>Ver File</Button>
+                      <Button variant="text" onClick={e => AddReport(ListKids.id)}>Aumentar Reporte de Salud</Button>
                     </div>
                 ))}
             </div>
         </div>
     </div>
-  );
+  )
 }
-export default ShowFilesForm;
+export default ShowFilesForm

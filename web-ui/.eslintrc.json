@@ -29,6 +29,7 @@
     "rules": {
         "react/react-in-jsx-scope":"off",
         "no-unused-vars": "warn",
+        "eqeqeq": "off",
         "react/prop-types": 0
     }
 }
