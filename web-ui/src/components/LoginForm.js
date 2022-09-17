@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import InputText from './InputText';
-import '../styles.css';
+import React, { useEffect, useState } from 'react'
+import InputText from './InputText'
+import '../styles.css'
 
-function LoginForm() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+function LoginForm () {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-    function handleEmailChange(event) {
-        setEmail(event.target.value);
+  function handleEmailChange (event) {
+    setEmail(event.target.value)
+  }
+
+  function handlePasswordChange (event) {
+    setPassword(event.target.value)
+  }
+
+  function handleLoginForm (event) {
+    event.preventDefault()
+    const user = {
+      email,
+      password
     }
-
-    function handlePasswordChange(event) {
-        setPassword(event.target.value);
-    }
-
-    function handleLoginForm(event){
-        event.preventDefault();
-        let user = {
-            email: email,
-            password: password
-        }
-        console.log("in login");
-        window.location.href = "/home-ncv";
-        /*
+    console.log('in login')
+    window.location.href = '/home-ncv'
+    /*
         fetch("url_here", {
-            headers: { 
+            headers: {
                 "Content-Type": "application/json; charset=utf-8"
             },
             method: 'POST',
@@ -35,7 +35,7 @@ function LoginForm() {
             console.log(data);
             if(data.isSuccess) {
                 sessionStorage.setItem("jwt", data.token);
-                
+
             } else {
                 var errors = data.errors.join("\n") ?? ""
                 alert(data.token + errors);
@@ -46,10 +46,10 @@ function LoginForm() {
             alert(error);
         })
         */
-    }
+  }
 
-    return (
-        <section className="vh-100" style={{backgroundColor: "#023E73"}}>
+  return (
+        <section className="vh-100" style={{ backgroundColor: '#023E73' }}>
             <div className="container py-5 h-100">
                 <div className="row d-flex justify-content-center align-items-center h-100">
                     <div className="col col-xl-10">
@@ -79,7 +79,7 @@ function LoginForm() {
                 </div>
             </div>
         </section>
-     );
+  )
 }
 
-export default LoginForm;
+export default LoginForm

@@ -1,15 +1,11 @@
 describe('Home Page end to end tests', () => {
-  
-
-    it('Busca los Botones en la Home Page', () => {
-      cy.visit('/home-ncv');
-      cy.get('button').should('have.class', 'btn-files').and('contain','Files');
-      cy.get('button').should('have.class', 'btn-activosFijos').and('contain','Activos Fijos');
-    });
-  
-
-});
-/**it('no muestra ningun resultado al iniciar', () => {
+  it('Busca los Botones en la Home Page', () => {
+    cy.visit('/home-ncv')
+    cy.get('button').should('have.class', 'btn-files').and('contain', 'Files')
+    cy.get('button').should('have.class', 'btn-activosFijos').and('contain', 'Activos Fijos')
+  })
+})
+/** it('no muestra ningun resultado al iniciar', () => {
     cy.visit('/');
     cy.get('#mensaje-suma').should('contain', '');
   });

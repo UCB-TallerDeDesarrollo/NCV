@@ -23,7 +23,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cypress": "cypress open",
-    "cypress-run": "cypress run"
+    "cypress-run": "cypress run",
+    "lint": "eslint --fix . --ext .js,.jsx"
   },
   "eslintConfig": {
     "extends": [
@@ -63,9 +64,15 @@
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
     "cypress": "^10.7.0",
+    "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
     "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.5",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.1",
+    "eslint-plugin-react": "^7.31.8",
     "prettier": "^2.7.1"
   }
 }

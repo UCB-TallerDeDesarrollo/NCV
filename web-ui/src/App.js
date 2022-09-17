@@ -1,15 +1,15 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes,Navigate } from 'react-router-dom';
-import HomePageForm from './HomePageForm';
-import AddHealthReport from './AddHealthReport';
-import CrearActivoFijoForm from './components/CrearActivoFijoForm';
+import React from 'react'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
+import HomePageForm from './HomePageForm'
+import AddHealthReport from './AddHealthReport'
+import CrearActivoFijoForm from './components/CrearActivoFijoForm'
 import ShowFilesForm from './ShowFilesForm'
-import LoginForm from './components/LoginForm';
-import ShowFixedAssets from './components/ShowFixedAssets';
-import DataHealth from './kidsFilesView/DataHealth';
+import LoginForm from './components/LoginForm'
+import ShowFixedAssets from './components/ShowFixedAssets'
+import DataHealth from './kidsFilesView/DataHealth'
 
-function App(){
-  return(
+function App () {
+  return (
     <Router>
       <Routes>
         <Route path='/crear-activo-fijo' element={<CrearActivoFijoForm/>}></Route>
@@ -22,7 +22,7 @@ function App(){
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
