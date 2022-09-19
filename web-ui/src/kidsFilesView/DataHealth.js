@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { makeStyles } from '@mui/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -22,17 +21,7 @@ const rows=[
     createData("Problemas de salud",  "Problema 1, Problema 2"),
 ];
 
-const useStyles = makeStyles({
-  table: {
-    width: '50%',
-    height: 50,
-    margin: "auto"
-  }
- });
-
 export default function DataHealth() {
-
-  const classes = useStyles();
   const nameKid = "Pedro";
   return (
     <div style={{ width: '100%' }}>
@@ -45,7 +34,7 @@ export default function DataHealth() {
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row" className={classes.table}>
+              <TableCell component="th" scope="row" >
                 {row.name}
               </TableCell>
               <TableCell align="right" >{row.description}</TableCell>
