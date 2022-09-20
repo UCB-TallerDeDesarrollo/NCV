@@ -24,6 +24,7 @@
     "eject": "react-scripts eject",
     "cypress": "cypress open",
     "cypress-run": "cypress run",
+    "format": "prettier --write . ",
     "lint": "eslint --fix . --ext .js,.jsx"
   },
   "eslintConfig": {
