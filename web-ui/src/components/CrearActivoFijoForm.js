@@ -12,86 +12,158 @@ import Input from '@mui/material/Input'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 
-function CrearActivoFijoForm (props) {
-  const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
-  const [open, setOpen] = useState(false)
-  const [data, setData] = useState({
-    Name: '', // string
-    Description: '', // string
-    EntryDate: '', // dateTime
-    Price: '', // decimal
-    Features: '', // string
-    Quantity: '' // int
-  })
-  function handle (e) {
-    const newData = { ...data }
-    newData[e.target.id] = e.target.value
-    setData(newData)
-    console.log(newData)
-  }
-  function handleClick () {
-    setOpen(true)
-  }
-  function handleClose (event, reason) {
-    if (reason === 'clickaway') {
-      return
-    }
-    setOpen(false)
-  }
-  function submit (e) {
-    e.preventDefault()
-    Axios.post(url, {
-      Name: data.Name,
-      Description: data.Description, // string
-      EntryDate: data.EntryDate, // dateTime
-      Price: data.Price, // decimal
-      Features: data.Features, // string
-      Quantity: data.Quantity // int
-    }).then(res => {
-      if (res.status == 201) {
-        setOpen(true)
-      }
-      console.log(res.status)
+function CrearActivoFijoForm(props) {
+    const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
+    const [open, setOpen] = useState(false)
+    const [data, setData] = useState({
+        Name: '', // string
+        Description: '', // string
+        EntryDate: '', // dateTime
+        Price: '', // decimal
+        Features: '', // string
+        Quantity: '' // int
     })
-  }
-  return (
-    <Box sx={{
-      '& .MuiTextField-root': { m: 1, width: '45ch' }
-    }}>
-      <Grid container direction="column" alignItems="center" justify="center" style={{ minHeight: '100vh' }}>
-        <Grid item xs={3}>
-        <Card sx={{ maxWidth: 450 }}>
-          <div>
-            <CardHeader style={{ textAlign: 'center' }} title="Crear activo fijo" />
-            <CardContent>
-              <form onSubmit={(e) => submit(e)}>
-                <TextField required onChange={(e) => handle(e)} id="Name" value={data.Name} placeholder='Nombre' type='text' variant="filled"/><br/>
-                <TextField onChange={(e) => handle(e)} id="Description" value={data.Description} placeholder='Descripción' type='text' variant="filled"/><br/>
-                <TextField required onChange={(e) => handle(e)} id="EntryDate" value={data.EntryDate} placeholder='Fecha de entrada' type='date' variant="filled"/><br/>
-                <TextField required onChange={(e) => handle(e)} id="Price" value={data.Price} placeholder='Precio' type='number' variant="filled"/><br/>
-                <TextField onChange={(e) => handle(e)} id="Features" value={data.Features} placeholder='Características' type='text' variant="filled"/><br/>
-                <TextField required onChange={(e) => handle(e)} id="Quantity" value={data.Quantity} placeholder='Cantidad' type='number' variant="filled"/><br/>
-                <CardActions style={{ justifyContent: 'center' }}>
-                  <Button variant="outlined">
-                      <Input type="submit" onClick={handleClick} id={'submit_button'}>
-                                Submit
-                      </Input>
-                  </Button>
-                </CardActions>
-              </form>
-            </CardContent>
-          </div>
-        </Card>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="success">
-            Activo fijo creado
-          </Alert>
-        </Snackbar>
-
-        </Grid>
-      </Grid>
-    </Box>
-  )
+    function handle(e) {
+        const newData = { ...data }
+        newData[e.target.id] = e.target.value
+        setData(newData)
+        console.log(newData)
+    }
+    function handleClick() {
+        setOpen(true)
+    }
+    function handleClose(event, reason) {
+        if (reason === 'clickaway') {
+            return
+        }
+        setOpen(false)
+    }
+    function submit(e) {
+        e.preventDefault()
+        Axios.post(url, {
+            Name: data.Name,
+            Description: data.Description, // string
+            EntryDate: data.EntryDate, // dateTime
+            Price: data.Price, // decimal
+            Features: data.Features, // string
+            Quantity: data.Quantity // int
+        }).then((res) => {
+            if (res.status == 201) {
+                setOpen(true)
+            }
+            console.log(res.status)
+        })
+    }
+    return (
+        <Box
+            sx={{
+                '& .MuiTextField-root': { m: 1, width: '45ch' }
+            }}
+        >
+            <Grid
+                container
+                direction="column"
+                alignItems="center"
+                justify="center"
+                style={{ minHeight: '100vh' }}
+            >
+                <Grid item xs={3}>
+                    <Card sx={{ maxWidth: 450 }}>
+                        <div>
+                            <CardHeader
+                                style={{ textAlign: 'center' }}
+                                title="Crear activo fijo"
+                            />
+                            <CardContent>
+                                <form onSubmit={(e) => submit(e)}>
+                                    <TextField
+                                        required
+                                        onChange={(e) => handle(e)}
+                                        id="Name"
+                                        value={data.Name}
+                                        placeholder="Nombre"
+                                        type="text"
+                                        variant="filled"
+                                    />
+                                    <br />
+                                    <TextField
+                                        onChange={(e) => handle(e)}
+                                        id="Description"
+                                        value={data.Description}
+                                        placeholder="Descripción"
+                                        type="text"
+                                        variant="filled"
+                                    />
+                                    <br />
+                                    <TextField
+                                        required
+                                        onChange={(e) => handle(e)}
+                                        id="EntryDate"
+                                        value={data.EntryDate}
+                                        placeholder="Fecha de entrada"
+                                        type="date"
+                                        variant="filled"
+                                    />
+                                    <br />
+                                    <TextField
+                                        required
+                                        onChange={(e) => handle(e)}
+                                        id="Price"
+                                        value={data.Price}
+                                        placeholder="Precio"
+                                        type="number"
+                                        variant="filled"
+                                    />
+                                    <br />
+                                    <TextField
+                                        onChange={(e) => handle(e)}
+                                        id="Features"
+                                        value={data.Features}
+                                        placeholder="Características"
+                                        type="text"
+                                        variant="filled"
+                                    />
+                                    <br />
+                                    <TextField
+                                        required
+                                        onChange={(e) => handle(e)}
+                                        id="Quantity"
+                                        value={data.Quantity}
+                                        placeholder="Cantidad"
+                                        type="number"
+                                        variant="filled"
+                                    />
+                                    <br />
+                                    <CardActions
+                                        style={{ justifyContent: 'center' }}
+                                    >
+                                        <Button variant="outlined">
+                                            <Input
+                                                type="submit"
+                                                onClick={handleClick}
+                                                id={'submit_button'}
+                                            >
+                                                Submit
+                                            </Input>
+                                        </Button>
+                                    </CardActions>
+                                </form>
+                            </CardContent>
+                        </div>
+                    </Card>
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                    >
+                        <Alert onClose={handleClose} severity="success">
+                            Activo fijo creado
+                        </Alert>
+                    </Snackbar>
+                </Grid>
+            </Grid>
+        </Box>
+    )
 }
 
 export default CrearActivoFijoForm
