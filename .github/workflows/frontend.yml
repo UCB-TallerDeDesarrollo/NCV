@@ -14,9 +14,35 @@ jobs:
 
       - name: Install Dependencies with install
         run: npm install
-        
+
       - name: Install Dependencies with ci
         run: npm ci
+
+      - name: Install Eslint
+        run: npm install -g eslint
+
+      - name: Install Prettier
+        run: npm i -g prettier
+
+      - name: Run linters with errors
+
+        uses: wearerequired/lint-action@v2
+
+        with:
+          eslint: true
+
+          prettier: true
+
+          eslint_dir: src/
+
+          prettier_dir: src/
+
+          eslint_auto_fix: true
+
+          prettier_auto_fix: true
+
+      - name: Run ESLint
+        run: npm run lint
 
       - name: Unit Tests
         run: npm test -- --watchAll=false  --passWithNoTests
@@ -35,17 +61,17 @@ jobs:
     defaults:
       run:
         working-directory: ./web-ui
-        
+
     steps:
       - uses: actions/checkout@v2
-      - name: Install Dependencies 
+      - name: Install Dependencies
         run: npm install
-        
+
       - name: Preparing Build Directory
         run: npm run build
         env:
-         CI: false
-          
+          CI: false
+
       - name: Deployment on Firebase
         uses: w9jds/firebase-action@master
         with:
