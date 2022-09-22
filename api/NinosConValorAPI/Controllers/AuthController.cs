@@ -41,5 +41,24 @@ namespace NinosConValorAPI.Controllers
 
             return BadRequest("Some properties are not valid");
         }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("Role")]
+        public async Task<IActionResult> CreateRolenAsync([FromBody] CreateRoleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.CreateRoleAsync(model);
+
+                if (result.IsSuccess)
+                {
+                    return Ok(result);
+                }
+
+                return BadRequest(result);
+            }
+            return BadRequest("Some properties are not valid");
+        }
     }
 }
