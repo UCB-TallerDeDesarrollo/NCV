@@ -12,6 +12,7 @@ import ShowFilesForm from './ShowFilesForm'
 import LoginForm from './components/LoginForm'
 import ShowFixedAssets from './components/ShowFixedAssets'
 import DataHealth from './kidsFilesView/DataHealth'
+import { ShowFixedAsset } from './components/ShowOneFixedAsset'
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                     path="/activos-fijos"
                     element={<ShowFixedAssets />}
                 ></Route>
+                <Route path='/activos-fijos/:fixedAssetId' element={<ShowFixedAsset/>}></Route>
                 <Route path="/files-nenes" element={<ShowFilesForm />}></Route>
                 <Route path="/home-ncv" element={<HomePageForm />}></Route>
                 <Route
