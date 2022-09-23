@@ -1,7 +1,6 @@
-import Button from './components/Button'
-import CrearActivoFijoForm from './components/CrearActivoFijoForm'
-import ShowFilesForm from './ShowFilesForm'
-import Logo from './components/Logo'
+import Button from '../../Components/Button'
+
+import Logo from '../../Components/Logo'
 
 import './HomePage.css'
 

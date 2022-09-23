@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
-import CrearActivoFijoForm from './components/CrearActivoFijoForm'
+import CrearActivoFijoForm from './CrearActivoFijoForm'
 
 describe('Inputs del componente Crear Activo Fijo deben estar vacios al inicio', () => {
     it('No muestra ningun resultado al iniciar en el espacio Name', () => {

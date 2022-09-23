@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
-import imgNiñosConValor from '../img/logo-ncv.png'
+import imgNiñosConValor from '../Assets/img/logo-ncv.png'
+
 // El logo se encuentra en formato png, esta sin fondo
 const Logo = (props) => {
     return (
