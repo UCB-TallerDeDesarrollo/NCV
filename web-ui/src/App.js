@@ -26,7 +26,10 @@ function App() {
                     path="/activos-fijos"
                     element={<ShowFixedAssets />}
                 ></Route>
-                <Route path='/activos-fijos/:fixedAssetId' element={<ShowFixedAsset/>}></Route>
+                <Route
+                    path="/activos-fijos/:fixedAssetId"
+                    element={<ShowFixedAsset />}
+                ></Route>
                 <Route path="/files-nenes" element={<ShowFilesForm />}></Route>
                 <Route path="/home-ncv" element={<HomePageForm />}></Route>
                 <Route
