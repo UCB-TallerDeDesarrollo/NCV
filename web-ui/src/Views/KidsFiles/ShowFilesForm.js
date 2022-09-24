@@ -1,4 +1,4 @@
-import CardFileKid from './components/CardFileKid'
+import CardFileKid from '../../Components/CardFileKid'
 import { useState, useEffect } from 'react'
 import Button from '@mui/material/Button'
 

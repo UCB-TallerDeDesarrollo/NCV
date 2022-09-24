@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import InputText from './InputText'
-import '../styles.css'
+import InputText from '../../Components/InputText'
+import './styles.css'
 
 function LoginForm() {
     const [email, setEmail] = useState('')
