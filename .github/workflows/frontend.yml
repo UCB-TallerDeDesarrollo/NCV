@@ -16,6 +16,9 @@ jobs:
 
       - name: Install Dependencies with install
         run: npm install
+        
+      - name: Install Dependencies with ci
+        run: npm ci
 
       - name: Install Eslint
         run: npm install -g eslint
