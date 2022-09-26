@@ -13,8 +13,9 @@ const healtReport = {
 }
 
 function AddHealthReport() {
-    const url =
-        'https://ucb-tde-ninos-con-valor-api.herokuapp.com/api/kids/1/healthreports'
+    var id_url = window.location.pathname;
+    id_url = id_url[id_url.length - 1];
+    var url = "https://ncv-api.herokuapp.com/api/kids/" + id_url +"/healthreports"
 
     const [formReport, setformReport] = useState(healtReport)
 

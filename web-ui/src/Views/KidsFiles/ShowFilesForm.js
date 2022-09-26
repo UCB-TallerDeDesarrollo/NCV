@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Button from '@mui/material/Button'
 
 function ShowFilesForm() {
-    const [ListKids, setListKids] = useState([])
+    const [ListKids, setListKids] = useState([]) 
     const urlKids = 'https://ncv-api.herokuapp.com/api/kids'
 
     useEffect(() => {
@@ -16,14 +16,14 @@ function ShowFilesForm() {
 
     function VerFile(neneId) {
         const idnene = neneId
-        const url = 'https://ncv-api.herokuapp.com/api/kids/' + idnene
-        window.location.href = '/kidHealth'
+        const url = '/kidHealth/'+ idnene
+        window.location.href = url
     }
 
     function AddReport(neneId) {
         const idnene = neneId
-        const url = 'https://ncv-api.herokuapp.com/api/kids/' + idnene
-        window.location.href = '/add-reporte-nene'
+        const url = '/add-reporte-nene/' + idnene
+        window.location.href = url
     }
 
     return (
