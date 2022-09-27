@@ -29,8 +29,6 @@ function AddHealthReport() {
 
     function handleFormSubmit(event) {
         event.preventDefault()
-        console.log('Subiendo...')
-        console.log(formReport)
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -38,7 +36,8 @@ function AddHealthReport() {
         }
         fetch(url, requestOptions)
             .then((response) => response.json())
-            .then((res) => console.log(res))
+            .then((res) => console.log(res));
+        alert("Formulario subido!");
     }
 
     return (
