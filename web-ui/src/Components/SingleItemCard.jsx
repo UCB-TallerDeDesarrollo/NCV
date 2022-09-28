@@ -1,4 +1,5 @@
 /*START NEW SINGLE ITEM CARD HERE*/ 
+/*Creo que vamos a necesitar una lista, porque no todos tienen la misma cantidad de datos*/
 import React from 'react'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -8,43 +9,24 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Button from '@mui/material/Button'
 import CardContent from '@mui/material/CardContent'
 
-const CardFileKid = ({ KidName, KidCi, KidId }) => {
-    const renderFilterRequest = () => {
-        console.log('Mostrando opciones...')
-    }
-
-    const renderFilterRequest2 = (neneId) => {
-        console.log('dirigiendo al file den nene...')
-        console.log(neneId)
-    }
-
+const SingleItemCard = ({about}) => {
     return (
         <Card sx={{ maxWidth: 600 }}>
             <CardHeader
                 avatar={
                     <Avatar
-                        alt="Remy Sharp"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZozF3uHVVazFQwVYSx7rEUqac99eyQJq_3w&usqp=CAU"
+                        alt="Profile Picture"
+                        src="https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg"
                     />
                 }
-                action={
-                    <IconButton
-                        aria-label="settings"
-                        onClick={renderFilterRequest()}
-                    >
-                        <MoreVertIcon />
-                    </IconButton>
-                }
-                title={KidName}
-                subheader={KidCi}
+                title={about.Name}
+                subheader={about.description}
             />
             <CardContent>
-                <Button variant="text" onClick={renderFilterRequest2(KidId)}>
-                    Ver File
-                </Button>
+                /*AQUI LISTAR EL RESTO DE INFORMACION DEPENDE DE LA LISTA*/
             </CardContent>
         </Card>
     )
 }
 
-export default CardFileKid
+export default SingleItemCard
