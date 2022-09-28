@@ -38,7 +38,7 @@ namespace NinosConValorAPI.Services
             var fixedAsset = await _NCVRepository.GetFixedAssetAsync(fixedAssetId);
 
             if (fixedAsset == null)
-                throw new NotFoundElementException($"El Activo fijo con id:{fixedAssetId} no existe.");
+                throw new NotFoundElementException($"Fixed Asset with Id:{fixedAssetId} doesn't exist.");
 
             return _mapper.Map<FixedAssetModel>(fixedAsset);
         }
