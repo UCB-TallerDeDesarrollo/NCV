@@ -13,7 +13,7 @@ import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
 import { ShowFixedAsset } from './Views/FixedAssets/ShowOneFixedAsset'
 
 import AddHealthReport from './Views/KidsFiles/AddHealthReport'
-import ShowFilesForm from './Views/KidsFiles/ShowFilesForm'
+import ShowKidsFiles from './Views/KidsFiles/ShowKidsFiles'
 import DataHealth from './Views/KidsFiles/DataHealth'
 
 function App() {
@@ -35,7 +35,11 @@ function App() {
                     path="/activos-fijos/:fixedAssetId"
                     element={<ShowFixedAsset />}
                 ></Route>
-                <Route path="/files-nenes" element={<ShowFilesForm />}></Route>
+                <Route path="/files-nenes" element={<ShowKidsFiles />}></Route>
+                <Route
+                    path="/files-nenes/:kidId"
+                    element={<ShowFixedAsset />}
+                ></Route>
                 <Route
                     path="/add-reporte-nene"
                     element={<AddHealthReport />}
