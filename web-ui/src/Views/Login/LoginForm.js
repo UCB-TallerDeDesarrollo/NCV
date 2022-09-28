@@ -74,19 +74,22 @@ function LoginForm() {
                                             <h5 className="fw-normal mb-3 pb-3">
                                                 Ingresa con tu cuenta
                                             </h5>
-
-                                            <InputText
-                                                type="text"
-                                                id="input-text-email"
-                                                label="E-mail:"
-                                                onChange={handleEmailChange}
-                                            />
-                                            <InputText
-                                                type="password"
-                                                id="input-text-password"
-                                                label="Contraseña:"
-                                                onChange={handlePasswordChange}
-                                            />
+                                            <div className="form-outline mb-4">
+                                                <InputText
+                                                    type="text"
+                                                    id="input-text-email"
+                                                    label="E-mail"
+                                                    onChange={handleEmailChange}
+                                                />
+                                            </div>
+                                            <div className="form-outline mb-4">
+                                                <InputText
+                                                    type="password"
+                                                    id="input-text-password"
+                                                    label="Contraseña"
+                                                    onChange={handlePasswordChange}
+                                                />
+                                            </div>
                                             <div className="pt-1 mb-4">
                                                 <input
                                                     type="submit"
