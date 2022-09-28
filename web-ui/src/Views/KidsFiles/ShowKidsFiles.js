@@ -10,11 +10,17 @@ function ShowKidsFiles() {
             .then(setKidList);
     }, [])
     let kidsListComponent = null
+    const baseUrl ="/ninos"
     if (kidsList.length>0){
         const listElements = kidsList.map((el)=>{
-            return {id:el.id, title:`${el.firstName} ${el.lastName}`, description:el.ci}
+            return {
+                id:el.id, 
+                title:`${el.firstName} ${el.lastName}`, 
+                description:el.ci, 
+                elementUrl:`${baseUrl}/${el.id}`
+            }
         })
-        kidsListComponent = <ListBasic items={listElements} listUrl="/ninos" />
+        kidsListComponent = <ListBasic items={listElements} />
     }
     return (
         <div>
