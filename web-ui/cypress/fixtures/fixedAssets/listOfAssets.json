@@ -1,0 +1,47 @@
+[
+  {
+     "id":9,
+     "name":"Computadora2",
+     "description":"Computadora de escritorio",
+     "entryDate":"2022-10-16T20:00:00",
+     "price":100.58,
+     "features":"8Gb de RAM",
+     "quantity":5
+  },
+  {
+     "id":11,
+     "name":"Computadora3",
+     "description":"Computadora de escritorio",
+     "entryDate":"2020-11-12T20:00:00",
+     "price":100.58,
+     "features":"8Gb de RAM",
+     "quantity":5
+  },
+  {
+     "id":13,
+     "name":"Computadora",
+     "description":"Computadora de escritorio",
+     "entryDate":"2022-09-11T00:00:00",
+     "price":1000,
+     "features":"8 GB de ram",
+     "quantity":1
+  },
+  {
+     "id":14,
+     "name":"Monitor curvo",
+     "description":"Es curvo",
+     "entryDate":"2022-09-11T00:00:00",
+     "price":200,
+     "features":"Tiene un rayon",
+     "quantity":1
+  },
+  {
+     "id":15,
+     "name":"Teclado",
+     "description":"Es un teclado",
+     "entryDate":"2022-09-11T00:00:00",
+     "price":100,
+     "features":"Tiene RGB",
+     "quantity":1
+  }
+]
