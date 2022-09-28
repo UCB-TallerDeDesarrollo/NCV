@@ -1,4 +1,4 @@
-describe('Add fixed asset end to end tests', () => {
+describe('Add a fixed asset end to end tests', () => {
   it('Crea un activo fijo', () => {
     cy.visit('/crear-activo-fijo');
     cy.get('#Name').type('Teclado');
@@ -11,9 +11,10 @@ describe('Add fixed asset end to end tests', () => {
     cy.get('#submit_button').click();
 
     cy.clock();
-    cy.intercept('POST', 'https://ncv-api.herokuapp.com/api/fixedAssets').as(
-      'teclado',
-    );
-    cy.wait('@teclado').its('response.statusCode').should('equal', 201);
+    cy.intercept('POST', 'https://ncv-api.herokuapp.com/api/fixedAssets',{
+      fixture: 'fixedAssets/listOfAssets.json',
+      statusCode: 201
+    }).as('anAssetPost',);
+    cy.wait('@anAssetPost').its('response.statusCode').should('equal', 201);
   });
 });
