@@ -1,5 +1,15 @@
-describe('Show assets end to end tests', () => {
-  it('Muestra la lista de los activos fijos', () => {
+describe('Show a fixed asset end to end tests', () => {
+  it('Shows a single fixed asset', () => {
+    cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/fixedAssets/9',{
+      fixture: 'fixedAssets/anAsset.json'
+    }).as('getAnAsset',);
+
+    cy.visit('/activos-fijos/9');
+
+    cy.get('li')
+    .should('have.length', 1)
+  });
+  it('Verifies the fields from a single fixed asset', () => {
     cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/fixedAssets/9',{
       fixture: 'fixedAssets/anAsset.json'
     }).as('getAnAsset',);
