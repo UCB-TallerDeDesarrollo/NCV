@@ -9,7 +9,7 @@ import './HomePage.css'
 function HomePageForm() {
     /* Borrar cuando las vistas esten conectadas */
     const responsViewFile = () => {
-        window.location.href = '/files-nenes'
+        window.location.href = '/ninos'
     }
     const responsActivosFijos = () => {
         window.location.href = '/activos-fijos'
