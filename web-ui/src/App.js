@@ -35,10 +35,9 @@ function App() {
                     path="/activos-fijos/:fixedAssetId"
                     element={<ShowFixedAsset />}
                 ></Route>
-                <Route path="/files-nenes" element={<ShowKidsFiles />}></Route>
+                <Route path="/ninos" element={<ShowKidsFiles />}></Route>
                 <Route
-                    path="/files-nenes/:kidId"
-                    element={<ShowFixedAsset />}
+                    path="/ninos/:kidId"
                 ></Route>
                 <Route
                     path="/add-reporte-nene"
