@@ -1,19 +1,13 @@
 import React from 'react'
+import { TextField } from '@mui/material'
 
 function InputText(props) {
-    const { label, onChange, ...rest } = props
+    const { label, ...rest } = props
 
     return (
-        <div className="form-outline mb-4">
-            <label className="form-label" htmlFor={rest.id}>
-                {label}
-            </label>
-            <input
-                {...rest}
-                className="form-control form-control-lg"
-                onChange={onChange}
-            />
-        </div>
+        <>
+            <TextField label={label} variant="filled" {...rest} />
+        </>
     )
 }
 
