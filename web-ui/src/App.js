@@ -14,6 +14,7 @@ import { ShowFixedAsset } from './Views/FixedAssets/ShowOneFixedAsset'
 
 import AddHealthReport from './Views/KidsFiles/AddHealthReport'
 import ShowKidsFiles from './Views/KidsFiles/ShowKidsFiles'
+import {ShowOneKidFile} from './Views/KidsFiles/ShowOneKidFile'
 import DataHealth from './Views/KidsFiles/DataHealth'
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
                     path="/crear-activo-fijo"
                     element={<CrearActivoFijoForm />}
                 ></Route>
+
                 <Route
                     path="/activos-fijos"
                     element={<ShowFixedAssets />}
@@ -35,10 +37,9 @@ function App() {
                     path="/activos-fijos/:fixedAssetId"
                     element={<ShowFixedAsset />}
                 ></Route>
+
                 <Route path="/ninos" element={<ShowKidsFiles />}></Route>
-                <Route
-                    path="/ninos/:kidId"
-                ></Route>
+                <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
                 <Route
                     path="/add-reporte-nene"
                     element={<AddHealthReport />}
