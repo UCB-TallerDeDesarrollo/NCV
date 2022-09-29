@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 import ListElement from './ListElement';
 
-export default function BasicGrid({items, withImage=true}) {
+export default function ListGrid({items, withImage=true}) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={4}>

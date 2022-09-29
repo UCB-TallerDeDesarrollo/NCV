@@ -1,5 +1,5 @@
 import ListBasic from '../../Components/ListBasic'
-import BasicGrid from '../../Components/GridListKids'
+import ListGrid from '../../Components/ListGrid'
 import { useState, useEffect } from 'react'
 
 function ShowKidsFiles() {
@@ -21,7 +21,7 @@ function ShowKidsFiles() {
                 elementUrl:`${baseUrl}/${el.id}`
             }
         })
-        kidsListComponent = <BasicGrid items={listElements} />
+        kidsListComponent = <ListGrid items={listElements} />
     }
     return (
         <div>
