@@ -4,6 +4,7 @@ using NinosConValorAPI.Exceptions;
 using NinosConValorAPI.Models;
 using NinosConValorAPI.Services;
 using System.Security.Cryptography;
+using NinosConValorAPI.Exceptions;
 
 namespace NinosConValorAPI.Controllers
 {
@@ -55,6 +56,10 @@ namespace NinosConValorAPI.Controllers
             try
             {
                 return Ok (await _kidService.GetKidsAsync());
+            }
+            catch (BadRequestOperationException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
