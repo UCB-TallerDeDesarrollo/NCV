@@ -6,7 +6,7 @@
   },
   "extends": [
     "plugin:react/recommended",
-    "standard",
+    //"standard",
     "plugin:cypress/recommended",
     "eslint-config-prettier"
   ],
