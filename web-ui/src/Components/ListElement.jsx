@@ -11,7 +11,7 @@ export default function ListElement({id, title = "default title", description = 
     img = <ListItemAvatar>
       <Avatar alt="Remy Sharp" src={imgSrc}/>
     </ListItemAvatar>;
-  return <ListItemButton alignItems="flex-start" onClick={()=>navigate(elementUrl)}>
+  return <ListItemButton key={id} alignItems="flex-start" onClick={()=>navigate(elementUrl)}>
       {img}
     <ListItemText primary={title} secondary={description} />
   </ListItemButton>;
