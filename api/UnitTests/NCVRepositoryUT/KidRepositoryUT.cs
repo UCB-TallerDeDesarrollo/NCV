@@ -63,5 +63,30 @@ namespace UnitTests.NCVRepositoryUT
             // ASSERT
             Assert.True(result);
         }
+        [Fact]
+        public async Task GetKids_AddKidToEmptyDB_ReturnListOfKids()
+        {
+            // CREATE 1 KID
+            var repository = new NCVRepository(ctx);
+            var kid = new KidEntity()
+            {
+                Id = 1,
+                FirstName = "Manuel",
+                LastName = "Flores",
+                CI = "1234567",
+                BirthDate = new DateTime(2010, 9, 12),
+                ProgramHouse = "SDA",
+                BirthPlace = "Cochabamba",
+                Gender = "masculino"
+            };
+            repository.CreateKid(kid);
+            var result = await repository.SaveChangesAsync();
+
+            // NUMBER OF FIXED ASSETS
+            var listKids = await repository.GetKidsAsync();
+            var numberOfKids = listKids.Count();
+            Assert.Equal(1, numberOfKids);
+        }
+
     }
 }
