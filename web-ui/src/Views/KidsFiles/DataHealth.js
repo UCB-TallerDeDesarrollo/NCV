@@ -6,6 +6,8 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import { Button } from '@mui/material'
+import { useState, useEffect } from 'react'
 
 function createData(name, description) {
     return { name, description }
@@ -22,6 +24,25 @@ const rows = [
 ]
 
 export default function DataHealth() {
+
+    var id_url = window.location.pathname;
+    id_url = id_url[id_url.length - 1];
+    var url = "https://ncv-api.herokuapp.com/api/kids/" + id_url +"/healthreports"
+    const [HealtKid, setHealtKid] = useState("") 
+
+    useEffect(() => {
+        fetch(url)
+            .then((res) => res.json())
+            .then((result) => {
+                setHealtKid(result)
+            })
+    }, [])
+
+    function ShowReport() {
+        console.log(HealtKid);
+    }
+    
+
     const nameKid = 'Pedro'
     return (
         <div style={{ width: '100%' }}>
@@ -49,6 +70,12 @@ export default function DataHealth() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Button
+                                    variant="text"
+                                    onClick={(e) => ShowReport()}
+                                >
+                                    Reporte de Salud
+                                </Button> 
         </div>
     )
 }

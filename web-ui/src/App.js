@@ -37,14 +37,13 @@ function App() {
                     path="/activos-fijos/:fixedAssetId"
                     element={<ShowFixedAsset />}
                 ></Route>
-
                 <Route path="/ninos" element={<ShowKidsFiles />}></Route>
                 <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
                 <Route
-                    path="/add-reporte-nene"
+                    path="/add-reporte-nene/:id"
                     element={<AddHealthReport />}
                 ></Route>
-                <Route path="kidHealth" element={<DataHealth />} />
+                <Route path="/kidHealth/:id" element={<DataHealth />} /> 
                 <Route path="*" element={<Navigate replace to="/" />} />
             </Routes>
         </Router>
