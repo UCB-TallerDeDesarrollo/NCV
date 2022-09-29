@@ -57,9 +57,10 @@ export default function ShowFixedAssets() {
                     return (
                         <Grid
                             id="lista-activos-fijos"
+                            class="activos-fijos"
                             style={{ minHeight: '60vh' }}
                         >
-                            <Card sx={{ p: 2, maxWidth: 1300 }} key={asset.id}>
+                            <Card sx={{ p: 10, maxWidth: 1300 ,minWidth: 275 }} key={asset.id}>
                                 <Box sx={{ display: 'flex' }}>
                                     <CardHeader id="Name" title={asset.name} />
                                 </Box>
