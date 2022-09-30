@@ -44,6 +44,23 @@ namespace NinosConValorAPI.Controllers
 
 
 
+        [HttpPost("User")]
+        public async Task<IActionResult> RegisterAsync([FromBody] RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.RegisterUserAsync(model);
+
+                if (result.IsSuccess)
+                    return Ok(result); // Status Code: 200 
+
+                return BadRequest(result);
+            }
+
+            return BadRequest("Some properties are not valid"); // Status code: 400
+        }
+
+
         [Authorize(Roles = "Admin")]
         [HttpPost("Role")]
         public async Task<IActionResult> CreateRolenAsync([FromBody] CreateRoleViewModel model)
