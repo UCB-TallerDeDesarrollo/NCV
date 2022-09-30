@@ -30,6 +30,10 @@ namespace NinosConValorAPI.Services
         public async Task<IEnumerable<FixedAssetModel>> GetFixedAssetsAsync()
         {
             var fixedAssetEntityList = await _NCVRepository.GetFixedAssetsAsync();
+            
+            if (fixedAssetEntityList == null || fixedAssetEntityList.Any())
+                throw new NotFoundElementException($"La lista de Activos Fijos no existe o está vacía.");
+
             return _mapper.Map<IEnumerable<FixedAssetModel>>(fixedAssetEntityList);
         }
 
