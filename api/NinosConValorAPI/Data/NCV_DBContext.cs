@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using NinosConValorAPI.Data.Entity;
+using NinosConValorAPI.Models.Security;
 
 namespace NinosConValorAPI.Data
 {
-    public class NCV_DBContext:DbContext
+    public class NCV_DBContext: IdentityDbContext<IdentityAppUser>
     { 
         public DbSet<FixedAssetEntity> FixedAssets => Set<FixedAssetEntity>();
         public DbSet<KidEntity> Kids => Set<KidEntity>();
