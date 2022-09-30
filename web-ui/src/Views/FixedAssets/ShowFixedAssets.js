@@ -56,8 +56,8 @@ export default function ShowFixedAssets() {
                 {fixedAssets.map((asset) => {
                     return (
                         <Grid
-                            id="fixed-assets-list"
-                            class="fixed-assets"
+                            id="lista-activos-fijos"
+                            class="activos-fijos"
                             style={{ minHeight: '60vh' }}
                         >
                             <Card sx={{ p: 10, maxWidth: 1300 ,minWidth: 275 }} key={asset.id}>
