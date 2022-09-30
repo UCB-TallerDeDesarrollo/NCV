@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
-import CreateFixedAssetForm from './CrearActivoFijoForm'
+import CreateFixedAssetForm from './CreateFixedAssetForm'
 
 describe('Inputs from CreateFixedAsset component must be empty in the beginning', () => {
     it('Doesnt show any result in the beginning at the Name space', () => {
