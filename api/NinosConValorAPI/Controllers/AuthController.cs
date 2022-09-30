@@ -43,6 +43,7 @@ namespace NinosConValorAPI.Controllers
         }
 
 
+
         [Authorize(Roles = "Admin")]
         [HttpPost("Role")]
         public async Task<IActionResult> CreateRolenAsync([FromBody] CreateRoleViewModel model)

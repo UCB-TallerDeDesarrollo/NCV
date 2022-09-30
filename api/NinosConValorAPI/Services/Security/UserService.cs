@@ -88,7 +88,48 @@ namespace NinosConValorAPI.Services.Security
             };
         }
 
+        public async Task<UserManagerResponse> RegisterUserAsync(RegisterViewModel model)
+        {
+            if (model == null)
+            {
+                throw new NullReferenceException("model is null");
+            }
 
+            if (model.Password != model.ConfirmPassword)
+                return new UserManagerResponse
+                {
+                    Token = "Confirm password doesn't match the password",
+                    IsSuccess = false,
+                };
+
+            var identityUser = new IdentityAppUser
+            {
+                Email = model.Email,
+                UserName = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.CellPhone,
+                State = 1
+            };
+
+            var result = await userManager.CreateAsync(identityUser, model.Password);
+
+            if (result.Succeeded)
+            {
+                return new UserManagerResponse
+                {
+                    Token = "User created successfully!",
+                    IsSuccess = true,
+                };
+            }
+
+            return new UserManagerResponse
+            {
+                Token = "User did not create",
+                IsSuccess = false,
+                Errors = result.Errors.Select(e => e.Description)
+            };
+        }
 
         public async Task<UserManagerResponse> CreateRoleAsync(CreateRoleViewModel model)
         {
