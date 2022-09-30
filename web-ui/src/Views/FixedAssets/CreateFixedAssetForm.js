@@ -157,7 +157,7 @@ function CreateFixedAssetForm(props) {
                         onClose={handleClose}
                     >
                         <Alert onClose={handleClose} severity="success">
-                            Fixed Asset Created
+                            Activo Fijo Creado
                         </Alert>
                     </Snackbar>
                 </Grid>
