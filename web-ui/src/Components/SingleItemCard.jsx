@@ -5,6 +5,7 @@ import Card from '@mui/material/Card'
 import Box from '@mui/material/Box'
 import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
+import Grid from '@mui/material/Unstable_Grid2';
 
 
 const SingleItemCard = ({element}) => {
@@ -22,6 +23,7 @@ const SingleItemCard = ({element}) => {
 
     return(
         <div>
+            <Grid container direction="column" alignItems="center" justify="center" style={{ minHeight: '100vh' }}>
                 <Card sx={{ p: 5, maxWidth: 1300}}>
                         <Box sx={{ display: 'inline-block' }} >
                         <CardMedia
@@ -41,6 +43,7 @@ const SingleItemCard = ({element}) => {
                             </CardContent>
                         </Box>
                 </Card>
+            </Grid>
         </div>
     )
 }
