@@ -25,7 +25,7 @@ namespace NinosConValorAPI.Services
             
             if (result)
             {
-                if (fixedAsset == null || fixedAssetEntity == null)
+                if (fixedAssetEntity.Name == null || fixedAssetEntity.Price == null)
                 {
                     throw new NotFoundElementException($"Ocurrio un error al crear el Activo Fijo, faltan datos o paso algo inesperado.");
                 }

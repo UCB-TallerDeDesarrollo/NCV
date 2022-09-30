@@ -155,5 +155,22 @@ namespace UnitTests.ServiceUT
             var ex = Assert.ThrowsAsync<Exception>(async () => await fixedAssetService.CreateFixedAssetAsync(fixedAssetModel));
             Assert.Equal("Database Error", ex.Result.Message);
         }
+
+        [Fact]
+        public void CreateFixedAsset_ReturnsNotCreatedFixedAsset()
+        {
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
+            var mapper = config.CreateMapper();
+            var fixedAssetEntity = new FixedAssetEntity() { };
+            var fixedAssetModel = new FixedAssetModel() { };
+
+            var fixedAssetRepositoryMock = new Mock<INCVRepository>();
+            fixedAssetRepositoryMock.Setup(r => r.CreateFixedAsset(fixedAssetEntity));
+            fixedAssetRepositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(true);
+
+            var fixedAssetService = new FixedAssetService(fixedAssetRepositoryMock.Object, mapper);
+            var ex = Assert.ThrowsAsync<NotFoundElementException>(async () => await fixedAssetService.CreateFixedAssetAsync(fixedAssetModel));
+            Assert.Equal("Ocurrio un error al crear el Activo Fijo, faltan datos o paso algo inesperado.", ex.Result.Message);
+        }
     }
 }
