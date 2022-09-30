@@ -6,6 +6,9 @@ function LoginForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const [hasAnError, sethasAnError] = useState(false);
+    const [errors, setErrors] = useState([]);
+
     function handleEmailChange(event) {
         setEmail(event.target.value)
     }
@@ -20,10 +23,7 @@ function LoginForm() {
             email,
             password
         }
-        console.log('in login')
-        window.location.href = '/home-ncv'
-        /*
-        fetch("url_here", {
+        fetch("https://ncv-api.herokuapp.com/api/auth/Login", {
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
             },
@@ -34,18 +34,24 @@ function LoginForm() {
         .then((data) => {
             console.log(data);
             if(data.isSuccess) {
-                sessionStorage.setItem("jwt", data.token);
+                console.log('logging successfully')
+                // Seguridad por Java Web Token
+                // sessionStorage.setItem("jwt", data.token);
+                window.location.href = '/home-ncv'
 
             } else {
-                var errors = data.errors.join("\n") ?? ""
-                alert(data.token + errors);
+                if(data.error != null){
+                    setErrors(data.errors.append(data.token));
+                } else {
+                    setErrors([data.token]);
+                }                
+                sethasAnError(true);
             }
         })
         .catch((error) => {
             console.log(`Error: ${error}`);
             alert(error);
         })
-        */
     }
 
     return (
@@ -80,6 +86,8 @@ function LoginForm() {
                                                     id="input-text-email"
                                                     label="E-mail"
                                                     onChange={handleEmailChange}
+                                                    required
+                                                    error={hasAnError}
                                                 />
                                             </div>
                                             <div className="form-outline mb-4">
@@ -88,7 +96,12 @@ function LoginForm() {
                                                     id="input-text-password"
                                                     label="Contraseña"
                                                     onChange={handlePasswordChange}
+                                                    required
+                                                    error={hasAnError}
                                                 />
+                                            </div>
+                                            <div>
+                                                {hasAnError && <p style={{color: "red"}}> Usuario y/o Contraseña no validos</p>}
                                             </div>
                                             <div className="pt-1 mb-4">
                                                 <input
