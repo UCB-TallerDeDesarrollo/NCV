@@ -19,10 +19,12 @@ function LoginForm() {
 
     function handleLoginForm(event) {
         event.preventDefault()
-        const user = {
+        window.location.href = '/home-ncv'
+        /*const user = {
             email,
             password
         }
+        
         fetch("https://ncv-api.herokuapp.com/api/auth/Login", {
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
@@ -37,7 +39,6 @@ function LoginForm() {
                 console.log('logging successfully')
                 // Seguridad por Java Web Token
                 // sessionStorage.setItem("jwt", data.token);
-                window.location.href = '/home-ncv'
 
             } else {
                 if(data.error != null){
@@ -51,7 +52,7 @@ function LoginForm() {
         .catch((error) => {
             console.log(`Error: ${error}`);
             alert(error);
-        })
+        })*/
     }
 
     return (
@@ -86,7 +87,7 @@ function LoginForm() {
                                                     id="input-text-email"
                                                     label="E-mail"
                                                     onChange={handleEmailChange}
-                                                    required
+                                                    //required
                                                     error={hasAnError}
                                                 />
                                             </div>
@@ -96,7 +97,7 @@ function LoginForm() {
                                                     id="input-text-password"
                                                     label="Contraseña"
                                                     onChange={handlePasswordChange}
-                                                    required
+                                                    //required
                                                     error={hasAnError}
                                                 />
                                             </div>
