@@ -17,7 +17,7 @@ namespace UnitTests.ServiceUT
     public class FixedAssetServiceUT
     {
         [Fact]
-        public async Task CreateFixesAsset_AddFixedAsset_ReturnsAddedFixedAsset()
+        public async Task CreateFixedAsset_ReturnsAddedFixedAsset()
         {
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
             var mapper = config.CreateMapper();
@@ -137,6 +137,23 @@ namespace UnitTests.ServiceUT
             var fixedAssetService = new FixedAssetService(fixedAssetRepositoryMock.Object, mapper);
             var ex = Assert.ThrowsAsync<NotFoundElementException>(async () => await fixedAssetService.GetFixedAssetsAsync());
             Assert.Equal("La lista de Activos Fijos no existe o está vacía.", ex.Result.Message);
+        }
+
+        [Fact]
+        public void CreateFixedAsset_ReturnsDataBaseErrorCreatingFixedAsset()
+        {
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
+            var mapper = config.CreateMapper();
+            var fixedAssetEntity = new FixedAssetEntity() { };
+            var fixedAssetModel = new FixedAssetModel() { };
+
+            var fixedAssetRepositoryMock = new Mock<INCVRepository>();
+            fixedAssetRepositoryMock.Setup(r => r.CreateFixedAsset(fixedAssetEntity));
+            fixedAssetRepositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(false);
+
+            var fixedAssetService = new FixedAssetService(fixedAssetRepositoryMock.Object, mapper);
+            var ex = Assert.ThrowsAsync<Exception>(async () => await fixedAssetService.CreateFixedAssetAsync(fixedAssetModel));
+            Assert.Equal("Database Error", ex.Result.Message);
         }
     }
 }
