@@ -23,7 +23,7 @@ import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 
 function CreateUser() {
-    const url = 'https://ncv-api.herokuapp.com/api/auth'
+    const url = 'https://ncv-api.herokuapp.com/api/auth/User'
     const [open, setOpen] = useState(false)
     const [data, setData] = useState({
         FirstName: '',
