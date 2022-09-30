@@ -12,7 +12,7 @@ import Input from '@mui/material/Input'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 
-function CrearActivoFijoForm(props) {
+function CreateFixedAssetForm(props) {
     const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
     const [open, setOpen] = useState(false)
     const [data, setData] = useState({
@@ -72,7 +72,7 @@ function CrearActivoFijoForm(props) {
                         <div>
                             <CardHeader
                                 style={{ textAlign: 'center' }}
-                                title="Crear activo fijo"
+                                title="Create Fixed Asset"
                             />
                             <CardContent>
                                 <form onSubmit={(e) => submit(e)}>
@@ -81,7 +81,7 @@ function CrearActivoFijoForm(props) {
                                         onChange={(e) => handle(e)}
                                         id="Name"
                                         value={data.Name}
-                                        placeholder="Nombre"
+                                        placeholder="Name"
                                         type="text"
                                         variant="filled"
                                     />
@@ -90,7 +90,7 @@ function CrearActivoFijoForm(props) {
                                         onChange={(e) => handle(e)}
                                         id="Description"
                                         value={data.Description}
-                                        placeholder="Descripción"
+                                        placeholder="Description"
                                         type="text"
                                         variant="filled"
                                     />
@@ -100,7 +100,7 @@ function CrearActivoFijoForm(props) {
                                         onChange={(e) => handle(e)}
                                         id="EntryDate"
                                         value={data.EntryDate}
-                                        placeholder="Fecha de entrada"
+                                        placeholder="EntryDate"
                                         type="date"
                                         variant="filled"
                                     />
@@ -110,7 +110,7 @@ function CrearActivoFijoForm(props) {
                                         onChange={(e) => handle(e)}
                                         id="Price"
                                         value={data.Price}
-                                        placeholder="Precio"
+                                        placeholder="Price"
                                         type="number"
                                         variant="filled"
                                     />
@@ -119,7 +119,7 @@ function CrearActivoFijoForm(props) {
                                         onChange={(e) => handle(e)}
                                         id="Features"
                                         value={data.Features}
-                                        placeholder="Características"
+                                        placeholder="Features"
                                         type="text"
                                         variant="filled"
                                     />
@@ -129,7 +129,7 @@ function CrearActivoFijoForm(props) {
                                         onChange={(e) => handle(e)}
                                         id="Quantity"
                                         value={data.Quantity}
-                                        placeholder="Cantidad"
+                                        placeholder="Quantity"
                                         type="number"
                                         variant="filled"
                                     />
@@ -157,7 +157,7 @@ function CrearActivoFijoForm(props) {
                         onClose={handleClose}
                     >
                         <Alert onClose={handleClose} severity="success">
-                            Activo fijo creado
+                            Activo Fijo Creado
                         </Alert>
                     </Snackbar>
                 </Grid>
@@ -166,4 +166,4 @@ function CrearActivoFijoForm(props) {
     )
 }
 
-export default CrearActivoFijoForm
+export default CreateFixedAssetForm
