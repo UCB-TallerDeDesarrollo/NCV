@@ -24,7 +24,7 @@ namespace NinosConValorAPI.Services
             {
                 return _mapper.Map<FixedAssetModel>(fixedAssetEntity);
             }
-            throw new Exception("Database Error");
+            throw new Exception("Error en la Base de Datos.");
         }
 
         public async Task<IEnumerable<FixedAssetModel>> GetFixedAssetsAsync()
@@ -38,7 +38,7 @@ namespace NinosConValorAPI.Services
             var fixedAsset = await _NCVRepository.GetFixedAssetAsync(fixedAssetId);
 
             if (fixedAsset == null)
-                throw new NotFoundElementException($"Fixed Asset with Id:{fixedAssetId} doesn't exist.");
+                throw new NotFoundElementException($"El activo fijo con Id:{fixedAssetId} no existe.");
 
             return _mapper.Map<FixedAssetModel>(fixedAsset);
         }
