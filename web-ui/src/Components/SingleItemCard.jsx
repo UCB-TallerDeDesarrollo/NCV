@@ -23,8 +23,8 @@ const SingleItemCard = ({element}) => {
 
     return(
         <div>
-            <Grid container direction="column" alignItems="center" justify="center" style={{ minHeight: '100vh' }}>
-                <Card sx={{ p: 5, maxWidth: 1300}}>
+            <Grid container direction="column" alignItems="center" justify="center" style={{ minHeight: '100vh'}}>
+                <Card sx={{ p: 5, maxWidth: 1300, m:5}}>
                         <Box sx={{ display: 'inline-block' }} >
                         <CardMedia
                             component="img"
