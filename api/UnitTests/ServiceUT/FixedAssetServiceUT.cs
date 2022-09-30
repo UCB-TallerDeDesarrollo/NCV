@@ -124,5 +124,19 @@ namespace UnitTests.ServiceUT
             var ex = Assert.ThrowsAsync<NotFoundElementException>(async () => await fixedAssetService.GetFixedAssetAsync(2));
             Assert.Equal("Fixed Asset with Id:2 doesn't exist.", ex.Result.Message);
         }
+
+        [Fact]
+        public void GetFixedAssets_ReturnNotFoundFixedAssets()
+        {
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
+            var mapper = config.CreateMapper();
+            var enumerable = new List<FixedAssetEntity>() { } as IEnumerable<FixedAssetEntity>;
+            var fixedAssetRepositoryMock = new Mock<INCVRepository>();
+            fixedAssetRepositoryMock.Setup(r => r.GetFixedAssetsAsync()).ReturnsAsync(enumerable);
+
+            var fixedAssetService = new FixedAssetService(fixedAssetRepositoryMock.Object, mapper);
+            var ex = Assert.ThrowsAsync<NotFoundElementException>(async () => await fixedAssetService.GetFixedAssetsAsync());
+            Assert.Equal("La lista de Activos Fijos no existe o está vacía.", ex.Result.Message);
+        }
     }
 }
