@@ -20,10 +20,20 @@ const SingleItemCard = ({element, displayed}) => {
         }
       } 
 
+    var hiddenCard = 'inline-block';
+    var hiddenImage = 'inline-block';
+
+    if(displayed == "reportHealth"){
+        hiddenImage = 'none';
+    }
+    if(displayed == "emptyReport"){
+        hiddenCard = 'none';
+    }
+
     return(
         <div>
-                <Card sx={{ p: 5, maxWidth: 1300, display: {displayed}}}>
-                        <Box sx={{ display: 'inline-block' }} >
+                <Card sx={{ p: 5, maxWidth: 1300, display: hiddenCard}}>
+                        <Box sx={{ display: hiddenImage }} >
                         <CardMedia
                             component="img"
                             image={ imageUrl}

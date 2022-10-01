@@ -64,9 +64,7 @@ function ShowOneKidFile() {
             action: responsViewFormHelthReport,
             displey: 'hidden'
         }
-        hiddenElement = "none";
-        console.log("Estoy Aca");
-        console.log(hiddenElement);
+        hiddenElement = "emptyReport";
     }
 
     var MyKidHealthReportDetails = {
@@ -80,7 +78,7 @@ function ShowOneKidFile() {
 
     return (
         <div>
-            <SingleItemCard element={MyKidDetails} displayed="block"/>  
+            <SingleItemCard element={MyKidDetails} displayed="BasicCard"/>  
             <SingleItemCard element={MyKidHealthReportDetails} displayed={hiddenElement} /> 
             <BoxWithButton about={aboutButton}/>
         </div>
