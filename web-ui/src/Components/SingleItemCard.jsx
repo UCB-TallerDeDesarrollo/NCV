@@ -1,15 +1,13 @@
-/*START NEW SINGLE ITEM CARD HERE*/ 
-/*Creo que vamos a necesitar una lista, porque no todos tienen la misma cantidad de datos*/
 import React from 'react'
 import Card from '@mui/material/Card'
 import Box from '@mui/material/Box'
 import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2';
-
+import Avatar from '@mui/material/Avatar';
 
 const SingleItemCard = ({element}) => {
-    let imageUrl = "https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg"
+    let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
     let detailsElement = []
       for (const prop in element ){
         if (prop != "id" ){
@@ -29,8 +27,10 @@ const SingleItemCard = ({element}) => {
                         <CardMedia
                             component="img"
                             image={ imageUrl}
-                            sx={{ width: 400 }}
-                        ></CardMedia>
+                            direction="column" justifyContent="center"
+                            sx={{ width: 400, height:400, borderRadius:50}}
+                        >
+                        </CardMedia>
                         </Box>
                         <Box
                             sx={{
