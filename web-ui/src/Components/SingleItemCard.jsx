@@ -7,7 +7,7 @@ import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 
 
-const SingleItemCard = ({element}) => {
+const SingleItemCard = ({element, displayed}) => {
     let imageUrl = "https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg"
     let detailsElement = []
       for (const prop in element ){
@@ -22,7 +22,7 @@ const SingleItemCard = ({element}) => {
 
     return(
         <div>
-                <Card sx={{ p: 5, maxWidth: 1300}}>
+                <Card sx={{ p: 5, maxWidth: 1300, display: {displayed}}}>
                         <Box sx={{ display: 'inline-block' }} >
                         <CardMedia
                             component="img"
