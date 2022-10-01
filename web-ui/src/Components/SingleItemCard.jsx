@@ -1,14 +1,12 @@
-/*START NEW SINGLE ITEM CARD HERE*/ 
-/*Creo que vamos a necesitar una lista, porque no todos tienen la misma cantidad de datos*/
 import React from 'react'
 import Card from '@mui/material/Card'
 import Box from '@mui/material/Box'
 import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
+import Grid from '@mui/material/Unstable_Grid2';
+import { minWidth } from '@mui/system'
 
-
-const SingleItemCard = ({element}) => {
-    let imageUrl = "https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg"
+const SingleItemCard = ({title , element, imageUrl = "none"}) => {
     let detailsElement = []
       for (const prop in element ){
         if (prop != "id" ){
@@ -18,31 +16,64 @@ const SingleItemCard = ({element}) => {
                 </div>
             )
         }
-      } 
+      }
+    let contentCard = []
+    if (imageUrl != "none"){
+        contentCard.push( <div>
+            <CardMedia
+                component="img"
+                image={ imageUrl}
+                direction="column" justifyContent="center"
+                sx={{ width: {xs:250, sm:400}, height:{xs:250, sm:400}, borderRadius:50}}
+            >
+            </CardMedia>
+        </div>)
+        contentCard.push( <div>
+            <CardContent>
+                {detailsElement}
+            </CardContent>
+        </div>)
+
+    }else{
+        if(detailsElement.length %2 != 0 ){
+            detailsElement.push(
+                <div>
+                    <h4></h4><br></br>
+                </div>
+            )
+            contentCard.push( <div>
+                <h2>{title}</h2><br></br>
+                <CardContent>
+                    {detailsElement.slice(0, detailsElement.length/2  )}
+                </CardContent>
+            </div>)
+            contentCard.push( <div>
+                <CardContent>
+                    {detailsElement.slice(detailsElement.length/2, detailsElement.length )}
+                </CardContent>
+            </div>)
+
+        }
+
+    }
 
     return(
         <div>
-                <Card sx={{ p: 5, maxWidth: 1300}}>
-                        <Box sx={{ display: 'inline-block' }} >
-                        <CardMedia
-                            component="img"
-                            image={ imageUrl}
-                            sx={{ width: 400 }}
-                        ></CardMedia>
-                        </Box>
-                        <Box
-                            sx={{
-                                display: 'inline-block',
-                                right: '30%'
-                            }}
-                        >
-                            <CardContent>
-                                {detailsElement}
-                            </CardContent>
-                        </Box>
+            <Grid container direction="column" alignItems="center" justify="center" >
+                <Card sx={{ p: 5, maxWidth: 1000, m:2, minWidth:{md:1000}}}>
+                    <Box sx={{ display: 'inline-block' , width: 450 }} >
+                        {contentCard[0]}
+                    </Box>
+
+                    <Box sx={{ display: 'inline-block', right: '30%', width: 450}}>
+                        {contentCard[1]}
+                    </Box>
                 </Card>
+            </Grid>
         </div>
     )
+
+    
 }
 
 export default SingleItemCard

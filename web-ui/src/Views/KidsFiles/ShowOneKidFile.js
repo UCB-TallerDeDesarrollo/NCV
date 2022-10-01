@@ -7,6 +7,7 @@ function ShowOneKidFile() {
     const { kidId } = useParams()
     const [kid, setKid] = useState([])
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
+
     
     useEffect(() => {
         fetch(urlKid)
@@ -26,8 +27,13 @@ function ShowOneKidFile() {
         "Lugar de Nacimiento ": kid.birthPlace,
         "Género ": kid.gender
     };
+    let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
+    let title = "Datos Personales"
     return (
-        <SingleItemCard element={MyKidDetails}/>  
+        <div>
+            <SingleItemCard element={MyKidDetails} title={title} imageUrl={imageUrl} />
+            <SingleItemCard element={MyKidDetails} title={title}/>
+        </div>
     )
 }
 export {ShowOneKidFile}
