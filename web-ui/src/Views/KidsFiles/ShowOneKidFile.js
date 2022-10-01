@@ -31,6 +31,7 @@ function ShowOneKidFile() {
             sethealthKid(res.json());
         }
     }
+
     
     useEffect(() => {
         fetch(urlKid)
@@ -76,12 +77,14 @@ function ShowOneKidFile() {
         "Problemas de salud" : healthKid.healthProblems ,
     }
 
+    let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
+    let title = "Datos Personales"
+
     return (
         <div>
-            <SingleItemCard element={MyKidDetails} displayed="BasicCard"/>  
-            <SingleItemCard element={MyKidHealthReportDetails} displayed={hiddenElement} /> 
+            <SingleItemCard element={MyKidDetails} title={title} imageUrl={imageUrl} displayed="BasicCard"/>  
+            <SingleItemCard element={MyKidHealthReportDetails} title={title} displayed={hiddenElement} /> 
             <BoxWithButton about={aboutButton}/>
         </div>
-    )
-}
+    )}
 export {ShowOneKidFile}
