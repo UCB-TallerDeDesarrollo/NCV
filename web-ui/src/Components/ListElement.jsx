@@ -11,8 +11,12 @@ export default function ListElement({id, title = "default title", description = 
     img = <ListItemAvatar>
       <Avatar alt="Remy Sharp" src={imgSrc}/>
     </ListItemAvatar>;
-  return <ListItemButton key={id} alignItems="flex-start" onClick={()=>navigate(elementUrl)}>
+  return <ListItemButton sx={{borderTop: 1, borderColor:'#CDCDCD', margin:0}} key={id} alignItems="flex-start" onClick={()=>navigate(elementUrl)}>
       {img}
-    <ListItemText primary={title} secondary={description} />
+    <ListItemText primary={title} secondary={description} className="ListElement" sx={{
+    '& .MuiListItemText-primary': {
+      fontSize: 18,
+    },
+  }}/>
   </ListItemButton>;
 }
