@@ -4,8 +4,8 @@ import Avatar from '@mui/material/Avatar';
 import { ListItemButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-export default function ListElement({id, title = "default title", description = "default description", imgSrc = "", elementUrl = "", withImage=true}){
-  const navigate = useNavigate()
+export default function ListElement({id=0, title = "default title", description = "default description", imgSrc = "", elementUrl = "", withImage=true}){
+  const navigate = useNavigate();
   let img = null;
   if (withImage)
     img = <ListItemAvatar>
