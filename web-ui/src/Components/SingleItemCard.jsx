@@ -6,8 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2';
 import Avatar from '@mui/material/Avatar';
 
-const SingleItemCard = ({element}) => {
-    let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
+const SingleItemCard = ({title , element, imageUrl = "none"}) => {
     let detailsElement = []
       for (const prop in element ){
         if (prop != "id" ){
@@ -17,35 +16,68 @@ const SingleItemCard = ({element}) => {
                 </div>
             )
         }
-      } 
+      }
 
-    return(
-        <div>
-            <Grid container direction="column" alignItems="center" justify="center" style={{ minHeight: '100vh'}}>
-                <Card sx={{ p: 5, maxWidth: 1300, m:5}}>
-                        <Box sx={{ display: 'inline-block' }} >
-                        <CardMedia
-                            component="img"
-                            image={ imageUrl}
-                            direction="column" justifyContent="center"
-                            sx={{ width: 400, height:400, borderRadius:50}}
-                        >
-                        </CardMedia>
-                        </Box>
-                        <Box
-                            sx={{
-                                display: 'inline-block',
-                                right: '30%'
-                            }}
-                        >
-                            <CardContent>
-                                {detailsElement}
-                            </CardContent>
-                        </Box>
-                </Card>
-            </Grid>
-        </div>
-    )
+    if (imageUrl != "none"){
+        return(
+                <div>
+                    <Grid container direction="column" alignItems="center" justify="center" style={{ minHeight: '100vh'}}>
+                        <Card sx={{ p: 5, maxWidth: 1300, m:5}}>
+                                <Box sx={{ display: 'inline-block' }} >
+                                <CardMedia
+                                    component="img"
+                                    image={ imageUrl}
+                                    direction="column" justifyContent="center"
+                                    sx={{ width: 400, height:400, borderRadius:50}}
+                                >
+                                </CardMedia>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        display: 'inline-block',
+                                        right: '30%'
+                                    }}
+                                >
+                                    <CardContent>
+                                        {detailsElement}
+                                    </CardContent>
+                                </Box>
+                        </Card>
+                    </Grid>
+                </div>
+            )
+    }else{
+        return(
+            <div>
+                <Grid container spacing={5} direction="column" alignItems="center" justify="center" style={{ minHeight: '100vh'}} >
+                    <Card sx={{p: 5 , maxWidth: 1300}}>
+                    <h1> {title} </h1>
+                            <Box
+                                sx={{
+                                    display: 'inline-block',
+                                    right: '30%'
+                                }}
+                            >
+                                <CardContent>
+                                    {detailsElement.slice(0, detailsElement.length/2 )}
+                                </CardContent>
+                            </Box>
+
+                            <Box
+                                sx={{
+                                    display: 'inline-block',
+                                    right: '30%'
+                                }}
+                            >
+                                <CardContent>
+                                    {detailsElement.slice(detailsElement.length/2  , detailsElement.length )}
+                                </CardContent>
+                            </Box>
+                    </Card>
+                </Grid>
+            </div>
+        )
+    }
 }
 
 export default SingleItemCard
