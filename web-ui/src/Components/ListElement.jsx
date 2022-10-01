@@ -16,6 +16,7 @@ export default function ListElement({id=0, title = "default title", description 
   let img = null;
   if (withImage)
     img = <ListItemAvatar> <Avatar alt="Remy Sharp" src={imgSrc}/> </ListItemAvatar>;
+  
   return <ListItemButton sx={{borderTop: 1, borderColor:'#CDCDCD', margin:0}} key={id} alignItems="flex-start" onClick={()=>navigate(elementUrl)}>
       {img}
     <ListItemText primary={title} secondary={description} className="ListElement" sx={sxListItemText}/>
