@@ -8,7 +8,7 @@ import {
 import HomePageForm from './Views/HomePage/HomePageForm'
 import LoginForm from './Views/Login/LoginForm'
 
-import CrearActivoFijoForm from './Views/FixedAssets/CrearActivoFijoForm'
+import CreateFixedAssetForm from './Views/FixedAssets/CreateFixedAssetForm'
 import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
 import { ShowFixedAsset } from './Views/FixedAssets/ShowOneFixedAsset'
 
@@ -26,7 +26,7 @@ function App() {
                 <Route path="/home-ncv" element={<HomePageForm />}></Route>
                 <Route
                     path="/crear-activo-fijo"
-                    element={<CrearActivoFijoForm />}
+                    element={<CreateFixedAssetForm />}
                 ></Route>
 
                 <Route
