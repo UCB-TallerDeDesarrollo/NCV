@@ -18,7 +18,7 @@ namespace UnitTests.ControllersUT
     public class FixedAssetControllerUT
     {
         [Fact]
-        public async Task CreateFixesAsset_AddFixedAsset_ReturnsAddedFixedAsset()
+        public async Task CreateFixedAsset_AddFixedAsset_ReturnsAddedFixedAsset()
         {
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
             var mapper = config.CreateMapper();
