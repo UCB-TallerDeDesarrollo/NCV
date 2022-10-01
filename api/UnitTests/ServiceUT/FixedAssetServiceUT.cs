@@ -122,7 +122,7 @@ namespace UnitTests.ServiceUT
 
             var fixedAssetService = new FixedAssetService(fixedAssetRepositoryMock.Object, mapper);
             var ex = Assert.ThrowsAsync<NotFoundElementException>(async () => await fixedAssetService.GetFixedAssetAsync(2));
-            Assert.Equal("Fixed Asset with Id:2 doesn't exist.", ex.Result.Message);
+            Assert.Equal("El activo fijo con Id:2 no existe.", ex.Result.Message);
         }
 
         [Fact]
@@ -153,7 +153,7 @@ namespace UnitTests.ServiceUT
 
             var fixedAssetService = new FixedAssetService(fixedAssetRepositoryMock.Object, mapper);
             var ex = Assert.ThrowsAsync<Exception>(async () => await fixedAssetService.CreateFixedAssetAsync(fixedAssetModel));
-            Assert.Equal("Database Error", ex.Result.Message);
+            Assert.Equal("Error en la base de datos.", ex.Result.Message);
         }
 
         [Fact]
