@@ -21,7 +21,8 @@ function ShowKidsFiles() {
                 id:el.id, 
                 title:`${el.firstName} ${el.lastName}`, 
                 description:`CI: ${el.ci}`, 
-                elementUrl:`${baseUrl}/${el.id}`
+                elementUrl:`${baseUrl}/${el.id}`,
+                //imgSrc:`https://storage.needpix.com/rsynced_images/child-3003305_1280.jpg`
             }
         })
         kidsListComponent = <ListGrid items={listElements} />
