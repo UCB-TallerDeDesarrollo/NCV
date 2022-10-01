@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import axios from 'axios'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -8,23 +7,17 @@ import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
-
+import getFromApi from '../../Components/GetFromApi'
+import ErrorPage from '../../Components/ErrorPage'
 export function ShowFixedAsset() {
     const { fixedAssetId } = useParams()
-    const [fixedAsset, setFixedAsset] = React.useState(null)
-    useEffect(() => {
-        axios
-            .get(
-                `https://ncv-api.herokuapp.com/api/fixedAssets/${fixedAssetId}`
-            )
-            .then((response) => {
-                setFixedAsset(response.data)
-                console.log(response.data)
-            })
-    }, [])
+    const [url, setSomeUrl] = useState(`https://ncv-api.herokuapp.com/api/fixedAssets/${fixedAssetId}`)
+    const { apiData:fixedAsset, error } = getFromApi(url)
 
+    if(error){
+        return ErrorPage(error)
+    }
     if (!fixedAsset) return null
-
     return (
         <div>
             <AppBar position="static">

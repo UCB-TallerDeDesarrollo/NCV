@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 const axios = require('axios').default
 
-export default function GetFromApi(url){
+export default function getFromApi(url){
   const [apiData, setApiData] = useState(null);
   const [error, setError] = useState(null);
   useEffect(() => {
