@@ -17,58 +17,43 @@ const SingleItemCard = ({title , element, imageUrl = "none"}) => {
             )
         }
       }
-    let contentCard = <div></div>
+    let contentCard = []
     if (imageUrl != "none"){
-        contentCard= <div>
-            <Box sx={{ display: 'inline-block' , width: 450 }} >
-                                <CardMedia
-                                    component="img"
-                                    image={ imageUrl}
-                                    direction="column" justifyContent="center"
-                                    sx={{ width: {xs:250, sm:400}, height:{xs:250, sm:400}, borderRadius:50}}
-                                >
-                                </CardMedia>
-                                </Box>
-                                <Box
-                                    sx={{
-                                        display: 'inline-block',
-                                        right: '30%',
-                                        width: 450
-                                    }}
-                                >
-                                    <CardContent>
-                                        {detailsElement}
-                                    </CardContent>
-                                </Box>
-        </div>
-    }else{
-        contentCard = <div>
-            <h1> {title} </h1><br></br>
-                            <Box
-                                sx={{
-                                    display: 'inline-block',
-                                    right: '30%',
-                                    width: 450
-                                }}
-                            >
-                                <CardContent>
-                                    {detailsElement.slice(0, detailsElement.length/2  + 1)}
-                                </CardContent>
-                            </Box>
+        contentCard.push( <div>
+            <CardMedia
+                component="img"
+                image={ imageUrl}
+                direction="column" justifyContent="center"
+                sx={{ width: {xs:250, sm:400}, height:{xs:250, sm:400}, borderRadius:50}}
+            >
+            </CardMedia>
+        </div>)
+        contentCard.push( <div>
+            <CardContent>
+                {detailsElement}
+            </CardContent>
+        </div>)
 
-                            <Box
-                                sx={{
-                                    display: 'inline-block',
-                                    right: '30%',
-                                    width: 450,
-                                    
-                                }}
-                            >
-                                <CardContent>
-                                    {detailsElement.slice(detailsElement.length/2  + 1, detailsElement.length )}
-                                </CardContent>
-                            </Box>
-        </div>
+    }else{
+        if(detailsElement.length %2 != 0 ){
+            detailsElement.push(
+                <div>
+                    <h4></h4><br></br>
+                </div>
+            )
+            contentCard.push( <div>
+                <h2>{title}</h2><br></br>
+                <CardContent>
+                    {detailsElement.slice(0, detailsElement.length/2  )}
+                </CardContent>
+            </div>)
+            contentCard.push( <div>
+                <CardContent>
+                    {detailsElement.slice(detailsElement.length/2, detailsElement.length )}
+                </CardContent>
+            </div>)
+
+        }
 
     }
 
@@ -76,7 +61,13 @@ const SingleItemCard = ({title , element, imageUrl = "none"}) => {
         <div>
             <Grid container direction="column" alignItems="center" justify="center" >
                 <Card sx={{ p: 5, maxWidth: 1000, m:2, minWidth:{md:1000}}}>
-                        {contentCard}
+                    <Box sx={{ display: 'inline-block' , width: 450 }} >
+                        {contentCard[0]}
+                    </Box>
+
+                    <Box sx={{ display: 'inline-block', right: '30%', width: 450}}>
+                        {contentCard[1]}
+                    </Box>
                 </Card>
             </Grid>
         </div>
