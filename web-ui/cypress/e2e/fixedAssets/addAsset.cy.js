@@ -1,5 +1,5 @@
 describe('Add a fixed asset end to end tests', () => {
-  it('Crea un activo fijo', () => {
+  it('Creates a fixed asset', () => {
     cy.visit('/crear-activo-fijo');
     cy.get('#Name').type('Teclado');
     cy.get('#Description').type('Es un teclado desde la prueba');
