@@ -81,7 +81,7 @@ function CreateFixedAssetForm(props) {
                                         onChange={(e) => handle(e)}
                                         id="Name"
                                         value={data.Name}
-                                        placeholder="Name"
+                                        placeholder="Nombre"
                                         type="text"
                                         variant="filled"
                                     />
@@ -90,7 +90,7 @@ function CreateFixedAssetForm(props) {
                                         onChange={(e) => handle(e)}
                                         id="Description"
                                         value={data.Description}
-                                        placeholder="Description"
+                                        placeholder="Descripción"
                                         type="text"
                                         variant="filled"
                                     />
@@ -100,7 +100,7 @@ function CreateFixedAssetForm(props) {
                                         onChange={(e) => handle(e)}
                                         id="EntryDate"
                                         value={data.EntryDate}
-                                        placeholder="EntryDate"
+                                        placeholder="Fecha de Entrada"
                                         type="date"
                                         variant="filled"
                                     />
@@ -110,7 +110,7 @@ function CreateFixedAssetForm(props) {
                                         onChange={(e) => handle(e)}
                                         id="Price"
                                         value={data.Price}
-                                        placeholder="Price"
+                                        placeholder="Precio"
                                         type="number"
                                         variant="filled"
                                     />
@@ -119,7 +119,7 @@ function CreateFixedAssetForm(props) {
                                         onChange={(e) => handle(e)}
                                         id="Features"
                                         value={data.Features}
-                                        placeholder="Features"
+                                        placeholder="Características"
                                         type="text"
                                         variant="filled"
                                     />
@@ -129,7 +129,7 @@ function CreateFixedAssetForm(props) {
                                         onChange={(e) => handle(e)}
                                         id="Quantity"
                                         value={data.Quantity}
-                                        placeholder="Quantity"
+                                        placeholder="Cantidad"
                                         type="number"
                                         variant="filled"
                                     />
