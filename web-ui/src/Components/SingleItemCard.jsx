@@ -17,13 +17,10 @@ const SingleItemCard = ({title , element, imageUrl = "none"}) => {
             )
         }
       }
-
+    let contentCard = <div></div>
     if (imageUrl != "none"){
-        return(
-                <div>
-                    <Grid container direction="column" alignItems="center" justify="center" >
-                        <Card sx={{ p: 5, maxWidth: 1000, m:2, minWidth:{md:1000}}}>
-                                <Box sx={{ display: 'inline-block' }} >
+        contentCard= <div>
+            <Box sx={{ display: 'inline-block' , width: 450 }} >
                                 <CardMedia
                                     component="img"
                                     image={ imageUrl}
@@ -35,49 +32,57 @@ const SingleItemCard = ({title , element, imageUrl = "none"}) => {
                                 <Box
                                     sx={{
                                         display: 'inline-block',
-                                        right: '30%'
+                                        right: '30%',
+                                        width: 450
                                     }}
                                 >
                                     <CardContent>
                                         {detailsElement}
                                     </CardContent>
                                 </Box>
-                        </Card>
-                    </Grid>
-                </div>
-            )
+        </div>
     }else{
-        return(
-            <div>
-                <Grid container direction="column" alignItems="center" justify="center" >
-                    <Card sx={{p:5 , maxWidth: 1000, m:2, minWidth:{md:1000}}}>
-                    <h1> {title} </h1>
+        contentCard = <div>
+            <h1> {title} </h1><br></br>
                             <Box
                                 sx={{
                                     display: 'inline-block',
-                                    right: '30%'
+                                    right: '30%',
+                                    width: 450
                                 }}
                             >
                                 <CardContent>
-                                    {detailsElement.slice(0, detailsElement.length/2 )}
+                                    {detailsElement.slice(0, detailsElement.length/2  + 1)}
                                 </CardContent>
                             </Box>
 
                             <Box
                                 sx={{
                                     display: 'inline-block',
-                                    right: '30%'
+                                    right: '30%',
+                                    width: 450,
+                                    
                                 }}
                             >
                                 <CardContent>
-                                    {detailsElement.slice(detailsElement.length/2  , detailsElement.length )}
+                                    {detailsElement.slice(detailsElement.length/2  + 1, detailsElement.length )}
                                 </CardContent>
                             </Box>
-                    </Card>
-                </Grid>
-            </div>
-        )
+        </div>
+
     }
+
+    return(
+        <div>
+            <Grid container direction="column" alignItems="center" justify="center" >
+                <Card sx={{ p: 5, maxWidth: 1000, m:2, minWidth:{md:1000}}}>
+                        {contentCard}
+                </Card>
+            </Grid>
+        </div>
+    )
+
+    
 }
 
 export default SingleItemCard
