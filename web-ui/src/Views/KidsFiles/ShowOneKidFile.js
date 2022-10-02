@@ -9,7 +9,6 @@ function ShowOneKidFile() {
     const { kidId } = useParams()
     const [kid, setKid] = useState([])     
     const [healthKid, sethealthKid] = useState([])
-    const checkEmpty = 'none';
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
 
@@ -24,19 +23,26 @@ function ShowOneKidFile() {
         display: 'inline-block'
     }
 
-    const fetchData = () => {
+    const fetchBasicData = () => {
         var responseBasicKid = axios(urlKid);
-        var responseHRKid = axios(urlHealthKid);
-        axios.all([responseBasicKid, responseHRKid]).then(
+        axios.all([responseBasicKid]).then(
             axios.spread((...allData) => {
                 var dataBK = allData[0].data
-                var dataHRK = allData[1].data
                 setKid(dataBK)
+            })
+    )}
+
+    const fetchHeltReportData = () => {
+        var responseHRKid = axios(urlHealthKid);
+        axios.all([responseHRKid]).then(
+            axios.spread((...allData) => {
+                var dataHRK = allData[0].data
                 sethealthKid(dataHRK)
             })
     )}
 
-    useEffect(() => { fetchData() }, [])
+    useEffect(() => { fetchBasicData();
+        fetchHeltReportData() }, [])
 
     // FIXME: Será necesario contemplar este caso ?? 
     // if (!kid) return null
