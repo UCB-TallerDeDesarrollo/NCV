@@ -32,6 +32,12 @@ describe('<AddHealthReport />', () => {
         expect(specialDiagnosisLabel).toBeInTheDocument();
 
     })
+    it('Should capture HealthProblemsrendered correctly', () => {
+        const {getByLabelText } = render(<AddHealthReport />);
+        const healthProblemsLabel = getByLabelText(/Problemas de Salud/i);
+        expect(healthProblemsLabel).toBeInTheDocument();
+
+    })
     
 })
 
