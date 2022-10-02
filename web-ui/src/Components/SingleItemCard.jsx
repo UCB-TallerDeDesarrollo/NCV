@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2';
 
-const SingleItemCard = ({title="" , element, imageUrl = "none"}) => {
+const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true}) => {
     let detailsElement = []
     let countAllNull = 0;
       for (const prop in element ){
@@ -17,24 +17,37 @@ const SingleItemCard = ({title="" , element, imageUrl = "none"}) => {
             }
             detailsElement.push(
                 <div>
-                    <h4 >{prop}:{contentOneElement}</h4><br></br>
+                    <h5>{prop}:{contentOneElement}</h5><br></br>
                 </div>
             )
         }
       }
 
 
+
     let contentCard = []
     if (imageUrl != "none"){
+        if ( imageCirle== false ){
         contentCard.push( <div>
             <CardMedia
                 component="img"
                 image={ imageUrl}
                 direction="column" justifyContent="center"
-                sx={{ width: {xs:250, sm:400}, height:{xs:250, sm:400}, borderRadius:50}}
+                sx={{ width: {xs:250, sm:400}, height:{xs:250, sm:400}, borderRadius:3     }}
             >
             </CardMedia>
         </div>)
+        } else{
+            contentCard.push( <div>
+                <CardMedia
+                    component="img"
+                    image={ imageUrl}
+                    direction="column" justifyContent="center"
+                    sx={{ width: {xs:250, sm:400}, height:{xs:250, sm:400}, borderRadius:50     }}
+                >
+                </CardMedia>
+            </div>)
+        }
         contentCard.push( <div>
             <h2>{title}</h2><br></br>
             <CardContent>
@@ -66,7 +79,7 @@ const SingleItemCard = ({title="" , element, imageUrl = "none"}) => {
     return(
         <div>
             <Grid container direction="column" alignItems="center" justify="center" >
-                <Card sx={{ p: 5, maxWidth: 1000, m:2, minWidth:{md:1000}}}>
+                <Card sx={{ p: 5, maxWidth: 1000, m:2, minWidth:{md:1000} , borderRadius:3}}>
                     <Box sx={{ display: 'inline-block' , width: 450 }} >
                         {contentCard[0]}
                     </Box>
