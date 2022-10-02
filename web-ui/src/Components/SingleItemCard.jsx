@@ -40,6 +40,7 @@ const SingleItemCard = ({title , element, imageUrl = "none"}) => {
                     <h4></h4><br></br>
                 </div>
             )
+        }
             contentCard.push( <div>
                 <h2>{title}</h2><br></br>
                 <CardContent>
@@ -51,9 +52,6 @@ const SingleItemCard = ({title , element, imageUrl = "none"}) => {
                     {detailsElement.slice(detailsElement.length/2, detailsElement.length )}
                 </CardContent>
             </div>)
-
-        }
-
     }
 
     return(

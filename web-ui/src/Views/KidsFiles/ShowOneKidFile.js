@@ -60,7 +60,7 @@ function ShowOneKidFile() {
     }
 
     let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
-    let title = "Datos Personales"
+    let title = "Reporte de Salud"
 
 
     const MyKidDetails = { 
@@ -88,7 +88,7 @@ function ShowOneKidFile() {
     return (
         <div>
             <SingleItemCard element={MyKidDetails} title={title} imageUrl={imageUrl} />  
-            <SingleItemCard element={MyKidHealthReportDetails} title={title} imageUrl={imageUrl}/> 
+            <SingleItemCard element={MyKidHealthReportDetails} title={title}/> 
             <BoxWithButton about={aboutButton}/>
         </div>
     )}
