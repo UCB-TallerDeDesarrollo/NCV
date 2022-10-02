@@ -8,6 +8,12 @@ describe('<AddHealthReport />', () => {
         const bloodTypeLabel = getByLabelText(/Tipo de Sangre/i);
         expect(bloodTypeLabel).toBeInTheDocument();
     })
+    it('Should capture CIDiscapacidad rendered correctly', () => {
+        const {getByLabelText } = render(<AddHealthReport />);
+        const cIDiscapacidadLabel = getByLabelText(/CI Discapacidad/i);
+        expect(cIDiscapacidadLabel).toBeInTheDocument();
+    })
+    
     
 })
 
