@@ -2,12 +2,12 @@ import SingleItemCard from '../../Components/SingleItemCard'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import BoxWithButton from '../../Components/BoxWithButton'
-import { GetFetch } from './GetFetch'
+import axios from "axios";
 
 function ShowOneKidFile() {
     
     const { kidId } = useParams()
-    const [kid, setKid] = useState([])
+    const [kid, setKid] = useState([])     
     const [healthKid, sethealthKid] = useState([])
     const checkEmpty = 'none';
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
@@ -21,23 +21,41 @@ function ShowOneKidFile() {
         texto: 'Añadir Reporte de Salud',
         nameClass: 'btn-healthReport',
         action: responsViewFormHelthReport,
-        displey: 'block'
+        display: 'inline-block'
     }
 
-    useEffect(async () => {
-        await setKid(GetFetch(urlKid));
-    }, [])
+    const fetchData = () => {
+        var responseBasicKid = axios(urlKid);
+        var responseHRKid = axios(urlHealthKid);
+        axios.all([responseBasicKid, responseHRKid]).then(
+            axios.spread((...allData) => {
+                var dataBK = allData[0].data
+                var dataHRK = allData[1].data
+                setKid(dataBK)
+                sethealthKid(dataHRK)
+            })
+    )}
 
-    useEffect(async () => {
-        await sethealthKid(GetFetch(urlHealthKid));
-    }, [])
+    useEffect(() => { fetchData() }, [])
 
-    console.log("resultado de kid...");
-    console.log(kid);
-    console.log("resultado de report kid...");
-    console.log(healthKid);
     // FIXME: Será necesario contemplar este caso ?? 
     // if (!kid) return null
+
+    console.log("revisando HR...");
+    console.log(healthKid);
+    if(healthKid.bloodType != null){
+        console.log("Ocultando boton...");
+        aboutButton = {
+            texto: 'Añadir Reporte de Salud',
+            nameClass: 'btn-healthReport',
+            action: responsViewFormHelthReport,
+            display: 'none'
+        }
+    }
+
+    let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
+    let title = "Datos Personales"
+
 
     const MyKidDetails = { 
         "Nombre " : kid.firstName ,
@@ -49,33 +67,22 @@ function ShowOneKidFile() {
         "Género ": kid.gender
     };
 
-    if(healthKid == checkEmpty){
-        aboutButton = {
-            texto: 'Añadir Reporte de Salud',
-            nameClass: 'btn-healthReport',
-            action: responsViewFormHelthReport,
-            displey: 'hidden'
-        }
-    }
-
     var MyKidHealthReportDetails = {
-        "Tipo de Sangre" : healthKid.bloodtype ,
-        "CI Discapacitado" : healthKid.cIDiscapacidad ,
+        "Tipo de Sangre" : healthKid.bloodType ,
+        "CI Discapacitado" : healthKid.ciDiscapacidad ,
         "Diagnostico Fisico" : healthKid.psychologicalDiagnosis ,
         "Diagnostico Neurologico" : healthKid.neurologicalDiagnosis ,
         "Diagnostico especial" : healthKid.specialDiagnosis ,
         "Problemas de salud" : healthKid.healthProblems ,
     }
 
-    let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
-    let title = "Datos Personales"
-
+    console.log("Datos obtenidos...");
     console.log(MyKidHealthReportDetails);
 
     return (
         <div>
             <SingleItemCard element={MyKidDetails} title={title} imageUrl={imageUrl} />  
-            <SingleItemCard element={MyKidHealthReportDetails} title={title} /> 
+            <SingleItemCard element={MyKidHealthReportDetails} title={title} imageUrl={imageUrl}/> 
             <BoxWithButton about={aboutButton}/>
         </div>
     )}
