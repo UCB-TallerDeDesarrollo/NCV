@@ -1,6 +1,9 @@
-import ListBasic from '../../Components/ListBasic'
+import Box from '@mui/material/Box';
 import ListGrid from '../../Components/ListGrid'
 import { useState, useEffect } from 'react'
+import { bgcolor } from '@mui/system';
+import ListContainer from '../../Components/ListContainer';
+import ListBasic from '../../Components/ListBasic';
 
 function ShowKidsFiles() {
     const [kidsList, setKidList] = useState([])
@@ -17,18 +20,19 @@ function ShowKidsFiles() {
             return {
                 id:el.id, 
                 title:`${el.firstName} ${el.lastName}`, 
-                description:el.ci, 
-                elementUrl:`${baseUrl}/${el.id}`
+                description:`CI: ${el.ci}`, 
+                elementUrl:`${baseUrl}/${el.id}`,
+                //imgSrc:`https://storage.needpix.com/rsynced_images/child-3003305_1280.jpg`
             }
         })
         kidsListComponent = <ListGrid items={listElements} />
     }
     return (
-        <div>
-            <h3>Archivos de los niños</h3>
-            {kidsListComponent}
-            <p>Aqui vendria el component button que se debe implementar</p>
-        </div>
+        <Box sx={{display:'flex', justifyContent: 'center'}}>
+            <ListContainer title="Niños del centro">
+                {kidsListComponent}
+            </ListContainer>
+        </Box>
     )
 }
 export default ShowKidsFiles
