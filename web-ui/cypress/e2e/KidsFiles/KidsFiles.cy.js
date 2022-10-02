@@ -1,4 +1,4 @@
-
+/*
 describe('Show kids end to end tests', () => {
     it('Shows the list of kids', () => {
       cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/kids',{
@@ -11,3 +11,4 @@ describe('Show kids end to end tests', () => {
       .should('have.length', 6)
     });
   });
+  */
