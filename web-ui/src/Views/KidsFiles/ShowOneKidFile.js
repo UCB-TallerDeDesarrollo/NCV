@@ -47,10 +47,8 @@ function ShowOneKidFile() {
     // FIXME: Será necesario contemplar este caso ?? 
     // if (!kid) return null
 
-    console.log("revisando HR...");
-    console.log(healthKid);
+
     if(healthKid.bloodType != null){
-        console.log("Ocultando boton...");
         aboutButton = {
             texto: 'Añadir Reporte de Salud',
             nameClass: 'btn-healthReport',
@@ -58,21 +56,19 @@ function ShowOneKidFile() {
             display: 'none'
         }
     }
-
+    let birthDate = new Date (kid.birthDate);
     let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
-    let title = "Datos Personales"
-
-
     const MyKidDetails = { 
         "Nombre " : kid.firstName ,
         "Apellido ": kid.lastName ,
         "CI " : kid.ci, 
-        "Fecha de Nacimiento ": kid.birthDate,
+        "Fecha de Nacimiento ": birthDate.toLocaleDateString(),
         "Programa de Casa " : kid.programHouse,
         "Lugar de Nacimiento ": kid.birthPlace,
         "Género ": kid.gender
     };
 
+    let title = "Reporte de Salud"
     var MyKidHealthReportDetails = {
         "Tipo de Sangre" : healthKid.bloodType ,
         "CI Discapacitado" : healthKid.ciDiscapacidad ,
@@ -82,13 +78,10 @@ function ShowOneKidFile() {
         "Problemas de salud" : healthKid.healthProblems ,
     }
 
-    console.log("Datos obtenidos...");
-    console.log(MyKidHealthReportDetails);
-
     return (
         <div>
-            <SingleItemCard element={MyKidDetails} title={title} imageUrl={imageUrl} />  
-            <SingleItemCard element={MyKidHealthReportDetails} title={title} imageUrl={imageUrl}/> 
+            <SingleItemCard element={MyKidDetails} imageUrl={imageUrl} />  
+            <SingleItemCard element={MyKidHealthReportDetails} title={title}/> 
             <BoxWithButton about={aboutButton}/>
         </div>
     )}
