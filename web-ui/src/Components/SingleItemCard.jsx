@@ -56,16 +56,6 @@ const SingleItemCard = ({title , element, imageUrl = "none"}) => {
 
     }
 
-    var hiddenCard = 'inline-block';
-    var hiddenImage = 'inline-block';
-
-    if(displayed == "reportHealth"){
-        hiddenImage = 'none';
-    }
-    if(displayed == "emptyReport"){
-        hiddenCard = 'none';
-    }
-
     return(
         <div>
             <Grid container direction="column" alignItems="center" justify="center" >

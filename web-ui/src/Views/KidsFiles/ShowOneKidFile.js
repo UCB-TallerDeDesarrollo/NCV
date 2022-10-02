@@ -2,16 +2,16 @@ import SingleItemCard from '../../Components/SingleItemCard'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import BoxWithButton from '../../Components/BoxWithButton'
+import { GetFetch } from './GetFetch'
 
 function ShowOneKidFile() {
     
     const { kidId } = useParams()
     const [kid, setKid] = useState([])
     const [healthKid, sethealthKid] = useState([])
-    var chechEmpty = "Empty";
-    var hiddenElement = "block";
+    const checkEmpty = 'none';
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
-    const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/1/healthreports'
+    const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
 
     const responsViewFormHelthReport = () => {
         window.location.href = '/add-reporte-nene/'+ kidId
@@ -24,29 +24,20 @@ function ShowOneKidFile() {
         displey: 'block'
     }
 
-    function Verificar(res){
-        if(res.status == "404"){
-            sethealthKid(["Empty"]);
-        }else{
-            sethealthKid(res.json());
-        }
-    }
-
-    
-    useEffect(() => {
-        fetch(urlKid)
-            .then((res) => res.json())
-            .then(setKid);
+    useEffect(async () => {
+        await setKid(GetFetch(urlKid));
     }, [])
 
-    useEffect(() => {
-        fetch(urlHealthKid)
-            .then((res) => Verificar(res));
+    useEffect(async () => {
+        await sethealthKid(GetFetch(urlHealthKid));
     }, [])
- 
+
+    console.log("resultado de kid...");
+    console.log(kid);
+    console.log("resultado de report kid...");
+    console.log(healthKid);
     // FIXME: Será necesario contemplar este caso ?? 
     // if (!kid) return null
-
 
     const MyKidDetails = { 
         "Nombre " : kid.firstName ,
@@ -58,14 +49,13 @@ function ShowOneKidFile() {
         "Género ": kid.gender
     };
 
-    if(healthKid == chechEmpty){
+    if(healthKid == checkEmpty){
         aboutButton = {
             texto: 'Añadir Reporte de Salud',
             nameClass: 'btn-healthReport',
             action: responsViewFormHelthReport,
             displey: 'hidden'
         }
-        hiddenElement = "emptyReport";
     }
 
     var MyKidHealthReportDetails = {
@@ -80,10 +70,12 @@ function ShowOneKidFile() {
     let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
     let title = "Datos Personales"
 
+    console.log(MyKidHealthReportDetails);
+
     return (
         <div>
-            <SingleItemCard element={MyKidDetails} title={title} imageUrl={imageUrl} displayed="BasicCard"/>  
-            <SingleItemCard element={MyKidHealthReportDetails} title={title} displayed={hiddenElement} /> 
+            <SingleItemCard element={MyKidDetails} title={title} imageUrl={imageUrl} />  
+            <SingleItemCard element={MyKidHealthReportDetails} title={title} /> 
             <BoxWithButton about={aboutButton}/>
         </div>
     )}
