@@ -19,6 +19,12 @@ describe('<AddHealthReport />', () => {
         expect(psychologicalDiagnosisLabel).toBeInTheDocument();
 
     })
+    it(' Should capture NeurologicalDiagnosis rendered correctly', () => {
+        const {getByLabelText } = render(<AddHealthReport />);
+        const neurologicalDiagnosisLabel = getByLabelText(/Diagnostico Neurologico/i);
+        expect(neurologicalDiagnosisLabel).toBeInTheDocument();
+
+    })
     
 })
 
