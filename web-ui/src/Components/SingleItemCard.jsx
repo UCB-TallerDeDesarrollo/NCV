@@ -7,15 +7,23 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 const SingleItemCard = ({title , element, imageUrl = "none"}) => {
     let detailsElement = []
+    let countAllNull = 0;
       for (const prop in element ){
         if (prop != "id" ){
+            var contentOneElement = element[prop]
+            if (element[prop] == null){
+                countAllNull++;
+                contentOneElement =  " ----- "
+            }
             detailsElement.push(
                 <div>
-                    <h4>{prop}:  {element[prop]}</h4><br></br>
+                    <h4 >{prop}:{contentOneElement}</h4><br></br>
                 </div>
             )
         }
       }
+
+
     let contentCard = []
     if (imageUrl != "none"){
         contentCard.push( <div>
