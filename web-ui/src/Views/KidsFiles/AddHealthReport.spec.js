@@ -25,6 +25,12 @@ describe('<AddHealthReport />', () => {
         expect(neurologicalDiagnosisLabel).toBeInTheDocument();
 
     })
+    it(' Should capture SpecialDiagnosis rendered correctly', () => {
+        const {getByLabelText } = render(<AddHealthReport />);
+        const specialDiagnosisLabel = getByLabelText(/Diagnostico Especial/i);
+        expect(specialDiagnosisLabel).toBeInTheDocument();
+
+    })
     
     
 })
