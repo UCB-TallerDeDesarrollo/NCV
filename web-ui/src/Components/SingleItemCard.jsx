@@ -4,7 +4,6 @@ import Box from '@mui/material/Box'
 import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2';
-import { minWidth } from '@mui/system'
 
 const SingleItemCard = ({title , element, imageUrl = "none"}) => {
     let detailsElement = []
