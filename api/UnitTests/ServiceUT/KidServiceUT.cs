@@ -85,5 +85,41 @@ namespace UnitTests.ServiceUT
             var kidAdded = await kidService.CreateKidAsync(kidModel);
             Assert.Equal("Manuel", kidAdded.FirstName);
         }
+        [Fact]
+        public async Task GetKids_AddKids_ReturnAssert()
+        {
+            var kid1 = new KidEntity()
+            {
+                Id = 1,
+                FirstName = "Manuel",
+                LastName = "Flores",
+                CI = "1234567",
+                BirthDate = new DateTime(2010, 9, 12),
+                ProgramHouse = "SDA",
+                BirthPlace = "Cochabamba",
+                Gender = "masculino"
+            };
+
+            var kid2 = new KidEntity()
+            {
+                Id = 2,
+                FirstName = "Pedro",
+                LastName = "Tintos",
+                CI = "1234563",
+                BirthDate = new DateTime(2010, 9, 15),
+                ProgramHouse = "SDA",
+                BirthPlace = "Cochabamba",
+                Gender = "masculino"
+            };
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
+            var mapper = config.CreateMapper();
+            var enumerable = new List<KidEntity>() { kid1, kid2 } as IEnumerable<KidEntity>;
+            var kidRepositoryMock = new Mock<INCVRepository>();
+            kidRepositoryMock.Setup(r => r.GetKidsAsync()).ReturnsAsync(enumerable);
+
+            var kidService = new KidService(kidRepositoryMock.Object, mapper);
+            var listKids = await kidService.GetKidsAsync();
+            Assert.Equal(2, listKids.Count());
+        }
     }
 }
