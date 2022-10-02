@@ -13,6 +13,12 @@ describe('<AddHealthReport />', () => {
         const cIDiscapacidadLabel = getByLabelText(/CI Discapacidad/i);
         expect(cIDiscapacidadLabel).toBeInTheDocument();
     })
+    it(' Should capture PsychologicalDiagnosis rendered correctly', () => {
+        const {getByLabelText } = render(<AddHealthReport />);
+        const psychologicalDiagnosisLabel = getByLabelText(/Diagnostico Fisico/i);
+        expect(psychologicalDiagnosisLabel).toBeInTheDocument();
+
+    })
     
     
 })
