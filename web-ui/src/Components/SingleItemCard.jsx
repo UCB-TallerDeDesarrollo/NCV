@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2';
 
-const SingleItemCard = ({title , element, imageUrl = "none"}) => {
+const SingleItemCard = ({title="" , element, imageUrl = "none"}) => {
     let detailsElement = []
     let countAllNull = 0;
       for (const prop in element ){
@@ -36,6 +36,7 @@ const SingleItemCard = ({title , element, imageUrl = "none"}) => {
             </CardMedia>
         </div>)
         contentCard.push( <div>
+            <h2>{title}</h2><br></br>
             <CardContent>
                 {detailsElement}
             </CardContent>
