@@ -12,5 +12,6 @@ namespace NinosConValorAPI.Services.Security
         Task<UserManagerResponse> LoginUserAsync(LoginViewModel model);
 
         Task<UserManagerResponse> CreateRoleAsync(CreateRoleViewModel model);
+        Task<UserManagerResponse> CreateUserRoleAsync(CreateUserRoleViewModel model);
     }
 }
