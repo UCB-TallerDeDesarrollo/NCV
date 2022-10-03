@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import BoxWithButton from '../../Components/BoxWithButton'
 import axios from "axios";
+import Navbar from '../../Components/NavBar';
 
 function ShowOneKidFile() {
     
@@ -79,10 +80,10 @@ function ShowOneKidFile() {
     }
 
     return (
-        <div>
-            <SingleItemCard element={MyKidDetails} imageUrl={imageUrl} />  
-            <SingleItemCard element={MyKidHealthReportDetails} title={title}/> 
-            <BoxWithButton about={aboutButton}/>
-        </div>
+        <><Navbar /><div style={{ marginTop: '11vh' }}>
+            <SingleItemCard element={MyKidDetails} imageUrl={imageUrl} />
+            <SingleItemCard element={MyKidHealthReportDetails} title={title} />
+            <BoxWithButton about={aboutButton} />
+        </div></>
     )}
 export {ShowOneKidFile}

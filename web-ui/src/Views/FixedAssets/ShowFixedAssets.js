@@ -15,6 +15,7 @@ import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
 import ErrorPage from '../../Components/ErrorPage'
 import getFromApi from '../../Components/GetFromApi'
+import Navbar from '../../Components/NavBar'
 
 export default function ShowFixedAssets() {
     const navigate = useNavigate()
@@ -29,7 +30,7 @@ export default function ShowFixedAssets() {
     }
     if (!fixedAssets) return null
     return (
-        <div>
+        <><Navbar /><div style={{ marginTop: '10vh' }}>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
@@ -58,7 +59,7 @@ export default function ShowFixedAssets() {
                             class="activos-fijos"
                             style={{ minHeight: '60vh' }}
                         >
-                            <Card sx={{ p: 10, maxWidth: 1300 ,minWidth: 275 }} key={asset.id}>
+                            <Card sx={{ p: 10, maxWidth: 1300, minWidth: 275 }} key={asset.id}>
                                 <Box sx={{ display: 'flex' }}>
                                     <CardHeader id="Name" title={asset.name} />
                                 </Box>
@@ -87,12 +88,10 @@ export default function ShowFixedAssets() {
                                         <br></br>
                                         <Button
                                             variant="outlined"
-                                            onClick={(e) =>
-                                                navigate(
-                                                    completeInfoFixedAsset +
-                                                        asset.id
-                                                )
-                                            }
+                                            onClick={(e) => navigate(
+                                                completeInfoFixedAsset +
+                                                asset.id
+                                            )}
                                         >
                                             Ver más
                                         </Button>
@@ -103,6 +102,6 @@ export default function ShowFixedAssets() {
                     )
                 })}
             </div>
-        </div>
+        </div></>
     )
 }
