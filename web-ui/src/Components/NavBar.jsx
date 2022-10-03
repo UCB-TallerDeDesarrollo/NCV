@@ -3,25 +3,33 @@ import { AppBar, Grid, Typography, Toolbar, Tabs , Link, Tab, Box, Button ,useTh
 import imgNiñosConValor from '../Assets/img/logo-ncv2.png'
 /* import NewUserForm from './NewUserForm'; */
 
-
+var Rol = sessionStorage.getItem("Role")
 function Navbar() {
   const theme = useTheme();
   
   const isMatch = useMediaQuery(theme.breakpoints.down('md'));
 
   function handleClickFiles(){
-    window.location.href = "/ninos";
+    //if(Rol=="Soporte" || Rol=="Admin"){  
+      window.location.href = "/ninos";
+    //}
   }
 
   function handleClickAssets(){
-    window.location.href = '/activos-fijos';
+    //if(Rol=="Soporte" || Rol=="Admin"){
+      window.location.href = '/activos-fijos';
+    //}
   }
 
   function handleClickHome(){
     window.location.href = "/inicio-ncv";
   }
+
   function handleClickSignIn(){
-    window.location.href = "/registrarse-ncv";
+    
+    //if(Rol=="Soporte" || Rol=="Admin"){
+      window.location.href = "/registrarse-ncv";
+    //}
   }
 
   function handleClickExit(){
