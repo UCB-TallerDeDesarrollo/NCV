@@ -20,7 +20,7 @@ builder.Services.AddTransient<IKidService, KidService>();
 builder.Services.AddTransient<IHealthReportService, HealthReportService>();
 builder.Services.AddTransient<INCVRepository, NCVRepository>();
 
-builder.Services.AddAutoMapper(typeof(Program));
+
 //entity framework config
 var connectionString = builder.Configuration.GetConnectionString("NinosConValorDB");
 builder.Services.AddDbContext<NCV_DBContext>(x => x.UseNpgsql(connectionString));
@@ -58,11 +58,18 @@ builder.Services.AddAuthentication(auth =>
 });
 
 //CORS configuration
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddCors(c =>
 {
-    c.AddPolicy("AllowOrigin", options => { options.AllowAnyOrigin(); options.AllowAnyMethod(); options.AllowAnyHeader(); });
-});
+    c.AddPolicy("AllowOrigin", options => {
+        options.AllowAnyOrigin(); 
+        options.AllowAnyMethod(); 
+        options.AllowAnyHeader(); 
+        //options.WithOrigins("https://ncv-application.web.app/", "http://localhost:5009/").AllowAnyHeader().AllowAnyMethod();
 
+    });
+});
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true); //dates in postgresql
 
@@ -72,6 +79,7 @@ var app = builder.Build();
 
 //CORS 
 app.UseCors(options => { options.AllowAnyOrigin(); options.AllowAnyMethod(); options.AllowAnyHeader(); });
+
 
 app.UseAuthorization();
 
