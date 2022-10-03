@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
+import InputText from '../../Components/InputText'
 
 const healtReport = {
     BloodType: '',
@@ -52,7 +53,7 @@ function AddHealthReport() {
                 autoComplete="off"
             >
                 <div>
-                    <TextField
+                    <InputText
                         required
                         id="bloodtype"
                         name="BloodType"
@@ -62,7 +63,7 @@ function AddHealthReport() {
                         onChange={handleInputChange}
                     />
 
-                    <TextField
+                    <InputText
                         required
                         id="CIDiscapacidad"
                         name="CIDiscapacidad"
@@ -72,7 +73,7 @@ function AddHealthReport() {
                         onChange={handleInputChange}
                     />
 
-                    <TextField
+                    <InputText
                         id="PsychologicalDiagnosis"
                         name="PsychologicalDiagnosis"
                         label="Diagnostico Fisico"
@@ -81,7 +82,7 @@ function AddHealthReport() {
                         onChange={handleInputChange}
                     />
 
-                    <TextField
+                    <InputText
                         id="NeurologicalDiagnosis"
                         name="NeurologicalDiagnosis"
                         label="Diagnostico Neurologico"
@@ -90,7 +91,7 @@ function AddHealthReport() {
                         onChange={handleInputChange}
                     />
 
-                    <TextField
+                    <InputText
                         id="SpecialDiagnosis"
                         name="SpecialDiagnosis"
                         label="Diagnostico Especial"
@@ -99,7 +100,7 @@ function AddHealthReport() {
                         onChange={handleInputChange}
                     />
 
-                    <TextField
+                    <InputText
                         id="HealthProblems"
                         name="HealthProblems"
                         label="Problemas de Salud"

@@ -6,7 +6,7 @@ function InputText(props) {
 
     return (
         <>
-            <TextField label={label} variant="filled" {...rest} />
+            <TextField label={label} variant="standard" {...rest} />
         </>
     )
 }
