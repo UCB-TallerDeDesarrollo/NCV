@@ -18,10 +18,10 @@ function Navbar() {
   }
 
   function handleClickHome(){
-    window.location.href = "/home-ncv";
+    window.location.href = "/inicio-ncv";
   }
   function handleClickSignIn(){
-    window.location.href = "/home-ncv";
+    window.location.href = "/registrarse-ncv";
   }
 
   function handleClickExit(){
@@ -47,6 +47,9 @@ function Navbar() {
               </Typography>
             </Grid>
             
+            <Grid  item xs={2}>
+                <Button color="inherit" onClick={handleClickSignIn}>Registrar Usuario</Button>
+            </Grid>
             
             <Grid  item xs={2}>
                 <Button color="inherit" onClick={handleClickFiles}>Files de los niños</Button>
@@ -55,6 +58,7 @@ function Navbar() {
             <Grid  item xs={2}>
                 <Button color="inherit" onClick={handleClickAssets}>Activos Fijos</Button>
             </Grid>
+
 
             <Grid  item xs={2}>
                 <Button color="inherit" onClick={handleClickExit}>Salir</Button>

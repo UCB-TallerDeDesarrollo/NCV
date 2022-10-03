@@ -19,7 +19,7 @@ function LoginForm() {
 
     function handleLoginForm(event) {
         event.preventDefault()
-        window.location.href = '/home-ncv'
+        window.location.href = '/inicio-ncv'
         /*const user = {
             email,
             password
