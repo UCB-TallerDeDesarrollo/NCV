@@ -11,10 +11,12 @@ import Grid from '@mui/material/Grid'
 import Input from '@mui/material/Input'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
+import ErrorPage from '../../Components/ErrorPage'
 
 function CreateFixedAssetForm(props) {
     const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
     const [open, setOpen] = useState(false)
+    const [error, setError] = useState(null);
     const [data, setData] = useState({
         Name: '', // string
         Description: '', // string
@@ -52,7 +54,13 @@ function CreateFixedAssetForm(props) {
                 setOpen(true)
             }
             console.log(res.status)
+        }).catch ((apiError) => {
+            setError(apiError);
         })
+    }
+
+    if(error){
+        return ErrorPage(error)
     }
     return (
         <Box

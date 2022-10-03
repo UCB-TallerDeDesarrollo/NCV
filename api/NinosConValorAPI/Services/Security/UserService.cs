@@ -31,7 +31,7 @@ namespace NinosConValorAPI.Services.Security
         {
             var user = await userManager.FindByEmailAsync(model.Email);
 
-            if (user == null || user.State != 1)
+            if (user == null)
             {
                 return new UserManagerResponse
                 {
@@ -48,19 +48,13 @@ namespace NinosConValorAPI.Services.Security
                     Token = "Invalid password",
                     IsSuccess = false,
                 };
-            var userId = user.Id;
 
             var roles = await userManager.GetRolesAsync(user);
 
             var claims = new List<Claim>()
             {
-                new Claim("UserId", userId),
                 new Claim("Email", model.Email),
-                new Claim("FirstName", user.FirstName),
-                new Claim("LastName", user.LastName),
-                new Claim("PhoneNumber", user.PhoneNumber),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim("UserRole", roles[0])
             };
 
             foreach (var role in roles)
@@ -77,9 +71,9 @@ namespace NinosConValorAPI.Services.Security
                 claims: claims,
                 expires: DateTime.Now.AddHours(2),
                 signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
-
+            
             string tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
-
+            //aca muere
             return new UserManagerResponse
             {
                 Token = tokenAsString,
@@ -157,6 +151,55 @@ namespace NinosConValorAPI.Services.Security
                 Token = "Role did not create",
                 IsSuccess = false,
                 Errors = result.Errors.Select(e => e.Description)
+            };
+        }
+
+        public async Task<UserManagerResponse> CreateUserRoleAsync(CreateUserRoleViewModel model)
+        {
+            var role = await roleManager.FindByIdAsync(model.RoleId);
+            if (role == null)
+            {
+                return new UserManagerResponse
+                {
+                    Token = "Role does not exist",
+                    IsSuccess = false
+                };
+            }
+
+            var user = await userManager.FindByIdAsync(model.UserId);
+            if (role == null)
+            {
+                return new UserManagerResponse
+                {
+                    Token = "user does not exist",
+                    IsSuccess = false
+                };
+            }
+
+            if (await userManager.IsInRoleAsync(user, role.Name))
+            {
+                return new UserManagerResponse
+                {
+                    Token = "user has role already",
+                    IsSuccess = false
+                };
+            }
+
+            var result = await userManager.AddToRoleAsync(user, role.Name);
+
+            if (result.Succeeded)
+            {
+                return new UserManagerResponse
+                {
+                    Token = "Role assigned",
+                    IsSuccess = true
+                };
+            }
+
+            return new UserManagerResponse
+            {
+                Token = "something went wrong",
+                IsSuccess = false
             };
         }
     }

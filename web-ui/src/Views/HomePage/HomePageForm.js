@@ -1,6 +1,7 @@
 import Button from '../../Components/Button'
 
 import Logo from '../../Components/Logo'
+import Navbar from '../../Components/NavBar'
 
 import './HomePage.css'
 
@@ -28,7 +29,7 @@ function HomePageForm() {
     }
 
     return (
-        <div className="homePageForm">
+        <><Navbar /><div style={{ marginTop: '15vh' }} className="homePageForm">
             <header className="App-header">
                 <Logo />
                 <h1 className="title">Niños con Valor org</h1>
@@ -37,7 +38,7 @@ function HomePageForm() {
                     <Button about={aboutButtonB} />
                 </div>
             </header>
-        </div>
+        </div></>
     )
 }
 

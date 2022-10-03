@@ -81,5 +81,45 @@ namespace UnitTests.ControllersUT
             Assert.Equal("Manuel", kidCreated.FirstName);
             Assert.Equal(201, status.StatusCode);
         }
+        [Fact]
+        public async Task GetKids_ReturnAllKids_ReturnStatus()
+        {
+            var kid1 = new KidModel()
+            {
+                Id = 1,
+                FirstName = "Manuel",
+                LastName = "Flores",
+                CI = "1234567",
+                BirthDate = new DateTime(2010, 9, 12),
+                ProgramHouse = "SDA",
+                BirthPlace = "Cochabamba",
+                Gender = "masculino"
+            };
+
+            var kid2 = new KidModel()
+            {
+                Id = 2,
+                FirstName = "Pedro",
+                LastName = "Romero",
+                CI = "1234568",
+                BirthDate = new DateTime(2010, 9, 15),
+                ProgramHouse = "SDA",
+                BirthPlace = "Cochabamba",
+                Gender = "masculino"
+            };
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
+            var mapper = config.CreateMapper();
+            var enumerable = new List<KidModel>() { kid1, kid2 } as IEnumerable<KidModel>;
+            var kidServiceMock = new Mock<IKidService>();
+            kidServiceMock.Setup(r => r.GetKidsAsync()).ReturnsAsync(enumerable);
+
+            var kidController = new KidsController(kidServiceMock.Object);
+            var response = await kidController.GetKidsAync();
+            var status = (OkObjectResult)response.Result;
+            var kidsList = status.Value as List<KidModel>;
+            var countKidsList = kidsList.Count();
+            Assert.Equal(2, countKidsList);
+            Assert.Equal(200, status.StatusCode);
+        }
     }
 }
