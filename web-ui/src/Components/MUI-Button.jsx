@@ -4,16 +4,14 @@ import { Input } from '@mui/material';
 
 export default function MButtons() {
     return (
-        <Stack spacing={2} direction="row">
-            <Button variant="contained" sx={{ 
-                borderRadius: 40, 
-                background: "#5CD4E2",
-                color: "#023859", 
-                boxShadow: 3,
-                fontWeight: 'bold',
-                }}>Confirmar
-                </Button>
-        </Stack>
+        <Button variant="contained" type="input" sx={{ 
+            borderRadius: 40, 
+            background: "#5CD4E2",
+            color: "#023859", 
+            boxShadow: 3,
+            fontWeight: 'bold',
+            }}>Confirmar
+            </Button>
     );
   }
   export function MButtonsSec() {
