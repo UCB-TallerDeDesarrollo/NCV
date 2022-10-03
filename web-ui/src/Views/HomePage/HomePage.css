@@ -42,34 +42,4 @@ code {
     font-size: 30px;
 }
 
-button {
-    background-color: #ceecf2;
-    color: #163760;
-    padding: 16px 30px;
-    border: 3px solid #023859;
-    width: 200px;
-    display: block;
-    margin: 10px 4px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 22px;
-}
-.btn-activosFijos {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-}
 
-.btn-files {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-}

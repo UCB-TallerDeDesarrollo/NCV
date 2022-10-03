@@ -60,11 +60,11 @@ function Navbar() {
             </Grid>
             
             <Grid  item xs={2}>
-                <Button color="inherit" onClick={handleClickFiles}>Files de los niños</Button>
+                <Button className='btn-files' color="inherit" onClick={handleClickFiles}>Files de los niños</Button>
             </Grid>
 
             <Grid  item xs={2}>
-                <Button color="inherit" onClick={handleClickAssets}>Activos Fijos</Button>
+                <Button className='btn-activosFijos' color="inherit" onClick={handleClickAssets}>Activos Fijos</Button>
             </Grid>
 
 
