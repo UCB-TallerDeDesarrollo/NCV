@@ -9,13 +9,13 @@ import './HomePage.css'
 
 function HomePageForm() {
     /* Borrar cuando las vistas esten conectadas */
-    const responsViewFile = () => {
+    /*const responsViewFile = () => {
         window.location.href = '/ninos'
     }
     const responsActivosFijos = () => {
         window.location.href = '/activos-fijos'
     }
-    /* */
+     
     const aboutButton = {
         texto: 'Files',
         nameClass: 'btn-files',
@@ -27,16 +27,18 @@ function HomePageForm() {
         nameClass: 'btn-activosFijos',
         action: responsActivosFijos
     }
+    <div className="butonsHome">
+                    <Button about={aboutButton} />
+                    <Button about={aboutButtonB} />
+                </div>
+    */
 
     return (
         <><Navbar /><div style={{ marginTop: '15vh' }} className="homePageForm">
             <header className="App-header">
                 <Logo />
                 <h1 className="title">Niños con Valor org</h1>
-                <div className="butonsHome">
-                    <Button about={aboutButton} />
-                    <Button about={aboutButtonB} />
-                </div>
+                
             </header>
         </div></>
     )

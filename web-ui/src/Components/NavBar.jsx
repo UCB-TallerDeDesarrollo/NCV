@@ -1,7 +1,5 @@
 import React from 'react'
-import {useState} from 'react'
 import { AppBar, Grid, Typography, Toolbar, Tabs , Link, Tab, Box, Button ,useTheme , useMediaQuery} from '@mui/material';
-import Logo from './Logo';
 import imgNiñosConValor from '../Assets/img/logo-ncv2.png'
 /* import NewUserForm from './NewUserForm'; */
 
@@ -20,6 +18,9 @@ function Navbar() {
   }
 
   function handleClickHome(){
+    window.location.href = "/home-ncv";
+  }
+  function handleClickSignIn(){
     window.location.href = "/home-ncv";
   }
 
@@ -41,7 +42,7 @@ function Navbar() {
                     height="60"
                     src={imgNiñosConValor}
                     alt="Niños con Valor"
-                    className="logo-img"
+                    className="logo-img-nvar"
                 />
               </Typography>
             </Grid>
