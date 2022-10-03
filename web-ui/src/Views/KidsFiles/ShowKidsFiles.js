@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { bgcolor } from '@mui/system';
 import ListContainer from '../../Components/ListContainer';
 import ListBasic from '../../Components/ListBasic';
+import Navbar from '../../Components/NavBar';
 
 function ShowKidsFiles() {
     const [kidsList, setKidList] = useState([])
@@ -28,11 +29,11 @@ function ShowKidsFiles() {
         kidsListComponent = <ListGrid items={listElements} />
     }
     return (
-        <Box sx={{display:'flex', justifyContent: 'center'}}>
+        <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
             <ListContainer title="Niños del centro">
                 {kidsListComponent}
             </ListContainer>
-        </Box>
+        </Box></>
     )
 }
 export default ShowKidsFiles

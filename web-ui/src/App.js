@@ -19,7 +19,6 @@ import DataHealth from './Views/KidsFiles/DataHealth'
 
 function App() {
     return (
-        
         <Router>
             <Routes>
                 <Route exact path="/" element={<LoginForm />}></Route>
@@ -33,7 +32,7 @@ function App() {
                     path="/activos-fijos"
                     element={<ShowFixedAssets />}
                 ></Route>
-                
+
                 <Route
                     path="/activos-fijos/:fixedAssetId"
                     element={<ShowFixedAsset />}
@@ -44,7 +43,7 @@ function App() {
                     path="/add-reporte-nene/:id"
                     element={<AddHealthReport />}
                 ></Route>
-                <Route path="/kidHealth/:id" element={<DataHealth />} /> 
+                <Route path="/kidHealth/:id" element={<DataHealth />} />
                 <Route path="*" element={<Navigate replace to="/" />} />
             </Routes>
         </Router>
