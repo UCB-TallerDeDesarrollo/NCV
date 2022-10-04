@@ -10,6 +10,8 @@ export default function ButtonPrimary({label, onClick, id}) {
             color: "#023859", 
             boxShadow: 3,
             fontWeight: 'bold',
+            textTransform: 'none',
+            px:4
             }}>{label}
             </Button>
     );

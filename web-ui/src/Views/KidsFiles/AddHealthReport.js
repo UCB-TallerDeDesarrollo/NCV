@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
+import { useParams } from 'react-router-dom'
+import ButtonPrimary from '../../Components/MUI-Button'
 import InputText from '../../Components/InputText'
 import FormContainer from '../../Components/FormContainer'
-import { padding } from '@mui/system'
 
 const healtReport = {
     BloodType: '',
@@ -16,9 +14,8 @@ const healtReport = {
 }
 
 function AddHealthReport() {
-    var id_url = window.location.pathname;
-    id_url = id_url[id_url.length - 1];
-    var url = "https://ncv-api.herokuapp.com/api/kids/" + id_url +"/healthreports"
+    const {kidId} = useParams()
+    var url = "https://ncv-api.herokuapp.com/api/kids/" + kidId +"/healthreports"
 
     const [formReport, setformReport] = useState(healtReport)
 
@@ -100,9 +97,7 @@ function AddHealthReport() {
                     value={formReport.HealthProblems}
                     onChange={handleInputChange}
                 />
-                <Button variant="text" onClick={handleFormSubmit}>
-                    Guardar
-                </Button>
+                <ButtonPrimary label={"Guardar"} onClick={handleFormSubmit}/>
             </FormContainer>
         </div>
     )

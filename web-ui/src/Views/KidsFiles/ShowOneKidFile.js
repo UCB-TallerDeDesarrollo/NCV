@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 import BoxWithButton from '../../Components/BoxWithButton'
 import axios from "axios";
 import Navbar from '../../Components/NavBar';
+import ButtonPrimary from '../../Components/MUI-Button';
+import { useNavigate } from 'react-router-dom';
 
 function ShowOneKidFile() {
     
@@ -78,12 +80,13 @@ function ShowOneKidFile() {
         "Diagnostico especial" : healthKid.specialDiagnosis ,
         "Problemas de salud" : healthKid.healthProblems ,
     }
-
+    const navigate = useNavigate();
+    let urlCreateHealthReport = `/ninos/${kidId}/crear-reporte/`
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard element={MyKidDetails} imageUrl={imageUrl} />
             <SingleItemCard element={MyKidHealthReportDetails} title={title} />
-            <BoxWithButton about={aboutButton} />
+            <ButtonPrimary label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
         </div></>
     )}
 export {ShowOneKidFile}
