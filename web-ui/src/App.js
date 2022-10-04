@@ -17,6 +17,8 @@ import ShowKidsFiles from './Views/KidsFiles/ShowKidsFiles'
 import {ShowOneKidFile} from './Views/KidsFiles/ShowOneKidFile'
 import DataHealth from './Views/KidsFiles/DataHealth'
 
+import NavBar from './Components/NavBar'
+
 function App() {
     return (
         <Router>
@@ -41,7 +43,8 @@ function App() {
                 <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
                 <Route
                     path="/add-reporte-nene/:id"
-                    element={<AddHealthReport />}
+                    //element={<><NavBar/><AddHealthReport/></>}
+                    element={<AddHealthReport/>}
                 ></Route>
                 <Route path="/kidHealth/:id" element={<DataHealth />} />
                 <Route path="*" element={<Navigate replace to="/" />} />

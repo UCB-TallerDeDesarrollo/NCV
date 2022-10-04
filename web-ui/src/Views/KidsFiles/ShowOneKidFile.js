@@ -80,7 +80,7 @@ function ShowOneKidFile() {
     }
 
     return (
-        <><Navbar /><div style={{ marginTop: '11vh' }}>
+        <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard element={MyKidDetails} imageUrl={imageUrl} />
             <SingleItemCard element={MyKidHealthReportDetails} title={title} />
             <BoxWithButton about={aboutButton} />
