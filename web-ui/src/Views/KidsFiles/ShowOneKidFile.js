@@ -1,11 +1,10 @@
-import SingleItemCard from '../../Components/SingleItemCard'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import BoxWithButton from '../../Components/BoxWithButton'
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Navbar from '../../Components/NavBar';
+import SingleItemCard from '../../Components/SingleItemCard'
 import ButtonPrimary from '../../Components/MUI-Button';
-import { useNavigate } from 'react-router-dom';
 
 function HealthReport({healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
@@ -38,10 +37,6 @@ function ShowOneKidFile() {
     const [healthReportStatusCode, setHealthReportStatusCode] = useState(null)
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
-
-    const responsViewFormHelthReport = () => {
-        window.location.href = '/add-reporte-nene/'+ kidId
-    }
 
     const fetchBasicData = () => {
         var responseBasicKid = axios(urlKid);
