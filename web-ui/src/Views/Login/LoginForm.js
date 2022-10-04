@@ -19,6 +19,10 @@ function LoginForm() {
 
     function handleLoginForm(event) {
         event.preventDefault()
+<<<<<<< HEAD
+=======
+        
+>>>>>>> dd275e5 (Agregando seguridad nvar)
         const user = {
             email,
             password
@@ -48,7 +52,11 @@ function LoginForm() {
                 //showSecrectOptions(Role);
                 sessionStorage.setItem('Role',Role)
                 window.location.href = '/inicio-ncv'
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> dd275e5 (Agregando seguridad nvar)
             } else {
                 if(data.error != null){
                     setErrors(data.errors.append(data.token));
@@ -61,11 +69,16 @@ function LoginForm() {
         .catch((error) => {
             console.log(`Error: ${error}`);
             alert(error);
+<<<<<<< HEAD
         })
         .finally(() => {
             setPassword("");
         });
     } 
+=======
+        })/**/
+    }
+>>>>>>> dd275e5 (Agregando seguridad nvar)
 
     return (
         <section className="vh-100" style={{ backgroundColor: '#023E73' }}>
