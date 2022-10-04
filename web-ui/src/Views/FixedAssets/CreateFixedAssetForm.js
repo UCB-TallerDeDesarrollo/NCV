@@ -146,7 +146,7 @@ function CreateFixedAssetForm(props) {
                                     <CardActions
                                         style={{ justifyContent: 'center' }}
                                     >
-                                        <ButtonPrimary label= "Enviar" onClick={handleClick}>
+                                        <ButtonPrimary label= "Enviar" onClick={handleClick} id="submit_button">
                                         </ButtonPrimary>
                                     </CardActions>
                                 </form>

@@ -2,9 +2,9 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Input } from '@mui/material';
 
-export default function ButtonPrimary({label, onClick}) {
+export default function ButtonPrimary({label, onClick, id}) {
     return (
-        <Button variant="contained" type="input" label={label} onClick={onClick} sx={{ 
+        <Button variant="contained" type="input" label={label} onClick={onClick} id={id} sx={{ 
             borderRadius: 40, 
             background: "#5CD4E2",
             color: "#023859", 
@@ -14,10 +14,10 @@ export default function ButtonPrimary({label, onClick}) {
             </Button>
     );
   }
-  export function ButtonSecondary() {
+  export function ButtonSecondary({label, onClick, id}) {
     return (
 
-        <Button variant="contained" type="input" label={label} onClick={onClick} sx={{ 
+        <Button variant="contained" type="input" label={label} onClick={onClick} id={id} sx={{ 
             borderRadius: 40, 
             background: "#E0E0E0",
             color: "#023859", 
