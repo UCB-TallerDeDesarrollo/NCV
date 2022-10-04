@@ -12,7 +12,7 @@ import Input from '@mui/material/Input'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import ErrorPage from '../../Components/ErrorPage'
-import MButtons from '../../Components/MUI-Button'
+import ButtonPrimary from '../../Components/MUI-Button'
 
 function CreateFixedAssetForm(props) {
     const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
@@ -146,8 +146,8 @@ function CreateFixedAssetForm(props) {
                                     <CardActions
                                         style={{ justifyContent: 'center' }}
                                     >
-                                        <MButtons label= "Enviar" onClick={handleClick}>
-                                        </MButtons>
+                                        <ButtonPrimary label= "Enviar" onClick={handleClick}>
+                                        </ButtonPrimary>
                                     </CardActions>
                                 </form>
                             </CardContent>
