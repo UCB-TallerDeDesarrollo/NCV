@@ -82,7 +82,7 @@ export default function ShowFixedAssets() {
                                             Descripción: {asset.description}{' '}
                                         </h4>
                                         <h4>
-                                            Fecha de entrada: {asset.entryDate.split('T')[0]}{' '}
+                                            Fecha de entrada: {asset.entryDate!=null? asset.entryDate.split('T')[0]:null}
                                         </h4>
                                         <h4>Precio: {asset.price} </h4>
                                         <br></br>

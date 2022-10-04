@@ -52,7 +52,7 @@ export function ShowFixedAsset() {
                                 <br></br>
                                 <h4>
                                     FECHA DE ENTRADA:{' '}
-                                    {fixedAsset.entryDate.split('T')[0]}
+                                    {fixedAsset.entryDate!=null? fixedAsset.entryDate.split('T')[0]:null}
                                 </h4>
                                 <br></br>
                                 <h4>PRECIO: {fixedAsset.price}</h4>
