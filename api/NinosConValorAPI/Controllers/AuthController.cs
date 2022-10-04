@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NinosConValorAPI.Exceptions;
+using NinosConValorAPI.Models;
 using NinosConValorAPI.Models.Security;
 using NinosConValorAPI.Services;
 using NinosConValorAPI.Services.Security;
@@ -25,7 +26,7 @@ namespace NinosConValorAPI.Controllers
 
         // POST: api/auth/Login
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginAsync([FromBody] LoginViewModel model)
+        public async Task<ActionResult<UserManagerResponse>> LoginAsync([FromBody] LoginViewModel model)
         {
             if (ModelState.IsValid)
             {

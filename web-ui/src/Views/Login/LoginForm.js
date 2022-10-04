@@ -19,8 +19,7 @@ function LoginForm() {
 
     function handleLoginForm(event) {
         event.preventDefault()
-        window.location.href = '/inicio-ncv'
-        /*const user = {
+        const user = {
             email,
             password
         }
@@ -38,6 +37,9 @@ function LoginForm() {
             if(data.isSuccess) {
                 console.log('logging successfully')
                 // Seguridad por Java Web Token
+
+                // sessionStorage.setItem("jwt", data.token);
+                window.location.href = '/home-ncv';
                 sessionStorage.setItem("jwt", data.token);
 
                 
@@ -46,7 +48,6 @@ function LoginForm() {
                 //showSecrectOptions(Role);
                 sessionStorage.setItem('Role',Role)
 
-                
             } else {
                 if(data.error != null){
                     setErrors(data.errors.append(data.token));
@@ -59,8 +60,11 @@ function LoginForm() {
         .catch((error) => {
             console.log(`Error: ${error}`);
             alert(error);
-        })*/
-    }
+        })
+        .finally(() => {
+            setPassword("");
+        });
+    } 
 
     return (
         <section className="vh-100" style={{ backgroundColor: '#023E73' }}>
@@ -94,6 +98,7 @@ function LoginForm() {
                                                     id="input-text-email"
                                                     label="E-mail"
                                                     onChange={handleEmailChange}
+                                                    value={email}
                                                     //required
                                                     error={hasAnError}
                                                 />
@@ -104,6 +109,7 @@ function LoginForm() {
                                                     id="input-text-password"
                                                     label="Contraseña"
                                                     onChange={handlePasswordChange}
+                                                    value={password}
                                                     //required
                                                     error={hasAnError}
                                                 />
