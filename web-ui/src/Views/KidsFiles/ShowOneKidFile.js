@@ -7,23 +7,40 @@ import Navbar from '../../Components/NavBar';
 import ButtonPrimary from '../../Components/MUI-Button';
 import { useNavigate } from 'react-router-dom';
 
+function HealthReport({healthReport, healthReportStatusCode}){
+    const navigate = useNavigate();
+    let urlCreateHealthReport = `/ninos/${kidId}/crear-reporte/`
+    let buttonCreateHealthReport = <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
+    let healthReportComponent = null
+    if (healthReportStatusCode == 404){
+        healthReportComponent = buttonCreateHealthReport
+    }
+    if (healthReport != null && healthReportStatusCode == 200){
+        var healthReportElement = {
+            "Tipo de Sangre" : healthReport.bloodType ,
+            "CI Discapacitado" : healthReport.ciDiscapacidad ,
+            "Diagnostico Fisico" : healthReport.psychologicalDiagnosis ,
+            "Diagnostico Neurologico" : healthReport.neurologicalDiagnosis ,
+            "Diagnostico especial" : healthReport.specialDiagnosis ,
+            "Problemas de salud" : healthReport.healthProblems ,
+        }
+        healthReportComponent = <SingleItemCard key={1} element={healthReportElement} title={"Reporte de salud"} />
+    }
+    return healthReportComponent
+}
+
+
 function ShowOneKidFile() {
     
     const { kidId } = useParams()
     const [kid, setKid] = useState([])     
-    const [healthKid, sethealthKid] = useState([])
+    const [healthReport, setHealthReport] = useState(null)
+    const [healthReportStatusCode, setHealthReportStatusCode] = useState(null)
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
 
     const responsViewFormHelthReport = () => {
         window.location.href = '/add-reporte-nene/'+ kidId
-    }
-
-    var aboutButton = {
-        texto: 'Añadir Reporte de Salud',
-        nameClass: 'btn-healthReport',
-        action: responsViewFormHelthReport,
-        display: 'inline-block'
     }
 
     const fetchBasicData = () => {
@@ -35,32 +52,28 @@ function ShowOneKidFile() {
             })
     )}
 
-    const fetchHeltReportData = () => {
-        var responseHRKid = axios(urlHealthKid);
-        axios.all([responseHRKid]).then(
-            axios.spread((...allData) => {
-                var dataHRK = allData[0].data
-                sethealthKid(dataHRK)
+    const fetchHeltReport = () => {
+        axios.get(urlHealthKid)
+            .then((response) => {
+                setHealthReportStatusCode(response.status)
+                setHealthReport(response.data)
             })
-    )}
+            .catch((error)=>{
+                setHealthReportStatusCode(error.response.status);
+            })
+    }
 
-    useEffect(() => { fetchBasicData();
-        fetchHeltReportData() }, [])
+    useEffect(() => { 
+        fetchBasicData();
+        fetchHeltReport() 
+    }, [])
 
     // FIXME: Será necesario contemplar este caso ?? 
     // if (!kid) return null
 
-
-    if(healthKid.bloodType != null){
-        aboutButton = {
-            texto: 'Añadir Reporte de Salud',
-            nameClass: 'btn-healthReport',
-            action: responsViewFormHelthReport,
-            display: 'none'
-        }
-    }
     let birthDate = new Date (kid.birthDate);
     let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
+
     const MyKidDetails = { 
         "Nombre " : kid.firstName ,
         "Apellido ": kid.lastName ,
@@ -71,22 +84,10 @@ function ShowOneKidFile() {
         "Género ": kid.gender
     };
 
-    let title = "Reporte de Salud"
-    var MyKidHealthReportDetails = {
-        "Tipo de Sangre" : healthKid.bloodType ,
-        "CI Discapacitado" : healthKid.ciDiscapacidad ,
-        "Diagnostico Fisico" : healthKid.psychologicalDiagnosis ,
-        "Diagnostico Neurologico" : healthKid.neurologicalDiagnosis ,
-        "Diagnostico especial" : healthKid.specialDiagnosis ,
-        "Problemas de salud" : healthKid.healthProblems ,
-    }
-    const navigate = useNavigate();
-    let urlCreateHealthReport = `/ninos/${kidId}/crear-reporte/`
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
-            <SingleItemCard element={MyKidDetails} imageUrl={imageUrl} />
-            <SingleItemCard element={MyKidHealthReportDetails} title={title} />
-            <ButtonPrimary label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
+            <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} />
+            <HealthReport healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
         </div></>
     )}
 export {ShowOneKidFile}
