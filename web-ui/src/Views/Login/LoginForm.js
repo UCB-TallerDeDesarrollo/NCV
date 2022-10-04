@@ -19,7 +19,7 @@ function LoginForm() {
 
     function handleLoginForm(event) {
         event.preventDefault()
-        window.location.href = '/home-ncv'
+        window.location.href = '/inicio-ncv'
         /*const user = {
             email,
             password
@@ -38,8 +38,15 @@ function LoginForm() {
             if(data.isSuccess) {
                 console.log('logging successfully')
                 // Seguridad por Java Web Token
-                // sessionStorage.setItem("jwt", data.token);
+                sessionStorage.setItem("jwt", data.token);
 
+                
+                var parseToken = parseJwt(data.token)
+                var Role = parseToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
+                //showSecrectOptions(Role);
+                sessionStorage.setItem('Role',Role)
+
+                
             } else {
                 if(data.error != null){
                     setErrors(data.errors.append(data.token));
@@ -122,5 +129,14 @@ function LoginForm() {
         </section>
     )
 }
-
+function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    //debugger;
+    console.log(jsonPayload);
+    return JSON.parse(jsonPayload);
+};
 export default LoginForm

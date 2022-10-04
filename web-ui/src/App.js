@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import HomePageForm from './Views/HomePage/HomePageForm'
 import LoginForm from './Views/Login/LoginForm'
+import CreateUser from './Views/User/CreateUser'
 
 import CreateFixedAssetForm from './Views/FixedAssets/CreateFixedAssetForm'
 import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
@@ -22,7 +23,8 @@ function App() {
         <Router>
             <Routes>
                 <Route exact path="/" element={<LoginForm />}></Route>
-                <Route path="/home-ncv" element={<HomePageForm />}></Route>
+                <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
+                <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
                 <Route
                     path="/crear-activo-fijo"
                     element={<CreateFixedAssetForm />}
