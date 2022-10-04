@@ -61,16 +61,6 @@ describe('Show Fixed Asset', () => {
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
 
-  const renderWithRouter = ({children}) => (
-    render(
-      <MemoryRouter initialEntries={['activos-fijos/1']}>
-        <Route path='activos-fijos/fixedAssetId'>
-          {children}
-        </Route>
-      </MemoryRouter>
-    )
-  )
-
   it('Shows fixed asset data correctly', async () => {
     act(()=>{render( 
      <MemoryRouter initialEntries={["/activos-fijos/1"]}>
