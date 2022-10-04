@@ -44,7 +44,7 @@ function App() {
                 <Route path="/ninos" element={<ShowKidsFiles />}></Route>
                 <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
                 <Route
-                    path="/add-reporte-nene/:id"
+                    path="ninos/:kidId/crear-reporte/"
                     //element={<><NavBar/><AddHealthReport/></>}
                     element={<AddHealthReport/>}
                 ></Route>
