@@ -23,13 +23,36 @@ describe('Show Fixed Asset', () => {
                 quantity: 2
             }
         ),
-    );
-  });
+    )
+  })
 
+  const fixedAssetWithOnlyRequiredFields = rest.get(fixedAssetUrl, (req, res, ctx) => {
+    return res(
+        ctx.json(
+            {
+                id: 1,
+                name: "cuaderno",
+                description: null,
+                entryDate: null,
+                price: 50,
+                features: null,
+                quantity: 2
+            }
+          ),
+      )
+  })
+  
   const fixedAssetInvalidIdResponse = rest.get(fixedAssetUrl, (req, res, ctx) => {
-    return res(ctx.status(404));
-  });
+    return res(ctx.status(404), 
+                ctx.text("El activo fijo con Id:1 no existe.")
+               )
+  })
 
+  const fixedAssetInternalServiceErrorResponse = rest.get(fixedAssetUrl, (req, res, ctx) => {
+    return res(ctx.status(500), 
+                ctx.text("Lo sentimos, algo sucedió.")
+               )
+  })
   const handlers = [fixedAssetResponse];
 
   const server = new setupServer(...handlers);
@@ -47,6 +70,7 @@ describe('Show Fixed Asset', () => {
       </MemoryRouter>
     )
   )
+
   it('Shows fixed asset data correctly', async () => {
     act(()=>{render( 
      <MemoryRouter initialEntries={["/activos-fijos/1"]}>
@@ -63,5 +87,66 @@ describe('Show Fixed Asset', () => {
         expect(screen.getByText('CARACTERÍSTICAS: Color negro a medio uso')).toBeVisible
         expect(screen.getByText('CANTIDAD: 2')).toBeVisible
       })  
+  })
+
+  it('Shows fixed asset data when non-required fields are null', async () => {
+    server.use(fixedAssetWithOnlyRequiredFields)
+    act(()=>{render( 
+     <MemoryRouter initialEntries={["/activos-fijos/1"]}>
+        <Routes>
+            <Route path="/activos-fijos/:fixedAssetId" element={<ShowFixedAsset />}></Route>
+        </Routes>
+    </MemoryRouter>
+    )})
+    await waitFor(() => {
+        expect(screen.getByText('cuaderno')).toBeVisible
+        expect(screen.getByText('DESCRIPCIÓN:')).toBeVisible
+        expect(screen.getByText('FECHA DE ENTRADA:')).toBeVisible
+        expect(screen.getByText('PRECIO: 50')).toBeVisible
+        expect(screen.getByText('CARACTERÍSTICAS:')).toBeVisible
+        expect(screen.getByText('CANTIDAD: 2')).toBeVisible
+      })  
+  })
+
+  it('Shows error when accessing invalid fixed asset id', async () => {
+    server.use(fixedAssetInvalidIdResponse)
+    act(()=>{render( 
+     <MemoryRouter initialEntries={["/activos-fijos/1"]}>
+        <Routes>
+            <Route path="/activos-fijos/:fixedAssetId" element={<ShowFixedAsset />}></Route>
+        </Routes>
+    </MemoryRouter>
+    )})
+    await waitFor(() => {
+        expect(screen.getByText("ERROR 404: El activo fijo con Id:1 no existe.").toBeVisible)
+      })  
+  })
+
+  it('Shows error when accessing invalid fixed asset id', async () => {
+    server.use(fixedAssetInvalidIdResponse)
+    act(()=>{render( 
+     <MemoryRouter initialEntries={["/activos-fijos/1"]}>
+        <Routes>
+            <Route path="/activos-fijos/:fixedAssetId" element={<ShowFixedAsset />}></Route>
+        </Routes>
+    </MemoryRouter>
+    )})
+    await waitFor(() => {
+        expect(screen.getByText("ERROR 404: El activo fijo con Id:1 no existe.").toBeVisible)
+      })  
   });
-});
+
+  it('Shows error when api returns Internal Service Error', async () => {
+    server.use(fixedAssetInternalServiceErrorResponse)
+    act(()=>{render( 
+     <MemoryRouter initialEntries={["/activos-fijos/1"]}>
+        <Routes>
+            <Route path="/activos-fijos/:fixedAssetId" element={<ShowFixedAsset />}></Route>
+        </Routes>
+    </MemoryRouter>
+    )})
+    await waitFor(() => {
+        expect(screen.getByText("ERROR 500: Lo sentimos, algo sucedió.").toBeVisible)
+      })  
+  });
+})
