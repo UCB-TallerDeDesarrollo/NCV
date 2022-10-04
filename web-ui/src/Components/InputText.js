@@ -2,12 +2,12 @@ import React from 'react'
 import { TextField } from '@mui/material'
 
 function InputText(props) {
-    const { label, ...rest } = props
-
+    let sx = props.sx ? props.sx : {}
+    const { label, multiline, ...rest } = props
+    sx.width = sx.width == undefined ? 1 : sx.width;
+    sx.margin = sx.margin == undefined ? 2 : sx.margin;
     return (
-        <>
-            <TextField label={label} variant="filled" {...rest} />
-        </>
+        <TextField multiline={multiline} label={label} variant="standard" {...rest} sx={sx}/>
     )
 }
 

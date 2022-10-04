@@ -5,6 +5,8 @@ import { bgcolor } from '@mui/system';
 import ListContainer from '../../Components/ListContainer';
 import ListBasic from '../../Components/ListBasic';
 import Navbar from '../../Components/NavBar';
+import Button from '@mui/material/Button'
+import { useNavigate } from 'react-router-dom';
 
 function ShowKidsFiles() {
     const [kidsList, setKidList] = useState([])
@@ -28,9 +30,14 @@ function ShowKidsFiles() {
         })
         kidsListComponent = <ListGrid items={listElements} />
     }
+    const newKidUrl = ""
+    const navigate = useNavigate();
+    const listHeaderComponents = <Button variant="outlined" onClick={()=>navigate(newKidUrl)}>
+        Registrar niño
+    </Button>
     return (
         <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
-            <ListContainer title="Niños del centro">
+            <ListContainer title="Niños del centro" header={listHeaderComponents}>
                 {kidsListComponent}
             </ListContainer>
         </Box></>
