@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import Button from '@mui/material/Button';
 import FormContainer from '../../Components/FormContainer';
 import InputText from '../../Components/InputText';
+import ButtonPrimary from '../../Components/MUI-Button';
 
 const kidFile = {
   firstName: '',
@@ -75,6 +76,9 @@ function CreateFile() {
                     label="Fecha de Nacimiento"
                     type="date"
                     value={data.birthDate}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                     onChange={handleInputChange}
                 />
                 <InputText
@@ -104,9 +108,7 @@ function CreateFile() {
                     value={data.gender}
                     onChange={handleInputChange}
                 />
-                <Button variant="text" onClick={handleFormSubmit}>
-                    Guardar
-                </Button>
+                <ButtonPrimary label={"Registrar"} onClick={handleFormSubmit}/>
             </FormContainer>
         </div>
     );
