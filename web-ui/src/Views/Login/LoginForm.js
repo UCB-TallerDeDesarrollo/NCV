@@ -39,7 +39,7 @@ function LoginForm() {
                 // Seguridad por Java Web Token
 
                 // sessionStorage.setItem("jwt", data.token);
-                window.location.href = '/home-ncv';
+                window.location.href = '/inicio-ncv';
                 sessionStorage.setItem("jwt", data.token);
 
                 
