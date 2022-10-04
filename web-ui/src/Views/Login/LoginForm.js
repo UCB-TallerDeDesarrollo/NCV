@@ -19,8 +19,8 @@ function LoginForm() {
 
     function handleLoginForm(event) {
         event.preventDefault()
-        window.location.href = '/inicio-ncv'
-        /*const user = {
+        
+        const user = {
             email,
             password
         }
@@ -45,7 +45,7 @@ function LoginForm() {
                 var Role = parseToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
                 //showSecrectOptions(Role);
                 sessionStorage.setItem('Role',Role)
-
+                window.location.href = '/inicio-ncv'
                 
             } else {
                 if(data.error != null){
@@ -59,7 +59,7 @@ function LoginForm() {
         .catch((error) => {
             console.log(`Error: ${error}`);
             alert(error);
-        })*/
+        })/**/
     }
 
     return (
