@@ -10,15 +10,15 @@ function Navbar() {
   const isMatch = useMediaQuery(theme.breakpoints.down('md'));
 
   function handleClickFiles(){
-    //if(Rol=="Soporte" || Rol=="Admin"){  
+    if(Rol=="Soporte" || Rol=="Admin"){  
       window.location.href = "/ninos";
-    //}
+    }
   }
 
   function handleClickAssets(){
-    //if(Rol=="Soporte" || Rol=="Admin"){
+    if(Rol=="Soporte" || Rol=="Admin"){
       window.location.href = '/activos-fijos';
-    //}
+    }
   }
 
   function handleClickHome(){
@@ -27,9 +27,9 @@ function Navbar() {
 
   function handleClickSignIn(){
     
-    //if(Rol=="Soporte" || Rol=="Admin"){
+    if(Rol=="Soporte" || Rol=="Admin"){
       window.location.href = "/registrarse-ncv";
-    //}
+    }
   }
 
   function handleClickExit(){
@@ -68,9 +68,7 @@ function Navbar() {
             </Grid>
 
 
-            <Grid  item xs={2}>
-                <Button color="inherit" onClick={handleClickExit}>Salir</Button>
-            </Grid>
+            
 
 
         </Grid>
