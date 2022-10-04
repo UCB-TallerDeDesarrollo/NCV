@@ -5,7 +5,7 @@ import '@testing-library/jest-dom'
 describe('<AddHealthReport />', () => {
     it('Should capture BloodType rendered correctly', () => {
         const {getByLabelText } = render(<AddHealthReport />);
-        const bloodTypeLabel = getByLabelText(/Tipo de Sangre/i);
+        const bloodTypeLabel = getByLabelText(/Grupo sanguineo/i);
         expect(bloodTypeLabel).toBeInTheDocument();
     })
     it('Should capture CIDiscapacidad rendered correctly', () => {
