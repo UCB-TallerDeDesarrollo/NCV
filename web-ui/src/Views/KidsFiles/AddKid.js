@@ -1,19 +1,7 @@
 import React,{useState} from 'react';
-//import Axios from 'axios';
 import Button from '@mui/material/Button';
 import FormContainer from '../../Components/FormContainer';
 import InputText from '../../Components/InputText';
-/*import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Input from '@mui/material/Input';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-import Alert from '@mui/material/Alert';*/
 
 const kidFile = {
   firstName: '',
@@ -54,10 +42,9 @@ function CreateFile() {
       <div style={{display:'flex', justifyContent:'center'}}>
             <FormContainer title="Registrar nuevo niño">
                 <InputText
-                    display="inline"
                     required
-                    id="firstname"
-                    name="FirstName"
+                    id="firstName"
+                    name="firstName"
                     label="Nombre"
                     type="text"
                     value={data.firstName}
