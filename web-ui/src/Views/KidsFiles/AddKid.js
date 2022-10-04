@@ -1,0 +1,128 @@
+import React,{useState} from 'react';
+//import Axios from 'axios';
+import Button from '@mui/material/Button';
+import FormContainer from '../../Components/FormContainer';
+import InputText from '../../Components/InputText';
+/*import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import Input from '@mui/material/Input';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Alert from '@mui/material/Alert';*/
+
+const kidFile = {
+  firstName: '',
+  lastName: '',
+  ci: '',
+  birthDate: '',
+  programHouse:'',
+  birthPlace: '',
+  gender: ''
+}
+
+function CreateFile() {
+  var url = "https://ncv-api.herokuapp.com/api/kids"
+  const [data, setData] = useState(kidFile)
+  
+  const handleInputChange = (e)=>{
+      const {name, value}=e.target
+      setData({
+        ...data,
+        [name]:value
+      })
+
+  }
+
+  function handleFormSubmit(event){
+    event.preventDefault()
+    const requestOptions={
+      method:'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }
+    fetch(url, requestOptions)
+            .then((response) => response.json())
+            .then((res) => console.log(res));
+        alert("Formulario subido!");
+  }
+    return (
+      <div style={{display:'flex', justifyContent:'center'}}>
+            <FormContainer title="Registrar nuevo niño">
+                <InputText
+                    display="inline"
+                    required
+                    id="firstname"
+                    name="FirstName"
+                    label="Nombre"
+                    type="text"
+                    value={data.firstName}
+                    onChange={handleInputChange}
+                />
+                <InputText
+                    required
+                    id="lastName"
+                    name="lastName"
+                    label="Apellido"
+                    type="text"
+                    value={data.lastName}
+                    onChange={handleInputChange}
+                />
+                <InputText
+                    required
+                    id="ci"
+                    name="ci"
+                    label="CI"
+                    type="text"
+                    value={data.ci}
+                    onChange={handleInputChange}
+                />
+                <InputText
+                    required
+                    id="birthDate"
+                    name="birthDate"
+                    label="Fecha de Nacimiento"
+                    type="date"
+                    value={data.birthDate}
+                    onChange={handleInputChange}
+                />
+                <InputText
+                    required
+                    id="programHouse"
+                    name="programHouse"
+                    label="Casa"
+                    type="text"
+                    value={data.programHouse}
+                    onChange={handleInputChange}
+                />
+                <InputText
+                    required
+                    id="birthPlace"
+                    name="birthPlace"
+                    label="Lugar de Nacimiento"
+                    type="text"
+                    value={data.birthPlace}
+                    onChange={handleInputChange}
+                />
+                <InputText
+                    required
+                    id="gender"
+                    name="gender"
+                    label="Genero"
+                    type="text"
+                    value={data.gender}
+                    onChange={handleInputChange}
+                />
+                <Button variant="text" onClick={handleFormSubmit}>
+                    Guardar
+                </Button>
+            </FormContainer>
+        </div>
+    );
+}
+
+export default CreateFile;
