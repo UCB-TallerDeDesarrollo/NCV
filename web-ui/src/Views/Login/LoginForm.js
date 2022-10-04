@@ -39,7 +39,7 @@ function LoginForm() {
                 // Seguridad por Java Web Token
 
                 // sessionStorage.setItem("jwt", data.token);
-                window.location.href = '/inicio-ncv';
+                
                 sessionStorage.setItem("jwt", data.token);
 
                 
@@ -47,6 +47,7 @@ function LoginForm() {
                 var Role = parseToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
                 //showSecrectOptions(Role);
                 sessionStorage.setItem('Role',Role)
+                window.location.href = '/inicio-ncv'
 
             } else {
                 if(data.error != null){
