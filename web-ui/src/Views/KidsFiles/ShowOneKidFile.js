@@ -6,7 +6,7 @@ import Navbar from '../../Components/NavBar';
 import SingleItemCard from '../../Components/SingleItemCard'
 import ButtonPrimary from '../../Components/MUI-Button';
 
-function HealthReport({healthReport, healthReportStatusCode}){
+function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
     let urlCreateHealthReport = `/ninos/${kidId}/crear-reporte/`
     let buttonCreateHealthReport = <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
@@ -82,7 +82,7 @@ function ShowOneKidFile() {
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} />
-            <HealthReport healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
+            <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
         </div></>
     )}
 export {ShowOneKidFile}
