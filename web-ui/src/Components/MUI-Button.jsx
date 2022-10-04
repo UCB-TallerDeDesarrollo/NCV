@@ -2,15 +2,15 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Input } from '@mui/material';
 
-export default function MButtons() {
+export default function MButtons({label, onClick}) {
     return (
-        <Button variant="contained" type="input" sx={{ 
+        <Button variant="contained" type="input" label={label} onClick={onClick} sx={{ 
             borderRadius: 40, 
             background: "#5CD4E2",
             color: "#023859", 
             boxShadow: 3,
             fontWeight: 'bold',
-            }}>Confirmar
+            }}>{label}
             </Button>
     );
   }
