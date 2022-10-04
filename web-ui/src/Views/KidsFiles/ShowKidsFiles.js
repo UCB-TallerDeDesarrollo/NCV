@@ -31,7 +31,7 @@ function ShowKidsFiles() {
         })
         kidsListComponent = <ListGrid items={listElements} />
     }
-    const newKidUrl = ""
+    const newKidUrl = "/registrar-nino"
     const navigate = useNavigate();
     const listHeaderComponents = <ButtonPrimary label={"Registrar niño"} onClick={()=>navigate(newKidUrl)}/>
     return (
