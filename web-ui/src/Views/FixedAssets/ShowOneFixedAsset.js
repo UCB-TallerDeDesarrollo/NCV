@@ -9,6 +9,7 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import getFromApi from '../../Components/GetFromApi'
 import ErrorPage from '../../Components/ErrorPage'
+import Navbar from '../../Components/NavBar'
 export function ShowFixedAsset() {
     const { fixedAssetId } = useParams()
     const [url, setSomeUrl] = useState(`https://ncv-api.herokuapp.com/api/fixedAssets/${fixedAssetId}`)
@@ -19,7 +20,7 @@ export function ShowFixedAsset() {
     }
     if (!fixedAsset) return null
     return (
-        <div>
+        <><Navbar /><div style={{ marginTop: '10vh' }}>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
@@ -45,14 +46,13 @@ export function ShowFixedAsset() {
                                     maxWidth: { xs: 750, md: 750 }
                                 }}
                                 alt="Activo fijo."
-                                src="https://comovertodogratis.com/wp-content/uploads/2021/05/1621943166_La-computadora-portatil-Teclast-F15-hoy-a-un-precio-increible-2048x1280.jpg"
-                            />
+                                src="https://comovertodogratis.com/wp-content/uploads/2021/05/1621943166_La-computadora-portatil-Teclast-F15-hoy-a-un-precio-increible-2048x1280.jpg" />
                             <CardContent>
                                 <h4>DESCRIPCIÓN: {fixedAsset.description}</h4>{' '}
                                 <br></br>
                                 <h4>
                                     FECHA DE ENTRADA:{' '}
-                                    {fixedAsset.entryDate.split('T')[0]}
+                                    {fixedAsset.entryDate!=null? fixedAsset.entryDate.split('T')[0]:null}
                                 </h4>
                                 <br></br>
                                 <h4>PRECIO: {fixedAsset.price}</h4>
@@ -66,6 +66,6 @@ export function ShowFixedAsset() {
                     </Card>
                 </ul>
             </div>
-        </div>
+        </div></>
     )
 }

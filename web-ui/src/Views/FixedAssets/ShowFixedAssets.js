@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 
 import AppBar from '@mui/material/AppBar'
@@ -13,25 +13,24 @@ import CardMedia from '@mui/material/CardMedia'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
+import ErrorPage from '../../Components/ErrorPage'
+import getFromApi from '../../Components/GetFromApi'
+import Navbar from '../../Components/NavBar'
 
 export default function ShowFixedAssets() {
     const navigate = useNavigate()
     const completeInfoFixedAsset = '/activos-fijos/'
     const createFixedAssetRoute = '/crear-activo-fijo'
-    const [fixedAssets, setFixedAssets] = React.useState(null)
+    
+    const [url, setSomeUrl] = useState('https://ncv-api.herokuapp.com/api/fixedAssets')
+    const { apiData:fixedAssets, error } = getFromApi(url)
 
-    useEffect(() => {
-        axios
-            .get('https://ncv-api.herokuapp.com/api/fixedAssets')
-            .then((response) => {
-                setFixedAssets(response.data)
-                console.log(response.data)
-            })
-    }, [])
-
+    if(error){
+        return ErrorPage(error)
+    }
     if (!fixedAssets) return null
     return (
-        <div>
+        <><Navbar /><div style={{ marginTop: '10vh' }}>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
@@ -60,7 +59,7 @@ export default function ShowFixedAssets() {
                             class="activos-fijos"
                             style={{ minHeight: '60vh' }}
                         >
-                            <Card sx={{ p: 10, maxWidth: 1300 ,minWidth: 275 }} key={asset.id}>
+                            <Card sx={{ p: 10, maxWidth: 1300, minWidth: 275 }} key={asset.id}>
                                 <Box sx={{ display: 'flex' }}>
                                     <CardHeader id="Name" title={asset.name} />
                                 </Box>
@@ -83,18 +82,16 @@ export default function ShowFixedAssets() {
                                             Descripción: {asset.description}{' '}
                                         </h4>
                                         <h4>
-                                            Fecha de entrada: {asset.entryDate.split('T')[0]}{' '}
+                                            Fecha de entrada: {asset.entryDate!=null? asset.entryDate.split('T')[0]:null}
                                         </h4>
                                         <h4>Precio: {asset.price} </h4>
                                         <br></br>
                                         <Button
                                             variant="outlined"
-                                            onClick={(e) =>
-                                                navigate(
-                                                    completeInfoFixedAsset +
-                                                        asset.id
-                                                )
-                                            }
+                                            onClick={(e) => navigate(
+                                                completeInfoFixedAsset +
+                                                asset.id
+                                            )}
                                         >
                                             Ver más
                                         </Button>
@@ -105,6 +102,6 @@ export default function ShowFixedAssets() {
                     )
                 })}
             </div>
-        </div>
+        </div></>
     )
 }

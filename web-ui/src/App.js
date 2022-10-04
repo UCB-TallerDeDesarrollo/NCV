@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import HomePageForm from './Views/HomePage/HomePageForm'
 import LoginForm from './Views/Login/LoginForm'
+import CreateUser from './Views/User/CreateUser'
 
 import CreateFixedAssetForm from './Views/FixedAssets/CreateFixedAssetForm'
 import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
@@ -19,11 +20,11 @@ import DataHealth from './Views/KidsFiles/DataHealth'
 
 function App() {
     return (
-        
         <Router>
             <Routes>
                 <Route exact path="/" element={<LoginForm />}></Route>
-                <Route path="/home-ncv" element={<HomePageForm />}></Route>
+                <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
+                <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
                 <Route
                     path="/crear-activo-fijo"
                     element={<CreateFixedAssetForm />}
@@ -33,7 +34,7 @@ function App() {
                     path="/activos-fijos"
                     element={<ShowFixedAssets />}
                 ></Route>
-                
+
                 <Route
                     path="/activos-fijos/:fixedAssetId"
                     element={<ShowFixedAsset />}
@@ -44,7 +45,7 @@ function App() {
                     path="/add-reporte-nene/:id"
                     element={<AddHealthReport />}
                 ></Route>
-                <Route path="/kidHealth/:id" element={<DataHealth />} /> 
+                <Route path="/kidHealth/:id" element={<DataHealth />} />
                 <Route path="*" element={<Navigate replace to="/" />} />
             </Routes>
         </Router>
