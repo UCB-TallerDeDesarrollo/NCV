@@ -17,6 +17,7 @@ import AddHealthReport from './Views/KidsFiles/AddHealthReport'
 import ShowKidsFiles from './Views/KidsFiles/ShowKidsFiles'
 import {ShowOneKidFile} from './Views/KidsFiles/ShowOneKidFile'
 import DataHealth from './Views/KidsFiles/DataHealth'
+import AddKid from './Views/KidsFiles/AddKid'
 
 import NavBar from './Components/NavBar'
 
@@ -27,6 +28,7 @@ function App() {
                 <Route exact path="/" element={<LoginForm />}></Route>
                 <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
                 <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
+                <Route path="/registrar-nino" element={<AddKid />}></Route>
                 <Route
                     path="/crear-activo-fijo"
                     element={<CreateFixedAssetForm />}
