@@ -71,12 +71,15 @@ function ShowOneKidFile() {
     }
 
     let birthDate = new Date (kid.birthDate);
+    let yeardOld = new Date().getFullYear() - birthDate.getFullYear();
+    console.log("EDAD:  ------------",birthDate.getFullYear())
     let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
 
     const MyKidDetails = { 
-        "NOMBRE " : kid.firstName ,
+        "NOMBRE " : kid.firstName,
         "APELLIDO ": kid.lastName ,
         "CI " : kid.ci, 
+        "EDAD ": yeardOld , 
         "FECHA DE NACIMIENTO ": birthDate.toLocaleDateString(),
         "PROGRAMA DE CASA " : kid.programHouse,
         "LUGAR DE NACIMIENTO ": kid.birthPlace,
