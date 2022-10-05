@@ -1,3 +1,6 @@
+//Es necesario para las pruebas e2e instanciar esta variable debido que si no lo hacen se redirige a la vista por defecto que es el login
+sessionStorage.setItem('Role',"Soporte")
+
 describe('Add a fixed asset end to end tests', () => {
   it('Creates a fixed asset', () => {
     cy.visit('/crear-activo-fijo');
