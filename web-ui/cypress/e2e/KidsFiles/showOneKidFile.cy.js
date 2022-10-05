@@ -7,7 +7,7 @@ describe('Show view of File Kid', () => {
       cy.visit('/ninos/1');
 
       cy.get('h5')
-      .should('have.length', 13) // plus the sum of the personal information card (7)
+      .should('have.length', 14) // plus the sum of the personal information card (7)
       .and('contain', 'ABRH-')
       .and('contain', '15678234')
       .and('contain', 'Diagnostico fisico de ejemplo');
@@ -21,7 +21,7 @@ describe('Show view of File Kid', () => {
         cy.visit('/ninos/9');
   
         cy.get('h5')
-        .should('have.length', 13) // plus the sum of the personal information card (7)
+        .should('have.length', 14) // plus the sum of the personal information card (7)
         .and('contain', '-----')
   
       });
@@ -33,7 +33,7 @@ describe('Show view of File Kid', () => {
         cy.visit('/ninos/1');
   
         cy.get('h5')
-        .should('have.length', 13) // plus the sum of the personal information card (7)
+        .should('have.length', 14) // plus the sum of the personal information card (7)
         .and('contain', 'Pato')
         .and('contain', 'Oward')
         .and('contain', '3434582')
