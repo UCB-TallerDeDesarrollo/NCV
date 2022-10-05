@@ -8,51 +8,40 @@ import {act} from 'react-dom/test-utils';
 import {MemoryRouter, Route, Routes} from 'react-router-dom'
 
 describe('Show Fixed Asset', () => {
-  const fixedAssetUrl ='https://ncv-api.herokuapp.com/api/fixedAssets/1';
+  const fixedAssetUrl ='https://ncv-api.herokuapp.com/api/fixedAssets/1'  
 
-  const fixedAssetResponse = rest.get(fixedAssetUrl, (req, res, ctx) => {
-    return res(
-      ctx.json(
-            {
-                id: 1,
-                name: "Teclado",
-                description: "Es un teclado razer",
-                entryDate: "2022-09-30T00:00:00",
-                price: 200,
-                features: "Color negro a medio uso",
-                quantity: 2
-            }
-        ),
-    )
-  })
+  function getResponse(url, jsonData=null, code=200, text=null){
+    const response = rest.get(url, (req, res, ctx) => {
+      if(code!=200) return res(ctx.status(code), ctx.text(text))
+      return res(ctx.json(jsonData))
+    })
+    return response
+  }
 
-  const fixedAssetWithOnlyRequiredFields = rest.get(fixedAssetUrl, (req, res, ctx) => {
-    return res(
-        ctx.json(
-            {
-                id: 1,
-                name: "cuaderno",
-                description: null,
-                entryDate: null,
-                price: 50,
-                features: null,
-                quantity: 2
-            }
-          ),
-      )
-  })
-  
-  const fixedAssetInvalidIdResponse = rest.get(fixedAssetUrl, (req, res, ctx) => {
-    return res(ctx.status(404), 
-                ctx.text("El activo fijo con Id:1 no existe.")
-               )
-  })
+  const fixedAssetWithAllFields =
+  {
+      id: 1,
+      name: "Teclado",
+      description: "Es un teclado razer",
+      entryDate: "2022-09-30T00:00:00",
+      price: 200,
+      features: "Color negro a medio uso",
+      quantity: 2
+  }
 
-  const fixedAssetInternalServiceErrorResponse = rest.get(fixedAssetUrl, (req, res, ctx) => {
-    return res(ctx.status(500), 
-                ctx.text("Lo sentimos, algo sucedió.")
-               )
-  })
+  const fixedAssetOnlyRequiredFields = 
+  {
+    id: 1,
+    name: "cuaderno",
+    description: null,
+    entryDate: null,
+    price: 50,
+    features: null,
+    quantity: 2
+  }
+
+	const fixedAssetResponse = getResponse(fixedAssetUrl, fixedAssetWithAllFields)
+
   const handlers = [fixedAssetResponse];
 
   const server = new setupServer(...handlers);
@@ -61,24 +50,20 @@ describe('Show Fixed Asset', () => {
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
 
-  const renderWithRouter = ({children}) => (
-    render(
-      <MemoryRouter initialEntries={['activos-fijos/1']}>
-        <Route path='activos-fijos/fixedAssetId'>
-          {children}
-        </Route>
+  function renderWithRouter(componentToRender, pathToElement, mockedPath){
+    render( 
+      <MemoryRouter initialEntries={[mockedPath]}>
+          <Routes>
+              <Route path={pathToElement} element={componentToRender}></Route>
+          </Routes>
       </MemoryRouter>
     )
-  )
+  }
 
   it('Shows fixed asset data correctly', async () => {
-    act(()=>{render( 
-     <MemoryRouter initialEntries={["/activos-fijos/1"]}>
-        <Routes>
-            <Route path="/activos-fijos/:fixedAssetId" element={<ShowFixedAsset />}></Route>
-        </Routes>
-    </MemoryRouter>
-    )})
+    act(()=>{
+      renderWithRouter(<ShowFixedAsset/>,"/activos-fijos/:fixedAssetId","/activos-fijos/1" )
+    }) 
     await waitFor(() => {
         expect(screen.getByText('Teclado')).toBeVisible
         expect(screen.getByText('Es un teclado razer')).toBeVisible
@@ -89,15 +74,12 @@ describe('Show Fixed Asset', () => {
       })  
   })
 
-  it('Shows fixed asset data when non-required fields are null', async () => {
+  it('Shows fixed asset data when non-required fields are null', async () => {    
+    const fixedAssetWithOnlyRequiredFields = getResponse(fixedAssetUrl, fixedAssetOnlyRequiredFields)
     server.use(fixedAssetWithOnlyRequiredFields)
-    act(()=>{render( 
-     <MemoryRouter initialEntries={["/activos-fijos/1"]}>
-        <Routes>
-            <Route path="/activos-fijos/:fixedAssetId" element={<ShowFixedAsset />}></Route>
-        </Routes>
-    </MemoryRouter>
-    )})
+    act(()=>{
+      renderWithRouter(<ShowFixedAsset/>,"/activos-fijos/:fixedAssetId","/activos-fijos/1" )
+    }) 
     await waitFor(() => {
         expect(screen.getByText('cuaderno')).toBeVisible
         expect(screen.getByText('50')).toBeVisible
@@ -107,42 +89,22 @@ describe('Show Fixed Asset', () => {
   })
 
   it('Shows error when accessing invalid fixed asset id', async () => {
+    const fixedAssetInvalidIdResponse = getResponse(fixedAssetUrl, null, 404, "El activo fijo con Id:1 no existe.")
     server.use(fixedAssetInvalidIdResponse)
-    act(()=>{render( 
-     <MemoryRouter initialEntries={["/activos-fijos/1"]}>
-        <Routes>
-            <Route path="/activos-fijos/:fixedAssetId" element={<ShowFixedAsset />}></Route>
-        </Routes>
-    </MemoryRouter>
-    )})
+    act(()=>{
+      renderWithRouter(<ShowFixedAsset/>,"/activos-fijos/:fixedAssetId","/activos-fijos/1" )
+    }) 
     await waitFor(() => {
         expect(screen.getByText("ERROR 404: El activo fijo con Id:1 no existe.").toBeVisible)
       })  
   })
 
-  it('Shows error when accessing invalid fixed asset id', async () => {
-    server.use(fixedAssetInvalidIdResponse)
-    act(()=>{render( 
-     <MemoryRouter initialEntries={["/activos-fijos/1"]}>
-        <Routes>
-            <Route path="/activos-fijos/:fixedAssetId" element={<ShowFixedAsset />}></Route>
-        </Routes>
-    </MemoryRouter>
-    )})
-    await waitFor(() => {
-        expect(screen.getByText("ERROR 404: El activo fijo con Id:1 no existe.").toBeVisible)
-      })  
-  });
-
   it('Shows error when api returns Internal Service Error', async () => {
+    const fixedAssetInternalServiceErrorResponse = getResponse(fixedAssetUrl, null, 500, "Lo sentimos, algo sucedió.")
     server.use(fixedAssetInternalServiceErrorResponse)
-    act(()=>{render( 
-     <MemoryRouter initialEntries={["/activos-fijos/1"]}>
-        <Routes>
-            <Route path="/activos-fijos/:fixedAssetId" element={<ShowFixedAsset />}></Route>
-        </Routes>
-    </MemoryRouter>
-    )})
+    act(()=>{
+      renderWithRouter(<ShowFixedAsset/>,"/activos-fijos/:fixedAssetId","/activos-fijos/1" )
+    }) 
     await waitFor(() => {
         expect(screen.getByText("ERROR 500: Lo sentimos, algo sucedió.").toBeVisible)
       })  
