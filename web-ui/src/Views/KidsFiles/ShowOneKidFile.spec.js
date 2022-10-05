@@ -9,19 +9,20 @@ import {MemoryRouter, Route, Routes} from 'react-router-dom'
 
 describe('Show One Kid File', () => {
   const fileKidUrl ='https://ncv-api.herokuapp.com/api/kids/1';
+  const HealthReportUrl = 'https://ncv-api.herokuapp.com/api/kids/1/healthreports'
 
   const fileKidResponse = rest.get(fileKidUrl, (req, res, ctx) => {
     return res(
       ctx.json(
         {
-        "id":1,
-        "firstName":"Pato",
-        "lastName":"Oward",
-        "ci":"3434582",
-        "birthDate":"2003-03-03T00:00:00",
-        "programHouse":"Av. Cualquier cosa #153",
-        "birthPlace":"Mexico",
-        "gender":"Masculino"}
+          "id":1,
+          "firstName":"Pato",
+          "lastName":"Oward",
+          "ci":"3434582",
+          "birthDate":"2003-03-03T00:00:00",
+          "programHouse":"Av. Cualquier cosa #153",
+          "birthPlace":"Mexico",
+          "gender":"Masculino"}
         ),
     )
   })
@@ -30,8 +31,27 @@ describe('Show One Kid File', () => {
     return res(ctx.json(
       {}
       ))})
+    
+  const healthReportResponse = rest.get(HealthReportUrl, (req, res, ctx) => {
+    return res(
+      ctx.json(
+        {"id":1,
+        "kidId":1,
+        "bloodType":"ABRH-",
+        "ciDiscapacidad":"15678234",
+        "psychologicalDiagnosis":"Diagnostico fisico de ejemplo",
+        "neurologicalDiagnosis":"Diagnostico neurologico de ejemplo",
+        "specialDiagnosis":"Diagnostico especial de ejemplo",
+        "healthProblems":"Problemas de salud de ejemplo"}
+        ),
+    )
+  })
+  const healthReportIncompletedResponse = rest.get(HealthReportUrl, (req, res, ctx) => {
+    return res(ctx.json(
+      {}
+      ))})
 
-  const handlers = [fileKidResponse];
+  const handlers = [fileKidResponse , healthReportResponse];
 
   const server = new setupServer(...handlers);
 
@@ -61,14 +81,48 @@ describe('Show One Kid File', () => {
   it('Shows kid file data when is null', async () => {
     server.use(fileKidIncompletedResponse)
     act(()=>{render( 
-     <MemoryRouter initialEntries={["/activos-fijos/1"]}>
+     <MemoryRouter initialEntries={["/ninos/1"]}>
         <Routes>
-            <Route path="/activos-fijos/:fixedAssetId" element={<ShowOneKidFile />}></Route>
+            <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
         </Routes>
     </MemoryRouter>
     )})
     await waitFor(() => {
       expect(screen.getByText('Invalid Date')).toBeVisible
+      expect(screen.getAllByText('-----')).toHaveLength(6)
+      })  
+  })
+
+
+  it('Show health report data correctly', async () => {
+    server.use(healthReportResponse)
+    act(()=>{render( 
+     <MemoryRouter initialEntries={["/ninos/1"]}>
+        <Routes>
+            <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
+        </Routes>
+    </MemoryRouter>
+    )})
+    await waitFor(() => {
+        expect(screen.getByText('ABRH-')).toBeVisible
+        expect(screen.getByText('15678234')).toBeVisible
+        expect(screen.getByText('Diagnostico fisico de ejemplo')).toBeVisible
+        expect(screen.getByText('Diagnostico neurologico de ejemplo')).toBeVisible
+        expect(screen.getByText('Diagnostico especial de ejemplo')).toBeVisible
+        expect(screen.getByText('Problemas de salud de ejemplo')).toBeVisible
+      })  
+  })
+
+  it('Shows health report data when is null', async () => {
+    server.use(healthReportIncompletedResponse)
+    act(()=>{render( 
+     <MemoryRouter initialEntries={["/ninos/1"]}>
+        <Routes>
+            <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
+        </Routes>
+    </MemoryRouter>
+    )})
+    await waitFor(() => {
       expect(screen.getAllByText('-----')).toHaveLength(6)
       })  
   })
