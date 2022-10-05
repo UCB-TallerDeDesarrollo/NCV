@@ -70,13 +70,13 @@ function ShowOneKidFile() {
     let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
 
     const MyKidDetails = { 
-        "Nombre " : kid.firstName ,
-        "Apellido ": kid.lastName ,
+        "NOMBRE " : kid.firstName ,
+        "APELLIDO ": kid.lastName ,
         "CI " : kid.ci, 
-        "Fecha de Nacimiento ": birthDate.toLocaleDateString(),
-        "Programa de Casa " : kid.programHouse,
-        "Lugar de Nacimiento ": kid.birthPlace,
-        "Género ": kid.gender
+        "FECHA DE NACIMIENTO ": birthDate.toLocaleDateString(),
+        "PROGRAMA DE CASA " : kid.programHouse,
+        "LUGAR DE NACIMIENTO ": kid.birthPlace,
+        "GENERO ": kid.gender
     };
 
     return (

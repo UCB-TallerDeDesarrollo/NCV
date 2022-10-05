@@ -54,13 +54,13 @@ describe('Show One Kid File', () => {
     </MemoryRouter>
     )})
     await waitFor(() => {
-        expect(screen.getByText('Nombre :Pato')).toBeVisible
-        expect(screen.getByText('Apellido :Oward')).toBeVisible
-        expect(screen.getByText('CI :3434582')).toBeVisible
-        expect(screen.getByText('Fecha de Nacimiento :3/3/2003')).toBeVisible
-        expect(screen.getByText('Programa de Casa :Av. Cualquier cosa #153')).toBeVisible
-        expect(screen.getByText('Lugar de Nacimiento :Mexico')).toBeVisible
-        expect(screen.getByText('Género :Masculino')).toBeVisible
+        expect(screen.getByText('Pato')).toBeVisible
+        expect(screen.getByText('Oward')).toBeVisible
+        expect(screen.getByText('3434582')).toBeVisible
+        expect(screen.getByText('3/3/2003')).toBeVisible
+        expect(screen.getByText('Av. Cualquier cosa #153')).toBeVisible
+        expect(screen.getByText('Mexico')).toBeVisible
+        expect(screen.getByText('Masculino')).toBeVisible
       })  
   })
 })
