@@ -7,6 +7,11 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true}) => {
     let detailsElement = []
+    const styles = {
+        label: {
+          display:"inline"
+        }
+      }
     let countAllNull = 0;
       for (const prop in element ){
         if (prop != "id" ){
@@ -16,9 +21,14 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
                 contentOneElement =  " ----- "
             }
             detailsElement.push(
+                <>
                 <div>
-                    <h5>{prop}:{contentOneElement}</h5><br></br>
+                    <h5 style={styles.label}>{prop}</h5>
                 </div>
+                <div >
+                    <p>{contentOneElement}</p>
+                </div>
+                </>
             )
         }
       }

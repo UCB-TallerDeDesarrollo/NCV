@@ -81,11 +81,11 @@ describe('Show Fixed Asset', () => {
     )})
     await waitFor(() => {
         expect(screen.getByText('Teclado')).toBeVisible
-        expect(screen.getByText('DESCRIPCIÓN: Es un teclado razer')).toBeVisible
-        expect(screen.getByText('FECHA DE ENTRADA: 2022-09-30')).toBeVisible
-        expect(screen.getByText('PRECIO: 200')).toBeVisible
-        expect(screen.getByText('CARACTERÍSTICAS: Color negro a medio uso')).toBeVisible
-        expect(screen.getByText('CANTIDAD: 2')).toBeVisible
+        expect(screen.getByText('Es un teclado razer')).toBeVisible
+        expect(screen.getByText('2022-09-30')).toBeVisible
+        expect(screen.getByText('200')).toBeVisible
+        expect(screen.getByText('Color negro a medio uso')).toBeVisible
+        expect(screen.getByText('2')).toBeVisible
       })  
   })
 
@@ -100,11 +100,9 @@ describe('Show Fixed Asset', () => {
     )})
     await waitFor(() => {
         expect(screen.getByText('cuaderno')).toBeVisible
-        expect(screen.getByText('DESCRIPCIÓN:')).toBeVisible
-        expect(screen.getByText('FECHA DE ENTRADA:')).toBeVisible
-        expect(screen.getByText('PRECIO: 50')).toBeVisible
-        expect(screen.getByText('CARACTERÍSTICAS:')).toBeVisible
-        expect(screen.getByText('CANTIDAD: 2')).toBeVisible
+        expect(screen.getByText('50')).toBeVisible
+        expect(screen.getByText('2')).toBeVisible
+        expect(screen.getAllByText('-----')).toHaveLength(3)
       })  
   })
 
