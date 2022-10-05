@@ -15,6 +15,6 @@ describe('Add a fixed asset end to end tests', () => {
       fixture: 'fixedAssets/listOfAssets.json',
       statusCode: 201
     }).as('anAssetPost',);
-    cy.wait('@anAssetPost').its('response.statusCode').should('equal', 201);
+    cy.wait('@anAssetPost',{timeout: 15000} ).its('response.statusCode').should('equal', 201);
   });
 });
