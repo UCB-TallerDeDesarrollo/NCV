@@ -6,6 +6,8 @@ import Alert from '@mui/material/Alert'
 import ErrorPage from '../../Components/ErrorPage'
 import FormContainer from '../../Components/FormContainer'
 import InputText from '../../Components/InputText'
+import Navbar from '../../Components/NavBar'
+import Box from '@mui/material/Box'
 
 function CreateFixedAssetForm(props) {
     const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
@@ -43,6 +45,7 @@ function CreateFixedAssetForm(props) {
         }).then((res) => {
             if (res.status == 201) {
                 setOpen(true)
+                window.location.href = '/activos-fijos'
             }
             console.log(res.status)
         }).catch ((apiError) => {
@@ -54,6 +57,8 @@ function CreateFixedAssetForm(props) {
         return ErrorPage(error)
     }
     return (
+        <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
+        </Box>
         <div style={{display:'flex', justifyContent:'center'}}>
             <FormContainer title="Crear activo fijo">
                 <InputText
@@ -101,7 +106,7 @@ function CreateFixedAssetForm(props) {
                     label="Cantidad"
                     type="number"
                 />
-                <Button variant="text" onClick={submit} id="submit_button">
+                <Button variant="text" onClick={submit}  id="submit_button">
                     Crear
                 </Button>
                 <Snackbar
@@ -115,6 +120,7 @@ function CreateFixedAssetForm(props) {
                 </Snackbar>
             </FormContainer>
         </div>
+        </>
     )
 }
 
