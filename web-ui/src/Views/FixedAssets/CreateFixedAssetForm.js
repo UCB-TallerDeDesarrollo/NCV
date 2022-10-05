@@ -25,6 +25,12 @@ function CreateFixedAssetForm(props) {
         setData(newData)
         console.log(newData)
     }
+    function handleClose(event, reason) {
+        if (reason === 'clickaway') {
+            return
+        }
+        setOpen(false)
+    }
     function submit(e) {
         e.preventDefault()
         Axios.post(url, {
