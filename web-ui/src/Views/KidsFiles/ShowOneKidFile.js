@@ -5,6 +5,7 @@ import axios from "axios";
 import Navbar from '../../Components/NavBar';
 import SingleItemCard from '../../Components/SingleItemCard'
 import ButtonPrimary from '../../Components/MUI-Button';
+import ErrorPage from '../../Components/ErrorPage'
 
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
@@ -65,6 +66,9 @@ function ShowOneKidFile() {
 
     // FIXME: Será necesario contemplar este caso ?? 
     // if (!kid) return null
+    if (!kid){
+        return <h1>ERROR: Niño no encontrado en la base de datos</h1>
+    }
 
     let birthDate = new Date (kid.birthDate);
     let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"

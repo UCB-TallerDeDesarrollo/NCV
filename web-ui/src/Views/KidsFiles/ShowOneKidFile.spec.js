@@ -25,18 +25,12 @@ describe('Show One Kid File', () => {
         ),
     )
   })
-  /*
-  const fixedAssetInvalidIdResponse = rest.get(fixedAssetUrl, (req, res, ctx) => {
-    return res(ctx.status(404), 
-                ctx.text("El activo fijo con Id:1 no existe.")
-               )
-  })
+  
+  const fileKidIncompletedResponse = rest.get(fileKidUrl, (req, res, ctx) => {
+    return res(ctx.json(
+      {}
+      ))})
 
-  const fixedAssetInternalServiceErrorResponse = rest.get(fixedAssetUrl, (req, res, ctx) => {
-    return res(ctx.status(500), 
-                ctx.text("Lo sentimos, algo sucedió.")
-               )
-  })*/
   const handlers = [fileKidResponse];
 
   const server = new setupServer(...handlers);
@@ -61,6 +55,21 @@ describe('Show One Kid File', () => {
         expect(screen.getByText('Av. Cualquier cosa #153')).toBeVisible
         expect(screen.getByText('Mexico')).toBeVisible
         expect(screen.getByText('Masculino')).toBeVisible
+      })  
+  })
+
+  it('Shows kid file data when is null', async () => {
+    server.use(fileKidIncompletedResponse)
+    act(()=>{render( 
+     <MemoryRouter initialEntries={["/activos-fijos/1"]}>
+        <Routes>
+            <Route path="/activos-fijos/:fixedAssetId" element={<ShowOneKidFile />}></Route>
+        </Routes>
+    </MemoryRouter>
+    )})
+    await waitFor(() => {
+      expect(screen.getByText('Invalid Date')).toBeVisible
+      expect(screen.getAllByText('-----')).toHaveLength(6)
       })  
   })
 })
