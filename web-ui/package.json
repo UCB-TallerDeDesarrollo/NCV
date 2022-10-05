@@ -25,6 +25,7 @@
     "eject": "react-scripts eject",
     "cypress": "cypress open",
     "cypress-run": "cypress run",
+    "cypress-one": "cypress run --spec ./cypress/e2e/kidsFiles/showOneKidFile.cy.js ",
     "format": "prettier --write . ",
     "lint": "eslint --fix . --ext .js,.jsx"
   },
