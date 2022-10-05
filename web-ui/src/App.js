@@ -20,41 +20,53 @@ import DataHealth from './Views/KidsFiles/DataHealth'
 import AddKid from './Views/KidsFiles/AddKid'
 
 import NavBar from './Components/NavBar'
+var Rol = sessionStorage.getItem("Role")
 
 function App() {
-    return (
+    if(Rol=="Soporte" || Rol=="Admin"){
+        return (
+            <Router>
+                <Routes>
+                    <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
+                    
+                    <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
+                    <Route path="/registrar-nino" element={<AddKid />}></Route>
+                    <Route
+                        path="/crear-activo-fijo"
+                        element={<CreateFixedAssetForm />}
+                    ></Route>
+
+                    <Route
+                        path="/activos-fijos"
+                        element={<ShowFixedAssets />}
+                    ></Route>
+
+                    <Route
+                        path="/activos-fijos/:fixedAssetId"
+                        element={<ShowFixedAsset />}
+                    ></Route>
+                    <Route path="/ninos" element={<ShowKidsFiles />}></Route>
+                    <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
+                    <Route
+                        path="ninos/:kidId/crear-reporte/"
+                        //element={<><NavBar/><AddHealthReport/></>}
+                        element={<AddHealthReport/>}
+                    ></Route>
+                    <Route path="/kidHealth/:id" element={<DataHealth />} />
+                    <Route path="*" element={<Navigate replace to="/" />} />
+                </Routes>
+            </Router>
+        )
+    }
+    else{
+        return(
         <Router>
-            <Routes>
-                <Route exact path="/" element={<LoginForm />}></Route>
-                <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
-                <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
-                <Route path="/registrar-nino" element={<AddKid />}></Route>
-                <Route
-                    path="/crear-activo-fijo"
-                    element={<CreateFixedAssetForm />}
-                ></Route>
-
-                <Route
-                    path="/activos-fijos"
-                    element={<ShowFixedAssets />}
-                ></Route>
-
-                <Route
-                    path="/activos-fijos/:fixedAssetId"
-                    element={<ShowFixedAsset />}
-                ></Route>
-                <Route path="/ninos" element={<ShowKidsFiles />}></Route>
-                <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
-                <Route
-                    path="ninos/:kidId/crear-reporte/"
-                    //element={<><NavBar/><AddHealthReport/></>}
-                    element={<AddHealthReport/>}
-                ></Route>
-                <Route path="/kidHealth/:id" element={<DataHealth />} />
-                <Route path="*" element={<Navigate replace to="/" />} />
-            </Routes>
-        </Router>
-    )
+                <Routes>
+                    <Route exact path="/" element={<LoginForm />}></Route>
+                    <Route path="*" element={<Navigate replace to="/" />} />
+                </Routes>
+        </Router>)
+    }
 }
 
 export default App
