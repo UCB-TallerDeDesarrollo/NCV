@@ -12,6 +12,7 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
           display:"inline"
         }
       }
+      // <p size="50" >{contentOneElement}</p>
     let countAllNull = 0;
       for (const prop in element ){
         if (prop != "id" ){
@@ -23,12 +24,13 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
             detailsElement.push(
                 <>
                 <div>
-                    <h5 style={styles.label}>{prop}</h5>
+                <font size="2">{prop}</font>
                 </div>
                 <div >
-                    <p>{contentOneElement}</p>
+                    <h5 style={styles.label}>{contentOneElement}</h5>
+                    <p></p>
                 </div>
-                </>
+                </> 
             )
         }
       }
