@@ -24,7 +24,6 @@ export function ShowFixedAsset() {
         "CARACTERÍSTICAS":fixedAsset.features,
         "CANTIDAD" : fixedAsset.quantity
     }
-    console.log(fixedAssetData)
     return (
         <>
             <Navbar />
