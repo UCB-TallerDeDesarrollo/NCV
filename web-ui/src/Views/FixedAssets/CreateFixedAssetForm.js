@@ -13,6 +13,8 @@ import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import ErrorPage from '../../Components/ErrorPage'
 import ButtonPrimary from '../../Components/MUI-Button'
+import FormContainer from '../../Components/FormContainer'
+import InputText from '../../Components/InputText';
 
 function CreateFixedAssetForm(props) {
     const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
@@ -64,95 +66,57 @@ function CreateFixedAssetForm(props) {
         return ErrorPage(error)
     }
     return (
-        <Box
-            sx={{
-                '& .MuiTextField-root': { m: 1, width: '45ch' }
-            }}
-        >
-            <Grid
-                container
-                direction="column"
-                alignItems="center"
-                justify="center"
-                style={{ minHeight: '100vh' }}
-            >
-                <Grid item xs={3}>
-                    <Card sx={{ maxWidth: 450 }}>
-                        <div>
-                            <CardHeader
-                                style={{ textAlign: 'center' }}
-                                title="Create Fixed Asset"
-                            />
-                            <CardContent>
-                                <form onSubmit={(e) => submit(e)}>
-                                    <TextField
+        <div style={{display:'flex', justifyContent:'center'}}>
+            <FormContainer title="Crear activo fijo">
+                                    <InputText
                                         required
-                                        onChange={(e) => handle(e)}
+                                        onChange={handle}
                                         id="Name"
                                         value={data.Name}
-                                        placeholder="Nombre"
+                                        label="Nombre"
                                         type="text"
-                                        variant="filled"
-                                    />
-                                    <br />
-                                    <TextField
-                                        onChange={(e) => handle(e)}
+                                    />                   
+                                    <InputText
+                                        onChange={handle}
                                         id="Description"
                                         value={data.Description}
-                                        placeholder="Descripción"
+                                        label="Descripción"
                                         type="text"
-                                        variant="filled"
                                     />
-                                    <br />
-                                    <TextField
+                                    <InputText
                                         required
-                                        onChange={(e) => handle(e)}
+                                        onChange={handle}
                                         id="EntryDate"
                                         value={data.EntryDate}
-                                        placeholder="Fecha de Entrada"
+                                        label="Fecha de Entrada"
                                         type="date"
-                                        variant="filled"
                                     />
-                                    <br />
-                                    <TextField
+                                    <InputText
                                         required
-                                        onChange={(e) => handle(e)}
+                                        onChange={handle}
                                         id="Price"
                                         value={data.Price}
-                                        placeholder="Precio"
+                                        label="Precio"
                                         type="number"
-                                        variant="filled"
                                     />
-                                    <br />
-                                    <TextField
-                                        onChange={(e) => handle(e)}
+                                    <InputText
+                                        onChange={handle}
                                         id="Features"
                                         value={data.Features}
-                                        placeholder="Características"
+                                        label="Características"
                                         type="text"
-                                        variant="filled"
                                     />
-                                    <br />
-                                    <TextField
+                                    <InputText
                                         required
-                                        onChange={(e) => handle(e)}
+                                        onChange={handle}
                                         id="Quantity"
                                         value={data.Quantity}
-                                        placeholder="Cantidad"
+                                        label="Cantidad"
                                         type="number"
-                                        variant="filled"
                                     />
-                                    <br />
-                                    <CardActions
-                                        style={{ justifyContent: 'center' }}
-                                    >
-                                        <ButtonPrimary label= "Enviar" onClick={handleClick} id="submit_button">
-                                        </ButtonPrimary>
-                                    </CardActions>
-                                </form>
-                            </CardContent>
-                        </div>
-                    </Card>
+                                    <Button variant="text" label="Crear" onClick={submit} id="submit_button">
+                                        Crear
+                                    </Button>
                     <Snackbar
                         open={open}
                         autoHideDuration={6000}
@@ -162,9 +126,8 @@ function CreateFixedAssetForm(props) {
                             Activo Fijo Creado
                         </Alert>
                     </Snackbar>
-                </Grid>
-            </Grid>
-        </Box>
+            </FormContainer>
+        </div>
     )
 }
 
