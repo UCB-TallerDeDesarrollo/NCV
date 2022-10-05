@@ -35,14 +35,16 @@ function CreateFixedAssetForm(props) {
     }
     function submit(e) {
         e.preventDefault()
+        debugger;
         Axios.post(url, {
             Name: data.Name,
-            Description: data.Description, // string
-            EntryDate: data.EntryDate, // dateTime
+            Description: data.Description == ""? null : data.Description, // string
+            EntryDate: data.EntryDate == ""? null : data.EntryDate.split('T')[0], // dateTime
             Price: data.Price, // decimal
-            Features: data.Features, // string
+            Features: data.Features == ""? null : data.Features, // string
             Quantity: data.Quantity // int
         }).then((res) => {
+            debugger;
             if (res.status == 201) {
                 setOpen(true)
                 window.location.href = '/activos-fijos'
