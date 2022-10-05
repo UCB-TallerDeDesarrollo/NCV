@@ -33,6 +33,8 @@ function Navbar() {
   }
 
   function handleClickExit(){
+    sessionStorage.setItem("jwt", "");
+    sessionStorage.setItem('Role',"")
     window.location.href = "/";
   }
   
