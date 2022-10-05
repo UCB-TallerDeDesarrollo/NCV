@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import InputText from '../../Components/InputText'
-import './styles.css'
+import Button from '../../Components/Button'
+import FormContainer from '../../Components/FormContainer'
+import './LoginForm.css'
 
 function LoginForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const [hasAnError, sethasAnError] = useState(false);
-    const [errors, setErrors] = useState([]);
 
     function handleEmailChange(event) {
         setEmail(event.target.value)
@@ -68,72 +69,53 @@ function LoginForm() {
     } 
 
     return (
-        <section className="vh-100" style={{ backgroundColor: '#023E73' }}>
-            <div className="container py-5 h-100">
-                <div className="row d-flex justify-content-center align-items-center h-100">
-                    <div className="col col-xl-10">
-                        <div className="card cardCustom">
-                            <div className="row g-0">
-                                <div className="col-md-6 col-lg-5 d-none d-md-block">
-                                    <img
-                                        src="https://ayudaenaccion.org/uploads/2022/02/historias-para-ninos-que-educan-en-valores.jpg"
-                                        alt="login form"
-                                        className="img-fluid imageCustom"
-                                    />
-                                </div>
-                                <div className="col-md-6 col-lg-7 d-flex align-items-center">
-                                    <div className="card-body p-4 p-lg-5 text-black">
-                                        <form onSubmit={handleLoginForm}>
-                                            <img
-                                                src="https://ninosconvalor.org.bo/wp-content/uploads/2020/01/NCV-Logos-Whites.png"
-                                                alt="login form"
-                                                className="img-fluid iconCustom"
-                                            />
+        <div className='login-page'>
+            <FormContainer className="login-card">
+                <form onSubmit={handleLoginForm}>
+                    <img
+                        src="https://res.cloudinary.com/dfsv5wqsb/image/upload/c_scale,q_87,w_221/v1664990797/logo-ncv-removebg-preview_f5piiq.png"
+                        alt="login form"
+                        className="img-fluid iconCustom"
+                    />
 
-                                            <h5 className="fw-normal mb-3 pb-3">
-                                                Ingresa con tu cuenta
-                                            </h5>
-                                            <div className="form-outline mb-4">
-                                                <InputText
-                                                    type="text"
-                                                    id="input-text-email"
-                                                    label="E-mail"
-                                                    onChange={handleEmailChange}
-                                                    value={email}
-                                                    //required
-                                                    error={hasAnError}
-                                                />
-                                            </div>
-                                            <div className="form-outline mb-4">
-                                                <InputText
-                                                    type="password"
-                                                    id="input-text-password"
-                                                    label="Contraseña"
-                                                    onChange={handlePasswordChange}
-                                                    value={password}
-                                                    //required
-                                                    error={hasAnError}
-                                                />
-                                            </div>
-                                            <div>
-                                                {hasAnError && <p style={{color: "red"}}> Usuario y/o Contraseña no validos</p>}
-                                            </div>
-                                            <div className="pt-1 mb-4">
-                                                <input
-                                                    type="submit"
-                                                    value="Log-In"
-                                                    className="btn btn-dark btn-lg btn-block"
-                                                />
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <h5 className="fw-normal mb-3 pb-3">
+                        Ingresa con tu cuenta
+                    </h5>
+                    <div className="form-outline mb-4">
+                        <InputText
+                            type="text"
+                            id="input-text-email"
+                            label="E-mail"
+                            onChange={handleEmailChange}
+                            value={email}
+                            //required
+                            error={hasAnError}
+                        />
                     </div>
-                </div>
-            </div>
-        </section>
+                    <div className="form-outline mb-4">
+                        <InputText
+                            type="password"
+                            id="input-text-password"
+                            label="Contraseña"
+                            onChange={handlePasswordChange}
+                            value={password}
+                            //required
+                            error={hasAnError}
+                        />
+                    </div>
+                    <div>
+                        {hasAnError && <p style={{color: "red"}}> Usuario y/o Contraseña no validos</p>}
+                    </div>
+                    <div className="pt-1 mb-4">
+                        <input
+                            type="submit"
+                            value="Log-In"
+                            className="btn btn-dark btn-lg btn-block"
+                        />
+                    </div>
+                </form>
+            </FormContainer>
+        </div>                    
     )
 }
 function parseJwt (token) {
