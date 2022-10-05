@@ -1,18 +1,9 @@
 import React, { useState } from 'react'
 import Axios from 'axios'
 import Button from '@mui/material/Button'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import Grid from '@mui/material/Grid'
-import Input from '@mui/material/Input'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import ErrorPage from '../../Components/ErrorPage'
-import ButtonPrimary from '../../Components/MUI-Button'
 import FormContainer from '../../Components/FormContainer'
 import InputText from '../../Components/InputText';
 
@@ -33,15 +24,6 @@ function CreateFixedAssetForm(props) {
         newData[e.target.id] = e.target.value
         setData(newData)
         console.log(newData)
-    }
-    function handleClick() {
-        setOpen(true)
-    }
-    function handleClose(event, reason) {
-        if (reason === 'clickaway') {
-            return
-        }
-        setOpen(false)
     }
     function submit(e) {
         e.preventDefault()
@@ -68,64 +50,64 @@ function CreateFixedAssetForm(props) {
     return (
         <div style={{display:'flex', justifyContent:'center'}}>
             <FormContainer title="Crear activo fijo">
-                                    <InputText
-                                        required
-                                        onChange={handle}
-                                        id="Name"
-                                        value={data.Name}
-                                        label="Nombre"
-                                        type="text"
-                                    />                   
-                                    <InputText
-                                        onChange={handle}
-                                        id="Description"
-                                        value={data.Description}
-                                        label="Descripción"
-                                        type="text"
-                                    />
-                                    <InputText
-                                        required
-                                        onChange={handle}
-                                        id="EntryDate"
-                                        value={data.EntryDate}
-                                        label="Fecha de Entrada"
-                                        type="date"
-                                    />
-                                    <InputText
-                                        required
-                                        onChange={handle}
-                                        id="Price"
-                                        value={data.Price}
-                                        label="Precio"
-                                        type="number"
-                                    />
-                                    <InputText
-                                        onChange={handle}
-                                        id="Features"
-                                        value={data.Features}
-                                        label="Características"
-                                        type="text"
-                                    />
-                                    <InputText
-                                        required
-                                        onChange={handle}
-                                        id="Quantity"
-                                        value={data.Quantity}
-                                        label="Cantidad"
-                                        type="number"
-                                    />
-                                    <Button variant="text" label="Crear" onClick={submit} id="submit_button">
-                                        Crear
-                                    </Button>
-                    <Snackbar
-                        open={open}
-                        autoHideDuration={6000}
-                        onClose={handleClose}
-                    >
-                        <Alert onClose={handleClose} severity="success">
-                            Activo Fijo Creado
-                        </Alert>
-                    </Snackbar>
+                <InputText
+                    required
+                    onChange={handle}
+                    id="Name"
+                    value={data.Name}
+                    label="Nombre"
+                    type="text"
+                />                   
+                <InputText
+                    onChange={handle}
+                    id="Description"
+                    value={data.Description}
+                    label="Descripción"
+                    type="text"
+                />
+                <InputText
+                    required
+                    onChange={handle}
+                    id="EntryDate"
+                    value={data.EntryDate}
+                    label="Fecha de Entrada"
+                    type="date"
+                />
+                <InputText
+                    required
+                    onChange={handle}
+                    id="Price"
+                    value={data.Price}
+                    label="Precio"
+                    type="number"
+                />
+                <InputText
+                    onChange={handle}
+                    id="Features"
+                    value={data.Features}
+                    label="Características"
+                    type="text"
+                />
+                <InputText
+                    required
+                    onChange={handle}
+                    id="Quantity"
+                    value={data.Quantity}
+                    label="Cantidad"
+                    type="number"
+                />
+                <Button variant="text" label="Crear" onClick={submit} id="submit_button">
+                    Crear
+                </Button>
+                <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                >
+                    <Alert onClose={handleClose} severity="success">
+                        Activo Fijo Creado
+                    </Alert>
+                </Snackbar>
             </FormContainer>
         </div>
     )
