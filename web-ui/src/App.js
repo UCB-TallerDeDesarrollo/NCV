@@ -28,7 +28,6 @@ function App() {
             <Router>
                 <Routes>
                     <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
-                    
                     <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
                     <Route path="/registrar-nino" element={<AddKid />}></Route>
                     <Route
