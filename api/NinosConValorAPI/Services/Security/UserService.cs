@@ -210,7 +210,7 @@ namespace NinosConValorAPI.Services.Security
 
         public async Task<UserManagerResponse> RegisterAuntUserAsync(RegisterViewModel model)
         {
-            return await RegisterUserRole(model, "AdminUser");
+            return await RegisterUserRole(model, "AuntUser");
 
         }
 

@@ -17,5 +17,6 @@ namespace NinosConValorAPI.Services.Security
         //Roles
         Task<UserManagerResponse> RegisterAdminUserAsync(RegisterViewModel model);
         Task<UserManagerResponse> RegisterAuntUserAsync(RegisterViewModel model);
+
     }
 }
