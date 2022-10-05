@@ -40,9 +40,9 @@ function CreateFixedAssetForm(props) {
             Name: data.Name,
             Description: data.Description == ""? null : data.Description, // string
             EntryDate: data.EntryDate == ""? null : data.EntryDate.split('T')[0], // dateTime
-            Price: data.Price, // decimal
+            Price: parseFloat(data.Price).toFixed(2), // decimal
             Features: data.Features == ""? null : data.Features, // string
-            Quantity: data.Quantity // int
+            Quantity: parseInt(data.Quantity) // int
         }).then((res) => {
             debugger;
             if (res.status == 201) {
