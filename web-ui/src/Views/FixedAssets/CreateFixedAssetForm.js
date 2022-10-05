@@ -101,7 +101,7 @@ function CreateFixedAssetForm(props) {
                     label="Cantidad"
                     type="number"
                 />
-                <Button variant="text" onClick={submit}>
+                <Button variant="text" onClick={submit} id="submit_button">
                     Crear
                 </Button>
                 <Snackbar
