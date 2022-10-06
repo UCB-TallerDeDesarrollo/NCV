@@ -53,7 +53,7 @@ function App() {
                         element={<AddHealthReport/>}
                     ></Route>
                     <Route path="/kidHealth/:id" element={<DataHealth />} />
-                    
+                    <Route path="*" element={<Navigate replace to="/" />} />
                 </Routes>
             </Router>
         )
