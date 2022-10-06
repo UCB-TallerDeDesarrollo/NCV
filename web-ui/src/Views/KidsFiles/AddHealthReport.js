@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import ButtonPrimary from '../../Components/MUI-Button'
 import InputText from '../../Components/InputText'
 import FormContainer from '../../Components/FormContainer'
+import axios from 'axios'
+import { Box } from '@mui/system';
 import Navbar from '../../Components/NavBar';
+
 
 const healtReport = {
     BloodType: '',
@@ -14,7 +18,9 @@ const healtReport = {
     HealthProblems: ''
 }
 
+
 function AddHealthReport() {
+    const navigate = useNavigate();
     const {kidId} = useParams()
     var url = "https://ncv-api.herokuapp.com/api/kids/" + kidId +"/healthreports"
 
@@ -27,18 +33,17 @@ function AddHealthReport() {
             [name]: value
         })
     }
-
-    function handleFormSubmit(event) {
-        event.preventDefault()
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formReport)
-        }
-        fetch(url, requestOptions)
-            .then((response) => response.json())
-            .then((res) => console.log(res));
-        alert("Formulario subido!");
+    
+    function handleFormSubmit() {
+        axios.post(url, formReport)
+          .then(function (response) {
+            if (response.status == 201){
+                navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de salud creado"}});
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
 
     return (
@@ -98,7 +103,7 @@ function AddHealthReport() {
                     value={formReport.HealthProblems}
                     onChange={handleInputChange}
                 />
-                <ButtonPrimary label={"Guardar"} onClick={handleFormSubmit}/>
+                <ButtonPrimary label={"Crear reporte"} onClick={handleFormSubmit}/>
             </FormContainer>
         </div></>
     )
