@@ -1,3 +1,5 @@
+sessionStorage.setItem('Role',"Soporte")
+
 describe('Add a Health report end to end tests', () => {
     it('Creates a health report', () => {
       cy.visit('ninos/6/crear-reporte/');
