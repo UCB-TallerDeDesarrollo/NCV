@@ -10,9 +10,7 @@ describe('Inputs from CreateFixedAsset component must be empty in the beginning'
     })
     it('Doesnt show any result in the beginning at the Description space', () => {
         render(<CreateFixedAssetForm />)
-        expect(screen.getByLabelText(/Descripción/i)).toHaveDisplayValue(
-            ''
-        )
+        expect(screen.getByLabelText(/Descripción/i)).toHaveDisplayValue('')
     })
     it('Doesnt show any result in the beginning at EntryDate space', () => {
         render(<CreateFixedAssetForm />)
