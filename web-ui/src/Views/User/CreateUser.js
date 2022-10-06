@@ -15,6 +15,7 @@ import {
 , Autocomplete, Container } from '@mui/material'
 
 import Axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import CardHeader from '@mui/material/CardHeader'
 import CardActions from '@mui/material/CardActions'
 import Box from '@mui/material/Box'
@@ -26,6 +27,7 @@ import { margin } from '@mui/system'
 
 function CreateUser() {
     const url = 'https://ncv-api.herokuapp.com/api/auth/User'
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null);
     const [data, setData] = useState({
@@ -61,14 +63,13 @@ function CreateUser() {
             ConfirmPassword: data.ConfirmPassword, // password
             Rol : data.Rol, // string
         }).then((res) => {
-            if (res.status == 201) {
+            if (res.status == 200) {
                 setOpen(true)
                 alert('usuario creado');
-            } 
-        }).catch ((error) => {
-            setError(apiError);
-            console.log(apiError)
-            alert(error);
+                navigate(`/inicio-ncv`);
+            }
+        }).catch (function(error) {
+           alert(error);
         })
     }
     return (
@@ -172,13 +173,15 @@ function CreateUser() {
                         </div>
                     </Card>
                     <Snackbar
-                        open={open}
                         autoHideDuration={6000}
                         onClose={handleClose}
+                        setOpen={open}
                     >
-                        <Alert onClose={handleClose} severity="success">
+                        {open? <Alert onClose={handleClose} severity="success">
                             Usuario Creado
-                        </Alert>
+                        </Alert> : <Alert onClose={handleClose} severity="error">
+                            Error al registrar
+                        </Alert> }
                     </Snackbar>
                 </Grid>
             </Grid>
