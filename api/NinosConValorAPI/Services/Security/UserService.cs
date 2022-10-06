@@ -202,5 +202,43 @@ namespace NinosConValorAPI.Services.Security
                 IsSuccess = false
             };
         }
+        public async Task<UserManagerResponse> RegisterAdminUserAsync(RegisterViewModel model)
+        {
+            return await RegisterUserRole(model, "AdminUser");
+
+        }
+
+        public async Task<UserManagerResponse> RegisterAuntUserAsync(RegisterViewModel model)
+        {
+            return await RegisterUserRole(model, "AuntUser");
+
+        }
+
+        public async Task<UserManagerResponse> RegisterUserRole(RegisterViewModel model, string role)
+        {
+            var registeredUserResponse = await RegisterUserAsync(model);
+            if (!registeredUserResponse.IsSuccess) return registeredUserResponse;
+
+            var user = await userManager.FindByEmailAsync(model.Email);
+            var userId = user.Id;
+
+            var adminRole = await roleManager.FindByNameAsync(role);
+            var adminRoleId = adminRole.Id;
+
+            var userRoleModel = new CreateUserRoleViewModel()
+            {
+                UserId = userId,
+                RoleId = adminRoleId
+            };
+
+            var assignedRoleResponse = await CreateUserRoleAsync(userRoleModel);
+            if (!assignedRoleResponse.IsSuccess) return assignedRoleResponse;
+
+            return new UserManagerResponse
+            {
+                Token = $"User created successfully with {role} Role!",
+                IsSuccess = true,
+            };
+        }
     }
 }

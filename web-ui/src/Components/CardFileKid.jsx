@@ -12,11 +12,6 @@ const CardFileKid = ({ KidName, KidCi, KidId }) => {
         console.log('Mostrando opciones...')
     }
 
-    const renderFilterRequest2 = (neneId) => {
-        console.log('dirigiendo al file den nene...')
-        console.log(neneId)
-    }
-
     return (
         <Card sx={{ maxWidth: 600 }}>
             <CardHeader

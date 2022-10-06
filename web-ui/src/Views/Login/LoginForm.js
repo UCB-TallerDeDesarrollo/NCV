@@ -9,6 +9,7 @@ function LoginForm() {
     const [password, setPassword] = useState('')
 
     const [hasAnError, sethasAnError] = useState(false);
+    const [error, setErrors] = useState([]);
 
     function handleEmailChange(event) {
         setEmail(event.target.value)

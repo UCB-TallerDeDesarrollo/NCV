@@ -35,14 +35,16 @@ function CreateFixedAssetForm(props) {
     }
     function submit(e) {
         e.preventDefault()
+        debugger;
         Axios.post(url, {
             Name: data.Name,
-            Description: data.Description, // string
-            EntryDate: data.EntryDate, // dateTime
-            Price: data.Price, // decimal
-            Features: data.Features, // string
-            Quantity: data.Quantity // int
+            Description: data.Description == ""? null : data.Description, // string
+            EntryDate: data.EntryDate == ""? null : data.EntryDate.split('T')[0], // dateTime
+            Price: parseFloat(data.Price).toFixed(2), // decimal
+            Features: data.Features == ""? null : data.Features, // string
+            Quantity: parseInt(data.Quantity) // int
         }).then((res) => {
+            debugger;
             if (res.status == 201) {
                 setOpen(true)
                 window.location.href = '/activos-fijos'
@@ -82,6 +84,9 @@ function CreateFixedAssetForm(props) {
                     value={data.EntryDate}
                     label="Fecha de Entrada"
                     type="date"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                 />
                 <InputText
                     required

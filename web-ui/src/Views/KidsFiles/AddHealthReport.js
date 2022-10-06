@@ -6,6 +6,7 @@ import InputText from '../../Components/InputText'
 import FormContainer from '../../Components/FormContainer'
 import axios from 'axios'
 import { Box } from '@mui/system';
+import Navbar from '../../Components/NavBar';
 
 
 const healtReport = {
@@ -46,7 +47,7 @@ function AddHealthReport() {
     }
 
     return (
-        <div style={{display:'flex', justifyContent:'center'}}>
+        <><Navbar /><div style={{marginTop: '3em', display:'flex', justifyContent:'center'}}>
             <FormContainer title="Reporte de salud">
                 <InputText
                     display="inline"
@@ -104,7 +105,7 @@ function AddHealthReport() {
                 />
                 <ButtonPrimary label={"Crear reporte"} onClick={handleFormSubmit}/>
             </FormContainer>
-        </div>
+        </div></>
     )
 }
 export default AddHealthReport

@@ -7,6 +7,8 @@ import ButtonPrimary from '../../Components/MUI-Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { width } from '@mui/system';
+import Navbar from '../../Components/NavBar';
+
 
 const kidFile = {
   firstName: '',
@@ -58,7 +60,7 @@ function CreateFile() {
     }
 
     return (
-      <div style={{display:'flex', justifyContent:'center'}}>
+        <><Navbar /><div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
             <FormContainer title="Registrar nuevo niño">
                 <Collapse in={open} sx={{width:1, pt:2}}>
                     <Alert severity="error">
@@ -143,7 +145,7 @@ function CreateFile() {
                 </InputText>
                 <ButtonPrimary label={"Registrar"} onClick={handleFormSubmit}/>
             </FormContainer>
-        </div>
+        </div></>
     );
 }
 

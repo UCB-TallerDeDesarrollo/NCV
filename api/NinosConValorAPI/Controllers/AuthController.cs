@@ -96,5 +96,39 @@ namespace NinosConValorAPI.Controllers
             }
             return BadRequest("Some properties are not valid");
         }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpPost("AdminUser")]
+        public async Task<IActionResult> RegisterAdminAsync([FromBody] RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.RegisterAdminUserAsync(model);
+
+                if (result.IsSuccess)
+                    return Ok(result); // Status Code: 200 
+
+                return BadRequest(result);
+            }
+
+            return BadRequest("Some properties are not valid"); // Status code: 400
+        }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpPost("AuntUser")]
+        public async Task<IActionResult> RegisterAuntAsync([FromBody] RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.RegisterAuntUserAsync(model);
+
+                if (result.IsSuccess)
+                    return Ok(result); // Status Code: 200 
+
+                return BadRequest(result);
+            }
+
+            return BadRequest("Some properties are not valid"); // Status code: 400
+        }
     }
 }
