@@ -39,12 +39,7 @@ function LoginForm() {
             if(data.isSuccess) {
                 console.log('logging successfully')
                 // Seguridad por Java Web Token
-
-                // sessionStorage.setItem("jwt", data.token);
-                
                 sessionStorage.setItem("jwt", data.token);
-
-                
                 var parseToken = parseJwt(data.token)
                 var Role = parseToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
                 //showSecrectOptions(Role);
@@ -87,9 +82,10 @@ function LoginForm() {
                             type="text"
                             id="input-text-email"
                             label="E-mail"
+                            inputProps={{ maxLength: 20 }}
                             onChange={handleEmailChange}
                             value={email}
-                            //required
+                            required
                             error={hasAnError}
                         />
                     </div>
@@ -98,9 +94,10 @@ function LoginForm() {
                             type="password"
                             id="input-text-password"
                             label="Contraseña"
+                            inputProps={{ maxLength: 15 }}
                             onChange={handlePasswordChange}
                             value={password}
-                            //required
+                            required
                             error={hasAnError}
                         />
                     </div>

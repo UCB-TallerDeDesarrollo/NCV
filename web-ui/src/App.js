@@ -27,6 +27,7 @@ function App() {
         return (
             <Router>
                 <Routes>
+                    <Route exact path="/" element={<LoginForm />}></Route>
                     <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
                     <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
                     <Route path="/registrar-nino" element={<AddKid />}></Route>
@@ -52,7 +53,7 @@ function App() {
                         element={<AddHealthReport/>}
                     ></Route>
                     <Route path="/kidHealth/:id" element={<DataHealth />} />
-                    <Route path="*" element={<Navigate replace to="/" />} />
+                    
                 </Routes>
             </Router>
         )
