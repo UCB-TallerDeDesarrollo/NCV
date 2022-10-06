@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import ButtonPrimary from '../../Components/MUI-Button'
 import InputText from '../../Components/InputText'
 import FormContainer from '../../Components/FormContainer'
+import Navbar from '../../Components/NavBar';
 
 const healtReport = {
     BloodType: '',
@@ -41,7 +42,7 @@ function AddHealthReport() {
     }
 
     return (
-        <div style={{display:'flex', justifyContent:'center'}}>
+        <><Navbar /><div style={{marginTop: '3em', display:'flex', justifyContent:'center'}}>
             <FormContainer title="Reporte de salud">
                 <InputText
                     display="inline"
@@ -99,7 +100,7 @@ function AddHealthReport() {
                 />
                 <ButtonPrimary label={"Guardar"} onClick={handleFormSubmit}/>
             </FormContainer>
-        </div>
+        </div></>
     )
 }
 export default AddHealthReport

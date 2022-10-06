@@ -21,6 +21,8 @@ import Box from '@mui/material/Box'
 import Input from '@mui/material/Input'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
+import Navbar from '../../Components/NavBar'
+import { margin } from '@mui/system'
 
 function CreateUser() {
     const url = 'https://ncv-api.herokuapp.com/api/auth/User'
@@ -66,6 +68,8 @@ function CreateUser() {
         })
     }
     return (
+        <><Navbar />
+        <div style={{marginTop: '5em'}}></div>
         <Box
             sx={{
                 '& .MuiTextField-root': { m: 1, width: '45ch' }
@@ -174,6 +178,7 @@ function CreateUser() {
                 </Grid>
             </Grid>
         </Box>
+        </>
     )
 }
 
