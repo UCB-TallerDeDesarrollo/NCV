@@ -17,14 +17,14 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
       for (const prop in element ){
         if (prop != "id" ){
             var contentOneElement = element[prop]
-            if (element[prop] == null || element[prop]== "" ){
+            if (element[prop] == null  || element[prop]== ""){
                 countAllNull++;
                 contentOneElement =  " ----- "
             }
             detailsElement.push(
                 <>
                 <div>
-                <font size="2">{prop}</font>
+                    <font size="2">{prop}</font>
                 </div>
                 <div >
                     <h5 style={styles.label}>{contentOneElement}</h5>

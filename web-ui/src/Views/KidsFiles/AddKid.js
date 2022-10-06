@@ -1,9 +1,14 @@
 import React,{useState} from 'react';
-import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
 import FormContainer from '../../Components/FormContainer';
 import InputText from '../../Components/InputText';
 import ButtonPrimary from '../../Components/MUI-Button';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { width } from '@mui/system';
 import Navbar from '../../Components/NavBar';
+
 
 const kidFile = {
   firstName: '',
@@ -15,39 +20,61 @@ const kidFile = {
   gender: ''
 }
 
-function CreateFile() {
-  var url = "https://ncv-api.herokuapp.com/api/kids"
-  const [data, setData] = useState(kidFile)
-  
-  const handleInputChange = (e)=>{
-      const {name, value}=e.target
-      setData({
-        ...data,
-        [name]:value
-      })
-
-  }
-
-  function handleFormSubmit(event){
-    event.preventDefault()
-    const requestOptions={
-      method:'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+const genders = [
+    {
+      value: 'M',
+      label: 'M',
+    },
+    {
+      value: 'F',
+      label: 'F',
     }
-    fetch(url, requestOptions)
-            .then((response) => response.json())
-            .then((res) => console.log(res));
-        alert("Formulario subido!");
-  }
+  ];
+
+function CreateFile() {
+    var url = "https://ncv-api.herokuapp.com/api/kids"
+    const navigate = useNavigate()
+    const [data, setData] = useState(kidFile)
+    const [open, setOpen] = useState(false)
+    
+    const handleInputChange = (e)=>{
+        const {name, value}=e.target
+        setOpen(false)
+        setData({
+            ...data,
+            [name]:value
+        })
+
+    }
+
+    function handleFormSubmit() {
+        axios.post(url, data)
+        .then(function (response) {
+            if (response.status == 201){
+                navigate(`/ninos`,{state:{showAlert:true,alertMessage:"Archivo de niño creado exitosamente"}})
+            }
+        })
+        .catch(function (error) {
+            if (error.response){
+                if (error.response.status == 400 )
+                    setOpen(true)
+            }
+        });
+    }
+
     return (
         <><Navbar /><div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
             <FormContainer title="Registrar nuevo niño">
+                <Collapse in={open} sx={{width:1, pt:2}}>
+                    <Alert severity="error">
+                        Todos los campos son requeridos
+                    </Alert>
+                </Collapse>
                 <InputText
                     required
                     id="firstName"
                     name="firstName"
-                    label="Nombre"
+                    label="Nombres"
                     type="text"
                     value={data.firstName}
                     onChange={handleInputChange}
@@ -56,7 +83,7 @@ function CreateFile() {
                     required
                     id="lastName"
                     name="lastName"
-                    label="Apellido"
+                    label="Apellidos"
                     type="text"
                     value={data.lastName}
                     onChange={handleInputChange}
@@ -65,7 +92,7 @@ function CreateFile() {
                     required
                     id="ci"
                     name="ci"
-                    label="CI"
+                    label="Carnet de identidad (CI)"
                     type="text"
                     value={data.ci}
                     onChange={handleInputChange}
@@ -74,7 +101,7 @@ function CreateFile() {
                     required
                     id="birthDate"
                     name="birthDate"
-                    label="Fecha de Nacimiento"
+                    label="Fecha de nacimiento"
                     type="date"
                     value={data.birthDate}
                     InputLabelProps={{
@@ -102,13 +129,23 @@ function CreateFile() {
                 />
                 <InputText
                     required
+                    select
+                    SelectProps={{
+                        native: true,
+                    }}
                     id="gender"
                     name="gender"
                     label="Genero"
                     type="text"
                     value={data.gender}
                     onChange={handleInputChange}
-                />
+                >
+                {genders.map((option) => (
+                    <option key={option.value} value={option.value}>
+                    {option.label}
+                    </option>
+                ))}
+                </InputText>
                 <ButtonPrimary label={"Registrar"} onClick={handleFormSubmit}/>
             </FormContainer>
         </div></>
