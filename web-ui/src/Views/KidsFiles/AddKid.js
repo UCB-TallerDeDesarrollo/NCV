@@ -18,7 +18,7 @@ const kidFile = {
   birthDate: '',
   programHouse:'',
   birthPlace: '',
-  gender: 'M'
+  gender: ''
 }
 
 const genders = [

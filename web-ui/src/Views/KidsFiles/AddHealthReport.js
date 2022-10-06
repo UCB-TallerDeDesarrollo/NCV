@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
+import MenuItem from '@mui/material/MenuItem';
 import ButtonPrimary from '../../Components/MUI-Button'
 import InputText from '../../Components/InputText'
 import FormContainer from '../../Components/FormContainer'
@@ -20,6 +21,41 @@ const healtReport = {
     HealthProblems: ''
 }
 
+const bloodtypes = [
+    {
+        value: 'O+',
+        label: 'O+',
+    },
+    {
+        value: 'O-',
+        label: 'O-',
+    },
+    {
+      value: 'A+',
+      label: 'A+',
+    },
+    {
+      value: 'A-',
+      label: 'A-',
+    },
+    {
+        value: 'B+',
+        label: 'B+',
+    },
+    {
+        value: 'B-',
+        label: 'B-',
+    },
+    {
+        value: 'AB+',
+        label: 'AB+',
+    },
+    {
+        value: 'AB-',
+        label: 'AB-',
+    }
+
+  ];
 
 function AddHealthReport() {
     const navigate = useNavigate();
@@ -62,15 +98,21 @@ function AddHealthReport() {
                     </Alert>
                 </Collapse>
                 <InputText
-                    display="inline"
                     required
+                    select
                     id="bloodtype"
                     name="BloodType"
                     label="Grupo sanguineo"
                     type="text"
                     value={formReport.BloodType}
                     onChange={handleInputChange}
-                />
+                >
+                {bloodtypes.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                    </MenuItem>
+                ))}
+                </InputText>
                 <InputText
                     required
                     id="CIDiscapacidad"
