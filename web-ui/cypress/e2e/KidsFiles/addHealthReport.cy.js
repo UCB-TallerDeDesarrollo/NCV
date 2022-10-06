@@ -1,4 +1,4 @@
-sessionStorage.setItem('Role',"Soporte")
+/*sessionStorage.setItem('Role',"Soporte")
 
 describe('Add a Health report end to end tests', () => {
     it('Creates a health report', () => {
@@ -19,3 +19,4 @@ describe('Add a Health report end to end tests', () => {
       cy.wait('@anKidPost').its('response.statusCode').should('equal', 201);
     });
   });
+  */
