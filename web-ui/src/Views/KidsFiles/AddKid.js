@@ -55,7 +55,10 @@ function CreateFile() {
             }
         })
         .catch(function (error) {
-            setOpen(true)
+            if (error.response){
+                if (error.response.status == 400 )
+                    setOpen(true)
+            }
         });
     }
 
