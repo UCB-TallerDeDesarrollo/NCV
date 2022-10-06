@@ -82,6 +82,9 @@ function CreateFixedAssetForm(props) {
                     value={data.EntryDate}
                     label="Fecha de Entrada"
                     type="date"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                 />
                 <InputText
                     required
