@@ -1,3 +1,6 @@
+//Es necesario para las pruebas e2e instanciar esta variable debido que si no lo hacen se redirige a la vista por defecto que es el login
+sessionStorage.setItem('Role',"Soporte")
+
 describe('Show a fixed asset end to end tests', () => {
   it('Verifies the fields from a single fixed asset', () => {
     cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/fixedAssets/9',{

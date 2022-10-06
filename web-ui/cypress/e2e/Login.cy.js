@@ -1,3 +1,4 @@
+
 describe('Login', () => {
   it('muestra la pagina de LogIn', () => {
     cy.visit('/');
