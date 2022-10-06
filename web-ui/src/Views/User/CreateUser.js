@@ -66,12 +66,17 @@ function CreateUser() {
             }
             console.log(res.status)
         })
+        .catch(error=>{
+            processError(error)
+            console.log(error.message)
+        })
     }
     return (
         <><Navbar />
         <div style={{marginTop: '5em'}}></div>
         <Box
             sx={{
+                marginTop: '10vh',
                 '& .MuiTextField-root': { m: 1, width: '45ch' }
             }}
         >

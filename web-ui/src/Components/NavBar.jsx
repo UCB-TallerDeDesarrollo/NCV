@@ -57,7 +57,7 @@ function Navbar() {
             
             <Grid xs={4} />
             <Grid  item xs={1}>
-                <Button sx={{marginLeft:35,width:150,textTransform:'none'}} color="inherit" onClick={handleClickSignIn}>Registrar Usuario</Button>
+                <Button sx={{marginLeft:35,width:150,textTransform:'none'}} color="inherit" onClick={handleClickSignIn}>Registrar usuario</Button>
             </Grid>
             
             <Grid  item xs={1}>
@@ -65,7 +65,7 @@ function Navbar() {
             </Grid>
 
             <Grid  item xs={1}>
-                <Button sx={{marginLeft:45, width:150,textTransform:'none'}} className='btn-activosFijos' color="inherit" onClick={handleClickAssets}>Activos Fijos</Button>
+                <Button sx={{marginLeft:45, width:150,textTransform:'none'}} className='btn-activosFijos' color="inherit" onClick={handleClickAssets}>Activos fijos</Button>
             </Grid>
 
 
