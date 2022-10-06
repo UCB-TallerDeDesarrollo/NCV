@@ -11,7 +11,7 @@ describe('<AddHealthReport />', () => {
     })
     it('Should capture CIDiscapacidad rendered correctly', () => {
         const {getByLabelText } = render(<Router><AddHealthReport /></Router>);
-        const cIDiscapacidadLabel = getByLabelText(/CI Discapacidad/i);
+        const cIDiscapacidadLabel = getByLabelText(/CI de Discapacidad/i);
         expect(cIDiscapacidadLabel).toBeInTheDocument();
     })
     it(' Should capture PsychologicalDiagnosis rendered correctly', () => {
