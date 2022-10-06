@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import FormContainer from '../../Components/FormContainer';
 import InputText from '../../Components/InputText';
 import ButtonPrimary from '../../Components/MUI-Button';
+import Navbar from '../../Components/NavBar';
 
 const kidFile = {
   firstName: '',
@@ -40,7 +41,7 @@ function CreateFile() {
         alert("Formulario subido!");
   }
     return (
-      <div style={{display:'flex', justifyContent:'center'}}>
+        <><Navbar /><div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
             <FormContainer title="Registrar nuevo niño">
                 <InputText
                     required
@@ -110,7 +111,7 @@ function CreateFile() {
                 />
                 <ButtonPrimary label={"Registrar"} onClick={handleFormSubmit}/>
             </FormContainer>
-        </div>
+        </div></>
     );
 }
 

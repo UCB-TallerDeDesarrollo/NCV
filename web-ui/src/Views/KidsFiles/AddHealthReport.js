@@ -42,7 +42,7 @@ function AddHealthReport() {
     }
 
     return (
-        <><Navbar /><div style={{margin:'10px', display:'flex', justifyContent:'center'}}>
+        <><Navbar /><div style={{marginTop: '3em', display:'flex', justifyContent:'center'}}>
             <FormContainer title="Reporte de salud">
                 <InputText
                     display="inline"
