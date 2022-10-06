@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Axios from 'axios'
-import Button from '@mui/material/Button'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import ErrorPage from '../../Components/ErrorPage'
@@ -8,6 +7,7 @@ import FormContainer from '../../Components/FormContainer'
 import InputText from '../../Components/InputText'
 import Navbar from '../../Components/NavBar'
 import Box from '@mui/material/Box'
+import ButtonPrimary from '../../Components/MUI-Button'
 
 function CreateFixedAssetForm(props) {
     const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
@@ -25,31 +25,36 @@ function CreateFixedAssetForm(props) {
         const newData = { ...data }
         newData[e.target.id] = e.target.value
         setData(newData)
-        console.log(newData)
     }
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
             return
         }
+        window.location.href = '/activos-fijos'
         setOpen(false)
+    }
+    function checkError(){
+        if(error){
+            return ErrorPage(error)
+        }
     }
     function submit(e) {
         e.preventDefault()
         Axios.post(url, {
             Name: data.Name,
-            Description: data.Description, // string
-            EntryDate: data.EntryDate, // dateTime
-            Price: data.Price, // decimal
-            Features: data.Features, // string
-            Quantity: data.Quantity // int
+            Description: data.Description==''? null:data.Description, // string
+            EntryDate: data.EntryDate==''? null:data.EntryDate, // dateTime
+            Price: data.Price==''? null:data.Price, // decimal
+            Features: data.Features==''? null:data.Features, // string
+            Quantity: data.Quantity==''? null:data.Quantity // int
         }).then((res) => {
             if (res.status == 201) {
                 setOpen(true)
-                window.location.href = '/activos-fijos'
-            }
-            console.log(res.status)
+            }            
         }).catch ((apiError) => {
-            setError(apiError);
+            console.log(apiError)
+            setError(apiError) 
+            checkError()                    
         })
     }
 
@@ -109,9 +114,7 @@ function CreateFixedAssetForm(props) {
                     label="Cantidad"
                     type="number"
                 />
-                <Button variant="text" onClick={submit}  id="submit_button">
-                    Crear
-                </Button>
+                <ButtonPrimary label={"Crear"} id="submit_button" onClick={submit}/>
                 <Snackbar
                     open={open}
                     autoHideDuration={6000}
