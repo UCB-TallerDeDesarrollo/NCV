@@ -15,6 +15,7 @@ import {
 , Autocomplete, Container } from '@mui/material'
 
 import Axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import CardHeader from '@mui/material/CardHeader'
 import CardActions from '@mui/material/CardActions'
 import Box from '@mui/material/Box'
@@ -26,7 +27,9 @@ import { margin } from '@mui/system'
 
 function CreateUser() {
     const url = 'https://ncv-api.herokuapp.com/api/auth/User'
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false)
+    const [error, setError] = useState(null);
     const [data, setData] = useState({
         FirstName: '',
         LastName: '',
@@ -39,7 +42,6 @@ function CreateUser() {
         const newData = { ...data }
         newData[e.target.id] = e.target.value
         setData(newData)
-        console.log(newData)
     }
     function handleClick() {
         setOpen(true)
@@ -59,12 +61,15 @@ function CreateUser() {
             Email: data.Email, // email
             Password: data.Password, // password
             ConfirmPassword: data.ConfirmPassword, // password
-            Rol : data.Rol // string
+            Rol : data.Rol, // string
         }).then((res) => {
-            if (res.status == 201) {
+            if (res.status == 200) {
                 setOpen(true)
+                alert('usuario creado');
+                navigate(`/inicio-ncv`);
             }
-            console.log(res.status)
+        }).catch (function(error) {
+           alert(error);
         })
     }
     return (
@@ -72,6 +77,7 @@ function CreateUser() {
         <div style={{marginTop: '5em'}}></div>
         <Box
             sx={{
+                marginTop: '10vh',
                 '& .MuiTextField-root': { m: 1, width: '45ch' }
             }}
         >
@@ -167,13 +173,15 @@ function CreateUser() {
                         </div>
                     </Card>
                     <Snackbar
-                        open={open}
                         autoHideDuration={6000}
                         onClose={handleClose}
+                        setOpen={open}
                     >
-                        <Alert onClose={handleClose} severity="success">
+                        {open? <Alert onClose={handleClose} severity="success">
                             Usuario Creado
-                        </Alert>
+                        </Alert> : <Alert onClose={handleClose} severity="error">
+                            Error al registrar
+                        </Alert> }
                     </Snackbar>
                 </Grid>
             </Grid>
