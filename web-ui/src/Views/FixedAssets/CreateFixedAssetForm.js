@@ -43,10 +43,10 @@ function CreateFixedAssetForm(props) {
         Axios.post(url, {
             Name: data.Name,
             Description: data.Description==''? null:data.Description, // string
-            EntryDate: data.EntryDate==''? null:data.EntryDate, // dateTime
-            Price: data.Price==''? null:data.Price, // decimal
+            EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
+            Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
             Features: data.Features==''? null:data.Features, // string
-            Quantity: data.Quantity==''? null:data.Quantity // int
+            Quantity: data.Quantity==''? null:parseInt(data.Quantity) // int
         }).then((res) => {
             if (res.status == 201) {
                 setOpen(true)
