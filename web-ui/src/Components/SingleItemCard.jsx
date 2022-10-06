@@ -42,7 +42,7 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
             <CardMedia
                 component="img"
                 image={ imageUrl}
-                direction="column" justifyContent="center"
+                direction="column" justifycontent="center"
                 sx={{ width: {xs:250, sm:400}, height:{xs:250, sm:400}, borderRadius:3     }}
             >
             </CardMedia>
@@ -52,7 +52,7 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
                 <CardMedia
                     component="img"
                     image={ imageUrl}
-                    direction="column" justifyContent="center"
+                    direction="column" justifycontent="center"
                     sx={{ width: {xs:250, sm:400}, height:{xs:250, sm:400}, borderRadius:50     }}
                 >
                 </CardMedia>
