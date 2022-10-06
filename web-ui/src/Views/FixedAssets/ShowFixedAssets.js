@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 export default function ShowFixedAssets() {
     const navigate = useNavigate();
     const completeInfoFixedAsset = '/activos-fijos'
-    const [url, setSomeUrl] = useState('https://ncv-api.herokuapp.com/api/fixedAssets')
+    const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
     const { apiData:fixedAssets, error } = getFromApi(url)
     if(error){
         return ErrorPage(error)
@@ -24,7 +24,7 @@ export default function ShowFixedAssets() {
             return {
                 id:el.id, 
                 title:`${el.name}`, 
-                description:`Descripción: ${el.description!=null ? el.description:"*Sin descripción*"}`, 
+                description:`Descripción: ${el.description!=null && el.description!='' ? el.description:"*Sin descripción*"}`, 
                 elementUrl:`${completeInfoFixedAsset}/${el.id}`,
                 imgSrc:`https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg`
             }
