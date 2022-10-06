@@ -8,9 +8,27 @@ import Navbar from '../../Components/NavBar';
 import Button from '../../Components/MUI-Button'
 import { useNavigate } from 'react-router-dom';
 import ButtonPrimary from '../../Components/MUI-Button';
+import {useLocation} from 'react-router-dom'
+import Alert from '@mui/material/Alert';
+import { Snackbar } from '@mui/material';
+import Collapse from '@mui/material/Collapse';
 
 function ShowKidsFiles() {
     const [kidsList, setKidList] = useState([])
+    const location = useLocation()
+    
+    let showAlert = location.state ? location.state.showAlert : false 
+    let alertMessage = location.state ? location.state.alertMessage : null 
+    const [open, setOpen] = useState(showAlert);
+
+    function handleClose(event, reason) {
+        if (reason === 'clickaway') {
+            return
+        }
+        setOpen(false)
+    }
+
+
     const urlKids = 'https://ncv-api.herokuapp.com/api/kids'
     useEffect(() => {
         fetch(urlKids)
@@ -39,7 +57,13 @@ function ShowKidsFiles() {
             <ListContainer title="Niños del centro" header={listHeaderComponents}>
                 {kidsListComponent}
             </ListContainer>
-        </Box></>
+        </Box>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    {alertMessage}
+                </Alert>
+        </Snackbar>
+        </>
     )
 }
 export default ShowKidsFiles

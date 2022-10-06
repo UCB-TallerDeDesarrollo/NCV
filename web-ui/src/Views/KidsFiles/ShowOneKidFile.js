@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
+import {useLocation} from 'react-router-dom'
 import axios from "axios";
 import Navbar from '../../Components/NavBar';
 import SingleItemCard from '../../Components/SingleItemCard'
 import ButtonPrimary from '../../Components/MUI-Button';
+import Alert from '@mui/material/Alert';
+import { Snackbar } from '@mui/material';
+import Collapse from '@mui/material/Collapse';
 
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
@@ -37,6 +41,19 @@ function ShowOneKidFile() {
     const [healthReportStatusCode, setHealthReportStatusCode] = useState(null)
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
+
+    const location = useLocation()
+    
+    let showAlert = location.state ? location.state.showAlert : false 
+    let alertMessage = location.state ? location.state.alertMessage : null 
+    const [open, setOpen] = useState(showAlert);
+
+    function handleClose(event, reason) {
+        if (reason === 'clickaway') {
+            return
+        }
+        setOpen(false)
+    }
 
     const fetchBasicData = () => {
         var responseBasicKid = axios(urlKid);
@@ -83,6 +100,11 @@ function ShowOneKidFile() {
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} />
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    {alertMessage}
+                </Alert>
+            </Snackbar>
         </div></>
     )}
 export {ShowOneKidFile}

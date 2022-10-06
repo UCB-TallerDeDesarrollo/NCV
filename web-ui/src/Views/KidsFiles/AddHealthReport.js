@@ -5,6 +5,8 @@ import ButtonPrimary from '../../Components/MUI-Button'
 import InputText from '../../Components/InputText'
 import FormContainer from '../../Components/FormContainer'
 import axios from 'axios'
+import { Box } from '@mui/system';
+
 
 const healtReport = {
     BloodType: '',
@@ -30,13 +32,12 @@ function AddHealthReport() {
             [name]: value
         })
     }
-
+    
     function handleFormSubmit() {
         axios.post(url, formReport)
           .then(function (response) {
             if (response.status == 201){
-                alert("Reporte de salud creado correctamente.");
-                navigate(`/ninos/${kidId}`);
+                navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de salud creado"}});
             }
           })
           .catch(function (error) {

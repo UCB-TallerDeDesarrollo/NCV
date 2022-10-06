@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 import FormContainer from '../../Components/FormContainer';
 import InputText from '../../Components/InputText';
 import ButtonPrimary from '../../Components/MUI-Button';
@@ -45,8 +45,7 @@ function CreateFile() {
         axios.post(url, data)
         .then(function (response) {
             if (response.status == 201){
-                alert("Registro de niño creado correctamente.");
-                navigate(`/ninos`);
+                navigate(`/ninos`,{state:{showAlert:true,alertMessage:"Archivo de niño creado exitosamente"}})
             }
         })
         .catch(function (error) {
