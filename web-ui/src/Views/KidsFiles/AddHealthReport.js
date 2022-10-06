@@ -115,7 +115,7 @@ function AddHealthReport() {
                     value={formReport.HealthProblems}
                     onChange={handleInputChange}
                 />
-                <ButtonPrimary label={"Crear reporte"} onClick={handleFormSubmit}/>
+                <ButtonPrimary  label={"Crear reporte"} onClick={handleFormSubmit}/>
             </FormContainer>
         </div></>
     )
