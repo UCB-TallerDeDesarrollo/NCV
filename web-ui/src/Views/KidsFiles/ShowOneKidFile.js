@@ -10,6 +10,7 @@ import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 import Collapse from '@mui/material/Collapse';
 
+
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
     let urlCreateHealthReport = `/ninos/${kidId}/crear-reporte/`
@@ -82,18 +83,24 @@ function ShowOneKidFile() {
 
     // FIXME: Será necesario contemplar este caso ?? 
     // if (!kid) return null
+    if (!kid){
+        return <h1>ERROR: Niño no encontrado en la base de datos</h1>
+    }
 
     let birthDate = new Date (kid.birthDate);
+    let yeardOld = new Date().getFullYear() - birthDate.getFullYear();
+    console.log("EDAD:  ------------",birthDate.getFullYear())
     let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
 
     const MyKidDetails = { 
-        "Nombre " : kid.firstName ,
-        "Apellido ": kid.lastName ,
+        "NOMBRE " : kid.firstName,
+        "APELLIDO ": kid.lastName ,
         "CI " : kid.ci, 
-        "Fecha de Nacimiento ": birthDate.toLocaleDateString(),
-        "Programa de Casa " : kid.programHouse,
-        "Lugar de Nacimiento ": kid.birthPlace,
-        "Género ": kid.gender
+        "EDAD ": yeardOld , 
+        "FECHA DE NACIMIENTO ": birthDate.toLocaleDateString(),
+        "PROGRAMA DE CASA " : kid.programHouse,
+        "LUGAR DE NACIMIENTO ": kid.birthPlace,
+        "GENERO ": kid.gender
     };
 
     return (
