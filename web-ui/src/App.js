@@ -23,7 +23,7 @@ import NavBar from './Components/NavBar'
 var Rol = sessionStorage.getItem("Role")
 
 function App() {
-    if(Rol=="Soporte" || Rol=="Admin"){
+    if(Rol=="Soporte" || Rol=="AdminUser" || Rol == "AuntUser"){
         return (
             <Router>
                 <Routes>
