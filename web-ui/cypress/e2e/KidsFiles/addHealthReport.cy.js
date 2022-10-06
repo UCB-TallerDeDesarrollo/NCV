@@ -13,7 +13,7 @@ describe('Add a Health report end to end tests', () => {
   
       cy.clock();
       cy.intercept('POST', 'https://ncv-api.herokuapp.com/api/kids/6/healthreports',{
-        fixture: 'kids/listOfKids.json',
+        fixture: 'Kids/listOfKids.json',
         statusCode: 201
       }).as('anKidPost',);
       cy.wait('@anKidPost').its('response.statusCode').should('equal', 201);
