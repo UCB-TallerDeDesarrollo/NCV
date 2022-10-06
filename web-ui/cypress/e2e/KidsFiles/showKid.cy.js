@@ -1,3 +1,5 @@
+sessionStorage.setItem('Role',"Soporte")
+
 describe('Show a kid end to end tests', () => {
     it('Shows a single kid', () => {
       cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/kids/6',{
