@@ -27,6 +27,7 @@ import { margin } from '@mui/system'
 function CreateUser() {
     const url = 'https://ncv-api.herokuapp.com/api/auth/User'
     const [open, setOpen] = useState(false)
+    const [error, setError] = useState(null);
     const [data, setData] = useState({
         FirstName: '',
         LastName: '',
@@ -39,7 +40,6 @@ function CreateUser() {
         const newData = { ...data }
         newData[e.target.id] = e.target.value
         setData(newData)
-        console.log(newData)
     }
     function handleClick() {
         setOpen(true)
@@ -59,16 +59,16 @@ function CreateUser() {
             Email: data.Email, // email
             Password: data.Password, // password
             ConfirmPassword: data.ConfirmPassword, // password
-            Rol : data.Rol // string
+            Rol : data.Rol, // string
         }).then((res) => {
             if (res.status == 201) {
                 setOpen(true)
-            }
-            console.log(res.status)
-        })
-        .catch(error=>{
-            processError(error)
-            console.log(error.message)
+                alert('usuario creado');
+            } 
+        }).catch ((error) => {
+            setError(apiError);
+            console.log(apiError)
+            alert(error);
         })
     }
     return (
