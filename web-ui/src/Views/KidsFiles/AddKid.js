@@ -1,10 +1,12 @@
 import React,{useState} from 'react';
 import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
 import FormContainer from '../../Components/FormContainer';
 import InputText from '../../Components/InputText';
 import ButtonPrimary from '../../Components/MUI-Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { width } from '@mui/system';
 
 const kidFile = {
   firstName: '',
@@ -31,9 +33,11 @@ function CreateFile() {
     var url = "https://ncv-api.herokuapp.com/api/kids"
     const navigate = useNavigate()
     const [data, setData] = useState(kidFile)
+    const [open, setOpen] = useState(false)
     
     const handleInputChange = (e)=>{
         const {name, value}=e.target
+        setOpen(false)
         setData({
             ...data,
             [name]:value
@@ -49,13 +53,18 @@ function CreateFile() {
             }
         })
         .catch(function (error) {
-            console.log(error);
+            setOpen(true)
         });
     }
 
     return (
       <div style={{display:'flex', justifyContent:'center'}}>
             <FormContainer title="Registrar nuevo niño">
+                <Collapse in={open} sx={{width:1, pt:2}}>
+                    <Alert severity="error">
+                        Todos los campos son requeridos
+                    </Alert>
+                </Collapse>
                 <InputText
                     required
                     id="firstName"
