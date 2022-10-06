@@ -40,6 +40,7 @@ function CreateFixedAssetForm(props) {
     }
     function submit(e) {
         e.preventDefault()
+        debugger;
         Axios.post(url, {
             Name: data.Name,
             Description: data.Description==''? null:data.Description, // string
@@ -48,6 +49,7 @@ function CreateFixedAssetForm(props) {
             Features: data.Features==''? null:data.Features, // string
             Quantity: data.Quantity==''? null:parseInt(data.Quantity) // int
         }).then((res) => {
+            debugger;
             if (res.status == 201) {
                 setOpen(true)
             }            
