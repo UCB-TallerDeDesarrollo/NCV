@@ -1,3 +1,5 @@
+sessionStorage.setItem('Role',"Soporte")
+
 describe('Show view of File Kid', () => {
     it('Verifies the fields from a single health report', () => {
       cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/kids/1/healthreports',{
