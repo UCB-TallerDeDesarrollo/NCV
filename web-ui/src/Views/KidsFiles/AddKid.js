@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
+import MenuItem from '@mui/material/MenuItem';
 import FormContainer from '../../Components/FormContainer';
 import InputText from '../../Components/InputText';
 import ButtonPrimary from '../../Components/MUI-Button';
@@ -17,7 +18,7 @@ const kidFile = {
   birthDate: '',
   programHouse:'',
   birthPlace: '',
-  gender: ''
+  gender: 'M'
 }
 
 const genders = [
@@ -130,9 +131,6 @@ function CreateFile() {
                 <InputText
                     required
                     select
-                    SelectProps={{
-                        native: true,
-                    }}
                     id="gender"
                     name="gender"
                     label="Genero"
@@ -141,9 +139,9 @@ function CreateFile() {
                     onChange={handleInputChange}
                 >
                 {genders.map((option) => (
-                    <option key={option.value} value={option.value}>
+                    <MenuItem key={option.value} value={option.value}>
                     {option.label}
-                    </option>
+                    </MenuItem>
                 ))}
                 </InputText>
                 <ButtonPrimary label={"Registrar"} onClick={handleFormSubmit}/>
