@@ -3,7 +3,7 @@ sessionStorage.setItem('Role',"Soporte")
 describe('Show a kid end to end tests', () => {
   it('Verifies the fields from a single kid', () => {
     cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/kids/6',{
-      fixture: 'kids/anKid.json'
+      fixture: 'Kids/anKid.json'
     }).as('getAnKid',);
 
     cy.visit('/ninos/6');
