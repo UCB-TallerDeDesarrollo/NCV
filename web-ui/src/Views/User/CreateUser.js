@@ -11,7 +11,8 @@ import {
     TextField,
     Select,
     MenuItem,
-    Button
+    Button,
+    InputLabel
 , Autocomplete, Container } from '@mui/material'
 
 import Axios from 'axios'
@@ -25,18 +26,23 @@ import Alert from '@mui/material/Alert'
 import Navbar from '../../Components/NavBar'
 import { margin } from '@mui/system'
 
+
 function CreateUser() {
-    const url = 'https://ncv-api.herokuapp.com/api/auth/User'
+
+    const API = 'https://ncv-api.herokuapp.com/api/auth'
     const navigate = useNavigate();
     const [open, setOpen] = useState(false)
-    const [error, setError] = useState(null);
+    const [rol, setRol] = useState("");
+    const [error, setError] = useState(null)
     const [data, setData] = useState({
+    
         FirstName: '',
         LastName: '',
         CellPhone: '',
         Email: '',
         Password: '',
-        ConfirmPassword: ''
+        ConfirmPassword: '',
+        rol: rol
     })
     function handle(e) {
         const newData = { ...data }
@@ -54,7 +60,7 @@ function CreateUser() {
     }
     function submit(e) {
         e.preventDefault()
-        Axios.post(url, {
+        Axios.post(`${API}/${rol}`, {
             FirstName: data.FirstName,
             LastName: data.LastName, // string
             CellPhone: data.CellPhone, // number
@@ -154,6 +160,9 @@ function CreateUser() {
                                         type="password"
                                         variant="filled"
                                     />
+                                   <Autocomplete  variant="filled"  options={roles} inputValue={rol} onInputChange={(event, newRol) => {setRol(newRol)}} renderInput={
+                                    (params) => <TextField {...params} label="Rol" required />
+                                    } />
                                     <br />
                                     <CardActions
                                         style={{ justifyContent: 'center' }}
@@ -189,5 +198,10 @@ function CreateUser() {
         </>
     )
 }
+
+const roles = [
+    {label: "AuntUser"},
+    {label: "AdminUser"},
+]
 
 export default CreateUser
