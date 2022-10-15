@@ -5,7 +5,7 @@ import {useLocation} from 'react-router-dom'
 import axios from "axios";
 import Navbar from '../../Components/NavBar';
 import SingleItemCard from '../../Components/SingleItemCard'
-import ButtonPrimary from '../../Components/MUI-Button';
+import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
 import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 import TableBasic from '../../Components/TableBasic';
@@ -20,6 +20,12 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import Collapse from '@mui/material/Collapse';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
@@ -240,6 +246,10 @@ function ShowOneKidFile() {
     
     
 
+    const handleClickOpen = () => {
+        setOpen(true);
+      };
+
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName }/>
@@ -251,6 +261,26 @@ function ShowOneKidFile() {
                     {alertMessage}
                 </Alert>
             </Snackbar>
+            
+            <ButtonPrimary key={2} label="Eliminar Registro" onClick={handleClickOpen} />
+            <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>¿Seguro que desea eliminar el registro?</DialogTitle>
+            <DialogContent>
+            <TextField
+                autoFocus
+                margin="dense"
+                id="confirmDelete"
+                label="Escribe ELIMINAR para confirmar la acción"
+                type="text"
+                fullWidth
+                variant="standard"
+            />
+            </DialogContent>
+            <DialogActions>
+            <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
+            <ButtonPrimary label="Si, Quiero Eliminar Registro" onClick={handleClose}></ButtonPrimary>
+            </DialogActions>
+        </Dialog>
         </div></>
     )}
 export {ShowOneKidFile}
