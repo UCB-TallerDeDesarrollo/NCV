@@ -1,20 +1,27 @@
 import Box from '@mui/material/Box';
 import ListGrid from '../../Components/ListGrid'
 import { useState, useEffect } from 'react'
-import { bgcolor } from '@mui/system';
 import ListContainer from '../../Components/ListContainer';
-import ListBasic from '../../Components/ListBasic';
 import Navbar from '../../Components/NavBar';
-import Button from '../../Components/MUI-Button'
 import { useNavigate } from 'react-router-dom';
 import ButtonPrimary from '../../Components/MUI-Button';
 import {useLocation} from 'react-router-dom'
 import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
-import Collapse from '@mui/material/Collapse';
+import SearchBar from '../../Components/SearchBar';
+
+const filterListKids = (listKids, searched) => {
+    if (!searched) {
+      return listKids;
+    } else {
+      return listKids.filter((d) => d.toLowerCase().includes(searched));
+    }
+  };
 
 function ShowKidsFiles() {
     const [kidsList, setKidList] = useState([])
+    const [kidsFilteredList, setKidsFilteredList] = useState([])
+    const [stringSearch, setStringSearch] = useState ("")
     const location = useLocation()
     
     let showAlert = location.state ? location.state.showAlert : false 
@@ -37,8 +44,14 @@ function ShowKidsFiles() {
     }, [])
     let kidsListComponent = null
     const baseUrl ="/ninos"
+
+    useEffect(() => {
+        setKidsFilteredList(filterListKids(kidsList, stringSearch));
+        console.log(kidsFilteredList);
+    })
+    
     if (kidsList.length>0){
-        const listElements = kidsList.map((el)=>{
+        const listElements = kidsFilteredList.map((el)=>{
             return {
                 id:el.id, 
                 title:`${el.firstName} ${el.lastName}`, 
@@ -54,6 +67,7 @@ function ShowKidsFiles() {
     const listHeaderComponents = <ButtonPrimary label={"Registrar niño"} onClick={()=>navigate(newKidUrl)}/>
     return (
         <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
+            <SearchBar/>
             <ListContainer title="Niños del centro" header={listHeaderComponents}>
                 {kidsListComponent}
             </ListContainer>
