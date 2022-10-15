@@ -7,9 +7,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-export default function TableBasic({columnHeaders=null, data=null, align="center"}) {
+export default function TableBasic({columnHeaders=null, data=null, align="center",sxTableContainer={}}) {
   let tableHead = null
   let tableBody = null
+
+  sxTableContainer.borderRadius = sxTableContainer.borderRadius ?? 2;
+  sxTableContainer.boxShadow = sxTableContainer.boxShadow ?? 2;
+
   if (data != null){
     tableBody = (<TableBody>
       {data.map((row, rowIdx) => {
@@ -38,8 +42,8 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
     </TableHead>)
   }
   return (
-    <TableContainer component={Paper} sx={{borderRadius:2, boxShadow:0}}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+    <TableContainer component={Paper} sx={sxTableContainer}>
+      <Table sx={{ minWidth: 50 }} size="small" aria-label="a dense table">
         {tableHead}
         {tableBody}
       </Table>

@@ -12,8 +12,7 @@ import Collapse from '@mui/material/Collapse';
 import TableBasic from '../../Components/TableBasic';
 import FormContainer from '../../Components/FormContainer';
 import Container from '../../Components/Container';
-
-
+import Box from '@mui/material/Box';
 
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
@@ -108,14 +107,18 @@ function ShowOneKidFile() {
     };
 
     let colHeads = ["Fecha","Peso","Talla"];
-    let data = [{date:"Feb 25",weight:25,height:10},{date:"Feb 25",weight:25,height:10}];
+    let data = [{date:"Feb 25",weight:25,height:10},{year:2022,v:null,x:null},{date:"Feb 25",weight:25,height:10},{date:"Feb 25",weight:25,height:10}];
 
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} />
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
             <Container>
-                <TableBasic columnHeaders={colHeads} data={data}></TableBasic>
+                <h4>Peso y talla</h4>
+                <Box sx={{display:"flex", flexDirection:"row"}}>
+                    <TableBasic columnHeaders={colHeads} data={data} sxTableContainer={{width:0.25}}></TableBasic>
+                    <TableBasic columnHeaders={colHeads} data={data} sxTableContainer={{ marginLeft:2, width:0.25}}></TableBasic>
+                </Box>
             </Container>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
