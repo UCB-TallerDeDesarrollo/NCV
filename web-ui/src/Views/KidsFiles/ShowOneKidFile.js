@@ -274,6 +274,10 @@ function ShowOneKidFile() {
         setOpenToConfirm(true);
     };
 
+    const handleClickOpen = () => {
+        setOpen(true);
+      };
+
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName }/>
