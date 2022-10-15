@@ -9,6 +9,8 @@ import ButtonPrimary from '../../Components/MUI-Button';
 import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 import Collapse from '@mui/material/Collapse';
+import TableBasic from '../../Components/TableBasic';
+
 
 
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
@@ -103,10 +105,13 @@ function ShowOneKidFile() {
         "GENERO ": kid.gender
     };
 
+    let colHeads = ["Lolo","Lolazo","Lolazo maximo esta es una col"]
+
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} />
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
+            <TableBasic columnHeaders={colHeads}></TableBasic>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
