@@ -105,13 +105,14 @@ function ShowOneKidFile() {
         "GENERO ": kid.gender
     };
 
-    let colHeads = ["Lolo","Lolazo","Lolazo maximo esta es una col"]
+    let colHeads = ["Lolo","Lolazo","col"];
+    let data = [{date:"Feb 25",weight:25,height:10}];
 
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} />
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
-            <TableBasic columnHeaders={colHeads}></TableBasic>
+            <TableBasic columnHeaders={colHeads} data={data}></TableBasic>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}

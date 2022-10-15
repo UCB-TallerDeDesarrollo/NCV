@@ -19,36 +19,41 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function TableBasic({columnHeaders=null, align="center"}) {
-  if (columnHeaders == null) return;
+export default function TableBasic({columnHeaders=null, data=null, align="center"}) {
+  let tableHead = null
+  let tableBody = null
+  if (data != null){
+    tableBody = (<TableBody>
+      {data.map((row, rowIdx) => {
+        let rowKeys = Object.keys(row);
+        return (<TableRow
+          key={rowIdx}
+          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+        >
+        {
+          rowKeys.map((rk,i)=>(<TableCell key={i} align={align}>{row[rk]}</TableCell>))
+        }
+        </TableRow>
+      )}
+      )}
+    </TableBody>)
+  }
+  if (columnHeaders!=null){
+    tableHead = (<TableHead>
+      <TableRow>
+        {
+          columnHeaders.map((colHeader,k)=>{
+            return (<TableCell sx={{backgroundColor:'#CEECF2',fontWeight: 'fontWeightBold' }} key={k} align={align}>{colHeader}</TableCell>)
+          })
+        }
+      </TableRow>
+    </TableHead>)
+  }
   return (
     <TableContainer component={Paper} sx={{width:0.5}}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            {
-              columnHeaders.map((colHeader,k)=>{
-                return (<TableCell key={k} align={align}>{colHeader}</TableCell>)
-              })
-            }
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+        {tableHead}
+        {tableBody}
       </Table>
     </TableContainer>
   );
