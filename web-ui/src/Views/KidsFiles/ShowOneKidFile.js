@@ -13,11 +13,14 @@ import TableBasic from '../../Components/TableBasic';
 import FormContainer from '../../Components/FormContainer';
 import Container from '../../Components/Container';
 import Box from '@mui/material/Box';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
     let urlCreateHealthReport = `/ninos/${kidId}/crear-reporte/`
-    let buttonCreateHealthReport = <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
+    let buttonCreateHealthReport = (<Container>
+        <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
+    </Container>);
     let healthReportComponent = null
     if (healthReportStatusCode == 404){
         healthReportComponent = buttonCreateHealthReport
@@ -36,6 +39,24 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
     return healthReportComponent
 }
 
+function WeightAndHeight({weightAndHeightData=null}){
+    let table = <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
+        <AutoAwesomeIcon sx={{margin:2}}/>
+        No existen registros de <b>peso y talla</b>
+    </Box>;
+    if (weightAndHeightData != null){
+        let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
+        table = (<>
+            <h4>Peso y talla</h4>
+            <Box sx={{display:"flex", flexDirection:"row"}}>
+                <TableBasic columnHeaders={columnNames} data={weightAndHeightData} sxTableContainer={{width:1}}></TableBasic>
+            </Box>
+        </>);
+    }
+    return (<Container>
+        {table}
+    </Container>);
+}
 
 function ShowOneKidFile() {
     
@@ -106,20 +127,13 @@ function ShowOneKidFile() {
         "GENERO ": kid.gender
     };
 
-    let colHeads = ["Fecha","Peso","Talla"];
-    let data = [{date:"Feb 25",weight:25,height:10},{year:2022,v:null,x:null},{date:"Feb 25",weight:25,height:10},{date:"Feb 25",weight:25,height:10}];
+    let weightAndHeightData = [{date:"Feb 25",weight:25,height:10},{year:2022,v:null,x:null},{date:"Feb 25",weight:25,height:10},{date:"Feb 25",weight:25,height:10}];
 
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} />
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
-            <Container>
-                <h4>Peso y talla</h4>
-                <Box sx={{display:"flex", flexDirection:"row"}}>
-                    <TableBasic columnHeaders={colHeads} data={data} sxTableContainer={{width:0.25}}></TableBasic>
-                    <TableBasic columnHeaders={colHeads} data={data} sxTableContainer={{ marginLeft:2, width:0.25}}></TableBasic>
-                </Box>
-            </Container>
+            <WeightAndHeight weightAndHeightData={weightAndHeightData}/>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}

@@ -12,7 +12,7 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
   let tableBody = null
 
   sxTableContainer.borderRadius = sxTableContainer.borderRadius ?? 2;
-  sxTableContainer.boxShadow = sxTableContainer.boxShadow ?? 2;
+  sxTableContainer.boxShadow = sxTableContainer.boxShadow ?? 0;
 
   if (data != null){
     tableBody = (<TableBody>
