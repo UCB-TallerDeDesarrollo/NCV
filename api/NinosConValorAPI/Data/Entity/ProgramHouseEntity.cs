@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using NinosConValorAPI.Models.Security;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,10 +17,8 @@ namespace NinosConValorAPI.Data.Entity
         public string? Location { get; set; }
 
         [Required]
-        [ForeignKey("AspNetUsers")]
-        public IKey? ResponsibleId { get; set; }
-
-
+        [ForeignKey("ResponsibleId")]
+        public virtual IdentityAppUser ResponsibleUser { get; set; }
 
 
     }

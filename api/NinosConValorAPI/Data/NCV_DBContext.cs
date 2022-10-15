@@ -9,6 +9,7 @@ namespace NinosConValorAPI.Data
     { 
         public DbSet<FixedAssetEntity> FixedAssets => Set<FixedAssetEntity>();
         public DbSet<KidEntity> Kids => Set<KidEntity>();
+        public DbSet<ProgramHouseEntity> ProgramHouses => Set<ProgramHouseEntity>();
         public DbSet<HealthReportEntity> HealthReports { get; set; }
 
         public NCV_DBContext(DbContextOptions<NCV_DBContext> options) : base(options)
@@ -39,6 +40,10 @@ namespace NinosConValorAPI.Data
             modelBuilder.Entity<HealthReportEntity>().ToTable("HealthReports");
             modelBuilder.Entity<HealthReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
 
+            //ProgamHouses
+            modelBuilder.Entity<ProgramHouseEntity>().ToTable("ProgramHouse");
+            modelBuilder.Entity<ProgramHouseEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<ProgramHouseEntity>().HasOne(d => d.ResponsibleUser);
         }
     }
 }

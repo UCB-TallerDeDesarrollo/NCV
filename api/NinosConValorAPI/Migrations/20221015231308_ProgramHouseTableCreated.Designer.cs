@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NinosConValorAPI.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NinosConValorAPI.Migrations
 {
     [DbContext(typeof(NCV_DBContext))]
-    partial class NCV_DBContextModelSnapshot : ModelSnapshot
+    [Migration("20221015231308_ProgramHouseTableCreated")]
+    partial class ProgramHouseTableCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -278,13 +280,13 @@ namespace NinosConValorAPI.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
-                    b.Property<string>("ResponsibleId")
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ResponsibleId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("ProgramHouse", (string)null);
                 });
@@ -430,7 +432,7 @@ namespace NinosConValorAPI.Migrations
                 {
                     b.HasOne("NinosConValorAPI.Models.Security.IdentityAppUser", "ResponsibleUser")
                         .WithMany()
-                        .HasForeignKey("ResponsibleId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
