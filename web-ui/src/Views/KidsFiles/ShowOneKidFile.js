@@ -10,6 +10,8 @@ import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 import Collapse from '@mui/material/Collapse';
 import TableBasic from '../../Components/TableBasic';
+import FormContainer from '../../Components/FormContainer';
+import Container from '../../Components/Container';
 
 
 
@@ -105,14 +107,16 @@ function ShowOneKidFile() {
         "GENERO ": kid.gender
     };
 
-    let colHeads = ["Lolo","Lolazo","col"];
-    let data = [{date:"Feb 25",weight:25,height:10}];
+    let colHeads = ["Fecha","Peso","Talla"];
+    let data = [{date:"Feb 25",weight:25,height:10},{date:"Feb 25",weight:25,height:10}];
 
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} />
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
-            <TableBasic columnHeaders={colHeads} data={data}></TableBasic>
+            <Container>
+                <TableBasic columnHeaders={colHeads} data={data}></TableBasic>
+            </Container>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
