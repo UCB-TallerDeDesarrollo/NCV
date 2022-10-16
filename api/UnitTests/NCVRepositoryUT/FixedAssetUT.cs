@@ -1,5 +1,6 @@
 ﻿using NinosConValorAPI.Data.Entity;
 using NinosConValorAPI.Data.Repository;
+using NinosConValorAPI.Models.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,19 @@ namespace UnitTests.NCVRepositoryUT
         {
             // ARRANGE
             var repository = new NCVRepository(ctx);
+            var programHouse = new ProgramHouseEntity()
+            {
+                Id = 2,
+                Name = "casa 1",
+                ResponsibleUser = new IdentityAppUser()
+                {
+                    Id = "aaefawef",
+                    FirstName = "juna",
+                    LastName = "perez",
+                    State = 1
+                }
+
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -25,11 +39,12 @@ namespace UnitTests.NCVRepositoryUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5
+                Quantity = 5,
+                ProgramHouse = programHouse
             };
-
-            // ACT 
-            repository.CreateFixedAsset(fixedAsset);
+            ctx.Add(programHouse);
+            ctx.SaveChanges();
+            repository.CreateFixedAsset(fixedAsset, 2);
             var result = await repository.SaveChangesAsync();
 
             // ASSERT
@@ -41,6 +56,19 @@ namespace UnitTests.NCVRepositoryUT
         {
             // CREATE 1 FIXED ASSET
             var repository = new NCVRepository(ctx);
+            var programHouse = new ProgramHouseEntity()
+            {
+                Id = 2,
+                Name = "casa 1",
+                ResponsibleUser = new IdentityAppUser()
+                {
+                    Id = "aaefawef",
+                    FirstName = "juna",
+                    LastName = "perez",
+                    State = 1
+                }
+
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -49,9 +77,12 @@ namespace UnitTests.NCVRepositoryUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5
-            };
-            repository.CreateFixedAsset(fixedAsset);
+                Quantity = 5,
+                ProgramHouse= programHouse
+            };           
+            ctx.Add(programHouse);
+            ctx.SaveChanges();
+            repository.CreateFixedAsset(fixedAsset,2);
             var result = await repository.SaveChangesAsync();
 
             // NUMBER OF FIXED ASSETS
@@ -65,6 +96,19 @@ namespace UnitTests.NCVRepositoryUT
         {
             // CREATE 1 FIXED ASSET
             var repository = new NCVRepository(ctx);
+            var programHouse = new ProgramHouseEntity()
+            {
+                Id = 2,
+                Name = "casa 1",
+                ResponsibleUser = new IdentityAppUser()
+                {
+                    Id = "aaefawef",
+                    FirstName = "juna",
+                    LastName = "perez",
+                    State = 1
+                }
+
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -73,9 +117,12 @@ namespace UnitTests.NCVRepositoryUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5
+                Quantity = 5,
+                ProgramHouse = programHouse
             };
-            repository.CreateFixedAsset(fixedAsset);
+            ctx.Add(programHouse);
+            ctx.SaveChanges();
+            repository.CreateFixedAsset(fixedAsset, 2);
             var result = await repository.SaveChangesAsync();
 
             // NUMBER OF FIXED ASSETS
@@ -89,6 +136,19 @@ namespace UnitTests.NCVRepositoryUT
         {
             // CREATE 1 FIXED ASSET
             var repository = new NCVRepository(ctx);
+            var programHouse = new ProgramHouseEntity()
+            {
+                Id = 2,
+                Name = "casa 1",
+                ResponsibleUser = new IdentityAppUser()
+                {
+                    Id = "aaefawef",
+                    FirstName = "juna",
+                    LastName = "perez",
+                    State = 1
+                }
+
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -97,9 +157,12 @@ namespace UnitTests.NCVRepositoryUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5
+                Quantity = 5,
+                ProgramHouse = programHouse
             };
-            repository.CreateFixedAsset(fixedAsset);
+            ctx.Add(programHouse);
+            ctx.SaveChanges();
+            repository.CreateFixedAsset(fixedAsset, 2);
             var result = await repository.SaveChangesAsync();
 
             // RETURN THE FIRST FIXED ASSET
@@ -113,6 +176,19 @@ namespace UnitTests.NCVRepositoryUT
         {
             // CREATE 1 FIXED ASSET
             var repository = new NCVRepository(ctx);
+            var programHouse = new ProgramHouseEntity()
+            {
+                Id = 2,
+                Name = "casa 1",
+                ResponsibleUser = new IdentityAppUser()
+                {
+                    Id = "aaefawef",
+                    FirstName = "juna",
+                    LastName = "perez",
+                    State = 1
+                }
+
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -121,9 +197,12 @@ namespace UnitTests.NCVRepositoryUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5
+                Quantity = 5,
+                ProgramHouse = programHouse
             };
-            repository.CreateFixedAsset(fixedAsset);
+            ctx.Add(programHouse);
+            ctx.SaveChanges();
+            repository.CreateFixedAsset(fixedAsset, 2);
             var result = await repository.SaveChangesAsync();
 
             // RETURN THE FIRST FIXED ASSET

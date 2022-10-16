@@ -17,10 +17,22 @@ namespace NinosConValorAPI.Services
             _NCVRepository = fixedAssetRepository;
             _mapper = mapper;
         }
-        public async Task<FixedAssetModel> CreateFixedAssetAsync(FixedAssetModel fixedAsset)
+
+        private async Task<ProgramHouseEntity> GetProgramHouseAsync(int programHouseId)
         {
+            var programHouse = await _NCVRepository.GetProgramHouseAsync(programHouseId);
+            if (programHouse == null)
+                throw new NotFoundElementException($"El programa con id {programHouseId} no se encontrós");
+            return programHouse;
+        }
+
+        public async Task<FixedAssetModel> CreateFixedAssetAsync(FixedAssetModel fixedAsset, int programHouseId)
+        {
+            //fixedAsset.ProgramHouseId = fixedAsset.ProgramHouseId == 0 ? 2 : fixedAsset.ProgramHouseId;
+            await GetProgramHouseAsync(programHouseId);
+            fixedAsset.ProgramHouseId = programHouseId;
             var fixedAssetEntity = _mapper.Map<FixedAssetEntity>(fixedAsset);
-            _NCVRepository.CreateFixedAsset(fixedAssetEntity);
+            _NCVRepository.CreateFixedAsset(fixedAssetEntity, programHouseId);
             var result = await _NCVRepository.SaveChangesAsync();
             
             if (result)

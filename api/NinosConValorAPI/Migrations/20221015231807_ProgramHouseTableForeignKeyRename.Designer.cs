@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NinosConValorAPI.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NinosConValorAPI.Migrations
 {
     [DbContext(typeof(NCV_DBContext))]
-    partial class NCV_DBContextModelSnapshot : ModelSnapshot
+    [Migration("20221015231807_ProgramHouseTableForeignKeyRename")]
+    partial class ProgramHouseTableForeignKeyRename
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,15 +180,10 @@ namespace NinosConValorAPI.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<int?>("ProgramHouseId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProgramHouseId");
 
                     b.ToTable("FixedAsset", (string)null);
                 });
@@ -420,15 +417,6 @@ namespace NinosConValorAPI.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("NinosConValorAPI.Data.Entity.FixedAssetEntity", b =>
-                {
-                    b.HasOne("NinosConValorAPI.Data.Entity.ProgramHouseEntity", "ProgramHouse")
-                        .WithMany("FixedAssets")
-                        .HasForeignKey("ProgramHouseId");
-
-                    b.Navigation("ProgramHouse");
-                });
-
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.HealthReportEntity", b =>
                 {
                     b.HasOne("NinosConValorAPI.Data.Entity.KidEntity", "Kid")
@@ -454,11 +442,6 @@ namespace NinosConValorAPI.Migrations
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.KidEntity", b =>
                 {
                     b.Navigation("HealthReport");
-                });
-
-            modelBuilder.Entity("NinosConValorAPI.Data.Entity.ProgramHouseEntity", b =>
-                {
-                    b.Navigation("FixedAssets");
                 });
 #pragma warning restore 612, 618
         }
