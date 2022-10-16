@@ -8,9 +8,7 @@ import SingleItemCard from '../../Components/SingleItemCard'
 import ButtonPrimary from '../../Components/MUI-Button';
 import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
-import Collapse from '@mui/material/Collapse';
 import TableBasic from '../../Components/TableBasic';
-import FormContainer from '../../Components/FormContainer';
 import Container from '../../Components/Container';
 import Box from '@mui/material/Box';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
@@ -19,7 +17,11 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
     let urlCreateHealthReport = `/ninos/${kidId}/crear-reporte/`
     let buttonCreateHealthReport = (<Container>
-        <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
+        <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
+            <AutoAwesomeIcon sx={{marginTop:2}}/>
+            <Box sx={{margin:3}}>No se registraron datos de <b>salud</b></Box>
+            <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
+        </Box>
     </Container>);
     let healthReportComponent = null
     if (healthReportStatusCode == 404){
@@ -127,7 +129,7 @@ function ShowOneKidFile() {
         "GENERO ": kid.gender
     };
 
-    let weightAndHeightData = [{date:"Feb 25",weight:25,height:10},{year:2022,v:null,x:null},{date:"Feb 25",weight:25,height:10},{date:"Feb 25",weight:25,height:10}];
+    let weightAndHeightData = null//[{date:"Feb 25",weight:25,height:10},{year:2022,v:null,x:null},{date:"Feb 25",weight:25,height:10},{date:"Feb 25",weight:25,height:10}];
 
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>

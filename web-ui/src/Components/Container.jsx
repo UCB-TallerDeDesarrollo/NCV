@@ -3,7 +3,7 @@ export default function Container({children,sx={}}) {
     
     sx.bgcolor = sx.bgcolor ?? '#ffff';
     sx.padding = sx.padding ?? 4;
-    sx.margin = sx.margin ?? 3;
+    sx.margin = sx.margin ?? 1.5;
     sx.borderRadius = sx.borderRadius ?? 3;
     sx.boxShadow = sx.boxShadow ?? 2;
     sx.width = sx.width ?? 0.75;
