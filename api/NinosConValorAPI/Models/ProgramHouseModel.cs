@@ -7,9 +7,9 @@
         public string? PhoneNumber { get; set; }
         public string? Acronym { get; set; }
         public string? Location { get; set; }
-        public string? ResponsibleUser { get; set; }
+        public string? ResponsibleId { get; set; }
 
         //fixed assets that belong to the program house
-        public IEnumerable<FixedAssetModel>? FixedAssets { get; set; }
+        public IEnumerable<FixedAssetModel> FixedAssets { get; set; }
     }
 }

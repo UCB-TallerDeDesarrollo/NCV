@@ -11,6 +11,6 @@
         public string? Features { get; set; }
         public int Quantity { get; set; }
 
-        public int? ProgramHouseId { get; set; }
+        public int ProgramHouseId { get; set; }
     }
 }

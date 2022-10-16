@@ -23,8 +23,9 @@ namespace NinosConValorAPI.Data.Repository
 
         // FIXED ASSET
 
-        public void CreateFixedAsset(FixedAssetEntity fixedAsset)
+        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId)
         {
+            _dbContext.Entry(fixedAsset.ProgramHouse).State = EntityState.Unchanged;
             _dbContext.FixedAssets.Add(fixedAsset);
         }
         public async Task<KidEntity> GetKidAsync(int kidId)
@@ -97,6 +98,14 @@ namespace NinosConValorAPI.Data.Repository
             query = query.AsNoTracking();
             var result = await query.ToListAsync();
             return result;
+        }
+
+        public async Task<ProgramHouseEntity> GetProgramHouseAsync(int programHouseId)
+        {
+            IQueryable<ProgramHouseEntity> query = _dbContext.ProgramHouses;
+            query = query.AsNoTracking();
+            var programHouse = await query.FirstOrDefaultAsync(rep => (rep.Id == programHouseId));
+            return programHouse;
         }
     }
 }

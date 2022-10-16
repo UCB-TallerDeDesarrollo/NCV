@@ -20,10 +20,11 @@ namespace NinosConValorAPI.Controllers
         public async Task<ActionResult<FixedAssetModel>> CreateFixedAssetAsync([FromBody] FixedAssetModel fixedAsset)
         {
             try
-            {
+            {                               
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
-                var newFixedAsset = await _fixedAssetService.CreateFixedAssetAsync(fixedAsset);
+                int programHouseId = 2; // OJOOOO! modificar esto cuando este implementado FRONT END!!!
+                var newFixedAsset = await _fixedAssetService.CreateFixedAssetAsync(fixedAsset, programHouseId);
                 return Created($"/api/fixedAssets/{newFixedAsset.Id}", newFixedAsset);
             }
             catch (Exception)
@@ -39,6 +40,10 @@ namespace NinosConValorAPI.Controllers
             {
                 var fixedAssets = await _fixedAssetService.GetFixedAssetsAsync();
                 return Ok(fixedAssets);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception)
             {
