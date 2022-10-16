@@ -7,7 +7,9 @@ namespace NinosConValorAPI.Data.Entity
 {
     public class ProgramHouseEntity
     {
+        
         [Key]
+        [Required]
         public int Id { get; set; }
 
         [Required]
@@ -18,8 +20,10 @@ namespace NinosConValorAPI.Data.Entity
 
         [Required]
         [ForeignKey("ResponsibleId")]
-        public virtual IdentityAppUser ResponsibleUser { get; set; }
+        public virtual IdentityAppUser? ResponsibleUser { get; set; }
 
+        //fixed assets that belong to the program house
+        public ICollection<FixedAssetEntity>? FixedAssets { get; set; }
 
     }
 }

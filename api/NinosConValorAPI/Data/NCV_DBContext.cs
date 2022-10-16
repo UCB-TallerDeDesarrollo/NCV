@@ -29,8 +29,12 @@ namespace NinosConValorAPI.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            //fixedAssets
             modelBuilder.Entity<FixedAssetEntity>().ToTable("FixedAsset");
             modelBuilder.Entity<FixedAssetEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<FixedAssetEntity>().HasOne(d => d.ProgramHouse).WithMany(d=>d.FixedAssets);
+
             modelBuilder.Entity<KidEntity>().ToTable("Kid");
             modelBuilder.Entity<KidEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
 
@@ -44,6 +48,7 @@ namespace NinosConValorAPI.Data
             modelBuilder.Entity<ProgramHouseEntity>().ToTable("ProgramHouse");
             modelBuilder.Entity<ProgramHouseEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<ProgramHouseEntity>().HasOne(d => d.ResponsibleUser);
+            modelBuilder.Entity<ProgramHouseEntity>().HasMany(d => d.FixedAssets).WithOne(d => d.ProgramHouse);
         }
     }
 }
