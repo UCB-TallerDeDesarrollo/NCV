@@ -22,7 +22,7 @@ namespace NinosConValorAPI.Services
         {
             var programHouse = await _NCVRepository.GetProgramHouseAsync(programHouseId);
             if (programHouse == null)
-                throw new NotFoundElementException($"Prgram House with id {programHouseId} was not found");
+                throw new NotFoundElementException($"El programa con id {programHouseId} no se encontrós");
             return programHouse;
         }
 
