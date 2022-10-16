@@ -90,5 +90,13 @@ namespace NinosConValorAPI.Data.Repository
         {
             throw new NotImplementedException();
         }
+
+        public async Task<IEnumerable<ProgramHouseEntity>> GetProgramHousesAsync()
+        {
+            IQueryable<ProgramHouseEntity> query = _dbContext.ProgramHouses;
+            query = query.AsNoTracking();
+            var result = await query.ToListAsync();
+            return result;
+        }
     }
 }
