@@ -5,6 +5,23 @@ import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2';
 
+function myCardImage({imageUrlValue,imageCirleValue}){
+    console.log("Entraste a MyCardImage")
+    var borderRadiusValue = 3
+    if (imageCirle){
+        borderRadiusValue = 50
+    }
+/*
+    return <CardMedia
+            component="img"
+            image={ imageUrl}
+            direction="column" justifycontent="center"
+            sx={{ width: {xs:200, sm:200}, height:{xs:200, sm:200}, borderRadius:50}}
+        >
+        </CardMedia>; */
+    return <h1>Holaaaaaaaa</h1>
+}
+
 const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true}) => {
     let detailsElement = []
     const styles = {
@@ -35,33 +52,16 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
 
     let contentCard = []
     if (imageUrl != "none"){
-        if ( imageCirle== false ){
         contentCard.push( <div>
-            <CardMedia
-                component="img"
-                image={ imageUrl}
-                direction="column" justifycontent="center"
-                sx={{ width: {xs:50, sm:40}, height:{xs:50, sm:40}, borderRadius:3     }}
-            >
-            </CardMedia>
-        </div>)
-        } else{
-            contentCard.push( <div>
-                <CardMedia
-                    component="img"
-                    image={ imageUrl}
-                    direction="column" justifycontent="center"
-                    sx={{ width: {xs:200, sm:200}, height:{xs:200, sm:200}, borderRadius:50     }}
-                >
-                </CardMedia>
-            </div>)
-        }
+                            <myCardImage></myCardImage>
+                          </div>)
+
         contentCard.push( <div>
-            <h2>{title}</h2><br></br>
-            <Grid container spacing={1.5} rowSpacing={0}>
-                {detailsElement}
-            </Grid>
-        </div>)
+                            <h2>{title}</h2><br></br>
+                            <Grid container spacing={1.5} rowSpacing={0}>
+                                {detailsElement}
+                            </Grid>
+                          </div>)
 
     }else{
         if(detailsElement.length %2 != 0 ){
