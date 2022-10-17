@@ -25,6 +25,28 @@ export default function ButtonPrimary({label, onClick, id}) {
             color: "#023859", 
             boxShadow: 3,
             fontWeight: 'bold',
+            marginBottom: 2,
+            "&:hover": {
+              background: "#cecccc"
+            }
+            }}>{label}
+            </Button>
+    );
+  }
+
+  export function ButtonDanger({label, onClick, id}) {
+    return (
+
+        <Button variant="contained" type="input" label={label} onClick={onClick} id={id} sx={{ 
+            borderRadius: 40, 
+            background: "#DB524B",
+            color: "#FFFFFF", 
+            boxShadow: 3,
+            fontWeight: 'bold',
+            marginBottom: 2,
+            "&:hover": {
+              background: "#c63e39"
+            }
             }}>{label}
             </Button>
     );
