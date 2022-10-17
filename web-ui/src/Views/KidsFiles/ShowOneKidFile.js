@@ -5,7 +5,7 @@ import {useLocation} from 'react-router-dom'
 import axios from "axios";
 import Navbar from '../../Components/NavBar';
 import SingleItemCard from '../../Components/SingleItemCard'
-import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
+import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../Components/MUI-Button';
 import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 import TextField from '@mui/material/TextField';
@@ -116,7 +116,7 @@ function ShowOneKidFile() {
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} />
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
             
-            <ButtonPrimary key={2} label="Eliminar Registro" onClick={handleClickOpen} />
+            <ButtonDanger key={2} label="Eliminar Registro" onClick={handleClickOpen} />
             <Dialog open={open} onClose={handleClose}>
             <DialogTitle>¿Seguro que desea eliminar el registro?</DialogTitle>
             <DialogContent>
@@ -132,7 +132,7 @@ function ShowOneKidFile() {
             </DialogContent>
             <DialogActions>
             <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
-            <ButtonPrimary label="Si, Quiero Eliminar Registro" onClick={handleClose}></ButtonPrimary>
+            <ButtonDanger label="Si, Quiero Eliminar Registro" onClick={handleClose}></ButtonDanger>
             </DialogActions>
         </Dialog>
         </div></>
