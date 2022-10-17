@@ -12,29 +12,25 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
           display:"inline"
         }
       }
-      // <p size="50" >{contentOneElement}</p>
-    let countAllNull = 0;
       for (const prop in element ){
-        if (prop != "id" ){
             var contentOneElement = element[prop]
             if (element[prop] == null  || element[prop]== ""){
-                countAllNull++;
                 contentOneElement =  " ----- "
             }
             detailsElement.push(
                 <>
-                <div>
-                    <font size="2">{prop}</font>
-                </div>
-                <div >
-                    <h5 style={styles.label}>{contentOneElement}</h5>
-                    <p></p>
-                </div>
+                <Grid item xs={12} sm={6} md={4}>
+                    <div>
+                        <font size="2">{prop}</font>
+                    </div>
+                    <div >
+                        <h5 style={styles.label}>{contentOneElement}</h5>
+                        <p></p>
+                    </div>
+                </Grid>
                 </> 
             )
-        }
       }
-
 
 
     let contentCard = []
@@ -62,9 +58,9 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
         }
         contentCard.push( <div>
             <h2>{title}</h2><br></br>
-            <CardContent>
+            <Grid container spacing={1.5} rowSpacing={0}>
                 {detailsElement}
-            </CardContent>
+            </Grid>
         </div>)
 
     }else{
@@ -87,12 +83,12 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
                 </CardContent>
             </div>)
     }
-/*
+
     return(
         <div>
             <Grid container direction="column" alignItems="center" justify="center" >
                 <Card sx={{ p: 5, maxWidth: 1000, m:2, minWidth:{md:1000} , borderRadius:3}}>
-                    <Box sx={{ display: 'inline-block' , width: 450 }} >
+                    <Box sx={{ display: 'inline-block' , width: 260 , height:{md:70, sm:220} }} >
                         {contentCard[0]}
                     </Box>
 
@@ -103,43 +99,6 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
             </Grid>
         </div>
     )
-*/
-return(
-    <div>
-        <Grid container direction="column" alignItems="center" justify="center" >
-            <Card sx={{ p: 5, maxWidth: 1000, m:2, minWidth:{md:1000} , borderRadius:3}}>
-                <Box sx={{ display: 'inline-block' , width: 450 }} >
-                    {contentCard[0]}
-                </Box>
-
-                <Box sx={{ display: 'inline-block', right: '30%', width: 450}}>
-                <h2>{title}</h2><br></br>
-                    <Grid container spacing={1.5} rowSpacing={0}>
-                            <Grid item xs={12} sm={6} md={4}>
-                            {detailsElement[0]}
-                            </Grid>
-                            <Grid item xs={12} sm={6} md={4}>
-                            {detailsElement[1]}
-                            </Grid>
-                            <Grid item xs={12} sm={6} md={4}>
-                            {detailsElement[2]}
-                            </Grid>
-                            <Grid item xs={12} sm={6} md={4}>
-                            {detailsElement[3]}
-                            </Grid>
-                            <Grid item xs={12} sm={6} md={4}>
-                            {detailsElement[4]}
-                            </Grid>
-                            <Grid item xs={12} sm={6} md={4}>
-                            {detailsElement[5]}
-                            </Grid>
-                    </Grid>
-                </Box>
-            </Card>
-        </Grid>
-    </div>
-)
-    
 }
 
 export default SingleItemCard
