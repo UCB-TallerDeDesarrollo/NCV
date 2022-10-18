@@ -265,17 +265,6 @@ function ShowOneKidFile() {
             <ButtonDanger key={2} label="Eliminar Registro" onClick={handleClickOpen} />
             <Dialog open={open} onClose={handleClose}>
             <DialogTitle>¿Seguro que desea eliminar el registro?</DialogTitle>
-            <DialogContent>
-            <TextField
-                autoFocus
-                margin="dense"
-                id="confirmDelete"
-                label="Escribe ELIMINAR para confirmar la acción"
-                type="text"
-                fullWidth
-                variant="standard"
-            />
-            </DialogContent>
             <DialogActions>
             <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
             <ButtonDanger label="Si, Quiero Eliminar Registro" onClick={handleClose}></ButtonDanger>
