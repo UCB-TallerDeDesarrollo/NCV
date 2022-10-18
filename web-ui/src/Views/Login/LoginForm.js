@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import InputText from '../../Components/InputText'
-import Button from '../../Components/Button'
+import ButtonPrimary from '../../Components/MUI-Button';
 import FormContainer from '../../Components/FormContainer'
 import './LoginForm.css'
 
@@ -105,11 +105,7 @@ function LoginForm() {
                         {hasAnError && <p style={{color: "red"}}> Usuario y/o Contraseña no validos</p>}
                     </div>
                     <div className="pt-1 mb-4">
-                        <input
-                            type="submit"
-                            value="Log-In"
-                            className="btn btn-dark btn-lg btn-block"
-                        />
+                        <ButtonPrimary label={"Iniciar Sesion"} type="submit"/>
                     </div>
                 </form>
             </FormContainer>
