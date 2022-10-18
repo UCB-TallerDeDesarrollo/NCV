@@ -10,18 +10,9 @@ import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 import SearchBar from '../../Components/SearchBar';
 
-const filterListKids = (listKids, searched) => {
-    if (!searched) {
-      return listKids;
-    } else {
-      return listKids.filter((d) => d.toLowerCase().includes(searched));
-    }
-  };
-
 function ShowKidsFiles() {
     const [kidsList, setKidList] = useState([])
-    const [kidsFilteredList, setKidsFilteredList] = useState([])
-    const [stringSearch, setStringSearch] = useState ("")
+    const [searchResult, setSearchResults] = useState ([])
     const location = useLocation()
     
     let showAlert = location.state ? location.state.showAlert : false 
@@ -46,12 +37,14 @@ function ShowKidsFiles() {
     const baseUrl ="/ninos"
 
     useEffect(() => {
-        setKidsFilteredList(filterListKids(kidsList, stringSearch));
-        console.log(kidsFilteredList);
-    })
+        console.log("inicializando...");
+        setSearchResults(kidsList);
+        console.log(kidsList);
+        console.log(searchResult);
+    }, [])
     
     if (kidsList.length>0){
-        const listElements = kidsFilteredList.map((el)=>{
+        const listElements = searchResult.map((el)=>{
             return {
                 id:el.id, 
                 title:`${el.firstName} ${el.lastName}`, 
@@ -67,7 +60,7 @@ function ShowKidsFiles() {
     const listHeaderComponents = <ButtonPrimary label={"Registrar niño"} onClick={()=>navigate(newKidUrl)}/>
     return (
         <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
-            <SearchBar/>
+            <SearchBar posts={kidsList} setSearchResults={setSearchResults}/>
             <ListContainer title="Niños del centro" header={listHeaderComponents}>
                 {kidsListComponent}
             </ListContainer>

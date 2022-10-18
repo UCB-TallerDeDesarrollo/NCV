@@ -1,28 +1,29 @@
-
-import IconButton from "@mui/material/IconButton";
+import { Button, IconButton } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search";
-import TextField from "@mui/material/TextField";
 
-function SearchBar({setSearchQuery}){
-    return (
-        <form>
-        <TextField
-            id="search-bar"
-            className="text"
-            onInput={(e) => {
-            setSearchQuery(e.target.value);
-            }}
-            label="Enter a city name"
-            variant="outlined"
-            placeholder="Search..."
-            size="small"
+const SearchBar = ({posts, setSearchResults }) => {
+  const handleSubmit = (e) => e.preventDefault()
+  console.log(posts);
+
+  const handleSearchChange = (e) => {
+    if (!e.target.value) return setSearchResults(posts)
+    const resultsArray = posts.filter(post => post.firstName.includes(e.target.value) || post.lastName.includes(e.target.value))
+    setSearchResults(resultsArray);
+  }
+
+  return (
+    <header>
+      <form className="search" onSubmit={handleSubmit}>
+        <input
+          className="search__input"
+          type="text"
+          id="search"
+          onChange={handleSearchChange}
         />
-        <IconButton type="submit" aria-label="search">
-            <SearchIcon style={{ fill: "blue" }} />
-        </IconButton>
-        </form>
-    );
 
-    }
+      </form>
+    </header>
+  )
+}
 
 export default SearchBar
