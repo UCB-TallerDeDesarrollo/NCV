@@ -122,5 +122,12 @@ namespace NinosConValorAPI.Data.Repository
             return programHouse;
         }
 
+        public bool UpdateKid(KidEntity kidModel)
+        {
+            var kidToUpdate = _dbContext.Kids.FirstOrDefault(c => c.Id == kidModel.Id);
+
+            _dbContext.Entry(kidToUpdate).CurrentValues.SetValues(kidModel);
+            return true;
+        }
     }
 }

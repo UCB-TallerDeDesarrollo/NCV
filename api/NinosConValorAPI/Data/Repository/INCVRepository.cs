@@ -26,6 +26,7 @@ namespace NinosConValorAPI.Data.Repository
 
         Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync();
         Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId);
+        bool UpdateCompany(KidEntity kidModel);
 
         //PROGRAM HOUSE
         Task<IEnumerable<ProgramHouseEntity>> GetProgramHousesAsync();
