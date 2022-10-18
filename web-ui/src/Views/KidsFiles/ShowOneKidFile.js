@@ -8,13 +8,21 @@ import SingleItemCard from '../../Components/SingleItemCard'
 import ButtonPrimary from '../../Components/MUI-Button';
 import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
-import Collapse from '@mui/material/Collapse';
-
+import TableBasic from '../../Components/TableBasic';
+import Container from '../../Components/Container';
+import Box from '@mui/material/Box';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
     let urlCreateHealthReport = `/ninos/${kidId}/crear-reporte/`
-    let buttonCreateHealthReport = <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
+    let buttonCreateHealthReport = (<Container>
+        <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
+            <AutoAwesomeIcon sx={{marginTop:2}}/>
+            <Box sx={{margin:3}}>No se registraron datos de <b>salud</b></Box>
+            <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
+        </Box>
+    </Container>);
     let healthReportComponent = null
     if (healthReportStatusCode == 404){
         healthReportComponent = buttonCreateHealthReport
@@ -33,6 +41,24 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
     return healthReportComponent
 }
 
+function WeightAndHeight({weightAndHeightData=null}){
+    let table = <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
+        <AutoAwesomeIcon sx={{margin:2}}/>
+        No existen registros de <b>peso y talla</b>
+    </Box>;
+    if (weightAndHeightData != null){
+        let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
+        table = (<>
+            <h4>Peso y talla</h4>
+            <Box sx={{display:"flex", flexDirection:"row"}}>
+                <TableBasic columnHeaders={columnNames} data={weightAndHeightData} sxTableContainer={{width:1}}></TableBasic>
+            </Box>
+        </>);
+    }
+    return (<Container>
+        {table}
+    </Container>);
+}
 
 function ShowOneKidFile() {
     
@@ -103,10 +129,13 @@ function ShowOneKidFile() {
         "GENERO ": kid.gender
     };
 
+    let weightAndHeightData = null//[{date:"Feb 25",weight:25,height:10},{year:2022,v:null,x:null},{date:"Feb 25",weight:25,height:10},{date:"Feb 25",weight:25,height:10}];
+
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} />
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
+            <WeightAndHeight weightAndHeightData={weightAndHeightData}/>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
