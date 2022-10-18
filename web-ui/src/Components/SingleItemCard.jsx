@@ -5,21 +5,42 @@ import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Unstable_Grid2';
 
-function myCardImage({imageUrlValue,imageCirleValue}){
-    console.log("Entraste a MyCardImage")
+function MyCardImage({imageUrl,imageCirle}){
     var borderRadiusValue = 3
     if (imageCirle){
         borderRadiusValue = 50
     }
-/*
     return <CardMedia
-            component="img"
-            image={ imageUrl}
-            direction="column" justifycontent="center"
-            sx={{ width: {xs:200, sm:200}, height:{xs:200, sm:200}, borderRadius:50}}
-        >
-        </CardMedia>; */
-    return <h1>Holaaaaaaaa</h1>
+                    component="img"
+                    image={ imageUrl}
+                    direction="column" justifycontent="center"
+                    sx={{ width: {xs:200, sm:200}, height:{xs:200, sm:200}, borderRadius:borderRadiusValue }}
+                >
+            </CardMedia>
+}
+
+// pendiente por probar
+function GridItems({elements , size_md=4}){
+    let gridElements = []
+    for (const prop in elements ){
+        var contentOneElement = elements[prop]
+        if (elements[prop] == null  || elements[prop]== ""){
+            contentOneElement =  " ----- "
+        }
+        gridElements.push(
+            <>
+            <Grid item xs={12} sm={6} md={size_md}>
+                <div>
+                    <font size="2">{prop}</font> </div>
+                <div >
+                    <h5 style={styles.label}>{contentOneElement}</h5>
+                    <p></p>
+                </div>
+            </Grid>
+            </> 
+        )
+  }
+  return gridElements;
 }
 
 const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true}) => {
@@ -36,69 +57,64 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
             }
             detailsElement.push(
                 <>
-                <Grid item xs={12} sm={6} md={4}>
                     <div>
-                        <font size="2">{prop}</font>
-                    </div>
+                        <font size="2">{prop}</font> </div>
                     <div >
                         <h5 style={styles.label}>{contentOneElement}</h5>
                         <p></p>
                     </div>
-                </Grid>
                 </> 
             )
       }
-
-
+      
     let contentCard = []
     if (imageUrl != "none"){
-        contentCard.push( <div>
-                            <myCardImage></myCardImage>
-                          </div>)
+        contentCard.push( <Box sx={{ display: 'inline-block' , width: 260 , height:{md:70, sm:220} }} >
+                            <MyCardImage imageUrl={imageUrl} imageCirle={imageCirle}></MyCardImage>
+                            </Box>)
 
-        contentCard.push( <div>
+        contentCard.push( <Box sx={{ display: 'inline-block', width: {sm:200 , md:450}}}>
                             <h2>{title}</h2><br></br>
-                            <Grid container spacing={1.5} rowSpacing={0}>
-                                {detailsElement}
+                            <Grid container spacing={0} rowSpacing={1}>
+                            {detailsElement.map((n,i)=>{
+                                    return (
+                                        <Grid item key={i} xs={12} sm={6} md={4}>
+                                            {detailsElement[i]}
+                                        </Grid>
+                                    )})}
                             </Grid>
-                          </div>)
+                            </Box>)
 
     }else{
-        if(detailsElement.length %2 != 0 ){
-            detailsElement.push(
-                <div>
-                    <h4></h4><br></br>
-                </div>
-            )
-        }
-            contentCard.push( <div>
-                <h2>{title}</h2><br></br>
-                <CardContent>
-                    {detailsElement.slice(0, detailsElement.length/2  )}
-                </CardContent>
-            </div>)
-            contentCard.push( <div>
-                <CardContent>
-                    {detailsElement.slice(detailsElement.length/2, detailsElement.length )}
-                </CardContent>
-            </div>)
+        // Card for health Report
+        contentCard.push( 
+                    <Box sx={{ display: 'inline-block', width: {sm:550 , md:1500}}}>
+                            <h2>{title}</h2><br></br>
+                            <Grid container spacing={1.5} rowSpacing={0}>
+                            {detailsElement.map((n,i)=>{
+                                    return (
+                                        <Grid item key={i} xs={12} sm={6} md={7}>
+                                            {detailsElement[i]}
+                                        </Grid>
+                                    )})}
+                            </Grid>
+                    </Box>)
     }
 
-    return(
-        <div>
-            <Grid container direction="column" alignItems="center" justify="center" >
-                <Card sx={{ p: 5, maxWidth: 1000, m:2, minWidth:{md:1000} , borderRadius:3}}>
-                    <Box sx={{ display: 'inline-block' , width: 260 , height:{md:70, sm:220} }} >
-                        {contentCard[0]}
-                    </Box>
-
-                    <Box sx={{ display: 'inline-block', right: '30%', width: 450}}>
-                        {contentCard[1]}
-                    </Box>
-                </Card>
-            </Grid>
-        </div>
-    )
+    if( contentCard.length==2){
+        return (
+            <Card sx={{ p: 5, maxWidth: 1000, m:2, minWidth:{md:1000} , borderRadius:3}}>
+                {contentCard[0]}
+                {contentCard[1]}
+            </Card>
+        )
+    }else{
+        return (
+            <Card sx={{ p: 5, maxWidth: 1000, m:2, minWidth:{md:1000} , borderRadius:3}}>
+                {contentCard[0]}
+            </Card>
+        )
+    }
 }
 
 export default SingleItemCard
