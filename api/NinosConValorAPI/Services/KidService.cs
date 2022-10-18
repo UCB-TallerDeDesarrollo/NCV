@@ -36,6 +36,20 @@ namespace NinosConValorAPI.Services
             var listKids = await _NCVRepository.GetKidsAsync();
             return _mapper.Map<IEnumerable<KidModel>>(listKids);
         }
+        public async Task<KidModel> UpdateKidAsync(int kidId, KidModel kidModel)
+        {
+            var kidEntity = _mapper.Map<KidEntity>(kidModel);
+            await GetKidAsync(kidId);
+            kidEntity.Id = kidId;
+            _NCVRepository.UpdateKid(kidEntity);
 
+            var saveResult = await _NCVRepository.SaveChangesAsync();
+
+            if (!saveResult)
+            {
+                throw new Exception("Database Error");
+            }
+            return kidModel;
+        }
     }
 }
