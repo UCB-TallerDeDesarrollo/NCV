@@ -1,13 +1,11 @@
-import { Button, IconButton } from "@mui/material"
-import SearchIcon from "@mui/icons-material/Search";
 
 const SearchBar = ({posts, setSearchResults }) => {
   const handleSubmit = (e) => e.preventDefault()
-  console.log(posts);
-
+  posts = posts.sort((a, b) => { return a.firstName.localeCompare(b.firstName)});
+  
   const handleSearchChange = (e) => {
     if (!e.target.value) return setSearchResults(posts)
-    const resultsArray = posts.filter(post => post.firstName.includes(e.target.value) || post.lastName.includes(e.target.value))
+    const resultsArray = posts.filter(post => post.firstName.includes(e.target.value) || post.lastName.includes(e.target.value) || post.ci.includes(e.target.value))
     setSearchResults(resultsArray);
   }
 

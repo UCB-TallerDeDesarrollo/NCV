@@ -37,7 +37,9 @@ function ShowKidsFiles() {
     // }, [])
 
     useEffect(() => {
-        getListKids().then(json => {
+        getListKids().then(
+            json => json.sort((a, b) => { return a.firstName.localeCompare(b.firstName)})
+        ).then(json => {
             setKidList(json)
             return json
         }).then(json => {
