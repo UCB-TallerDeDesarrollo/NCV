@@ -82,7 +82,6 @@ function LoginForm() {
                             type="text"
                             id="input-text-email"
                             label="E-mail"
-                            inputProps={{ maxLength: 20 }}
                             onChange={handleEmailChange}
                             value={email}
                             required
@@ -94,7 +93,6 @@ function LoginForm() {
                             type="password"
                             id="input-text-password"
                             label="Contraseña"
-                            inputProps={{ maxLength: 15 }}
                             onChange={handlePasswordChange}
                             value={password}
                             required
