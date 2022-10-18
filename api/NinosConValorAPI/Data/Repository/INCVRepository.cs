@@ -13,7 +13,7 @@ namespace NinosConValorAPI.Data.Repository
         //FIXED ASSET
 
         Task<bool> SaveChangesAsync();
-        public void CreateFixedAsset(FixedAssetEntity fixedAsset);
+        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId);
 
         public void CreateKid(KidEntity kid);
         Task<KidEntity> GetKidAsync(int kidId);
@@ -21,6 +21,10 @@ namespace NinosConValorAPI.Data.Repository
 
         Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync();
         Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId);
+
+        //PROGRAM HOUSE
+        Task<IEnumerable<ProgramHouseEntity>> GetProgramHousesAsync();
+        Task<ProgramHouseEntity> GetProgramHouseAsync(int programHouseId);
 
     }
 }

@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 
 namespace UnitTests.ControllersUT
 {
@@ -29,11 +29,12 @@ namespace UnitTests.ControllersUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5
+                Quantity = 5,
+                ProgramHouseId = 2
             };           
 
             var fixedAssetServiceMock = new Mock<IFixedAssetService>();
-            fixedAssetServiceMock.Setup(r => r.CreateFixedAssetAsync(fixedAssetModel)).ReturnsAsync(new FixedAssetModel()
+            fixedAssetServiceMock.Setup(r => r.CreateFixedAssetAsync(fixedAssetModel,2)).ReturnsAsync(new FixedAssetModel()
             {
                 Id=1,
                 Name = "Computadora",
@@ -41,7 +42,8 @@ namespace UnitTests.ControllersUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5
+                Quantity = 5,
+                ProgramHouseId=2
             });
 
             var fixedAssetController = new FixedAssetsController(fixedAssetServiceMock.Object);
