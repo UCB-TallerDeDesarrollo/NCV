@@ -7,9 +7,8 @@ import Navbar from '../../Components/NavBar'
 import ListContainer from "../../Components/ListContainer"
 import ListBasic from '../../Components/ListBasic'
 import ButtonPrimary from '../../Components/MUI-Button';    
-import Snackbar from '@mui/material/Snackbar'
-import Alert from '@mui/material/Alert'
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import BasicSelect from '../../Components/Dropdown'
 
 export default function ShowFixedAssets() {
     const location = useLocation()
@@ -45,6 +44,13 @@ export default function ShowFixedAssets() {
         let fixedAssetsComponent = <ListBasic items={listElements} withImage={false} />
         let nexFixedAsset = "/crear-activo-fijo"
         const listHeaderComponents = <ButtonPrimary label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
+        // let handleChange = e => {
+        //     var value = e.target.value;
+        
+        //     this.setState({
+        //       SeletedVal: value
+        //     });
+        //   };
         return (
             <>
                 <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>

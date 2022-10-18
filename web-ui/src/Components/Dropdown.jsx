@@ -6,28 +6,35 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 export default function BasicSelect({ label, id, options }) {
-  const [value] = React.useState('');
+  console.log('opciones:', options);
+  //const [value] = React.useState('');
+  //this.state.setState(SelectedVal);
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  // handleChange = e => {
+  //   var value = e.target.value;
+
+  // this.setState({
+  //   SeletedVal: value
+  // });
 
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel>{label}</InputLabel>
-        <Select
-          id={id}
-        // value={value}
-          // onChange={handleChange}
-        >
-          {options.map(option => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </Select>
-      </FormControl>
-    </Box>
+    <div style={{ minWidth: 120 }}>
+      <InputLabel>{label}</InputLabel>
+      <Select
+        id={id}
+        // onChange={handleChange}
+        // handleChange={this.handleChange}
+        // selectedValue={this.state.SelectedVal}
+        value={options[-1]}
+
+      // onChange={handleChange}
+      >
+        {options.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </Select>
+    </div>
   );
-}
+};
