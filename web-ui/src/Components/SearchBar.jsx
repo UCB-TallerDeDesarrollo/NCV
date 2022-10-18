@@ -1,11 +1,12 @@
+//orderCriteria funcion que ordena la lista con la logica enviada
+//searchCriteria funcion que busca con la logica enviada. Referencia en showKidsFiles.js
 
-const SearchBar = ({posts, setSearchResults }) => {
+const SearchBar = ({posts, setSearchResults, orderCriteria, searchCriteria }) => {
   const handleSubmit = (e) => e.preventDefault()
-  posts = posts.sort((a, b) => { return a.firstName.localeCompare(b.firstName)});
+  posts = orderCriteria(posts);
   
   const handleSearchChange = (e) => {
-    if (!e.target.value) return setSearchResults(posts)
-    const resultsArray = posts.filter(post => post.firstName.includes(e.target.value) || post.lastName.includes(e.target.value) || post.ci.includes(e.target.value))
+    const resultsArray = searchCriteria(e, posts);
     setSearchResults(resultsArray);
   }
 

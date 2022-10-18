@@ -27,14 +27,16 @@ function ShowKidsFiles() {
         setOpen(false)
     }
 
+    function ordenCriteria(posts) {
+        posts = posts.sort((a, b) => { return a.firstName.localeCompare(b.firstName)});
+        return posts;
+    }
 
-    // const urlKids = 'https://ncv-api.herokuapp.com/api/kids'
-
-    // useEffect(() => {
-    //     fetch(urlKids)
-    //         .then((res) => res.json())
-    //         .then(setKidList);
-    // }, [])
+    function searchCriteria (e, posts) {
+        if (!e.target.value) return posts
+        const resultsArray = posts.filter(post => post.firstName.includes(e.target.value) || post.lastName.includes(e.target.value) || post.ci.includes(e.target.value))
+        return resultsArray;
+    }
 
     useEffect(() => {
         getListKids().then(
@@ -68,7 +70,7 @@ function ShowKidsFiles() {
     const listHeaderComponents = <ButtonPrimary label={"Registrar niño"} onClick={()=>navigate(newKidUrl)}/>
     return (
         <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
-            <SearchBar posts={kidsList} setSearchResults={setSearchResults}/>
+            <SearchBar posts={kidsList} setSearchResults={setSearchResults} orderCriteria={ordenCriteria} searchCriteria={searchCriteria} />
             <ListContainer title="Niños del centro" header={listHeaderComponents}>
                 {kidsListComponent}
             </ListContainer>
