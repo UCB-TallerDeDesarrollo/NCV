@@ -9,6 +9,7 @@ import {useLocation} from 'react-router-dom'
 import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 import SearchBar from '../../Components/SearchBar';
+import { getListKids } from './API/getKids_axios';
 
 function ShowKidsFiles() {
     const [kidsList, setKidList] = useState([])
@@ -27,22 +28,27 @@ function ShowKidsFiles() {
     }
 
 
-    const urlKids = 'https://ncv-api.herokuapp.com/api/kids'
-    useEffect(() => {
-        fetch(urlKids)
-            .then((res) => res.json())
-            .then(setKidList);
-    }, [])
-    let kidsListComponent = null
-    const baseUrl ="/ninos"
+    // const urlKids = 'https://ncv-api.herokuapp.com/api/kids'
+
+    // useEffect(() => {
+    //     fetch(urlKids)
+    //         .then((res) => res.json())
+    //         .then(setKidList);
+    // }, [])
 
     useEffect(() => {
-        console.log("inicializando...");
-        setSearchResults(kidsList);
-        console.log(kidsList);
-        console.log(searchResult);
+        getListKids().then(json => {
+            setKidList(json)
+            return json
+        }).then(json => {
+            setSearchResults(json)
+        })
     }, [])
-    
+
+
+    let kidsListComponent = null
+    const baseUrl ="/ninos"
+  
     if (kidsList.length>0){
         const listElements = searchResult.map((el)=>{
             return {
