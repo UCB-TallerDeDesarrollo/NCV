@@ -22,6 +22,7 @@ function ShowUser() {
             firstName: "Jhon",
             lastName: "Wells",
             phoneNumber: 70188321,
+            role: "Soporte"
         },
         {
             id: 2,
@@ -29,6 +30,7 @@ function ShowUser() {
             firstName: "Mario",
             lastName: "Mario",
             phoneNumber: 72143516,
+            role: "Tia"
         },
         {
             id: 3,
@@ -36,6 +38,7 @@ function ShowUser() {
             firstName: "Jimmy",
             lastName: "McGill",
             phoneNumber: 642111234,
+            role: "Administrador"
         },
         {
             id: 4,
@@ -43,6 +46,7 @@ function ShowUser() {
             firstName: "Rodrigo",
             lastName: "Romans",
             phoneNumber: 792991224,
+            role: "Administrador"
         },
     ]
 
@@ -50,7 +54,7 @@ function ShowUser() {
         return {
             id:el.id, 
             title:`${el.firstName} ${el.lastName}`, 
-            description:`${el.email} - ${el.phoneNumber}`, 
+            description:`${el.email} - ${el.phoneNumber} - ${el.role}`, 
             elementUrl:`${completeInfoUser}/${el.id}`,
         }
     })
