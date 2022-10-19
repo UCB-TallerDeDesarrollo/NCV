@@ -128,7 +128,8 @@ namespace NinosConValorAPI.Services.Security
         public async Task<IEnumerable<IdentityAppUser>> GetUsersAsync( )
         {
             var userList = userManager.Users.ToList();
-
+            var rolesList= roleManager.Roles.ToList();
+            var aux = await userManager.GetRolesAsync(userList[1]);
             if (userList == null || !userList.Any())
                 throw new NotFoundElementException($"No se encontraron usuarios registrados");
 
