@@ -150,7 +150,7 @@ namespace NinosConValorAPI.Controllers
             return BadRequest("Some properties are not valid"); // Status code: 400
 =======
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserBasicInformation>>> GetUsersAsync()
+        public async Task<ActionResult<IEnumerable<UserBasicInformationModel>>> GetUsersAsync()
         {
             try
             {

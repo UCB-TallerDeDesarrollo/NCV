@@ -1,6 +1,6 @@
 ﻿namespace NinosConValorAPI.Models.Security
 {
-    public class UserBasicInformation
+    public class UserBasicInformationModel
     {
         public string Email { get; set; }
         public string FirstName { get; set; }
