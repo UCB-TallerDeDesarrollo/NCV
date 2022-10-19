@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import InputText from '../../Components/InputText'
-import Button from '../../Components/Button'
+import ButtonPrimary from '../../Components/MUI-Button';
 import FormContainer from '../../Components/FormContainer'
 import './LoginForm.css'
 

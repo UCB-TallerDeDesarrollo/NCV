@@ -11,7 +11,7 @@ export default function FormContainer({children,title=""}) {
         display: 'flex', 
         justifyContent: 'flex-start', 
         alignItems: 'center',
-        flexDirection: 'column'
+        flexDirection: 'column',
     };
     return (
           <Box sx={sxContainer}>
