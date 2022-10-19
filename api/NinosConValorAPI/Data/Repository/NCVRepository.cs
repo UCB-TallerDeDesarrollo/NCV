@@ -23,9 +23,12 @@ namespace NinosConValorAPI.Data.Repository
 
         // BIOMETRICS
 
-        public Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId)
+        public async Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId)
         {
-            throw new NotImplementedException();
+            IQueryable<BiometricsEntity> query = _dbContext.Biometrics;
+            query = query.AsNoTracking();
+            query = query.Where(b => b.KidId == kidId);
+            return await query.ToListAsync();
         }
 
 
