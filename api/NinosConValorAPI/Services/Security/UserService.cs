@@ -125,15 +125,35 @@ namespace NinosConValorAPI.Services.Security
             };
         }
 
-        public async Task<IEnumerable<IdentityAppUser>> GetUsersAsync( )
+        public async Task<IEnumerable<UserBasicInformation>> GetUsersAsync( )
         {
+            var userBasicInformation = new List<UserBasicInformation>();
             var userList = userManager.Users.ToList();
-            var rolesList= roleManager.Roles.ToList();
-            var aux = await userManager.GetRolesAsync(userList[1]);
-            if (userList == null || !userList.Any())
+            var user0 = userList[1];
+            //var userBasicInfomodel = new UserBasicInformation();
+           
+            foreach (var user in userList)
+            {
+                var aux =  await userManager.GetRolesAsync(user);
+                if (aux != null)
+                {
+                    var userBasicInfomodel = new UserBasicInformation
+                    {
+                        Email = user.Email,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        CellPhone = user.PhoneNumber,
+                        NameRole = aux[0],
+
+                    };
+
+                    userBasicInformation.Add(userBasicInfomodel);
+                }
+            }
+            if (userBasicInformation == null || !userBasicInformation.Any())
                 throw new NotFoundElementException($"No se encontraron usuarios registrados");
 
-            return userList;
+            return userBasicInformation;
         }
 
         public async Task<UserManagerResponse> CreateRoleAsync(CreateRoleViewModel model)
