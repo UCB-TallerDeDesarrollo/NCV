@@ -27,6 +27,10 @@ const roles = [
     {
         label: 'Administrador',
         value: 'AdminUser'
+    },
+    {
+        label: 'Super Usuario',
+        value: 'SuperUser'
     }
 ]
 
