@@ -130,5 +130,23 @@ namespace NinosConValorAPI.Controllers
 
             return BadRequest("Some properties are not valid"); // Status code: 400
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<FixedAssetModel>>> GetUsersAsync()
+        {
+            try
+            {
+                var usersList = await _userService.GetUsersAsync();
+                return Ok(usersList);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió.");
+            }
+        }
     }
 }

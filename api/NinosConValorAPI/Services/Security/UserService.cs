@@ -73,7 +73,7 @@ namespace NinosConValorAPI.Services.Security
                 signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
             
             string tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
-            //aca muere
+            
             return new UserManagerResponse
             {
                 Token = tokenAsString,
@@ -123,6 +123,16 @@ namespace NinosConValorAPI.Services.Security
                 IsSuccess = false,
                 Errors = result.Errors.Select(e => e.Description)
             };
+        }
+
+        public async Task<IEnumerable<IdentityAppUser>> GetUsersAsync( )
+        {
+            var userList = userManager.Users.ToList();
+
+            if (userList == null || !userList.Any())
+                throw new NotFoundElementException($"No se encontraron usuarios registrados");
+
+            return userList;
         }
 
         public async Task<UserManagerResponse> CreateRoleAsync(CreateRoleViewModel model)
