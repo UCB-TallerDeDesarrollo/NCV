@@ -7,5 +7,6 @@
         public string LastName { get; set; }
         public string CellPhone { get; set; }
         public string NameRole { get; set; }
+
     }
 }
