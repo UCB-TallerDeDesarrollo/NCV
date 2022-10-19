@@ -12,5 +12,6 @@
         public int Quantity { get; set; }
 
         public int ProgramHouseId { get; set; }
+        public int AssetCategoryId { get; set; }
     }
 }
