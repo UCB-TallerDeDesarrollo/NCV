@@ -68,46 +68,46 @@ function LoginForm() {
         <div className='login-page'>
             <FormContainer className="login-card">
                 <form onSubmit={handleLoginForm}>
-                    <div className='form-align'>
-                        <img
-                            src="https://res.cloudinary.com/dfsv5wqsb/image/upload/c_scale,q_87,w_221/v1664990797/logo-ncv-removebg-preview_f5piiq.png"
-                            alt="login form"
-                            className="img-fluid iconCustom"
-                        />
+                    <img
+                        src="https://res.cloudinary.com/dfsv5wqsb/image/upload/c_scale,q_87,w_221/v1664990797/logo-ncv-removebg-preview_f5piiq.png"
+                        alt="login form"
+                        className="img-fluid iconCustom"
+                    />
 
-                        <h5 className="fw-normal mb-3 pb-3">
-                            Ingresa con tu cuenta
-                        </h5>
-                        <div className="form-outline mb-4">
-                            <InputText
-                                type="text"
-                                id="input-text-email"
-                                label="E-mail"
-                                inputProps={{ maxLength: 20 }}
-                                onChange={handleEmailChange}
-                                value={email}
-                                required
-                                error={hasAnError}
-                            />
-                        </div>
-                        <div className="form-outline mb-4">
-                            <InputText
-                                type="password"
-                                id="input-text-password"
-                                label="Contraseña"
-                                inputProps={{ maxLength: 15 }}
-                                onChange={handlePasswordChange}
-                                value={password}
-                                required
-                                error={hasAnError}
-                            />
-                        </div>
-                        <div>
-                            {hasAnError && <p style={{color: "red"}}> Usuario y/o Contraseña no validos</p>}
-                        </div>
-                        <div className="pt-1 mb-4">
-                            <ButtonPrimary label={"Iniciar Sesion"} type="submit"/>
-                        </div>
+                    <h5 className="fw-normal mb-3 pb-3">
+                        Ingresa con tu cuenta
+                    </h5>
+                    <div className="form-outline mb-4">
+                        <InputText
+                            type="text"
+                            id="input-text-email"
+                            label="E-mail"
+                            onChange={handleEmailChange}
+                            value={email}
+                            required
+                            error={hasAnError}
+                        />
+                    </div>
+                    <div className="form-outline mb-4">
+                        <InputText
+                            type="password"
+                            id="input-text-password"
+                            label="Contraseña"
+                            onChange={handlePasswordChange}
+                            value={password}
+                            required
+                            error={hasAnError}
+                        />
+                    </div>
+                    <div>
+                        {hasAnError && <p style={{color: "red"}}> Usuario y/o Contraseña no validos</p>}
+                    </div>
+                    <div className="pt-1 mb-4">
+                        <input
+                            type="submit"
+                            value="Log-In"
+                            className="btn btn-dark btn-lg btn-block"
+                        />
                     </div>
                 </form>
             </FormContainer>

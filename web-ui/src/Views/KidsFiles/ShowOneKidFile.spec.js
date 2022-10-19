@@ -68,8 +68,7 @@ describe('Show One Kid File', () => {
     </MemoryRouter>
     )})
     await waitFor(() => {
-        expect(screen.getByText('Pato')).toBeVisible
-        expect(screen.getByText('Oward')).toBeVisible
+        expect(screen.getByText('Pato Oward')).toBeVisible
         expect(screen.getByText('3434582')).toBeVisible
         expect(screen.getByText('3/3/2003')).toBeVisible
         expect(screen.getByText('Av. Cualquier cosa #153')).toBeVisible
@@ -89,7 +88,7 @@ describe('Show One Kid File', () => {
     )})
     await waitFor(() => {
       expect(screen.getByText('Invalid Date')).toBeVisible
-      expect(screen.getAllByText('-----')).toHaveLength(6)
+      expect(screen.getAllByText('-----')).toHaveLength(4)
       })  
   })
 
