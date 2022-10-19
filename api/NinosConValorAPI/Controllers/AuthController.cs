@@ -130,5 +130,23 @@ namespace NinosConValorAPI.Controllers
 
             return BadRequest("Some properties are not valid"); // Status code: 400
         }
+
+
+        //[Authorize(Roles = "Admin")]
+        [HttpPost("SuperUser")]
+        public async Task<IActionResult> RegisterSuperuserAsync([FromBody] RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.RegisterSuperUserAsync(model);
+
+                if (result.IsSuccess)
+                    return Ok(result); // Status Code: 200 
+
+                return BadRequest(result);
+            }
+
+            return BadRequest("Some properties are not valid"); // Status code: 400
+        }
     }
 }
