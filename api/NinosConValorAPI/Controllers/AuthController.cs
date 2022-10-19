@@ -132,7 +132,7 @@ namespace NinosConValorAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserBasicInformation>>> GetUsersAsync()
+        public async Task<ActionResult<IEnumerable<UserBasicInformationModel>>> GetUsersAsync()
         {
             try
             {

@@ -125,9 +125,9 @@ namespace NinosConValorAPI.Services.Security
             };
         }
 
-        public async Task<IEnumerable<UserBasicInformation>> GetUsersAsync( )
+        public async Task<IEnumerable<UserBasicInformationModel>> GetUsersAsync( )
         {
-            var userBasicInformation = new List<UserBasicInformation>();
+            var userBasicInformation = new List<UserBasicInformationModel>();
             var userList = userManager.Users.ToList();
             var user0 = userList[1];
             //var userBasicInfomodel = new UserBasicInformation();
@@ -137,7 +137,7 @@ namespace NinosConValorAPI.Services.Security
                 var aux =  await userManager.GetRolesAsync(user);
                 if (aux != null)
                 {
-                    var userBasicInfomodel = new UserBasicInformation
+                    var userBasicInfomodel = new UserBasicInformationModel
                     {
                         Email = user.Email,
                         FirstName = user.FirstName,
