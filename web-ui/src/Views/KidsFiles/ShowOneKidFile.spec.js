@@ -126,3 +126,11 @@ describe('Show One Kid File', () => {
       })  
   })
 })
+
+describe('Show Delete Button', ()=>{
+  it('must display title on delete button', ()=>{
+    render(<BrowserRouter><ShowOneKidFile/></BrowserRouter>)
+    expect(screen.queryByText("ELIMINAR REGISTRO")).toBeVisible();
+  });
+});
+
