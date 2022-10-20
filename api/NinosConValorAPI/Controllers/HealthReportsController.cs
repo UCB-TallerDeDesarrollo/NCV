@@ -8,7 +8,7 @@ namespace NinosConValorAPI.Controllers
     [Route("api/kids/{kidId:int}/[controller]")]
     public class HealthReportsController : Controller
     {
-        IHealthReportService _healthReportService;
+        private IHealthReportService _healthReportService;
         public HealthReportsController(IHealthReportService healthReportService)
         {
             _healthReportService = healthReportService;

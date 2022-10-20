@@ -1,4 +1,5 @@
 ﻿using NinosConValorAPI.Data.Entity;
+using NinosConValorAPI.Models;
 
 namespace NinosConValorAPI.Data.Repository
 {
@@ -9,6 +10,10 @@ namespace NinosConValorAPI.Data.Repository
         Task<HealthReportEntity> GetHealthReportAsync(int kidId);
         Task DeleteHealthReportAsync(int kidId);
         Task<HealthReportEntity> UpdateHealthReportAsync(int kidId, HealthReportEntity healthReport);
+
+        // BIOMETRICS
+        Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId);
+
 
         //FIXED ASSET
 

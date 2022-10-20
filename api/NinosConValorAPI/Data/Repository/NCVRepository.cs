@@ -21,6 +21,17 @@ namespace NinosConValorAPI.Data.Repository
             return healthReport;
         }
 
+        // BIOMETRICS
+
+        public async Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId)
+        {
+            IQueryable<BiometricsEntity> query = _dbContext.Biometrics;
+            query = query.AsNoTracking();
+            query = query.Where(b => b.KidId == kidId);
+            return await query.ToListAsync();
+        }
+
+
         // FIXED ASSET
 
         public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId)
@@ -110,5 +121,6 @@ namespace NinosConValorAPI.Data.Repository
             var programHouse = await query.FirstOrDefaultAsync(rep => (rep.Id == programHouseId));
             return programHouse;
         }
+
     }
 }

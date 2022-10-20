@@ -17,5 +17,6 @@ namespace NinosConValorAPI.Data.Entity
         public string? Gender { get; set; }
 
         public virtual HealthReportEntity? HealthReport { get; set; }
+        public ICollection<BiometricsEntity> Biometrics { get; set; }
     }
 }
