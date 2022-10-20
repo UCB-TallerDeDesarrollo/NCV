@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using NinosConValorAPI.Data.Entity;
 using NinosConValorAPI.Data.Repository;
+using NinosConValorAPI.Exceptions;
 using NinosConValorAPI.Models;
 
 namespace NinosConValorAPI.Services
@@ -27,9 +28,14 @@ namespace NinosConValorAPI.Services
             throw new Exception("Database Error.");
         }
 
-        public Task<IEnumerable<AssetCategoryModel>> GetAssetCategoriesAsync()
+        public async Task<IEnumerable<AssetCategoryModel>> GetAssetCategoriesAsync()
         {
-            throw new NotImplementedException();
+            var assetCategoriesList = await _NCVRepository.GetAssetCategoriesAsync();
+
+            if (assetCategoriesList == null || !assetCategoriesList.Any())
+                throw new NotFoundElementException($"La lista de categorías no existe o está vacía.");
+
+            return _mapper.Map<IEnumerable<AssetCategoryModel>>(assetCategoriesList);
         }
 
         public Task<AssetCategoryModel> GetAssetCategoryAsync(int categoryId)
