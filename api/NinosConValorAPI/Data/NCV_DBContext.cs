@@ -11,6 +11,7 @@ namespace NinosConValorAPI.Data
         public DbSet<KidEntity> Kids => Set<KidEntity>();
         public DbSet<ProgramHouseEntity> ProgramHouses => Set<ProgramHouseEntity>();
         public DbSet<HealthReportEntity> HealthReports { get; set; }
+        public DbSet<AssetCategoryEntity> AssetCategories => Set<AssetCategoryEntity>();
 
         public NCV_DBContext(DbContextOptions<NCV_DBContext> options) : base(options)
         {

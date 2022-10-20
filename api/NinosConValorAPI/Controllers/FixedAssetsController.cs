@@ -26,7 +26,7 @@ namespace NinosConValorAPI.Controllers
                 int programHouseId = 2; // OJOOOO! modificar esto cuando este implementado FRONT END!!!
                 int categoryId = 1; // OJOOOO! modificar esto cuando este implementado FRONT END!!!
                 var newFixedAsset = await _fixedAssetService.CreateFixedAssetAsync(fixedAsset, programHouseId, categoryId);
-                return Created($"/api/fixedAssets/{newFixedAsset.Id}", newFixedAsset);
+                return Created($"/api/category/{categoryId}/fixedAssets/{newFixedAsset.Id}", newFixedAsset);
             }
             catch (Exception)
             {
