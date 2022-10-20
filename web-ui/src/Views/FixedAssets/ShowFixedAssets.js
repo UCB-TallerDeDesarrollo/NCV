@@ -28,7 +28,7 @@ export default function ShowFixedAssets() {
                 imgSrc:`https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg`                
             }
         })
-        let fixedAssetsComponent = <ListBasic items={listElements} />
+        let fixedAssetsComponent = <ListBasic items={listElements} withImage={false} />
         let nexFixedAsset = "/crear-activo-fijo"
         const listHeaderComponents = <ButtonPrimary label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
         return (
