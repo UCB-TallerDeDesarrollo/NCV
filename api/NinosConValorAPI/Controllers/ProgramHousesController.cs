@@ -32,5 +32,23 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió.");
             }
         }
+
+        [HttpGet("{programHouseId:int}")]
+        public async Task<ActionResult< ProgramHouseModel >> GetProgramHouseAsync(int programHouseId)
+        {
+            try
+            {
+                var programHouse = await _programHouseService.GetProgramHouseAsync(programHouseId);
+                return Ok(programHouse);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió.");
+            }
+        }
     }
 }

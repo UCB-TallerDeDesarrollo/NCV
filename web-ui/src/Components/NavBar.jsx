@@ -9,6 +9,12 @@ function Navbar() {
   
   const isMatch = useMediaQuery(theme.breakpoints.down('md'));
 
+  function handleClickViewUsers(){
+    if(Rol=="Soporte" || Rol=="Admin"){  
+      window.location.href = "/vista-usuarios";
+    }
+  }
+
   function handleClickFiles(){
     if(Rol=="Soporte" || Rol=="Admin"){  
       window.location.href = "/ninos";
@@ -23,13 +29,6 @@ function Navbar() {
 
   function handleClickHome(){
     window.location.href = "/inicio-ncv";
-  }
-
-  function handleClickSignIn(){
-    
-    if(Rol=="Soporte" || Rol=="Admin"){
-      window.location.href = "/registrarse-ncv";
-    }
   }
 
   function handleClickExit(){
@@ -59,7 +58,7 @@ function Navbar() {
             
             <Grid xs={4} />
             <Grid  item xs={1}>
-                <Button sx={{marginLeft:35,width:150,textTransform:'none'}} color="inherit" onClick={handleClickSignIn}>Registrar Usuario</Button>
+                <Button sx={{marginLeft:35,width:150,textTransform:'none'}} color="inherit" onClick={handleClickViewUsers}>Lista de usuarios</Button>
             </Grid>
             
             <Grid  item xs={1}>

@@ -20,6 +20,7 @@ import DataHealth from './Views/KidsFiles/DataHealth'
 import AddKid from './Views/KidsFiles/AddKid'
 
 import NavBar from './Components/NavBar'
+import ShowUser from './Views/User/ShowUsers'
 var Rol = sessionStorage.getItem("Role")
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
                     <Route exact path="/" element={<LoginForm />}></Route>
                     <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
                     <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
+                    <Route path="/vista-usuarios" element={<ShowUser />}></Route>
                     <Route path="/registrar-nino" element={<AddKid />}></Route>
                     <Route
                         path="/crear-activo-fijo"

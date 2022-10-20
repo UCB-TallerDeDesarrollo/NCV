@@ -1,4 +1,5 @@
 ﻿using NinosConValorAPI.Data.Entity;
+using NinosConValorAPI.Models;
 
 namespace NinosConValorAPI.Data.Repository
 {
@@ -14,12 +15,15 @@ namespace NinosConValorAPI.Data.Repository
         public void CreateKid(KidEntity kid);
         Task<KidEntity> GetKidAsync(int kidId);
         Task<IEnumerable<KidEntity>> GetKidsAsync();
+        bool UpdateKid(KidEntity kidModel);
 
         //FIXED ASSETS
-
         public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int categoryId);
         Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync(int categoryId);
         Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId, int categoryId);
+      
+        // BIOMETRICS
+        Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId);
 
         //PROGRAM HOUSE
         Task<IEnumerable<ProgramHouseEntity>> GetProgramHousesAsync();

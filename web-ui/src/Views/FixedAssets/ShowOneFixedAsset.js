@@ -10,7 +10,7 @@ export function ShowFixedAsset() {
     const { fixedAssetId } = useParams()
     const url = `https://ncv-api.herokuapp.com/api/fixedAssets/${fixedAssetId}`
     const { apiData:fixedAsset, error } = getFromApi(url)
-    let imageUrl = "https://comovertodogratis.com/wp-content/uploads/2021/05/1621943166_La-computadora-portatil-Teclast-F15-hoy-a-un-precio-increible-2048x1280.jpg" 
+    let imageUrl = "https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg" 
         
     if(error){
         return ErrorPage(error)
@@ -22,12 +22,13 @@ export function ShowFixedAsset() {
         "FECHA DE ENTRADA": fixedAsset.entryDate!=null? fixedAsset.entryDate.split('T')[0]:null,
         "PRECIO" : fixedAsset.price, 
         "CARACTERÍSTICAS":fixedAsset.features,
-        "CANTIDAD" : fixedAsset.quantity
+        "CANTIDAD" : fixedAsset.quantity,
+        "PROGRAMA" : fixedAsset.programHouseName
     }
     return (
         <>
             <Navbar />
-            <div style={{ marginTop: '11vh' }}>
+            <div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
                 <SingleItemCard element={fixedAssetData} imageUrl={imageUrl} imageCirle={false} />        
             </div>
         </>

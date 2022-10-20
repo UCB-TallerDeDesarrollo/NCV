@@ -21,6 +21,17 @@ namespace NinosConValorAPI.Data.Repository
             return healthReport;
         }
 
+        // BIOMETRICS
+
+        public async Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId)
+        {
+            IQueryable<BiometricsEntity> query = _dbContext.Biometrics;
+            query = query.AsNoTracking();
+            query = query.Where(b => b.KidId == kidId);
+            return await query.ToListAsync();
+        }
+
+
         // FIXED ASSET
 
         public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int categoryId)
@@ -65,14 +76,18 @@ namespace NinosConValorAPI.Data.Repository
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
             query = query.Where(d => d.AssetCategory.Id == categoryId);
-            return await query.ToListAsync();
+            query = query.Include(f => f.ProgramHouse);
+            var result = await query.ToListAsync();
+            return result;
         }
 
         public async Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId, int categoryId)
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
-            return await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId && g.AssetCategory.Id == categoryId);
+            query = query.Include(f=>f.ProgramHouse);
+            var fixedAssetEntity = await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId && g.AssetCategory.Id == categoryId);
+            return fixedAssetEntity;
         }
 
         public async Task<HealthReportEntity> GetHealthReportAsync(int kidId)
@@ -128,6 +143,14 @@ namespace NinosConValorAPI.Data.Repository
         public void CreateAssetCategory(AssetCategoryEntity assetCategory)
         {
             _dbContext.AssetCategories.Add(assetCategory);
+        }
+        
+        public bool UpdateKid(KidEntity kidModel)
+        {
+            var kidToUpdate = _dbContext.Kids.FirstOrDefault(c => c.Id == kidModel.Id);
+
+            _dbContext.Entry(kidToUpdate).CurrentValues.SetValues(kidModel);
+            return true;
         }
     }
 }

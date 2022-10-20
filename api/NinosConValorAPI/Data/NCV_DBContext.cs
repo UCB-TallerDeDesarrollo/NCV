@@ -12,6 +12,7 @@ namespace NinosConValorAPI.Data
         public DbSet<ProgramHouseEntity> ProgramHouses => Set<ProgramHouseEntity>();
         public DbSet<HealthReportEntity> HealthReports { get; set; }
         public DbSet<AssetCategoryEntity> AssetCategories => Set<AssetCategoryEntity>();
+        public DbSet<BiometricsEntity> Biometrics { get; set; }
 
         public NCV_DBContext(DbContextOptions<NCV_DBContext> options) : base(options)
         {
@@ -45,6 +46,10 @@ namespace NinosConValorAPI.Data
             // Configure the primary key for the OfficeAssignment
             modelBuilder.Entity<HealthReportEntity>().ToTable("HealthReports");
             modelBuilder.Entity<HealthReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
+ 
+            //Biometrics
+            modelBuilder.Entity<BiometricsEntity>().ToTable("Biometrics");
+            modelBuilder.Entity<BiometricsEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
 
             //ProgamHouses
             modelBuilder.Entity<ProgramHouseEntity>().ToTable("ProgramHouse");
