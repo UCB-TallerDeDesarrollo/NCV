@@ -24,6 +24,6 @@ namespace NinosConValorAPI.Data.Entity
         public virtual ProgramHouseEntity? ProgramHouse { get; set; }
         
         [ForeignKey("AssetCategoryId")]
-        public virtual FixedCategoryEntity? AssetCategory { get; set; }
+        public virtual AssetCategoryEntity? AssetCategory { get; set; }
     }
 }
