@@ -131,7 +131,7 @@ namespace NinosConValorAPI.Controllers
             return BadRequest("Some properties are not valid"); // Status code: 400
         }
 
-<<<<<<< HEAD
+
 
         //[Authorize(Roles = "Admin")]
         [HttpPost("SuperUser")]
@@ -148,7 +148,7 @@ namespace NinosConValorAPI.Controllers
             }
 
             return BadRequest("Some properties are not valid"); // Status code: 400
-=======
+        }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserBasicInformationModel>>> GetUsersAsync()
         {
@@ -165,7 +165,7 @@ namespace NinosConValorAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió.");
             }
->>>>>>> 6372d6b (Se creo el crud para retornar una lista de usuarios)
+
         }
     }
 }
