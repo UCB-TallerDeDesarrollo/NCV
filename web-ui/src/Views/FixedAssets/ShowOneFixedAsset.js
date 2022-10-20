@@ -22,7 +22,8 @@ export function ShowFixedAsset() {
         "FECHA DE ENTRADA": fixedAsset.entryDate!=null? fixedAsset.entryDate.split('T')[0]:null,
         "PRECIO" : fixedAsset.price, 
         "CARACTERÍSTICAS":fixedAsset.features,
-        "CANTIDAD" : fixedAsset.quantity
+        "CANTIDAD" : fixedAsset.quantity,
+        "PROGRAMA" : fixedAsset.programHouseName
     }
     return (
         <>
