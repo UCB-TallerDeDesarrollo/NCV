@@ -19,13 +19,14 @@ namespace NinosConValorAPI.Data.Repository
 
         Task<bool> SaveChangesAsync();
         public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId);
+        Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync();
+        Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId);
 
+        //KID FILE
         public void CreateKid(KidEntity kid);
         Task<KidEntity> GetKidAsync(int kidId);
         Task<IEnumerable<KidEntity>> GetKidsAsync();
-
-        Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync();
-        Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId);
+        bool UpdateKid(KidEntity kidModel);
 
         //PROGRAM HOUSE
         Task<IEnumerable<ProgramHouseEntity>> GetProgramHousesAsync();
