@@ -124,5 +124,10 @@ namespace NinosConValorAPI.Data.Repository
             var assetCategory = await query.FirstOrDefaultAsync(g => (g.Id == categoryId));
             return assetCategory;
         }
+
+        public void CreateAssetCategory(AssetCategoryEntity assetCategory)
+        {
+            _dbContext.AssetCategories.Add(assetCategory);
+        }
     }
 }
