@@ -30,7 +30,7 @@ namespace NinosConValorAPI.Services
         {
             var assetCategoryEntity = await _NCVRepository.GetAssetCategoryAsync(categoryId);
             if (assetCategoryEntity == null)
-                throw new NotFoundElementException($"La categoría con id:{categoryId} no existe.");
+                throw new NotFoundElementException($"La categoría con Id:{categoryId} no existe.");
         }
 
         public async Task<FixedAssetModel> CreateFixedAssetAsync(FixedAssetModel fixedAsset, int programHouseId, int categoryId)

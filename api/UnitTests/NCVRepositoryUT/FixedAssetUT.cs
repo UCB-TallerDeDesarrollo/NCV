@@ -44,17 +44,18 @@ namespace UnitTests.NCVRepositoryUT
                 Quantity = 5,
                 ProgramHouse = programHouse
             };
-
+            var fixedAssetCollection = new List<FixedAssetEntity>() { fixedAsset } as ICollection<FixedAssetEntity>;
             var assetCategory = new AssetCategoryEntity()
             {
-                Id = 1,
+                Id = 2,
                 Category = "Teclados",
-                FixedAssets = new List<FixedAssetEntity>() { fixedAsset }
+                FixedAssets = fixedAssetCollection
             };
 
             ctx.Add(programHouse);
+            ctx.Add(assetCategory);
             ctx.SaveChanges();
-            repository.CreateFixedAsset(fixedAsset, 2, 1);
+            repository.CreateFixedAsset(fixedAsset, 2, 2);
             var result = await repository.SaveChangesAsync();
 
             // ASSERT
