@@ -7,12 +7,14 @@ import FormContainer from '../../Components/FormContainer'
 import InputText from '../../Components/InputText'
 import Navbar from '../../Components/NavBar'
 import Box from '@mui/material/Box'
+import { useNavigate } from 'react-router-dom';
 import ButtonPrimary from '../../Components/MUI-Button'
 
 function CreateFixedAssetForm(props) {
     const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
     const [open, setOpen] = useState(false)
-    const [error, setError] = useState(null);
+    const [error, setError] = useState(null)
+    const navigate = useNavigate()
     const [data, setData] = useState({
         Name: '', // string
         Description: '', // string
@@ -30,7 +32,7 @@ function CreateFixedAssetForm(props) {
         if (reason === 'clickaway') {
             return
         }
-        window.location.href = '/activos-fijos'
+        //window.location.href = '/activos-fijos'
         setOpen(false)
     }
     function checkError(){
@@ -39,8 +41,7 @@ function CreateFixedAssetForm(props) {
         }
     }
     function submit(e) {
-        e.preventDefault()
-        debugger;
+        e.preventDefault()        
         Axios.post(url, {
             Name: data.Name,
             Description: data.Description==''? null:data.Description, // string
@@ -49,9 +50,9 @@ function CreateFixedAssetForm(props) {
             Features: data.Features==''? null:data.Features, // string
             Quantity: data.Quantity==''? null:parseInt(data.Quantity) // int
         }).then((res) => {
-            debugger;
             if (res.status == 201) {
-                setOpen(true)
+                console.log("in")                
+                navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo creado exitosamente"}})
             }            
         }).catch ((apiError) => {
             console.log(apiError)
