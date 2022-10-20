@@ -108,5 +108,21 @@ namespace NinosConValorAPI.Data.Repository
             var programHouse = await query.FirstOrDefaultAsync(rep => (rep.Id == programHouseId));
             return programHouse;
         }
+
+        public async Task<IEnumerable<AssetCategoryEntity>> GetAssetCategoriesAsync()
+        {
+            IQueryable<AssetCategoryEntity> query = _dbContext.AssetCategories;
+            query = query.AsNoTracking();
+            var result = await query.ToListAsync();
+            return result;
+        }
+
+        public async Task<AssetCategoryEntity> GetAssetCategoryAsync(int categoryId)
+        {
+            IQueryable<AssetCategoryEntity> query = _dbContext.AssetCategories;
+            query = query.AsNoTracking();
+            var assetCategory = await query.FirstOrDefaultAsync(g => (g.Id == categoryId));
+            return assetCategory;
+        }
     }
 }

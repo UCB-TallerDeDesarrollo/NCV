@@ -25,6 +25,10 @@ namespace NinosConValorAPI.Data.Repository
         Task<IEnumerable<ProgramHouseEntity>> GetProgramHousesAsync();
         Task<ProgramHouseEntity> GetProgramHouseAsync(int programHouseId);
 
+        //ASSETS CATEGORIES
+        Task<IEnumerable<AssetCategoryEntity>> GetAssetCategoriesAsync();
+        Task<AssetCategoryEntity> GetAssetCategoryAsync(int categoryId);
+
         //TASKS
         Task<bool> SaveChangesAsync();
     }
