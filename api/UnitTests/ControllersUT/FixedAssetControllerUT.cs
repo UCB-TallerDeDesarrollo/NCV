@@ -34,7 +34,7 @@ namespace UnitTests.ControllersUT
             };           
 
             var fixedAssetServiceMock = new Mock<IFixedAssetService>();
-            fixedAssetServiceMock.Setup(r => r.CreateFixedAssetAsync(fixedAssetModel,2)).ReturnsAsync(new FixedAssetModel()
+            fixedAssetServiceMock.Setup(r => r.CreateFixedAssetAsync(fixedAssetModel, 2, 1)).ReturnsAsync(new FixedAssetModel()
             {
                 Id=1,
                 Name = "Computadora",
@@ -43,7 +43,8 @@ namespace UnitTests.ControllersUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 Quantity = 5,
-                ProgramHouseId=2
+                ProgramHouseId=2,
+                AssetCategoryId=1
             });
 
             var fixedAssetController = new FixedAssetsController(fixedAssetServiceMock.Object);
@@ -84,7 +85,7 @@ namespace UnitTests.ControllersUT
             var mapper = config.CreateMapper();
             var enumerable = new List<FixedAssetModel>() { fixedAsset1, fixedAsset2 } as IEnumerable<FixedAssetModel>;
             var fixedAssetServiceMock = new Mock<IFixedAssetService>();
-            fixedAssetServiceMock.Setup(r => r.GetFixedAssetsAsync()).ReturnsAsync(enumerable);
+            fixedAssetServiceMock.Setup(r => r.GetFixedAssetsAsync(1)).ReturnsAsync(enumerable);
 
             var fixedAssetController = new FixedAssetsController(fixedAssetServiceMock.Object);
             var response = await fixedAssetController.GetFixedAssetsAsync();
@@ -110,7 +111,7 @@ namespace UnitTests.ControllersUT
             };
 
             var fixedAssetServiceMock = new Mock<IFixedAssetService>();
-            fixedAssetServiceMock.Setup(r => r.GetFixedAssetAsync(1)).ReturnsAsync(fixedAsset1);
+            fixedAssetServiceMock.Setup(r => r.GetFixedAssetAsync(1,1)).ReturnsAsync(fixedAsset1);
 
             var fixedAssetController = new FixedAssetsController(fixedAssetServiceMock.Object);
             var response = await fixedAssetController.GetFixedAssetAsync(1);

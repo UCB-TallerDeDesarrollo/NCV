@@ -11,6 +11,7 @@ namespace NinosConValorAPI.Data
         public DbSet<KidEntity> Kids => Set<KidEntity>();
         public DbSet<ProgramHouseEntity> ProgramHouses => Set<ProgramHouseEntity>();
         public DbSet<HealthReportEntity> HealthReports { get; set; }
+        public DbSet<AssetCategoryEntity> AssetCategories => Set<AssetCategoryEntity>();
         public DbSet<BiometricsEntity> Biometrics { get; set; }
 
         public NCV_DBContext(DbContextOptions<NCV_DBContext> options) : base(options)
@@ -35,6 +36,7 @@ namespace NinosConValorAPI.Data
             modelBuilder.Entity<FixedAssetEntity>().ToTable("FixedAsset");
             modelBuilder.Entity<FixedAssetEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<FixedAssetEntity>().HasOne(d => d.ProgramHouse).WithMany(d=>d.FixedAssets);
+            modelBuilder.Entity<FixedAssetEntity>().HasOne(d => d.AssetCategory).WithMany(d => d.FixedAssets);
 
             modelBuilder.Entity<KidEntity>().ToTable("Kid");
             modelBuilder.Entity<KidEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
@@ -54,6 +56,11 @@ namespace NinosConValorAPI.Data
             modelBuilder.Entity<ProgramHouseEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<ProgramHouseEntity>().HasOne(d => d.ResponsibleUser);
             modelBuilder.Entity<ProgramHouseEntity>().HasMany(d => d.FixedAssets).WithOne(d => d.ProgramHouse);
+
+            //Categories
+            modelBuilder.Entity<AssetCategoryEntity>().ToTable("AssetCategory");
+            modelBuilder.Entity<AssetCategoryEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<AssetCategoryEntity>().HasMany(d => d.FixedAssets).WithOne(d => d.AssetCategory);
         }
     }
 }

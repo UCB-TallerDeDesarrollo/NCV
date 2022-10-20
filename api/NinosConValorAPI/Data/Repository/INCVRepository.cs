@@ -11,26 +11,30 @@ namespace NinosConValorAPI.Data.Repository
         Task DeleteHealthReportAsync(int kidId);
         Task<HealthReportEntity> UpdateHealthReportAsync(int kidId, HealthReportEntity healthReport);
 
-        // BIOMETRICS
-        Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId);
-
-
-        //FIXED ASSET
-
-        Task<bool> SaveChangesAsync();
-        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId);
-        Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync();
-        Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId);
-
-        //KID FILE
+        //KIDS
         public void CreateKid(KidEntity kid);
         Task<KidEntity> GetKidAsync(int kidId);
         Task<IEnumerable<KidEntity>> GetKidsAsync();
         bool UpdateKid(KidEntity kidModel);
 
+        //FIXED ASSETS
+        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int categoryId);
+        Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync(int categoryId);
+        Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId, int categoryId);
+      
+        // BIOMETRICS
+        Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId);
+
         //PROGRAM HOUSE
         Task<IEnumerable<ProgramHouseEntity>> GetProgramHousesAsync();
         Task<ProgramHouseEntity> GetProgramHouseAsync(int programHouseId);
 
+        //ASSETS CATEGORIES
+        void CreateAssetCategory(AssetCategoryEntity assetCategory);
+        Task<IEnumerable<AssetCategoryEntity>> GetAssetCategoriesAsync();
+        Task<AssetCategoryEntity> GetAssetCategoryAsync(int categoryId);
+
+        //TASKS
+        Task<bool> SaveChangesAsync();
     }
 }
