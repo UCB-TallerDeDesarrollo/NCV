@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NinosConValorAPI.Data.Entity;
 using NinosConValorAPI.Data.Repository;
 using NinosConValorAPI.Models;
 
@@ -14,9 +15,16 @@ namespace NinosConValorAPI.Services
             _mapper = mapper;
         }
 
-        public Task<AssetCategoryModel> CreateAssetCategoryAsync(AssetCategoryModel assetCategory)
+        public async Task<AssetCategoryModel> CreateAssetCategoryAsync(AssetCategoryModel assetCategory)
         {
-            throw new NotImplementedException();
+            var assetCategoryEntity = _mapper.Map<AssetCategoryEntity>(assetCategory);
+            _NCVRepository.CreateAssetCategory(assetCategoryEntity);
+            var result = await _NCVRepository.SaveChangesAsync();
+            if (result)
+            {
+                return _mapper.Map<AssetCategoryModel>(assetCategoryEntity);
+            }
+            throw new Exception("Database Error.");
         }
 
         public Task<IEnumerable<AssetCategoryModel>> GetAssetCategoriesAsync()
