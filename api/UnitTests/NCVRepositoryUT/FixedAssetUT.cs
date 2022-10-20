@@ -33,6 +33,11 @@ namespace UnitTests.NCVRepositoryUT
 
             };
 
+            var assetCategory = new AssetCategoryEntity()
+            {
+                Id = 2,
+                Category = "Teclados",
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -42,14 +47,8 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 Quantity = 5,
-                ProgramHouse = programHouse
-            };
-            var fixedAssetCollection = new List<FixedAssetEntity>() { fixedAsset } as ICollection<FixedAssetEntity>;
-            var assetCategory = new AssetCategoryEntity()
-            {
-                Id = 2,
-                Category = "Teclados",
-                FixedAssets = fixedAssetCollection
+                ProgramHouse = programHouse,
+                AssetCategory = assetCategory
             };
 
             ctx.Add(programHouse);
@@ -80,6 +79,11 @@ namespace UnitTests.NCVRepositoryUT
                 }
 
             };
+            var assetCategory = new AssetCategoryEntity()
+            {
+                Id = 1,
+                Category = "Teclados",
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -89,9 +93,11 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 Quantity = 5,
-                ProgramHouse= programHouse
+                ProgramHouse= programHouse,
+                AssetCategory = assetCategory
             };           
             ctx.Add(programHouse);
+            ctx.Add(assetCategory);
             ctx.SaveChanges();
             repository.CreateFixedAsset(fixedAsset,2,1);
             var result = await repository.SaveChangesAsync();
@@ -120,6 +126,11 @@ namespace UnitTests.NCVRepositoryUT
                 }
 
             };
+            var assetCategory = new AssetCategoryEntity()
+            {
+                Id = 1,
+                Category = "Teclados",
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -129,9 +140,11 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 Quantity = 5,
-                ProgramHouse = programHouse
+                ProgramHouse = programHouse,
+                AssetCategory = assetCategory
             };
             ctx.Add(programHouse);
+            ctx.Add(assetCategory);
             ctx.SaveChanges();
             repository.CreateFixedAsset(fixedAsset, 2, 1);
             var result = await repository.SaveChangesAsync();
@@ -160,6 +173,11 @@ namespace UnitTests.NCVRepositoryUT
                 }
 
             };
+            var assetCategory = new AssetCategoryEntity()
+            {
+                Id = 1,
+                Category = "Teclados",
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -169,9 +187,11 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 Quantity = 5,
-                ProgramHouse = programHouse
+                ProgramHouse = programHouse,
+                AssetCategory = assetCategory
             };
             ctx.Add(programHouse);
+            ctx.Add(assetCategory);
             ctx.SaveChanges();
             repository.CreateFixedAsset(fixedAsset, 2, 1);
             var result = await repository.SaveChangesAsync();
@@ -200,6 +220,11 @@ namespace UnitTests.NCVRepositoryUT
                 }
 
             };
+            var assetCategory = new AssetCategoryEntity()
+            {
+                Id = 1,
+                Category = "Teclados",
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -209,9 +234,11 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 Quantity = 5,
-                ProgramHouse = programHouse
+                ProgramHouse = programHouse,
+                AssetCategory = assetCategory
             };
             ctx.Add(programHouse);
+            ctx.Add(assetCategory);
             ctx.SaveChanges();
             repository.CreateFixedAsset(fixedAsset, 2, 1);
             var result = await repository.SaveChangesAsync();
