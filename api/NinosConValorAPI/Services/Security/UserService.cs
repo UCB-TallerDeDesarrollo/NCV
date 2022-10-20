@@ -73,7 +73,7 @@ namespace NinosConValorAPI.Services.Security
                 signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
             
             string tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
-            //aca muere
+            
             return new UserManagerResponse
             {
                 Token = tokenAsString,
@@ -123,6 +123,37 @@ namespace NinosConValorAPI.Services.Security
                 IsSuccess = false,
                 Errors = result.Errors.Select(e => e.Description)
             };
+        }
+
+        public async Task<IEnumerable<UserBasicInformationModel>> GetUsersAsync( )
+        {
+            var userBasicInformation = new List<UserBasicInformationModel>();
+            var userList = userManager.Users.ToList();
+            var user0 = userList[1];
+            //var userBasicInfomodel = new UserBasicInformation();
+           
+            foreach (var user in userList)
+            {
+                var aux =  await userManager.GetRolesAsync(user);
+                if (aux != null)
+                {
+                    var userBasicInfomodel = new UserBasicInformationModel
+                    {
+                        Email = user.Email,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        CellPhone = user.PhoneNumber,
+                        NameRole = aux[0],
+
+                    };
+
+                    userBasicInformation.Add(userBasicInfomodel);
+                }
+            }
+            if (userBasicInformation == null || !userBasicInformation.Any())
+                throw new NotFoundElementException($"No se encontraron usuarios registrados");
+
+            return userBasicInformation;
         }
 
         public async Task<UserManagerResponse> CreateRoleAsync(CreateRoleViewModel model)
