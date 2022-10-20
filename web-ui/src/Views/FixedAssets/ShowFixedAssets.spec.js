@@ -145,15 +145,15 @@ describe('Show Fixed Asset', () => {
         expect(screen.getByText('Lista de activos fijos')).toBeVisible
         expect(screen.getByText('Crear activo fijo')).toBeVisible
         expect(screen.getByText('Asset name 1')).toBeVisible
-        expect(screen.getByText('Descripción: Description from asset 1')).toBeVisible
+        expect(screen.getByText('Descripción: Description from asset 1 -- Programa: *Sin programa*')).toBeVisible
         expect(screen.getByText('Asset name 2')).toBeVisible
-        expect(screen.getByText('Descripción: Description from asset 2')).toBeVisible
+        expect(screen.getByText('Descripción: Description from asset 2 -- Programa: *Sin programa*')).toBeVisible
         expect(screen.getByText('Asset name 3')).toBeVisible
-        expect(screen.getByText('Descripción: Description from asset 3')).toBeVisible
+        expect(screen.getByText('Descripción: Description from asset 3 -- Programa: *Sin programa*')).toBeVisible
         expect(screen.getByText('Asset name 4')).toBeVisible
-        expect(screen.getByText('Descripción: Description from asset 4')).toBeVisible
+        expect(screen.getByText('Descripción: Description from asset 4 -- Programa: *Sin programa*')).toBeVisible
         expect(screen.getByText('Asset name 5')).toBeVisible
-        expect(screen.getByText('Descripción: Description from asset 5')).toBeVisible
+        expect(screen.getByText('Descripción: Description from asset 5 -- Programa: *Sin programa*')).toBeVisible
       })  
   })
   
@@ -169,7 +169,7 @@ describe('Show Fixed Asset', () => {
       expect(screen.getByText('Asset name 3')).toBeVisible
       expect(screen.getByText('Asset name 4')).toBeVisible
       expect(screen.getByText('Asset name 5')).toBeVisible
-      expect(screen.getAllByText('Descripción: *Sin descripción*')).toHaveLength(5)
+      expect(screen.getAllByText('Descripción: *Sin descripción* -- Programa: *Sin programa*')).toHaveLength(5)
       })  
   })
   it('Shows error when api does not return any data. Should return error 500', async () => {
