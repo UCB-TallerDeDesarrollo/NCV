@@ -116,7 +116,7 @@ function ShowOneKidFile() {
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} />
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
             
-            <ButtonDanger key={2} label="Eliminar Registro" onClick={handleClickOpen} />
+            <ButtonDanger key={2} label="Eliminar Registro" id="delete_button" onClick={handleClickOpen} />
             <Dialog open={open} onClose={handleClose}>
             <DialogTitle>¿Seguro que desea eliminar el registro?</DialogTitle>
             <DialogActions>
