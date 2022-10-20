@@ -10,21 +10,22 @@ namespace NinosConValorAPI.Data.Repository
         Task DeleteHealthReportAsync(int kidId);
         Task<HealthReportEntity> UpdateHealthReportAsync(int kidId, HealthReportEntity healthReport);
 
-        //FIXED ASSET
-
-        Task<bool> SaveChangesAsync();
-        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId);
-
+        //KIDS
         public void CreateKid(KidEntity kid);
         Task<KidEntity> GetKidAsync(int kidId);
         Task<IEnumerable<KidEntity>> GetKidsAsync();
 
-        Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync();
-        Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId);
+        //FIXED ASSETS
+
+        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int categoryId);
+        Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync(int categoryId);
+        Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId, int categoryId);
 
         //PROGRAM HOUSE
         Task<IEnumerable<ProgramHouseEntity>> GetProgramHousesAsync();
         Task<ProgramHouseEntity> GetProgramHouseAsync(int programHouseId);
 
+        //TASKS
+        Task<bool> SaveChangesAsync();
     }
 }

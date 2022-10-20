@@ -23,8 +23,9 @@ namespace NinosConValorAPI.Data.Repository
 
         // FIXED ASSET
 
-        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId)
+        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int categoryId)
         {
+            _dbContext.Entry(fixedAsset.AssetCategory).State = EntityState.Unchanged;
             _dbContext.Entry(fixedAsset.ProgramHouse).State = EntityState.Unchanged;
             _dbContext.FixedAssets.Add(fixedAsset);
         }
@@ -59,19 +60,19 @@ namespace NinosConValorAPI.Data.Repository
             }
         }
 
-        public async Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync()
+        public async Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync(int categoryId)
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
-            var result = await query.ToListAsync();
-            return result;
+            query = query.Where(d => d.AssetCategory.Id == categoryId);
+            return await query.ToListAsync();
         }
 
-        public async Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId)
+        public async Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId, int categoryId)
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
-            return await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
+            return await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId && g.AssetCategory.Id == categoryId);
         }
 
         public async Task<HealthReportEntity> GetHealthReportAsync(int kidId)

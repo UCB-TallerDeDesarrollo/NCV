@@ -26,13 +26,13 @@ namespace NinosConValorAPI.Services
             return programHouse;
         }
 
-        public async Task<FixedAssetModel> CreateFixedAssetAsync(FixedAssetModel fixedAsset, int programHouseId)
+        public async Task<FixedAssetModel> CreateFixedAssetAsync(FixedAssetModel fixedAsset, int programHouseId, int categoryId)
         {
             //fixedAsset.ProgramHouseId = fixedAsset.ProgramHouseId == 0 ? 2 : fixedAsset.ProgramHouseId;
             await GetProgramHouseAsync(programHouseId);
             fixedAsset.ProgramHouseId = programHouseId;
             var fixedAssetEntity = _mapper.Map<FixedAssetEntity>(fixedAsset);
-            _NCVRepository.CreateFixedAsset(fixedAssetEntity, programHouseId);
+            _NCVRepository.CreateFixedAsset(fixedAssetEntity, programHouseId, categoryId);
             var result = await _NCVRepository.SaveChangesAsync();
             
             if (result)
@@ -46,9 +46,9 @@ namespace NinosConValorAPI.Services
             throw new Exception("Error en la base de datos.");
         }
 
-        public async Task<IEnumerable<FixedAssetModel>> GetFixedAssetsAsync()
+        public async Task<IEnumerable<FixedAssetModel>> GetFixedAssetsAsync(int categoryId)
         {
-            var fixedAssetEntityList = await _NCVRepository.GetFixedAssetsAsync();
+            var fixedAssetEntityList = await _NCVRepository.GetFixedAssetsAsync(categoryId);
             
             if (fixedAssetEntityList == null || !fixedAssetEntityList.Any())
                 throw new NotFoundElementException($"La lista de Activos Fijos no existe o está vacía.");
@@ -56,9 +56,9 @@ namespace NinosConValorAPI.Services
             return _mapper.Map<IEnumerable<FixedAssetModel>>(fixedAssetEntityList);
         }
 
-        public async Task<FixedAssetModel> GetFixedAssetAsync(int fixedAssetId)
+        public async Task<FixedAssetModel> GetFixedAssetAsync(int fixedAssetId, int categoryId)
         {
-            var fixedAsset = await _NCVRepository.GetFixedAssetAsync(fixedAssetId);
+            var fixedAsset = await _NCVRepository.GetFixedAssetAsync(fixedAssetId, categoryId);
 
             if (fixedAsset == null)
                 throw new NotFoundElementException($"El activo fijo con Id:{fixedAssetId} no existe.");
