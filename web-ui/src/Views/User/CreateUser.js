@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react'
 
 import axios from 'axios'
@@ -6,9 +7,10 @@ import Navbar from '../../Components/NavBar'
 import FormContainer from '../../Components/FormContainer'
 import InputText from '../../Components/InputText'
 import Collapse from '@mui/material/Collapse'
-import MenuItem from '@mui/material/MenuItem';
-import ButtonPrimary from '../../Components/MUI-Button';
-import Alert from '@mui/material/Alert';
+import MenuItem from '@mui/material/MenuItem'
+import ButtonPrimary from '../../Components/MUI-Button'
+import Alert from '@mui/material/Alert'
+import emailjs from 'emailjs-com'
 
 const user = {
     firstName: '',
@@ -54,7 +56,22 @@ function CreateUser() {
             .post(`${url}/${data.rol}`, data)
             .then(function (response) {
                 if (response.status == 200) {
-                    navigate(`/inicio-ncv`,{state:{showAlert:true,alertMessage:"Usuario creado exitosamente"}})
+                    emailjs.send(
+                        'service_fqnko4m',
+                        'template_1cszhti',
+                        {
+                            firstName: data.firstName,
+                            email: data.email,
+                            password: data.password
+                        },
+                        'gP3o_iD52sF8GJvJH'
+                    )
+                    navigate(`/inicio-ncv`, {
+                        state: {
+                            showAlert: true,
+                            alertMessage: 'Usuario creado exitosamente'
+                        }
+                    })
                 }
             })
             .catch(function (error) {
@@ -156,9 +173,17 @@ function CreateUser() {
                         onClick={handleFormSubmit}
                     />
                 </FormContainer>
+                <script
+                    type="text/javascript"
+                    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+                ></script>
+
+                <script type="text/javascript">
+                    emailjs.init('gP3o_iD52sF8GJvJH')
+                </script>
             </div>
         </>
-    );
+    )
 }
 
 export default CreateUser
