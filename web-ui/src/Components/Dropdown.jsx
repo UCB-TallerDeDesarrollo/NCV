@@ -4,37 +4,19 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import NativeSelect from '@mui/material/NativeSelect';
 
-export default function BasicSelect({ label, id, options }) {
-  console.log('opciones:', options);
-  //const [value] = React.useState('');
-  //this.state.setState(SelectedVal);
-
-  // handleChange = e => {
-  //   var value = e.target.value;
-
-  // this.setState({
-  //   SeletedVal: value
-  // });
-
+export default function Dropdown({name, id, options, handleChange, selectedValue}) {
   return (
-    <div style={{ minWidth: 120 }}>
-      <InputLabel>{label}</InputLabel>
-      <Select
-        id={id}
-        // onChange={handleChange}
-        // handleChange={this.handleChange}
-        // selectedValue={this.state.SelectedVal}
-        value={options[-1]}
-
-      // onChange={handleChange}
-      >
-        {options.map(option => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </Select>
-    </div>
+    <NativeSelect
+          id={id} name={name} onChange={handleChange} value={selectedValue}
+        >
+          {options.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </NativeSelect>
   );
-};
+}
+
