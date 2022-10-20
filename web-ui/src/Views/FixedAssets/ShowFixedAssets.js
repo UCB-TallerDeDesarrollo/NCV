@@ -17,16 +17,15 @@ export default function ShowFixedAssets() {
     if(error){
         return ErrorPage(error)
     }
-    //fixedAsset.entryDate!=null? fixedAsset.entryDate.split('T')[0]:null
     if (!fixedAssets) return null
     if (fixedAssets.length>0){
         const listElements = fixedAssets.map((el)=>{
             return {
                 id:el.id, 
                 title:`${el.name}`, 
-                description:`Descripción: ${el.description!=null && el.description!='' ? el.description:"*Sin descripción*"}`, 
+                description:`Descripción: ${el.description!=null && el.description!='' ? el.description:"*Sin descripción*"} -- Programa: ${el.programHouseName!=null&&el.programHouseName!=""&&el.programHouseName!=undefined?el.programHouseName:"*Sin programa*"}`,                 
                 elementUrl:`${completeInfoFixedAsset}/${el.id}`,
-                imgSrc:`https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg`
+                imgSrc:`https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg`                
             }
         })
         let fixedAssetsComponent = <ListBasic items={listElements} />
