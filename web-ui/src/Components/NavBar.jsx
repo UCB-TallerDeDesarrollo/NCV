@@ -57,7 +57,7 @@ function Navbar() {
               </Typography>
             </Grid>
             
-            <Grid xs={4} />
+            <Grid item xs={4} />
             <Grid  item xs={1}>
                 <Button sx={{marginLeft:35,width:150,textTransform:'none'}} color="inherit" onClick={handleClickSignIn}>Registrar Usuario</Button>
             </Grid>
