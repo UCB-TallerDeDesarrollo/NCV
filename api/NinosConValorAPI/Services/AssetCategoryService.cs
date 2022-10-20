@@ -38,9 +38,14 @@ namespace NinosConValorAPI.Services
             return _mapper.Map<IEnumerable<AssetCategoryModel>>(assetCategoriesList);
         }
 
-        public Task<AssetCategoryModel> GetAssetCategoryAsync(int categoryId)
+        public async Task<AssetCategoryModel> GetAssetCategoryAsync(int categoryId)
         {
-            throw new NotImplementedException();
+            var assetCategoryEntity = await _NCVRepository.GetAssetCategoryAsync(categoryId);
+
+            if (assetCategoryEntity == null)
+                throw new NotFoundElementException($"La categoría con id:{categoryId} no existe.");
+
+            return _mapper.Map<AssetCategoryModel>(assetCategoryEntity);
         }
     }
 }
