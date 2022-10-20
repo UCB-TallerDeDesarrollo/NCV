@@ -21,6 +21,17 @@ namespace NinosConValorAPI.Data.Repository
             return healthReport;
         }
 
+        // BIOMETRICS
+
+        public async Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId)
+        {
+            IQueryable<BiometricsEntity> query = _dbContext.Biometrics;
+            query = query.AsNoTracking();
+            query = query.Where(b => b.KidId == kidId);
+            return await query.ToListAsync();
+        }
+
+
         // FIXED ASSET
 
         public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId)
@@ -63,6 +74,7 @@ namespace NinosConValorAPI.Data.Repository
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
+            query = query.Include(f => f.ProgramHouse);
             var result = await query.ToListAsync();
             return result;
         }
@@ -71,7 +83,9 @@ namespace NinosConValorAPI.Data.Repository
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
-            return await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
+            query = query.Include(f=>f.ProgramHouse);
+            var fixedAssetEntity = await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
+            return fixedAssetEntity;
         }
 
         public async Task<HealthReportEntity> GetHealthReportAsync(int kidId)
@@ -106,6 +120,14 @@ namespace NinosConValorAPI.Data.Repository
             query = query.AsNoTracking();
             var programHouse = await query.FirstOrDefaultAsync(rep => (rep.Id == programHouseId));
             return programHouse;
+        }
+
+        public bool UpdateKid(KidEntity kidModel)
+        {
+            var kidToUpdate = _dbContext.Kids.FirstOrDefault(c => c.Id == kidModel.Id);
+
+            _dbContext.Entry(kidToUpdate).CurrentValues.SetValues(kidModel);
+            return true;
         }
     }
 }

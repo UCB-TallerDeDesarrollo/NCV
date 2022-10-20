@@ -4,7 +4,7 @@ using NinosConValorAPI.Exceptions;
 using NinosConValorAPI.Models;
 using NinosConValorAPI.Services;
 using System.Security.Cryptography;
-using NinosConValorAPI.Exceptions;
+
 
 namespace NinosConValorAPI.Controllers
 {
@@ -60,6 +60,34 @@ namespace NinosConValorAPI.Controllers
             catch (BadRequestOperationException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happend: {ex.Message}");
+            }
+        }
+
+        [HttpPut("{kidId:int}")]
+        public async Task<IActionResult> UpdateKidAsync(int kidId, [FromBody] KidModel kidModel)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    foreach (var pair in ModelState)
+                    {
+                        if (pair.Key == nameof(kidModel.FirstName) && pair.Value.Errors.Count > 0)
+                        {
+                            return BadRequest(pair.Value.Errors);
+                        }
+                    }
+                }
+
+                return Ok(await _kidService.UpdateKidAsync(kidId, kidModel));
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message); ;
             }
             catch (Exception ex)
             {

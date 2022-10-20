@@ -1,207 +1,280 @@
-import React, { useState } from 'react'
-import {
-    FormLabel,
-    RadioGroup,
-    FormControlLabel,
-    Radio,
-    Typography,
-    Card,
-    CardContent,
-    Grid,
-    TextField,
-    Select,
-    MenuItem,
-    Button,
-    InputLabel
-, Autocomplete, Container } from '@mui/material'
+/* eslint-disable react/no-unescaped-entities */
+import React, { useState, useEffect} from 'react'
 
-import Axios from 'axios'
+import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import CardHeader from '@mui/material/CardHeader'
-import CardActions from '@mui/material/CardActions'
-import Box from '@mui/material/Box'
-import Input from '@mui/material/Input'
-import Snackbar from '@mui/material/Snackbar'
-import Alert from '@mui/material/Alert'
 import Navbar from '../../Components/NavBar'
-import { margin } from '@mui/system'
+import FormContainer from '../../Components/FormContainer'
+import InputText from '../../Components/InputText'
+import Collapse from '@mui/material/Collapse'
+import MenuItem from '@mui/material/MenuItem'
+import ButtonPrimary from '../../Components/MUI-Button'
+import Alert from '@mui/material/Alert'
+import emailjs from 'emailjs-com'
 
+const user = {
+    firstName: '',
+    lastName: '',
+    cellPhone: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    rol: ''
+}
+const roles = [
+    {
+        label: 'Tia',
+        value: 'AuntUser'
+    },
+    {
+        label: 'Administrador',
+        value: 'AdminUser'
+    },
+    {
+        label: 'Super Usuario',
+        value: 'SuperUser'
+    }
+]
 
 function CreateUser() {
-
-    const API = 'https://ncv-api.herokuapp.com/api/auth'
-    const navigate = useNavigate();
+    var url = 'https://ncv-api.herokuapp.com/api/auth'
+    const navigate = useNavigate()
     const [open, setOpen] = useState(false)
-    const [rol, setRol] = useState("");
-    const [error, setError] = useState(null)
-    const [data, setData] = useState({
-    
-        FirstName: '',
-        LastName: '',
-        CellPhone: '',
-        Email: '',
-        Password: '',
-        ConfirmPassword: '',
-        rol: rol
-    })
-    function handle(e) {
-        const newData = { ...data }
-        newData[e.target.id] = e.target.value
-        setData(newData)
-    }
-    function handleClick() {
-        setOpen(true)
-    }
-    function handleClose(event, reason) {
-        if (reason === 'clickaway') {
-            return
-        }
+    const [data, setData] = useState(user)
+    const [formErrors,setFormErrors] = useState({})
+    const [isSubmit, setIsSubmit] = useState(false)
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target
         setOpen(false)
-    }
-    function submit(e) {
-        e.preventDefault()
-        Axios.post(`${API}/${rol}`, {
-            FirstName: data.FirstName,
-            LastName: data.LastName, // string
-            CellPhone: data.CellPhone, // number
-            Email: data.Email, // email
-            Password: data.Password, // password
-            ConfirmPassword: data.ConfirmPassword, // password
-            Rol : data.Rol, // string
-        }).then((res) => {
-            if (res.status == 200) {
-                setOpen(true)
-                alert('usuario creado');
-                navigate(`/inicio-ncv`);
-            }
-        }).catch (function(error) {
-           alert(error);
+        setData({
+            ...data,
+            [name]: value
         })
     }
+
+    function handleFormSubmit() {
+        setFormErrors(validate(data));
+        setIsSubmit(true)
+        axios
+            .post(`${url}/${data.rol}`, data)
+            .then(function (response) {
+                if (response.status == 200) {
+                    emailjs.send(
+                        'service_fqnko4m',
+                        'template_1cszhti',
+                        {
+                            firstName: data.firstName,
+                            email: data.email,
+                            password: data.password
+                        },
+                        'gP3o_iD52sF8GJvJH'
+                    )
+                    navigate(`/inicio-ncv`, {
+                        state: {
+                            showAlert: true,
+                            alertMessage: 'Usuario creado exitosamente'
+                        }
+                    })
+                }
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    //errores=handleValidation();
+                    //alert(error.name)
+                    if (error.response.status >= 400 || error.response.status <= 500) 
+                        setOpen(true)
+                }
+            })
+    };
+
+
+    useEffect(()=>{
+        console.log(formErrors)
+        if (Object.keys(formErrors).length === 0 && isSubmit){
+           console.log(data);
+        }
+    },[formErrors]);
+
+    const validate = (datas) => {
+        const errors = {};
+        const regex =  /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        const regexUpperCase = /^.*[A-Z]/;
+        const regexLowerCase = /^.*[a-z]/;
+        const regexNumber = /^.*[0-9]/;
+        const regexCharacter= /^.*[!@#$%^&*]/;
+        if(!datas.firstName){
+            errors.firstName= "El nombre es requerido!";
+        }
+
+        if(!datas.lastName){
+            errors.lastName= "El apellido es requerido!";
+        }
+
+        if(!datas.cellPhone){
+            errors.cellPhone= "El celular es requerido!";
+        }
+
+        if(!datas.email){
+            errors.email= "El correo es requerido!";
+        }else if (!regex.test(datas.email)){
+            errors.email = "Formato de correo incorrecto!"
+        }
+
+        if(!datas.password){
+            errors.password= "La contraseña es requerida";
+        }else if (datas.password.length<8){
+            errors.password= "La contraseña debe tener almenos 8 caracteres";
+        }else if(!regexUpperCase.test(datas.password)){
+            errors.password= "La contraseña debe tener almenos una mayúscula";
+        }else if(!regexLowerCase.test(datas.password)){
+            errors.password= "La contraseña debe tener almenos una minúscula";
+        }else if(!regexNumber.test(datas.password)){
+            errors.password= "La contraseña debe tener almenos una numero";
+        }else if(!regexCharacter.test(datas.password)){
+            errors.password= "La contraseña debe tener almenos caracter especial";
+        }
+
+        if(!datas.confirmPassword){
+            errors.confirmPassword= "Confirmar la contraseña es obligatorio!";
+        }else if(datas.password!= datas.confirmPassword){
+            errors.confirmPassword = "Las contraseñas no coinciden"
+        }
+
+        if(!datas.rol){
+            errors.rol= "El rol es requerido!";
+        }
+
+        return errors;
+
+    }
+
     return (
-        <><Navbar />
-        <div style={{marginTop: '5em'}}></div>
-        <Box
-            sx={{
-                marginTop: '10vh',
-                '& .MuiTextField-root': { m: 1, width: '45ch' }
-            }}
-        >
-            <Grid
-                container
-                direction="column"
-                alignItems="center"
-                justify="center"
-                style={{ minHeight: '100vh' }}
+        <>
+            <Navbar />
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginTop: '3em'
+                }}
             >
-                <Grid item xs={3}>
-                    <Card sx={{ maxWidth: 450 }}>
-                        <div>
-                            <CardHeader
-                                style={{ textAlign: 'center' }}
-                                title="Crear Usuario"
-                            />
-                            <CardContent>
-                                <form onSubmit={(e) => submit(e)}>
-                                    <TextField
-                                        required
-                                        onChange={(e) => handle(e)}
-                                        id="FirstName"
-                                        value={data.FirstName}
-                                        placeholder="Nombre"
-                                        type="text"
-                                        variant="filled"
-                                    />
-                                    <br />
-                                    <TextField
-                                        onChange={(e) => handle(e)}
-                                        id="LastName"
-                                        value={data.LastName}
-                                        placeholder="Apellido"
-                                        type="text"
-                                        variant="filled"
-                                    />
-                                    <br />
-                                    <TextField
-                                        required
-                                        onChange={(e) => handle(e)}
-                                        id="CellPhone"
-                                        value={data.CellPhone}
-                                        placeholder="Celular"
-                                        type="number"
-                                        variant="filled"
-                                    />
-                                    <br />
-                                    <TextField
-                                        required
-                                        onChange={(e) => handle(e)}
-                                        id="Email"
-                                        value={data.Email}
-                                        placeholder="Email"
-                                        type="email"
-                                        variant="filled"
-                                    />
-                                    <br />
-                                    <TextField
-                                        onChange={(e) => handle(e)}
-                                        id="Password"
-                                        value={data.Password}
-                                        placeholder="Contraseña"
-                                        type="password"
-                                        variant="filled"
-                                    />
-                                    <br />
-                                    <TextField
-                                        required
-                                        onChange={(e) => handle(e)}
-                                        id="ConfirmPassword"
-                                        value={data.ConfirmPassword}
-                                        placeholder="Confirmar Contraseña"
-                                        type="password"
-                                        variant="filled"
-                                    />
-                                   <Autocomplete  variant="filled"  options={roles} inputValue={rol} onInputChange={(event, newRol) => {setRol(newRol)}} renderInput={
-                                    (params) => <TextField {...params} label="Rol" required />
-                                    } />
-                                    <br />
-                                    <CardActions
-                                        style={{ justifyContent: 'center' }}
-                                    >
-                                        <Button variant="outlined">
-                                            <Input
-                                                type="submit"
-                                                onClick={handleClick}
-                                                id={'submit_button'}
-                                            >
-                                                Submit
-                                            </Input>
-                                        </Button>
-                                    </CardActions>
-                                </form>
-                            </CardContent>
-                        </div>
-                    </Card>
-                    <Snackbar
-                        autoHideDuration={6000}
-                        onClose={handleClose}
-                        setOpen={open}
+                <FormContainer title="Registrar nuevo usuario">
+                    <Collapse  in={open} sx={{ width: 1, pt: 2 }}>
+                        <Alert severity="error"> 
+                            Todos los campos son requeridos                          
+                        </Alert>
+                    </Collapse>
+
+                    <InputText
+                        required
+                        id="firstName"
+                        name="firstName"
+                        label="Nombre"
+                        type="text"
+                        value={data.firstName}
+                        onChange={handleInputChange}
+                    />
+                    {formErrors.firstName? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.firstName}                          
+                    </Alert>:<p></p> }
+                    <InputText
+                        required
+                        id="lastName"
+                        name="lastName"
+                        label="Apellido"
+                        type="text"
+                        value={data.lastName}
+                        onChange={handleInputChange}
+                    />
+                    {formErrors.lastName? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.lastName}                          
+                    </Alert>:<p></p> }
+                    
+                    <InputText
+                        required
+                        id="cellPhone"
+                        name="cellPhone"
+                        label="Celular"
+                        type="number"
+                        value={data.cellPhone}
+                        onChange={handleInputChange}
+                    />
+                    {formErrors.cellPhone? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.cellPhone}                          
+                    </Alert>:<p></p> }
+                    <InputText
+                        required
+                        id="email"
+                        name="email"
+                        label="Correo electronico"
+                        type="email"
+                        value={data.email}
+                        onChange={handleInputChange}
+                    />
+                    {formErrors.email? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.email}                          
+                    </Alert>:<p></p> }
+                    <InputText
+                        required
+                        id="password"
+                        name="password"
+                        label="Contraseña"
+                        type="password"
+                        value={data.password}
+                        onChange={handleInputChange}
+                    />
+                    {formErrors.password? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.password}                          
+                    </Alert>:<p></p> }
+                  
+                    <InputText
+                        required
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        label="Confirmar contraseña"
+                        type="password"
+                        value={data.confirmPassword}
+                        onChange={handleInputChange}
+                    />
+                    {formErrors.confirmPassword? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.confirmPassword}                          
+                    </Alert>:<p></p> }
+                    <InputText
+                        required
+                        select
+                        id="rol"
+                        name="rol"
+                        label="Rol"
+                        type="text"
+                        value={data.rol}
+                        onChange={handleInputChange}
                     >
-                        {open? <Alert onClose={handleClose} severity="success">
-                            Usuario Creado
-                        </Alert> : <Alert onClose={handleClose} severity="error">
-                            Error al registrar
-                        </Alert> }
-                    </Snackbar>
-                </Grid>
-            </Grid>
-        </Box>
+                        {roles.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </InputText>
+                    {formErrors.rol? <Alert sx={{ width: 1, pt: 1, marginBottom:2 }} severity="error"> 
+                        {formErrors.rol}                          
+                    </Alert>:<p></p> }
+                    <ButtonPrimary
+                        label={'Registrar'}
+                        onClick={handleFormSubmit} 
+                    />
+                </FormContainer>
+                <script
+                    type="text/javascript"
+                    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+                ></script>
+
+                <script type="text/javascript">
+                    emailjs.init('gP3o_iD52sF8GJvJH')
+                </script>
+            </div>
         </>
     )
 }
-
-const roles = [
-    {label: "AuntUser"},
-    {label: "AdminUser"},
-]
 
 export default CreateUser

@@ -15,6 +15,16 @@ namespace NinosConValorAPI.Services
             _mapper = mapper;
         }
 
+        public async Task<ProgramHouseModel> GetProgramHouseAsync(int programHouseId)
+        {
+            var programHouse = await _NCVRepository.GetProgramHouseAsync(programHouseId);
+
+            if (programHouse == null)
+                throw new NotFoundElementException($"El programa con Id:{programHouseId} no existe.");
+
+            return _mapper.Map<ProgramHouseModel>(programHouse);
+        }
+
         public async Task<IEnumerable<ProgramHouseModel>> GetProgramHousesAsync()
         {
             var programHousesList = await _NCVRepository.GetProgramHousesAsync();
