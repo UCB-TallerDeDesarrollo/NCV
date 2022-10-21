@@ -247,6 +247,10 @@ function ShowOneKidFile() {
     
     
 
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
     const navigateListKid = () =>{ 
         let path = `/ninos`; 
         navigate(path);
@@ -256,10 +260,6 @@ function ShowOneKidFile() {
         handleClose();
         setOpenConfirmed(true);
     };
-
-    const handleClickOpen = () => {
-        setOpen(true);
-      };
 
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
