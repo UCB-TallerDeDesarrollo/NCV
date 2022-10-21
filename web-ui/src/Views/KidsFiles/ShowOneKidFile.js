@@ -41,12 +41,12 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
     return healthReportComponent
 }
 
-function WeightAndHeight({weightAndHeightData=null}){
+function WeightAndHeight({weightAndHeightData=[]}){
     let table = <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
         <AutoAwesomeIcon sx={{margin:2}}/>
         No existen registros de <b>peso y talla</b>
     </Box>;
-    if (weightAndHeightData != null){
+    if (weightAndHeightData != null && weightAndHeightData.length > 0){
         let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
         table = (<>
             <h4>Peso y talla</h4>
@@ -66,8 +66,11 @@ function ShowOneKidFile() {
     const [kid, setKid] = useState([])     
     const [healthReport, setHealthReport] = useState(null)
     const [healthReportStatusCode, setHealthReportStatusCode] = useState(null)
+    const [biometrics, setBiometrics] = useState([])
+    const [biometricsStatusCode, setBiometricsStatusCode] = useState(null)
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
+    const urlBiometrics = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/biometrics'
 
     const location = useLocation()
     
@@ -102,9 +105,22 @@ function ShowOneKidFile() {
             })
     }
 
+    const fetchBiometrics = () => {
+        axios.get(urlBiometrics)
+            .then((response) => {
+                setBiometricsStatusCode(response.status)
+                setBiometrics(response.data)
+            })
+            .catch((error)=>{
+                setBiometricsStatusCode(error.response.status);
+                setBiometrics(null);
+            })
+    }
+
     useEffect(() => { 
         fetchBasicData();
-        fetchHeltReport() 
+        fetchHeltReport();
+        fetchBiometrics();
     }, [])
 
     // FIXME: Será necesario contemplar este caso ?? 
@@ -127,13 +143,11 @@ function ShowOneKidFile() {
         "Lugar de Nacimiento ": kid.birthPlace,
     };
 
-    let weightAndHeightData = null//[{date:"Feb 25",weight:25,height:10},{year:2022,v:null,x:null},{date:"Feb 25",weight:25,height:10},{date:"Feb 25",weight:25,height:10}];
-
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName }/>
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
-            <WeightAndHeight weightAndHeightData={weightAndHeightData}/>
+            <WeightAndHeight weightAndHeightData={biometrics}/>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
