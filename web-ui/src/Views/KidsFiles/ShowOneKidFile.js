@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import {useLocation} from 'react-router-dom'
 import axios from "axios";
@@ -46,12 +46,13 @@ function ShowOneKidFile() {
     const [healthReportStatusCode, setHealthReportStatusCode] = useState(null)
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
-
+    const navigate = useNavigate();
     const location = useLocation()
     
     let showAlert = location.state ? location.state.showAlert : false 
     let alertMessage = location.state ? location.state.alertMessage : null 
     const [open, setOpen] = useState(showAlert);
+    const [openConfirmed, setOpenConfirmed] = useState(showAlert);
 
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
@@ -109,7 +110,17 @@ function ShowOneKidFile() {
 
     const handleClickOpen = () => {
         setOpen(true);
-      };
+    };
+
+    const navigateListKid = () =>{ 
+        let path = `/ninos`; 
+        navigate(path);
+      }
+
+    const confirmedOpen = () => {
+        handleClose();
+        setOpenConfirmed(true);
+    };
 
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
@@ -117,13 +128,20 @@ function ShowOneKidFile() {
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
             
             <ButtonDanger key={2} label="Eliminar Registro" id="delete_button" onClick={handleClickOpen} />
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={open} onClose={handleClose} id="confirmation_popup">
             <DialogTitle>¿Seguro que desea eliminar el registro?</DialogTitle>
             <DialogActions>
             <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
-            <ButtonDanger label="Si, Quiero Eliminar Registro" onClick={handleClose}></ButtonDanger>
+            <ButtonDanger label="Si, Quiero Eliminar Registro" onClick={confirmedOpen}></ButtonDanger>
             </DialogActions>
-        </Dialog>
+            </Dialog>
+            
+            <Dialog open={openConfirmed} onClose={handleClose}>
+            <DialogTitle>Registro Eliminado</DialogTitle>
+            <DialogActions>
+            <ButtonPrimary label="Volver a la lista principal" onClick={navigateListKid}></ButtonPrimary>
+            </DialogActions>
+            </Dialog>
         </div></>
     )}
 export {ShowOneKidFile}
