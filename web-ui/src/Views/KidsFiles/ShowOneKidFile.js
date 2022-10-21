@@ -278,14 +278,14 @@ function ShowOneKidFile() {
             <DialogTitle>¿Seguro que desea eliminar el registro?</DialogTitle>
             <DialogActions>
             <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
-            <ButtonDanger label="Si, Quiero Eliminar Registro" onClick={confirmedOpen}></ButtonDanger>
+            <ButtonDanger label="Si, Quiero Eliminar Registro" id="confirm_delete_button" onClick={confirmedOpen}></ButtonDanger>
             </DialogActions>
             </Dialog>
             
             <Dialog open={openConfirmed} onClose={handleClose}>
             <DialogTitle>Registro Eliminado</DialogTitle>
             <DialogActions>
-            <ButtonPrimary label="Volver a la lista principal" onClick={navigateListKid}></ButtonPrimary>
+            <ButtonPrimary label="Volver a la lista principal" id="return_button" onClick={navigateListKid}></ButtonPrimary>
             </DialogActions>
             </Dialog>
         </div></>
