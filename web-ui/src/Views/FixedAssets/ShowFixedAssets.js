@@ -7,8 +7,9 @@ import Navbar from '../../Components/NavBar'
 import ListContainer from "../../Components/ListContainer"
 import ListBasic from '../../Components/ListBasic'
 import ButtonPrimary from '../../Components/MUI-Button';    
-import { useNavigate } from 'react-router-dom';
-import BasicSelect from '../../Components/Dropdown'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function ShowFixedAssets() {
     const location = useLocation()
