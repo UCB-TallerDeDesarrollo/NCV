@@ -12,5 +12,9 @@ describe('Show delete button and message end to end', () => {
       cy.scrollTo('bottom');
       cy.get('#delete_button').click();
       cy.contains('¿Seguro que desea eliminar el registro?');
+      cy.get('#confirm_delete_button').click();
+      cy.contains('Registro Eliminado')
+      cy.get('#return_button').click();
+      cy.contains('Niños del centro');
     });
   });
