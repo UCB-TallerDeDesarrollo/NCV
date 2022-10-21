@@ -44,13 +44,6 @@ export default function ShowFixedAssets() {
         let fixedAssetsComponent = <ListBasic items={listElements} withImage={false} />
         let nexFixedAsset = "/crear-activo-fijo"
         const listHeaderComponents = <ButtonPrimary label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
-        // let handleChange = e => {
-        //     var value = e.target.value;
-        
-        //     this.setState({
-        //       SeletedVal: value
-        //     });
-        //   };
         return (
             <>
                 <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
