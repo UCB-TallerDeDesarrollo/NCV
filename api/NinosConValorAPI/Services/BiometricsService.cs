@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using NinosConValorAPI.Data.Repository;
 using NinosConValorAPI.Models;
+using NinosConValorAPI.Data.Entity;
 
 namespace NinosConValorAPI.Services
 {
@@ -19,9 +20,13 @@ namespace NinosConValorAPI.Services
             return _mapper.Map<IEnumerable<BiometricsModel>>(biometricsList);
         }
 
-        public Task<BiometricsModel> CreateBiometricsAsync(int kidId, BiometricsModel biometrics)
+        public async Task<BiometricsModel> CreateBiometricsAsync(int kidId, BiometricsModel biometrics)
         {
-            throw new NotImplementedException();
+            await ValidateIdKidAsync(kidId);
+            var biometricsEntity = _mapper.Map<BiometricsEntity>(biometrics);
+            biometricsEntity.KidId = kidId;
+            var newSavedbiometrics = await _appRepository.CreateBiometricsAsync(biometricsEntity);
+            return _mapper.Map<BiometricsModel>(newSavedbiometrics);
         }
 
         public Task DeleteBiometricsAsync(int kidId)
@@ -32,6 +37,14 @@ namespace NinosConValorAPI.Services
         public Task<BiometricsModel> UpdateBiometricsAsync(int kidId, BiometricsModel biometrics)
         {
             throw new NotImplementedException();
+        }
+        private async Task ValidateIdKidAsync(int kidId)
+        {
+            var kid = await _appRepository.GetKidAsync(kidId);
+            if (kid == null)
+            {
+                throw new Exception($"El niño con el id: {kidId} no existe en la base de datos.");
+            }
         }
     }
 }

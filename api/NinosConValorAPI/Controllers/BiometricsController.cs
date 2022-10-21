@@ -32,5 +32,24 @@ namespace NinosConValorAPI.Controllers
             }
             return response;
         }
+        [HttpPost]
+        public async Task<ActionResult<IEnumerable<BiometricsModel>>> CreateBiometricsAsync(int kidId, [FromBody] BiometricsModel biometricsData )
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+                var newBiometricsData = await _biometricsService.CreateBiometricsAsync(kidId,biometricsData);
+                return Created($"/api/kids/{kidId}/[controllers]/biometrics", newBiometricsData);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
+            }
+        }
     }
 }

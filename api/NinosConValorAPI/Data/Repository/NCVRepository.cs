@@ -30,6 +30,13 @@ namespace NinosConValorAPI.Data.Repository
             query = query.Where(b => b.KidId == kidId);
             return await query.ToListAsync();
         }
+        public async Task<BiometricsEntity> CreateBiometricsAsync(BiometricsEntity biometrics)
+        {
+             _dbContext.Entry(biometrics.Kid).State = EntityState.Unchanged;
+            await _dbContext.Biometrics.AddAsync(biometrics);
+            _dbContext.Entry(biometrics.Kid).State = EntityState.Detached;
+            return biometrics;
+        }
 
 
         // FIXED ASSET
