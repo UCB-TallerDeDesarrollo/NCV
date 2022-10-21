@@ -14,7 +14,7 @@ import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
 import { ShowFixedAsset } from './Views/FixedAssets/ShowOneFixedAsset'
 
 import AddHealthReport from './Views/KidsFiles/AddHealthReport'
-import ShowKidsFiles from './Views/KidsFiles/ShowKidsFiles'
+import {ShowKidsFiles} from './Views/KidsFiles/ShowKidsFiles'
 import {ShowOneKidFile} from './Views/KidsFiles/ShowOneKidFile'
 import DataHealth from './Views/KidsFiles/DataHealth'
 import AddKid from './Views/KidsFiles/AddKid'

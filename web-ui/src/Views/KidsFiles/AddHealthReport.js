@@ -8,7 +8,6 @@ import ButtonPrimary from '../../Components/MUI-Button'
 import InputText from '../../Components/InputText'
 import FormContainer from '../../Components/FormContainer'
 import axios from 'axios'
-import { Box } from '@mui/system';
 import Navbar from '../../Components/NavBar';
 
 
@@ -75,6 +74,7 @@ function AddHealthReport() {
     }
     
     function handleFormSubmit() {
+        formReport = DefaultValues(formReport);
         axios.post(url, formReport)
           .then(function (response) {
             if (response.status == 201){
@@ -89,12 +89,36 @@ function AddHealthReport() {
           });
     }
 
+    function DefaultValues(formReport) {
+        if(formReport.CIDiscapacidad == ""){
+            formReport.CIDiscapacidad = 'Ninguno';
+        }
+
+        if(formReport.HealthProblems == ""){
+            formReport.HealthProblems = 'Ninguno';
+        }
+
+        if(formReport.NeurologicalDiagnosis == ""){
+            formReport.NeurologicalDiagnosis = 'Ninguno';
+        }
+
+        if(formReport.PsychologicalDiagnosis == ""){
+            formReport.PsychologicalDiagnosis = 'Ninguno';
+        }
+
+        if(formReport.SpecialDiagnosis == ""){
+            formReport.SpecialDiagnosis = 'Ninguno';
+        }
+
+        return formReport;
+    }
+
     return (
         <><Navbar /><div style={{marginTop: '3em', display:'flex', justifyContent:'center'}}>
             <FormContainer title="Reporte de salud">
                 <Collapse in={open} sx={{width:1, pt:2}}>
                     <Alert severity="error">
-                        {'Los campos de "Grupo sanguineo" y "CI de Discapacidad" son requeridos'}
+                        {'El campo de "Grupo sanguineo" es requerido'}
                     </Alert>
                 </Collapse>
                 <InputText
@@ -114,7 +138,6 @@ function AddHealthReport() {
                 ))}
                 </InputText>
                 <InputText
-                    required
                     id="CIDiscapacidad"
                     name="CIDiscapacidad"
                     label="CI de Discapacidad"

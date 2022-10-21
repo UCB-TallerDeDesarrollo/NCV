@@ -9,7 +9,7 @@ import {useLocation} from 'react-router-dom'
 import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 import SearchBar from '../../Components/SearchBar';
-import { getListKids } from './API/getKids_axios';
+import { getListKids } from './API/getAxios';
 
 function ShowKidsFiles() {
     const [kidsList, setKidList] = useState([])
@@ -28,13 +28,13 @@ function ShowKidsFiles() {
     }
 
     function ordenCriteria(posts) {
-        posts = posts.sort((a, b) => { return a.firstName.localeCompare(b.firstName)});
+        posts = posts.sort((a, b) => { return a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase())});
         return posts;
     }
 
     function searchCriteria (e, posts) {
         if (!e.target.value) return posts
-        const resultsArray = posts.filter(post => post.firstName.includes(e.target.value) || post.lastName.includes(e.target.value) || post.ci.includes(e.target.value))
+        const resultsArray = posts.filter(post => post.firstName.toLowerCase().includes(e.target.value.toLowerCase()) || post.lastName.toLowerCase().includes(e.target.value.toLowerCase()) || post.ci.toLowerCase().includes(e.target.value.toLowerCase()))
         return resultsArray;
     }
 
@@ -48,7 +48,6 @@ function ShowKidsFiles() {
             setSearchResults(json)
         })
     }, [])
-
 
     let kidsListComponent = null
     const baseUrl ="/ninos"
@@ -65,13 +64,15 @@ function ShowKidsFiles() {
         })
         kidsListComponent = <ListGrid items={listElements} />
     }
+    const searcher = <SearchBar posts={kidsList} setSearchResults={setSearchResults} orderCriteria={ordenCriteria} searchCriteria={searchCriteria} />
     const newKidUrl = "/registrar-nino"
     const navigate = useNavigate();
     const listHeaderComponents = <ButtonPrimary label={"Registrar niño"} onClick={()=>navigate(newKidUrl)}/>
     return (
         <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
-            <SearchBar posts={kidsList} setSearchResults={setSearchResults} orderCriteria={ordenCriteria} searchCriteria={searchCriteria} />
+            
             <ListContainer title="Niños del centro" header={listHeaderComponents}>
+                {searcher}
                 {kidsListComponent}
             </ListContainer>
         </Box>
@@ -83,4 +84,5 @@ function ShowKidsFiles() {
         </>
     )
 }
-export default ShowKidsFiles
+
+export {ShowKidsFiles}
