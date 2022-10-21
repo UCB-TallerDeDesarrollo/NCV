@@ -32,9 +32,9 @@ namespace NinosConValorAPI.Data.Repository
         }
         public async Task<BiometricsEntity> CreateBiometricsAsync(BiometricsEntity biometrics)
         {
-             _dbContext.Entry(biometrics.Kid).State = EntityState.Unchanged;
+            //_dbContext.Entry(biometrics.Kid).State = EntityState.Unchanged;
             await _dbContext.Biometrics.AddAsync(biometrics);
-            _dbContext.Entry(biometrics.Kid).State = EntityState.Detached;
+            //_dbContext.Entry(biometrics.Kid).State = EntityState.Detached;
             return biometrics;
         }
 

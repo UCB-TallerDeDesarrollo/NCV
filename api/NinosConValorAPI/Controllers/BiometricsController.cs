@@ -33,7 +33,7 @@ namespace NinosConValorAPI.Controllers
             return response;
         }
         [HttpPost]
-        public async Task<ActionResult<IEnumerable<BiometricsModel>>> CreateBiometricsAsync(int kidId, [FromBody] BiometricsModel biometricsData )
+        public async Task<ActionResult<BiometricsModel>> CreateBiometricsAsync(int kidId, [FromBody] BiometricsModel biometricsData )
         {
             try
             {

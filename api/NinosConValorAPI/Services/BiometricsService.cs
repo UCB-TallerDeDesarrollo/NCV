@@ -26,7 +26,12 @@ namespace NinosConValorAPI.Services
             var biometricsEntity = _mapper.Map<BiometricsEntity>(biometrics);
             biometricsEntity.KidId = kidId;
             var newSavedbiometrics = await _appRepository.CreateBiometricsAsync(biometricsEntity);
-            return _mapper.Map<BiometricsModel>(newSavedbiometrics);
+            var result = await _appRepository.SaveChangesAsync();
+            if (result)
+            {
+                return _mapper.Map<BiometricsModel>(newSavedbiometrics);
+            }
+            throw new Exception("Database Error");
         }
 
         public Task DeleteBiometricsAsync(int kidId)
