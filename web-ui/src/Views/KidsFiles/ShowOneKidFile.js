@@ -64,17 +64,85 @@ function WeightAndHeight({weightAndHeightData}){
     //     wh["registerDate"] = formatDate(wh["registerDate"]);
     //     return wh;
     // });
+    const [filteredBiometrics, setFilteredBiometrics] = useState([]);
+    useEffect(()=>{
+        console.log(weightAndHeightData);
+        setFilteredBiometrics(weightAndHeightData.slice());
+        //setBiometrics(biometrics.filter((b)=>{new Date(b["registerDate"]).getMonth()=="jun"}));
+    },[weightAndHeightData]);
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+      PaperProps: {
+        style: {
+          maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+          width: 250,
+        },
+      },
+    };
+    let availableYears = new Set([]);
+    weightAndHeightData.forEach(b => {
+        availableYears.add(new Date(b["registerDate"]).getFullYear());
+    });
+    availableYears = Array.from(availableYears);
+    const [personName, setPersonName] = useState([]);
+    const handleChange = (event) => {
+      const {
+        target: { value },
+      } = event;
+      setPersonName(
+        // On autofill we get a stringified value.
+        typeof value === 'string' ? value.split(',') : value,
+      );
+      console.log(filteredBiometrics.length);
+    };
+
+    useEffect(()=>{
+        console.log(personName);
+        setFilteredBiometrics(weightAndHeightData.filter((b)=>{
+            var ans = false;
+            let biometricYear = (new Date(b["registerDate"]).getFullYear())
+            personName.forEach((y)=>{
+                ans = ans || y == biometricYear;
+            })
+            return  ans;
+        }));
+    },[personName]);
+
+    let yearComboBox = (<FormControl sx={{ m: 1, width: 300 }}>
+        <InputLabel id="demo-multiple-checkbox-label">Año</InputLabel>
+        <Select
+        labelId="demo-multiple-checkbox-label"
+        id="demo-multiple-checkbox"
+        multiple
+        value={personName}
+        onChange={handleChange}
+        input={<OutlinedInput label="Año" />}
+        renderValue={(selected) => selected.join(', ')}
+        MenuProps={MenuProps}
+        >
+        {availableYears.map((name) => (
+            <MenuItem key={name} value={name}>
+            <Checkbox checked={personName.indexOf(name) > -1} />
+            <ListItemText primary={name} />
+            </MenuItem>
+        ))}
+        </Select>
+    </FormControl>);
+
     let table = <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
+        {yearComboBox}
         <AutoAwesomeIcon sx={{margin:2}}/>
         <Typography variant="body2">No existen registros de <b>peso y talla</b></Typography>
     </Box>;
     
-    if (weightAndHeightData != null && weightAndHeightData.length > 0){
+    if (filteredBiometrics != null && filteredBiometrics.length > 0){
         let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
         table = (<>
             <Typography variant="h3" sx={{marginBottom:1.5}}>Peso y talla</Typography>
+            {yearComboBox}
             <Box sx={{display:"flex", flexDirection:"row"}}>
-                <TableBasic columnHeaders={columnNames} data={weightAndHeightData} sxTableContainer={{width:1}}></TableBasic>
+                <TableBasic columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
             </Box>
         </>);
     }
@@ -169,90 +237,15 @@ function ShowOneKidFile() {
         "Programa de Casa " : kid.programHouse,
         "Lugar de Nacimiento ": kid.birthPlace,
     };
-    let biometricsComponent = null;
-    const [filteredBiometrics, setFilteredBiometrics] = useState([]);
-    useEffect(()=>{
-        console.log(biometrics);
-        setFilteredBiometrics(biometrics.slice());
-        //setBiometrics(biometrics.filter((b)=>{new Date(b["registerDate"]).getMonth()=="jun"}));
-    },[biometrics]);
-    const ITEM_HEIGHT = 48;
-    const ITEM_PADDING_TOP = 8;
-    const MenuProps = {
-      PaperProps: {
-        style: {
-          maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-          width: 250,
-        },
-      },
-    };
-    let availableYears = new Set([]);
-    biometrics.forEach(b => {
-        availableYears.add(new Date(b["registerDate"]).getFullYear());
-    });
-    availableYears = Array.from(availableYears);
-    const names = [
-        2022,
-        'Van Henry',
-        'April Tucker',
-        'Ralph Hubbard',
-        'Omar Alexander',
-        'Carlos Abbott',
-        'Miriam Wagner',
-        'Bradley Wilkerson',
-        'Virginia Andrews',
-        'Kelly Snyder',
-      ];
-    const [personName, setPersonName] = useState([]);
-    const handleChange = (event) => {
-      const {
-        target: { value },
-      } = event;
-      setPersonName(
-        // On autofill we get a stringified value.
-        typeof value === 'string' ? value.split(',') : value,
-      );
-      console.log(biometrics.length);
-      console.log(filteredBiometrics.length);
-    };
-    useEffect(()=>{
-        console.log(personName);
-        setFilteredBiometrics(biometrics.filter((b)=>{
-            var ans = false;
-            let biometricYear = (new Date(b["registerDate"]).getFullYear())
-            personName.forEach((y)=>{
-                ans = ans || y == biometricYear;
-            })
-            return  ans;
-        }));
-    },[personName]);
+    
+    
 
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName }/>
             <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
-            <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-checkbox-label">Año</InputLabel>
-                <Select
-                labelId="demo-multiple-checkbox-label"
-                id="demo-multiple-checkbox"
-                multiple
-                value={personName}
-                onChange={handleChange}
-                input={<OutlinedInput label="Año" />}
-                renderValue={(selected) => selected.join(', ')}
-                MenuProps={MenuProps}
-                >
-                {availableYears.map((name) => (
-                    <MenuItem key={name} value={name}>
-                    <Checkbox checked={personName.indexOf(name) > -1} />
-                    <ListItemText primary={name} />
-                    </MenuItem>
-                ))}
-                </Select>
-            </FormControl>
-            <WeightAndHeight weightAndHeightData={filteredBiometrics}/>
+            <WeightAndHeight weightAndHeightData={biometrics}/>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
