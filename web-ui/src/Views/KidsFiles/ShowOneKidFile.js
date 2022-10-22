@@ -85,12 +85,20 @@ function ShowOneKidFile() {
     let alertMessage = location.state ? location.state.alertMessage : null 
     const [open, setOpen] = useState(showAlert);
     const [openConfirmed, setOpenConfirmed] = useState(showAlert);
+    const [openToConfirm, setOpenToConfirm] = useState(showAlert);
 
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
             return
         }
         setOpen(false)
+    }
+
+    function handleCloseToConfirm(event, reason) {
+        if (reason === 'clickaway') {
+            return
+        }
+        setOpenToConfirm(false)
     }
 
     const fetchBasicData = () => {
@@ -161,8 +169,13 @@ function ShowOneKidFile() {
       }
 
     const confirmedOpen = () => {
-        handleClose();
+        handleCloseToConfirm();
         setOpenConfirmed(true);
+    };
+
+    const ToConfirmOpen = () => {
+        handleCloseToConfirm();
+        setOpenToConfirm(true);
     };
 
     return (
@@ -176,16 +189,16 @@ function ShowOneKidFile() {
                 </Alert>
             </Snackbar>
             
-            <ButtonDanger key={2} label="Eliminar Registro" id="delete_button" onClick={handleClickOpen} />
-            <Dialog open={open} onClose={handleClose} id="confirmation_popup">
+            <ButtonDanger key={2} label="Eliminar Registro" id="delete_button" onClick={ToConfirmOpen} />
+            <Dialog open={openToConfirm} onClose={handleCloseToConfirm} id="confirmation_popup">
             <DialogTitle>¿Seguro que desea eliminar el registro?</DialogTitle>
             <DialogActions>
-            <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
+            <ButtonSecondary label="Cancelar" onClick={handleCloseToConfirm}></ButtonSecondary>
             <ButtonDanger label="Si, Quiero Eliminar Registro" id="confirm_delete_button" onClick={confirmedOpen}></ButtonDanger>
             </DialogActions>
             </Dialog>
             
-            <Dialog open={openConfirmed} onClose={handleClose}>
+            <Dialog open={openConfirmed}>
             <DialogTitle>Registro Eliminado</DialogTitle>
             <DialogActions>
             <ButtonPrimary label="Volver a la lista principal" id="return_button" onClick={navigateListKid}></ButtonPrimary>
