@@ -32,7 +32,6 @@ function CreateFixedAssetForm(props) {
         if (reason === 'clickaway') {
             return
         }
-        //window.location.href = '/activos-fijos'
         setOpen(false)
     }
     function checkError(){
@@ -50,12 +49,10 @@ function CreateFixedAssetForm(props) {
             Features: data.Features==''? null:data.Features, // string
             Quantity: data.Quantity==''? null:parseInt(data.Quantity) // int
         }).then((res) => {
-            if (res.status == 201) {
-                console.log("in")                
+            if (res.status == 201) {               
                 navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo creado exitosamente"}})
             }            
         }).catch ((apiError) => {
-            console.log(apiError)
             setError(apiError) 
             checkError()                    
         })
