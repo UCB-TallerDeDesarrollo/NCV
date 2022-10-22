@@ -20,6 +20,7 @@ builder.Services.AddTransient<IKidService, KidService>();
 builder.Services.AddTransient<IHealthReportService, HealthReportService>();
 builder.Services.AddTransient<IBiometricsService, BiometricsService>();
 builder.Services.AddTransient<IProgramHouseService, ProgramHouseService>();
+builder.Services.AddTransient<IAssetCategoryService, AssetCategoryService>();
 builder.Services.AddTransient<INCVRepository, NCVRepository>();
 
 
