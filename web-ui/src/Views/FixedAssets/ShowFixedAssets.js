@@ -18,8 +18,6 @@ export default function ShowFixedAssets() {
     const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
     let showAlert = location.state ? location.state.showAlert : false 
     let alertMessage = location.state ? location.state.alertMessage : null 
-    console.log("showAlert = ",showAlert)
-    console.log("alertMessage= ", alertMessage )
     const [open, setOpen] = useState(showAlert);
     const { apiData:fixedAssets, error } = getFromApi(url)
     function handleClose(event, reason) {
