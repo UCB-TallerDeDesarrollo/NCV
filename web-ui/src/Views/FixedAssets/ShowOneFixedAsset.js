@@ -16,13 +16,13 @@ export function ShowFixedAsset() {
         return ErrorPage(error)
     }
     if (!fixedAsset) return null
-    const fixedAssetData = { 
-        "DESCRIPCIÓN" : fixedAsset.description,
+    const fixedAssetData = {
+        "PROGRAMA" : fixedAsset.programHouseName,         
         "FECHA DE ENTRADA": fixedAsset.entryDate!=null? fixedAsset.entryDate.split('T')[0]:null,
+        "DESCRIPCIÓN" : fixedAsset.description,
         "PRECIO" : fixedAsset.price, 
         "CARACTERÍSTICAS":fixedAsset.features,
-        "CANTIDAD" : fixedAsset.quantity,
-        "PROGRAMA" : fixedAsset.programHouseName
+        "CANTIDAD" : fixedAsset.quantity,        
     }
     return (
         <>

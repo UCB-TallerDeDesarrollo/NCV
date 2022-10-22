@@ -15,7 +15,7 @@ export default function ShowFixedAssets() {
     const location = useLocation()
     const navigate = useNavigate();
     const completeInfoFixedAsset = '/activos-fijos'
-    const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
+    const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
     let showAlert = location.state ? location.state.showAlert : false 
     let alertMessage = location.state ? location.state.alertMessage : null 
     const [open, setOpen] = useState(showAlert);
@@ -35,7 +35,7 @@ export default function ShowFixedAssets() {
             return {
                 id:el.id, 
                 title:`${el.name}`, 
-                description:`Descripción: ${el.description!=null && el.description!='' ? el.description:"*Sin descripción*"} -- Programa: ${el.programHouseName!=null&&el.programHouseName!=""&&el.programHouseName!=undefined?el.programHouseName:"*Sin programa*"}`,                 
+                description:`Programa: ${el.programHouseAcronym!=null&&el.programHouseAcronym!=""&&el.programHouseAcronym!=undefined?el.programHouseAcronym:"*Sin programa*"}`,                 
                 elementUrl:`${completeInfoFixedAsset}/${el.id}`,
                 imgSrc:`https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg`                
             }
