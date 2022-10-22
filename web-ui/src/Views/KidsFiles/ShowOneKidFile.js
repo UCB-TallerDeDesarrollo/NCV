@@ -288,8 +288,13 @@ function ShowOneKidFile() {
       }
 
     const confirmedOpen = () => {
-        handleClose();
+        handleCloseToConfirm();
         setOpenConfirmed(true);
+    };
+
+    const ToConfirmOpen = () => {
+        handleCloseToConfirm();
+        setOpenToConfirm(true);
     };
 
     return (
