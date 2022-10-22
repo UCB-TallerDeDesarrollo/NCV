@@ -106,7 +106,7 @@ function WeightAndHeight({weightAndHeightData}){
         }));
     },[personName]);
 
-    let yearComboBox = (<FormControl sx={{ m: 1, width: 300 }}>
+    let yearComboBox = (<FormControl sx={{ m: 1, minWidth: 100, justifySelf:'right', alignSelf:'end'}}>
         <InputLabel id="demo-multiple-checkbox-label">Año</InputLabel>
         <Select
         labelId="demo-multiple-checkbox-label"
@@ -128,7 +128,6 @@ function WeightAndHeight({weightAndHeightData}){
     </FormControl>);
 
     let table = <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
-        {yearComboBox}
         <AutoAwesomeIcon sx={{margin:2}}/>
         No existen registros de <b>peso y talla</b>
     </Box>;
@@ -136,14 +135,16 @@ function WeightAndHeight({weightAndHeightData}){
     if (filteredBiometrics != null && filteredBiometrics.length > 0){
         let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
         table = (<>
-            <h4>Peso y talla</h4>
-            {yearComboBox}
             <Box sx={{display:"flex", flexDirection:"row"}}>
                 <TableBasic columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
             </Box>
         </>);
     }
-    return (<Container>
+    return (<Container sx={{ display: 'flex', flexDirection:'column' }}>
+        <Box sx={{ display: 'flex', flexDirection:'row', alignItems:'center',  justifyContent:'space-between'}}>
+            <h4>Peso y talla</h4>
+            {yearComboBox}
+        </Box>
         {table}
     </Container>);
 }
