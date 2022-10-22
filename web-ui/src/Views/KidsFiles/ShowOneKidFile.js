@@ -165,20 +165,6 @@ function ShowOneKidFile() {
         setOpenConfirmed(true);
     };
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const navigateListKid = () =>{ 
-        let path = `/ninos`; 
-        navigate(path);
-      }
-
-    const confirmedOpen = () => {
-        handleClose();
-        setOpenConfirmed(true);
-    };
-
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName }/>
