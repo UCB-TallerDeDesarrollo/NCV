@@ -109,7 +109,7 @@ function WeightAndHeight({weightAndHeightData}){
         }));
     },[personName]);
 
-    let yearComboBox = (<FormControl sx={{ m: 1, width: 300 }}>
+    let yearComboBox = (<FormControl sx={{ m: 1, minWidth: 100, justifySelf:'right', alignSelf:'end'}}>
         <InputLabel id="demo-multiple-checkbox-label">Año</InputLabel>
         <Select
         labelId="demo-multiple-checkbox-label"
@@ -131,7 +131,6 @@ function WeightAndHeight({weightAndHeightData}){
     </FormControl>);
 
     let table = <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
-        {yearComboBox}
         <AutoAwesomeIcon sx={{margin:2}}/>
         <Typography variant="body2">No existen registros de <b>peso y talla</b></Typography>
     </Box>;
@@ -146,7 +145,11 @@ function WeightAndHeight({weightAndHeightData}){
             </Box>
         </>);
     }
-    return (<Container>
+    return (<Container sx={{ display: 'flex', flexDirection:'column' }}>
+        <Box sx={{ display: 'flex', flexDirection:'row', alignItems:'center',  justifyContent:'space-between'}}>
+            <h4>Peso y talla</h4>
+            {yearComboBox}
+        </Box>
         {table}
     </Container>);
 }
