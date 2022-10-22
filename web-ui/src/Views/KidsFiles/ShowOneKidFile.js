@@ -12,6 +12,13 @@ import TableBasic from '../../Components/TableBasic';
 import Container from '../../Components/Container';
 import Box from '@mui/material/Box';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import Select from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
@@ -41,11 +48,24 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
     return healthReportComponent
 }
 
-function WeightAndHeight({weightAndHeightData=[]}){
+function formatDate(jsonDateStr){
+    //const options = { month: 'short', day: 'numeric'};
+    var date  = new Date(jsonDateStr);
+    return date.toLocaleDateString(undefined);
+}
+
+function WeightAndHeight({weightAndHeightData}){
+    // weightAndHeightData.map((wh)=>{
+    //     let registerDate = new Date(wh["registerDate"]);
+    //     //wh["year"] = registerDate.getFullYear();
+    //     wh["registerDate"] = formatDate(wh["registerDate"]);
+    //     return wh;
+    // });
     let table = <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
         <AutoAwesomeIcon sx={{margin:2}}/>
         No existen registros de <b>peso y talla</b>
     </Box>;
+    
     if (weightAndHeightData != null && weightAndHeightData.length > 0){
         let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
         table = (<>
@@ -113,7 +133,6 @@ function ShowOneKidFile() {
             })
             .catch((error)=>{
                 setBiometricsStatusCode(error.response.status);
-                setBiometrics(null);
             })
     }
 
@@ -122,6 +141,7 @@ function ShowOneKidFile() {
         fetchHeltReport();
         fetchBiometrics();
     }, [])
+    
 
     // FIXME: Será necesario contemplar este caso ?? 
     // if (!kid) return null
@@ -142,12 +162,89 @@ function ShowOneKidFile() {
         "Programa de Casa " : kid.programHouse,
         "Lugar de Nacimiento ": kid.birthPlace,
     };
+    let biometricsComponent = null;
+    const [filteredBiometrics, setFilteredBiometrics] = useState([]);
+    useEffect(()=>{
+        console.log(biometrics);
+        setFilteredBiometrics(biometrics.slice());
+        //setBiometrics(biometrics.filter((b)=>{new Date(b["registerDate"]).getMonth()=="jun"}));
+    },[biometrics]);
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+      PaperProps: {
+        style: {
+          maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+          width: 250,
+        },
+      },
+    };
+    let availableYears = new Set([]);
+    biometrics.forEach(b => {
+        availableYears.add(new Date(b["registerDate"]).getFullYear());
+    });
+    availableYears = Array.from(availableYears);
+    const names = [
+        2022,
+        'Van Henry',
+        'April Tucker',
+        'Ralph Hubbard',
+        'Omar Alexander',
+        'Carlos Abbott',
+        'Miriam Wagner',
+        'Bradley Wilkerson',
+        'Virginia Andrews',
+        'Kelly Snyder',
+      ];
+    const [personName, setPersonName] = useState([]);
+    const handleChange = (event) => {
+      const {
+        target: { value },
+      } = event;
+      setPersonName(
+        // On autofill we get a stringified value.
+        typeof value === 'string' ? value.split(',') : value,
+      );
+      console.log(biometrics.length);
+      console.log(filteredBiometrics.length);
+    };
+    useEffect(()=>{
+        console.log(personName);
+        setFilteredBiometrics(biometrics.filter((b)=>{
+            var ans = false;
+            let biometricYear = (new Date(b["registerDate"]).getFullYear())
+            personName.forEach((y)=>{
+                ans = ans || y == biometricYear;
+            })
+            return  ans;
+        }));
+    },[personName]);
 
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName }/>
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
-            <WeightAndHeight weightAndHeightData={biometrics}/>
+            <FormControl sx={{ m: 1, width: 300 }}>
+                <InputLabel id="demo-multiple-checkbox-label">Año</InputLabel>
+                <Select
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
+                multiple
+                value={personName}
+                onChange={handleChange}
+                input={<OutlinedInput label="Año" />}
+                renderValue={(selected) => selected.join(', ')}
+                MenuProps={MenuProps}
+                >
+                {availableYears.map((name) => (
+                    <MenuItem key={name} value={name}>
+                    <Checkbox checked={personName.indexOf(name) > -1} />
+                    <ListItemText primary={name} />
+                    </MenuItem>
+                ))}
+                </Select>
+            </FormControl>
+            <WeightAndHeight weightAndHeightData={filteredBiometrics}/>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
