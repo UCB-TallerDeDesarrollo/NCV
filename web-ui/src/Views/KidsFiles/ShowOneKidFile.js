@@ -93,19 +93,17 @@ function ShowOneKidFile() {
     let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
 
     const MyKidDetails = { 
-        "NOMBRE " : kid.firstName,
-        "APELLIDO ": kid.lastName ,
-        "CI " : kid.ci, 
-        "EDAD ": yeardOld , 
-        "FECHA DE NACIMIENTO ": birthDate.toLocaleDateString(),
-        "PROGRAMA DE CASA " : kid.programHouse,
-        "LUGAR DE NACIMIENTO ": kid.birthPlace,
-        "GENERO ": kid.gender
+        "Edad ": yeardOld ,
+        "Genero ": kid.gender,
+        "Carnet de Identidad (CI) " : kid.ci, 
+        "Fecha de Nacimiento ": birthDate.toLocaleDateString(),
+        "Programa de Casa " : kid.programHouse,
+        "Lugar de Nacimiento ": kid.birthPlace,
     };
 
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
-            <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} />
+            <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName }/>
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">

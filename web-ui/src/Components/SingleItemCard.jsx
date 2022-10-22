@@ -45,7 +45,7 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
                 component="img"
                 image={ imageUrl}
                 direction="column" justifycontent="center"
-                sx={{ width: {xs:250, sm:400}, height:{xs:250, sm:400}, borderRadius:3     }}
+                sx={{ width: {xs:50, sm:40}, height:{xs:50, sm:40}, borderRadius:3     }}
             >
             </CardMedia>
         </div>)
@@ -55,7 +55,7 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
                     component="img"
                     image={ imageUrl}
                     direction="column" justifycontent="center"
-                    sx={{ width: {xs:250, sm:400}, height:{xs:250, sm:400}, borderRadius:50     }}
+                    sx={{ width: {xs:200, sm:200}, height:{xs:200, sm:200}, borderRadius:50     }}
                 >
                 </CardMedia>
             </div>)
@@ -87,7 +87,7 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
                 </CardContent>
             </div>)
     }
-
+/*
     return(
         <div>
             <Grid container direction="column" alignItems="center" justify="center" >
@@ -103,7 +103,42 @@ const SingleItemCard = ({title="" , element, imageUrl = "none" , imageCirle=true
             </Grid>
         </div>
     )
+*/
+return(
+    <div>
+        <Grid container direction="column" alignItems="center" justify="center" >
+            <Card sx={{ p: 5, maxWidth: 1000, m:2, minWidth:{md:1000} , borderRadius:3}}>
+                <Box sx={{ display: 'inline-block' , width: 450 }} >
+                    {contentCard[0]}
+                </Box>
 
+                <Box sx={{ display: 'inline-block', right: '30%', width: 450}}>
+                <h2>{title}</h2><br></br>
+                    <Grid container spacing={1.5} rowSpacing={0}>
+                            <Grid item xs={12} sm={6} md={4}>
+                            {detailsElement[0]}
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={4}>
+                            {detailsElement[1]}
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={4}>
+                            {detailsElement[2]}
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={4}>
+                            {detailsElement[3]}
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={4}>
+                            {detailsElement[4]}
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={4}>
+                            {detailsElement[5]}
+                            </Grid>
+                    </Grid>
+                </Box>
+            </Card>
+        </Grid>
+    </div>
+)
     
 }
 
