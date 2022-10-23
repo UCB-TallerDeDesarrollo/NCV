@@ -5,5 +5,6 @@
   "entryDate":"2022-10-16T20:00:00",
   "price":2424.24,
   "features":"16 GB de Ram con targeta grafica NVIDIA",
-  "quantity":3
+  "quantity":3,
+  "programHouseId":2
 }

@@ -9,9 +9,13 @@ import Navbar from '../../Components/NavBar'
 import Box from '@mui/material/Box'
 import { useNavigate } from 'react-router-dom';
 import ButtonPrimary from '../../Components/MUI-Button'
+import getFromApi from '../../Components/GetFromApi'
+import Dropdown from '../../Components/Dropdown'
 
 function CreateFixedAssetForm(props) {
     const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
+    //const url = 'http://localhost:5009/api/fixedAssets'
+    const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null)
     const navigate = useNavigate()
@@ -21,8 +25,20 @@ function CreateFixedAssetForm(props) {
         EntryDate: '', // dateTime
         Price: '', // decimal
         Features: '', // string
-        Quantity: '' // int
+        Quantity: '', // int
+        ProgramHouseId : ''//int
     })
+    const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null);
+    const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)
+    if(errorProgramHouses){
+        return ErrorPage(errorProgramHouses)
+    }
+    if (!programHouses) return null
+    let programHousesList = programHouses.map( programHouse =>  { return{
+        label: programHouse.acronym,
+        value: programHouse.id      
+    }})    
+    const programHousesOptions = programHousesList
     function handle(e) {
         const newData = { ...data }
         newData[e.target.id] = e.target.value
@@ -40,14 +56,15 @@ function CreateFixedAssetForm(props) {
         }
     }
     function submit(e) {
-        e.preventDefault()        
+        e.preventDefault()  
         Axios.post(url, {
             Name: data.Name,
             Description: data.Description==''? null:data.Description, // string
             EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
             Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
             Features: data.Features==''? null:data.Features, // string
-            Quantity: data.Quantity==''? null:parseInt(data.Quantity) // int
+            Quantity: data.Quantity==''? null:parseInt(data.Quantity), // int
+            ProgramHouseId : programHouseSelectedValue
         }).then((res) => {
             if (res.status == 201) {               
                 navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo creado exitosamente"}})
@@ -99,6 +116,18 @@ function CreateFixedAssetForm(props) {
                     label="Precio"
                     type="number"
                 />
+                
+                <Dropdown 
+                    name={"Programa"} 
+                    id="programa-drop" 
+                    options={programHousesOptions} 
+                    helperText = "Seleccione un programa" 
+                    selectedValue={programHouseSelectedValue}
+                    setSelectedValue = {setProgramHouseSelectedValue}
+                    required
+                    >                                        
+                </Dropdown>                    
+                
                 <InputText
                     onChange={(e) => handle(e)}
                     id="Features"

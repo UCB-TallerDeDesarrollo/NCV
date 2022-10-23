@@ -1,22 +1,31 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import NativeSelect from '@mui/material/NativeSelect';
+import TextField from '@mui/material/TextField'
+import MenuItem from '@mui/material/MenuItem'
+import InputText from '../Components/InputText'
 
-export default function Dropdown({name, id, options, handleChange, selectedValue}) {
+export default function Dropdown({name, id, options, selectedValue, required=false, setSelectedValue, helperText = "Seleccione un valor"}) {
+  var handleChange = (event) => {
+    setSelectedValue(event.target.value)
+ }
   return (
-    <NativeSelect
-          id={id} name={name} onChange={handleChange} value={selectedValue}
-        >
-          {options.map(option => (
-            <option key={option.value} value={option.value}>
+    <>
+    <InputText 
+      required = {required}
+      select
+      id={id}      
+      name={name} 
+      label={name}       
+      type="text"       
+      value={selectedValue}
+      helperText={helperText}            
+      onChange={handleChange}
+      >
+          {options.map((option) => (
+            <MenuItem  key={option.value} value={option.value}>
               {option.label}
-            </option>
+            </MenuItem >
           ))}
-        </NativeSelect>
+        </InputText>
+      </>
   );
 }
 
