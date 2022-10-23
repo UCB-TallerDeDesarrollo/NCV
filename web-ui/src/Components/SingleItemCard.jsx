@@ -44,7 +44,16 @@ function gridItems(elements){
     return gridElements
   }
 
-const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true}) => {   
+const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, secondaryField=null}) => {   
+    const styles = {
+        secondaryField:{
+            color:"#5BCCD9",
+            display:"inline",            
+        },
+        title:{
+            display:"inline"
+        }
+    }
     let sm_value_box = 200
     let md_value_box = 450
     let md_value_griItem = 4
@@ -64,7 +73,7 @@ const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true})
     let detailsElement = gridItems(element)
     contentCard.push( 
                 <Box sx={{ width: {sm:sm_value_box , md:md_value_box}}}>
-                        <h2>{title}</h2><br></br>
+                        <h2>{title}</h2><h4 style={styles.secondaryField}>{secondaryField}</h4><br></br><br></br>
                         <Grid container spacing={1.5} rowSpacing={0}>
                         {detailsElement.map((oneDetail,i)=>{
                                 return (
