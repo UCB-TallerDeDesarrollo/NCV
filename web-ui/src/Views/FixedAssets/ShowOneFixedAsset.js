@@ -17,7 +17,6 @@ export function ShowFixedAsset() {
     }
     if (!fixedAsset) return null
     const fixedAssetData = {
-        "PROGRAMA" : fixedAsset.programHouseName,         
         "FECHA DE ENTRADA": fixedAsset.entryDate!=null? fixedAsset.entryDate.split('T')[0]:null,
         "DESCRIPCIÓN" : fixedAsset.description,
         "PRECIO" : fixedAsset.price, 
@@ -28,7 +27,7 @@ export function ShowFixedAsset() {
         <>
             <Navbar />
             <div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
-                <SingleItemCard title={fixedAsset.name} element={fixedAssetData} imageUrl={imageUrl} imageCirle={false} />        
+                <SingleItemCard title={fixedAsset.name} secondaryField={fixedAsset.programHouseName} element={fixedAssetData} imageUrl={imageUrl} imageCirle={false} />        
             </div>
         </>
         )
