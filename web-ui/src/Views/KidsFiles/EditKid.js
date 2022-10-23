@@ -13,7 +13,7 @@ import Navbar from '../../Components/NavBar';
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
-import { getOneKid } from './API/getAxios';
+import {editKidFile } from './API/getAxios';
 const genders = [
     {
       value: 'M',
@@ -29,6 +29,7 @@ function EditKidFile() {
     const { kidId } = useParams()
     console.log("kidId: ",kidId)
     var urlKid = "https://ncv-api.herokuapp.com/api/kids/"+ kidId 
+    const navigate = useNavigate()
     const [kid, setKid] = useState([])
     const [open, setOpen] = useState(false)
 
@@ -55,10 +56,34 @@ function EditKidFile() {
         })
     }
 
+    function handleFormSubmit() {
+        const navigateKid = () =>{ 
+            let path = `/ninos/${kidId}`; 
+            navigate(path);
+        }
+        axios.put(urlKid, kid)
+        .then(function (response) {
+            if (response.status == 200){
+                navigate(navigateKid,{state:{showAlert:true,alertMessage:"Archivo de niño actualizado exitosamente"}})
+                console.log("kid json: cambiado" )
+            }
+        })
+        .catch(function (error) {
+            if (error.response){
+                if (error.response.status == 400 )
+                    setOpen(true)
+            }
+        });
+    }
     
     return (
         <><Navbar /><div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
             <FormContainer title="Modificar datos del niño">
+                <Collapse in={open} sx={{width:1, pt:2}}>
+                    <Alert severity="error">
+                        Todos los campos son requeridos
+                    </Alert>
+                </Collapse>
                 <InputText
                     required
                     id="firstName"
@@ -125,6 +150,7 @@ function EditKidFile() {
                     </MenuItem>
                 ))}
                 </InputText>
+                <ButtonPrimary label={"Guardar Cambios"} onClick={handleFormSubmit}/>
             </FormContainer>
         </div></>
     );
