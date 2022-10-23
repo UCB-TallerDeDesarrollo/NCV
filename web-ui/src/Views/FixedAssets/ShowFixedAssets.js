@@ -6,32 +6,53 @@ import getFromApi from '../../Components/GetFromApi'
 import Navbar from '../../Components/NavBar'
 import ListContainer from "../../Components/ListContainer"
 import ListBasic from '../../Components/ListBasic'
-import ButtonPrimary from '../../Components/MUI-Button';    
+import ButtonPrimary from '../../Components/MUI-Button';
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import { useNavigate, useLocation } from 'react-router-dom';
+import { List, ListSubheader } from '@mui/material'
 
 export default function ShowFixedAssets() {
     const location = useLocation()
     const navigate = useNavigate();
     const completeInfoFixedAsset = '/activos-fijos'
-    const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
-    let showAlert = location.state ? location.state.showAlert : false 
-    let alertMessage = location.state ? location.state.alertMessage : null 
+    const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
+    const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories'
+    let showAlert = location.state ? location.state.showAlert : false
+    let alertMessage = location.state ? location.state.alertMessage : null
     const [open, setOpen] = useState(showAlert);
-    const { apiData:fixedAssets, error } = getFromApi(url)
+    const { apiData: fixedAssets, error } = getFromApi(url)
+    const { apiData: assetCategories, errors2 } = getFromApi(urlCategories)
+    const headerIndices = [];
+    const getHeaderName = (i) => {
+        switch (i) {
+            case 1:
+                return 'Equipos y herramientas';
+            case 2:
+                return 'Muebles y enseres';
+            case 3:
+                return 'Maquinaria';
+            case 4:
+                return 'Herramientas';
+        }
+    }
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
             return
         }
         setOpen(false)
     }
-    if(error){
+    if (error) {
         return ErrorPage(error)
     }
+    if (assetCategories) {
+        assetCategories.map((cat) => {
+            headerIndices.push(cat.category); //agregar los indices a la lista 
+        })
+    }
     if (!fixedAssets) return null
-    if (fixedAssets.length>0){
-        const listElements = fixedAssets.map((el)=>{
+    if (fixedAssets.length > 0) {
+        const listElements = fixedAssets.map((el) => {
             return {
                 id:el.id, 
                 title:`${el.name}`, 
@@ -40,13 +61,21 @@ export default function ShowFixedAssets() {
                 imgSrc:`https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg`                
             }
         })
+        // console.log();
+        // headerIndices.forEach(el => console.log(el))
         let fixedAssetsComponent = <ListBasic items={listElements} withImage={false} />
+        // console.log('elementos', listElements);
         let nexFixedAsset = "/crear-activo-fijo"
-        const listHeaderComponents = <ButtonPrimary label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
+        const listHeaderComponents = <ButtonPrimary label={"Crear activo fijo"} onClick={() => navigate(nexFixedAsset)} />
         return (
             <>
-                <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
+                <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '15vh' }}>
                     <ListContainer title="Lista de activos fijos" header={listHeaderComponents}>
+                        {headerIndices && (
+                                <ListSubheader>
+                                    {getHeaderName(1)}
+                                </ListSubheader>
+                            )}
                         {fixedAssetsComponent}
                     </ListContainer>
                 </Box>
