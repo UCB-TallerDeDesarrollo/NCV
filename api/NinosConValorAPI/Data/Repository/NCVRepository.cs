@@ -78,22 +78,21 @@ namespace NinosConValorAPI.Data.Repository
             }
         }
 
-        public async Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync(int categoryId)
+        public async Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync()
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
-            query = query.Where(d => d.AssetCategory.Id == categoryId);
             query = query.Include(f => f.ProgramHouse);
             var result = await query.ToListAsync();
             return result;
         }
 
-        public async Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId, int categoryId)
+        public async Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId)
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
             query = query.Include(f=>f.ProgramHouse);
-            var fixedAssetEntity = await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId && g.AssetCategory.Id == categoryId);
+            var fixedAssetEntity = await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
             return fixedAssetEntity;
         }
 

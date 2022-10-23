@@ -55,32 +55,25 @@ namespace NinosConValorAPI.Services
             throw new Exception("Error en la base de datos.");
         }
 
-        public async Task<IEnumerable<FixedAssetModel>> GetFixedAssetsAsync(int categoryId)
+        public async Task<IEnumerable<FixedAssetModel>> GetFixedAssetsAsync()
         {
-            await GetAssetCategoryAsync(categoryId);
-            var fixedAssetEntityList = await _NCVRepository.GetFixedAssetsAsync(categoryId);
+            var fixedAssetEntityList = await _NCVRepository.GetFixedAssetsAsync();
             
             if (fixedAssetEntityList == null || !fixedAssetEntityList.Any())
                 throw new NotFoundElementException($"La lista de Activos Fijos no existe o está vacía.");
 
             var fixedAssetEnumerable = _mapper.Map<IEnumerable<FixedAssetModel>>(fixedAssetEntityList);
-            foreach (FixedAssetModel fixedAsset in fixedAssetEnumerable)
-            {
-                fixedAsset.AssetCategoryId = categoryId;
-            }
             return fixedAssetEnumerable;
         }
 
-        public async Task<FixedAssetModel> GetFixedAssetAsync(int fixedAssetId, int categoryId)
+        public async Task<FixedAssetModel> GetFixedAssetAsync(int fixedAssetId)
         {
-            await GetAssetCategoryAsync(categoryId);
-            var fixedAsset = await _NCVRepository.GetFixedAssetAsync(fixedAssetId, categoryId);
+            var fixedAsset = await _NCVRepository.GetFixedAssetAsync(fixedAssetId);
 
             if (fixedAsset == null)
-                throw new NotFoundElementException($"El activo fijo con Id:{fixedAssetId} no existe en la categoría con Id:{categoryId}.");
+                throw new NotFoundElementException($"El activo fijo con Id:{fixedAssetId} no existe.");
 
             var fixedAssetEnumerable = _mapper.Map<FixedAssetModel>(fixedAsset);
-            fixedAssetEnumerable.AssetCategoryId = fixedAssetId;
             return fixedAssetEnumerable;
         }
     }

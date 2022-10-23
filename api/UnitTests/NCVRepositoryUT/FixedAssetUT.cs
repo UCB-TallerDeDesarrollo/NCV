@@ -103,7 +103,7 @@ namespace UnitTests.NCVRepositoryUT
             var result = await repository.SaveChangesAsync();
 
             // NUMBER OF FIXED ASSETS
-            var listFixedAssets = await repository.GetFixedAssetsAsync(1);
+            var listFixedAssets = await repository.GetFixedAssetsAsync();
             var numberOfFixedAssets = listFixedAssets.Count();
             Assert.Equal(1,numberOfFixedAssets);
         }
@@ -150,7 +150,7 @@ namespace UnitTests.NCVRepositoryUT
             var result = await repository.SaveChangesAsync();
 
             // NUMBER OF FIXED ASSETS
-            var listFixedAssets = await repository.GetFixedAssetsAsync(1);
+            var listFixedAssets = await repository.GetFixedAssetsAsync();
             //var numberOfFixedAssets = listFixedAssets.Count();
             Assert.Equal("Computadora", listFixedAssets.First().Name);
         }
@@ -197,7 +197,7 @@ namespace UnitTests.NCVRepositoryUT
             var result = await repository.SaveChangesAsync();
 
             // RETURN THE FIRST FIXED ASSET
-            var firstFixedAsset = await repository.GetFixedAssetAsync(1, 1);
+            var firstFixedAsset = await repository.GetFixedAssetAsync(1);
             //var numberOfFixedAssets = listFixedAssets.Count();
             Assert.Equal("Computadora", firstFixedAsset.Name);
         }
@@ -244,7 +244,7 @@ namespace UnitTests.NCVRepositoryUT
             var result = await repository.SaveChangesAsync();
 
             // RETURN THE FIRST FIXED ASSET
-            var firstFixedAsset = await repository.GetFixedAssetAsync(1, 1);
+            var firstFixedAsset = await repository.GetFixedAssetAsync(1);
             //var numberOfFixedAssets = listFixedAssets.Count();
             Assert.Equal(100.58m, firstFixedAsset.Price);
         }
