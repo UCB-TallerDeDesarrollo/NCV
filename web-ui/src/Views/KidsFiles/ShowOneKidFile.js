@@ -13,6 +13,10 @@ import Container from '../../Components/Container';
 import Box from '@mui/material/Box';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
+
+
+
+
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
     let urlCreateHealthReport = `/ninos/${kidId}/crear-reporte/`
@@ -71,7 +75,11 @@ function ShowOneKidFile() {
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
     const urlBiometrics = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/biometrics'
-
+    const navigate = useNavigate();
+    const navigateEditKid = () =>{ 
+        let path = `/ninos/${kidId}/editar-nino`; 
+        navigate(path);
+    }
     const location = useLocation()
     
     let showAlert = location.state ? location.state.showAlert : false 
@@ -146,7 +154,7 @@ function ShowOneKidFile() {
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName }/>
-            <ButtonPrimary key={2} label="EditarFile" onClick={()=>{navigate(`/ninos/${kidId}/editar-nino`)}} />
+            <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
             <WeightAndHeight weightAndHeightData={biometrics}/>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
