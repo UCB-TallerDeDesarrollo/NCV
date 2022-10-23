@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React from 'react';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
 import MenuItem from '@mui/material/MenuItem';
@@ -11,8 +11,9 @@ import { width } from '@mui/system';
 import Navbar from '../../Components/NavBar';
 
 import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
-import { getOneKid } from './API/getKids_axios';
+import { getOneKid } from './API/getAxios';
 const genders = [
     {
       value: 'M',
@@ -53,32 +54,11 @@ function EditKidFile() {
             [name]:value
         })
     }
-    function handleFormSubmit() {
-        axios.post(urlKid, kid)
-        console.log("ENTRA")
-        .then(function (response) {
-            if (response.status == 200){
-                navigate(`ninos`+kidId,{state:{showAlert:true,alertMessage:"Archivo de niño actualizado exitosamente"}})
-            }
-            console.log("Manda")
-        })
-        .catch(function (error) {
-            if (error.response){
-                if (error.response.status == 400 )
-                    setOpen(true)
-            }
-        });
-    }
 
     
     return (
         <><Navbar /><div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
             <FormContainer title="Modificar datos del niño">
-                <Collapse in={open} sx={{width:1, pt:2}}>
-                    <Alert severity="error">
-                        Todos los campos son requeridos
-                    </Alert>
-                </Collapse>
                 <InputText
                     required
                     id="firstName"
@@ -87,7 +67,7 @@ function EditKidFile() {
                     value={kid.firstName}
                     onChange={handleInputChange}
                 />
-                <InputText
+                 <InputText
                     required
                     id="lastName"
                     name="lastName"
@@ -141,13 +121,12 @@ function EditKidFile() {
                 >
                 {genders.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
-                    {option.label}
+                        {option.label}
                     </MenuItem>
                 ))}
                 </InputText>
-                <ButtonPrimary label={"Guardar Cambios"} onClick={handleFormSubmit}/>
             </FormContainer>
         </div></>
     );
 }
-export default EditKidFile
+export default EditKidFile;

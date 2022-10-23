@@ -55,12 +55,13 @@ function App() {
                         //element={<><NavBar/><AddHealthReport/></>}
                         element={<AddHealthReport/>}
                     ></Route>
-                    <Route path="/kidHealth/:id" element={<DataHealth />} />
-                    <Route path="*" element={<Navigate replace to="/" />} />
                     <Route
-                        path="ninos/:kidId/editar-nino/"
+                        path="ninos/:kidId/editar-nino"
                         element={<EditKid/>}
                     ></Route>
+                    <Route path="/kidHealth/:id" element={<DataHealth />} />
+                    <Route path="*" element={<Navigate replace to="/" />} />
+
                 </Routes>
             </Router>
         )
