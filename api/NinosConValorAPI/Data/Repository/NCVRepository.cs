@@ -131,10 +131,14 @@ namespace NinosConValorAPI.Data.Repository
             return programHouse;
         }
 
-        public async Task<IEnumerable<AssetCategoryEntity>> GetAssetCategoriesAsync()
+        public async Task<IEnumerable<AssetCategoryEntity>> GetAssetCategoriesAsync(bool showAssets = false)
         {
             IQueryable<AssetCategoryEntity> query = _dbContext.AssetCategories;
             query = query.AsNoTracking();
+            if (showAssets)
+            {
+                query = query.Include(f => f.FixedAssets);
+            }
             var result = await query.ToListAsync();
             return result;
         }
