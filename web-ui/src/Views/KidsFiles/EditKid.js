@@ -26,10 +26,9 @@ const genders = [
   ];
 
 function EditKidFile() {
-    const { kidId } = useParams()
-    console.log("kidId: ",kidId)
+    const navigate = useNavigate();
+    const {kidId} = useParams()
     var urlKid = "https://ncv-api.herokuapp.com/api/kids/"+ kidId 
-    const navigate = useNavigate()
     const [kid, setKid] = useState([])
     const [open, setOpen] = useState(false)
 
@@ -57,23 +56,18 @@ function EditKidFile() {
     }
 
     function handleFormSubmit() {
-        const navigateKid = () =>{ 
-            let path = `/ninos/${kidId}`; 
-            navigate(path);
-        }
         axios.put(urlKid, kid)
-        .then(function (response) {
+          .then(function (response) {
             if (response.status == 200){
-                navigate(navigateKid,{state:{showAlert:true,alertMessage:"Archivo de niño actualizado exitosamente"}})
-                console.log("kid json: cambiado" )
+                navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de salud creado"}});
             }
-        })
-        .catch(function (error) {
+          })
+          .catch(function (error) {
             if (error.response){
                 if (error.response.status == 400 )
                     setOpen(true)
             }
-        });
+          });
     }
     
     return (
