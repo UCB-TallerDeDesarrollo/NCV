@@ -82,6 +82,7 @@ namespace NinosConValorAPI.Data.Repository
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
+            query = query.Include(f => f.AssetCategory);
             query = query.Include(f => f.ProgramHouse);
             var result = await query.ToListAsync();
             return result;
@@ -91,6 +92,7 @@ namespace NinosConValorAPI.Data.Repository
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
+            query = query.Include(f => f.AssetCategory);
             query = query.Include(f=>f.ProgramHouse);
             var fixedAssetEntity = await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
             return fixedAssetEntity;
