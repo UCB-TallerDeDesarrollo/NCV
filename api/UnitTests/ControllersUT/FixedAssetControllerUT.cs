@@ -85,7 +85,7 @@ namespace UnitTests.ControllersUT
             var mapper = config.CreateMapper();
             var enumerable = new List<FixedAssetModel>() { fixedAsset1, fixedAsset2 } as IEnumerable<FixedAssetModel>;
             var fixedAssetServiceMock = new Mock<IFixedAssetService>();
-            fixedAssetServiceMock.Setup(r => r.GetFixedAssetsAsync(1)).ReturnsAsync(enumerable);
+            fixedAssetServiceMock.Setup(r => r.GetFixedAssetsAsync()).ReturnsAsync(enumerable);
 
             var fixedAssetController = new FixedAssetsController(fixedAssetServiceMock.Object);
             var response = await fixedAssetController.GetFixedAssetsAsync();
@@ -111,12 +111,12 @@ namespace UnitTests.ControllersUT
             };
 
             var fixedAssetServiceMock = new Mock<IFixedAssetService>();
-            fixedAssetServiceMock.Setup(r => r.GetFixedAssetAsync(1,1)).ReturnsAsync(fixedAsset1);
+            fixedAssetServiceMock.Setup(r => r.GetFixedAssetAsync(1)).ReturnsAsync(fixedAsset1);
 
             var fixedAssetController = new FixedAssetsController(fixedAssetServiceMock.Object);
             var response = await fixedAssetController.GetFixedAssetAsync(1);
-            var status = (OkObjectResult)response.Result;
-            Assert.Equal(200, status.StatusCode);
+            var result = response.Result as OkObjectResult;
+            Assert.Equal(200, result.StatusCode);
         }
     }
 }

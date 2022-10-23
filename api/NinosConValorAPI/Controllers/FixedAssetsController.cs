@@ -26,7 +26,7 @@ namespace NinosConValorAPI.Controllers
                 int programHouseId = fixedAsset.ProgramHouseId;
                 int categoryId = 1; // OJOOOO! modificar esto cuando este implementado FRONT END!!!
                 var newFixedAsset = await _fixedAssetService.CreateFixedAssetAsync(fixedAsset, programHouseId, categoryId);
-                return Created($"/api/category/{categoryId}/fixedAssets/{newFixedAsset.Id}", newFixedAsset);
+                return Created($"/api/fixedAssets/{newFixedAsset.Id}", newFixedAsset);
             }
             catch (Exception)
             {
@@ -39,8 +39,7 @@ namespace NinosConValorAPI.Controllers
         {
             try
             {
-                int categoryId = 1; // OJOOOO! modificar esto cuando este implementado FRONT END!!!
-                var fixedAssets = await _fixedAssetService.GetFixedAssetsAsync(categoryId);
+                var fixedAssets = await _fixedAssetService.GetFixedAssetsAsync();
                 return Ok(fixedAssets);
             }
             catch (NotFoundElementException ex)
@@ -58,8 +57,7 @@ namespace NinosConValorAPI.Controllers
         {
             try
             {
-                int categoryId = 1; // OJOOOO! modificar esto cuando este implementado FRONT END!!!
-                var fixedAsset = await _fixedAssetService.GetFixedAssetAsync(fixedAssetId, categoryId);
+                var fixedAsset = await _fixedAssetService.GetFixedAssetAsync(fixedAssetId);
                 return Ok(fixedAsset);
             }
             catch (NotFoundElementException ex)

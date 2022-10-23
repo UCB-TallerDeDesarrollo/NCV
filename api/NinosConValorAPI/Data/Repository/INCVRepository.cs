@@ -19,8 +19,8 @@ namespace NinosConValorAPI.Data.Repository
 
         //FIXED ASSETS
         public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int categoryId);
-        Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync(int categoryId);
-        Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId, int categoryId);
+        Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync();
+        Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId);
       
         // BIOMETRICS
         Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId);
@@ -32,7 +32,7 @@ namespace NinosConValorAPI.Data.Repository
 
         //ASSETS CATEGORIES
         void CreateAssetCategory(AssetCategoryEntity assetCategory);
-        Task<IEnumerable<AssetCategoryEntity>> GetAssetCategoriesAsync();
+        Task<IEnumerable<AssetCategoryEntity>> GetAssetCategoriesAsync(bool showAssets = false);
         Task<AssetCategoryEntity> GetAssetCategoryAsync(int categoryId);
 
         //TASKS
