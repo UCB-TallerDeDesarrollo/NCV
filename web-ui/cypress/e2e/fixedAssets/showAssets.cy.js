@@ -10,7 +10,7 @@ describe('Show fixed assets end to end tests', () => {
     cy.visit('/activos-fijos');
 
     cy.get('.ListElement')
-    .and('contain', 'Descripci')
+    .and('contain', 'Programa')
     .should('have.length', 5)
   });
   it('Verifies the fields from a fixed asset form the list', () => {
@@ -21,7 +21,7 @@ describe('Show fixed assets end to end tests', () => {
     cy.visit('/activos-fijos');
 
     cy.get('p')
-    .and('contain', 'Descripci')  
-    .and('contain', 'Computadora de escritorio')
+    .and('contain', 'Programa')  
+    .and('contain', 'SDE')
   });
 });

@@ -6,7 +6,8 @@
      "entryDate":"2022-10-16T20:00:00",
      "price":100.58,
      "features":"8Gb de RAM",
-     "quantity":5
+     "quantity":5,
+     "programHouseAcronym": "SDE"
   },
   {
      "id":11,
@@ -15,7 +16,8 @@
      "entryDate":"2020-11-12T20:00:00",
      "price":100.58,
      "features":"8Gb de RAM",
-     "quantity":5
+     "quantity":5,
+     "programHouseAcronym": "SDE"
   },
   {
      "id":13,
@@ -24,7 +26,8 @@
      "entryDate":"2022-09-11T00:00:00",
      "price":1000,
      "features":"8 GB de ram",
-     "quantity":1
+     "quantity":1,
+     "programHouseAcronym": "SDE"
   },
   {
      "id":14,
@@ -33,7 +36,8 @@
      "entryDate":"2022-09-11T00:00:00",
      "price":200,
      "features":"Tiene un rayon",
-     "quantity":1
+     "quantity":1,
+     "programHouseAcronym": "SDE"
   },
   {
      "id":15,
@@ -42,6 +46,7 @@
      "entryDate":"2022-09-11T00:00:00",
      "price":100,
      "features":"Tiene RGB",
-     "quantity":1
+     "quantity":1,
+     "programHouseAcronym": "SDE"
   }
 ]

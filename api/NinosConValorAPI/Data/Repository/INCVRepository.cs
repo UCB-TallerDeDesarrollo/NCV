@@ -24,6 +24,7 @@ namespace NinosConValorAPI.Data.Repository
       
         // BIOMETRICS
         Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId);
+        Task<BiometricsEntity> CreateBiometricsAsync(BiometricsEntity biometrics);
 
         //PROGRAM HOUSE
         Task<IEnumerable<ProgramHouseEntity>> GetProgramHousesAsync();
