@@ -21,7 +21,6 @@ import AddKid from './Views/KidsFiles/AddKid'
 import EditKid from './Views/KidsFiles/EditKid'
 
 import NavBar from './Components/NavBar'
-import ShowUser from './Views/User/ShowUsers'
 import ListUsers from './Views/User/ListUsers'
 var Rol = sessionStorage.getItem("Role")
 
