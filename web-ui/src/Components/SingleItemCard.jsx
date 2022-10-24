@@ -89,7 +89,7 @@ const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, 
                 </Box>)
 
    return (
-            <Card sx={{ p: 5 , pt: 4, maxWidth: 1000, m:2, minWidth:{md:1000} , borderRadius:3}}>
+            <Card sx={{ p: 5 , pt: 4, m:2, width:0.75, borderRadius:3}}>
                 {contentCard.map((oneContent,i)=>{
                         return (
                             <Box key={i} sx={{ display: 'inline-block'}}>

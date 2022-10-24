@@ -1,9 +1,9 @@
 // import React from 'react';
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles'
+import { createTheme, ThemeProvider, styled, responsiveFontSizes } from '@mui/material/styles'
   
-const theme = createTheme({
+let theme = createTheme({
 typography: {
     fontFamily: `"DM Sans", sans-serif`,
     fontWeightRegular: 500,
@@ -30,10 +30,13 @@ typography: {
         fontFamily : `"DM Sans", sans-serif`,
         fontWeight : 500,
         fontSize : 14,
-        color : '#989a9f'
+        color : '#989a9f',
+        textTransform : 'capitalize'
     }
 },
 });
+
+theme = responsiveFontSizes(theme);
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(<ThemeProvider theme={theme}><App/></ThemeProvider>)
