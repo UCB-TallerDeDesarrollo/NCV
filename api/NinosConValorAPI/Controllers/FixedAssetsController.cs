@@ -28,6 +28,10 @@ namespace NinosConValorAPI.Controllers
                 var newFixedAsset = await _fixedAssetService.CreateFixedAssetAsync(fixedAsset, programHouseId, categoryId);
                 return Created($"/api/fixedAssets/{newFixedAsset.Id}", newFixedAsset);
             }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió.");

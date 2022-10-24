@@ -62,6 +62,108 @@ namespace UnitTests.NCVRepositoryUT
         }
 
         [Fact]
+        public async Task CreateFixedAsset_AddFixedAssetToEmptyDB_ReturnsAddedFixedAssetWithNullFields()
+        {
+            // ARRANGE
+            var repository = new NCVRepository(ctx);
+            var programHouse = new ProgramHouseEntity()
+            {
+                Id = 2,
+                Name = "casa 1",
+                ResponsibleUser = new IdentityAppUser()
+                {
+                    Id = "aaefawef",
+                    FirstName = "juna",
+                    LastName = "perez",
+                    State = 1
+                }
+
+            };
+
+            var assetCategory = new AssetCategoryEntity()
+            {
+                Id = 2,
+                Category = "Teclados",
+            };
+            var fixedAsset = new FixedAssetEntity()
+            {
+                Id = 1,
+                Name = "Computadora",
+                Price = 100.58m,
+                Quantity = 5,
+                ProgramHouse = programHouse,
+                AssetCategory = assetCategory
+            };
+
+            ctx.Add(programHouse);
+            ctx.Add(assetCategory);
+            ctx.SaveChanges();
+            repository.CreateFixedAsset(fixedAsset, 2, 2);
+            var result = await repository.SaveChangesAsync();
+
+            // ASSERT
+            Assert.True(result);
+            Assert.Equal(1, fixedAsset.Id);
+            Assert.Equal("Computadora", fixedAsset.Name);
+            Assert.Null(fixedAsset.Description);
+            Assert.Null(fixedAsset.EntryDate);
+            Assert.Equal(100.58m, fixedAsset.Price);
+            Assert.Null(fixedAsset.Features);
+            Assert.Equal(5, fixedAsset.Quantity);
+        }
+
+        [Fact]
+        public async Task CreateFixedAsset_AddFixedAssetToEmptyDB_ReturnsAddedFixedAssetWithNullFalse()
+        {
+            // ARRANGE
+            var repository = new NCVRepository(ctx);
+            var programHouse = new ProgramHouseEntity()
+            {
+                Id = 2,
+                Name = "casa 1",
+                ResponsibleUser = new IdentityAppUser()
+                {
+                    Id = "aaefawef",
+                    FirstName = "juna",
+                    LastName = "perez",
+                    State = 1
+                }
+
+            };
+
+            var assetCategory = new AssetCategoryEntity()
+            {
+                Id = 2,
+                Category = "Teclados",
+            };
+            var fixedAsset = new FixedAssetEntity()
+            {
+                Id = 1,
+                Name = "Computadora",
+                Price = 100.58m,
+                Quantity = 5,
+                ProgramHouse = programHouse,
+                AssetCategory = assetCategory
+            };
+
+            ctx.Add(programHouse);
+            ctx.Add(assetCategory);
+            ctx.SaveChanges();
+            repository.CreateFixedAsset(fixedAsset, 2, 2);
+            var result = await repository.SaveChangesAsync();
+
+            // ASSERT
+            Assert.True(result);
+            Assert.Equal(1, fixedAsset.Id);
+            Assert.Equal("Computadora", fixedAsset.Name);
+            Assert.Null(fixedAsset.Description);
+            Assert.Null(fixedAsset.EntryDate);
+            Assert.Equal(100.58m, fixedAsset.Price);
+            Assert.Null(fixedAsset.Features);
+            Assert.Equal(5, fixedAsset.Quantity);
+        }
+
+        [Fact]
         public async Task GetFixedAssets_ReturnListOfFixedAssets()
         {
             // CREATE 1 FIXED ASSET
