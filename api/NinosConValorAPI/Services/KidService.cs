@@ -55,7 +55,7 @@ namespace NinosConValorAPI.Services
         public async Task DeleteKidAsync(int kidId)
         {
             await GetKidAsync(kidId);
-            await _NCVRepository.DeleteKid(kidId);
+            await _NCVRepository.DeleteKidAsync(kidId);
             var result = await _NCVRepository.SaveChangesAsync();
             if (!result)
             {

@@ -123,7 +123,12 @@ function ShowOneKidFile() {
 
     const deleteKid = () => {
         axios.delete(urlKid)
-        .then(response)
+        .then((response) => {
+            console.log("Deleted", response.status)
+            handleCloseToConfirm();
+            setOpenConfirmed(true);
+        })
+        .catch(err=> console.log(err))
     }
 
     const fetchBiometrics = () => {
@@ -199,7 +204,7 @@ function ShowOneKidFile() {
             <DialogTitle>¿Seguro que desea eliminar el registro?</DialogTitle>
             <DialogActions>
             <ButtonSecondary label="Cancelar" onClick={handleCloseToConfirm}></ButtonSecondary>
-            <ButtonDanger label="Si, Quiero Eliminar Registro" id="confirm_delete_button" onClick={confirmedOpen}></ButtonDanger>
+            <ButtonDanger label="Si, Quiero Eliminar Registro" id="confirm_delete_button" onClick={deleteKid}></ButtonDanger>
             </DialogActions>
             </Dialog>
             
