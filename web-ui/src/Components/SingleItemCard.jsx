@@ -3,6 +3,7 @@ import Card from '@mui/material/Card'
 import Box from '@mui/material/Box'
 import CardMedia from '@mui/material/CardMedia'
 import Grid from '@mui/material/Unstable_Grid2';
+import { Typography } from '@mui/material';
 
 function MyCardImage({imageUrl,imageCirle}){
     var borderRadiusValue = 3
@@ -32,10 +33,12 @@ function gridItems(elements){
             contentOneElement =  " ----- "
         }
         gridElements.push(
-            <><div>
-                  <font size="2">{prop}</font> </div>
-                <div >
-                  <h5 style={styles.label}>{contentOneElement}</h5>
+            <>
+                <div>
+                  <Typography variant="subtitle2" sx={styles.secondaryField}>{prop}</Typography>
+                </div>
+                <div>
+                    <Typography variant="body1" sx={{display:'inline'}}>{contentOneElement}</Typography>
                 <p></p>
               </div>
             </> 
@@ -73,7 +76,8 @@ const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, 
     let detailsElement = gridItems(element)
     contentCard.push( 
                 <Box sx={{ width: {sm:sm_value_box , md:md_value_box}}}>
-                        <h2>{title}</h2><h4 style={styles.secondaryField}>{secondaryField}</h4><br></br><br></br>
+                        <Typography variant="h2" sx={{marginBottom:1.5}}>{title}</Typography>
+                        <h4 style={styles.secondaryField}>{secondaryField}</h4>
                         <Grid container spacing={1.5} rowSpacing={0}>
                         {detailsElement.map((oneDetail,i)=>{
                                 return (

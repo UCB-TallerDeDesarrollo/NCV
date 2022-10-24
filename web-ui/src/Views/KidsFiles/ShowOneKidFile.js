@@ -12,6 +12,7 @@ import TableBasic from '../../Components/TableBasic';
 import Container from '../../Components/Container';
 import Box from '@mui/material/Box';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import { Typography } from '@mui/material';
 
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
@@ -49,7 +50,7 @@ function WeightAndHeight({weightAndHeightData=[]}){
     if (weightAndHeightData != null && weightAndHeightData.length > 0){
         let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
         table = (<>
-            <h4>Peso y talla</h4>
+            <Typography variant="h3" sx={{marginBottom:1.5}}>Peso y talla</Typography>
             <Box sx={{display:"flex", flexDirection:"row"}}>
                 <TableBasic columnHeaders={columnNames} data={weightAndHeightData} sxTableContainer={{width:1}}></TableBasic>
             </Box>
