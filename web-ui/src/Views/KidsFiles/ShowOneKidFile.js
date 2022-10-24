@@ -117,8 +117,6 @@ function WeightAndHeight({weightAndHeightData}){
     if (weightAndHeightData != null && weightAndHeightData.length > 0){
         let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
         table = (<>
-            <Typography variant="h3" sx={{marginBottom:1.5}}>Peso y talla</Typography>
-            {yearComboBox}
             <Box sx={{display:"flex", flexDirection:"row"}}>
                 <TableBasic columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
             </Box>
@@ -143,7 +141,7 @@ function WeightAndHeight({weightAndHeightData}){
             ))}
             </Select>
         </FormControl>);
-        weightAndHeightTitle = <h4>Peso y talla</h4>;
+        weightAndHeightTitle = <Typography variant="h3" sx={{marginBottom:1.5}}>Peso y talla</Typography>;
     }
     return (<Container sx={{ display: 'flex', flexDirection:'column' }}>
         <Box sx={{ display: 'flex', flexDirection:'row', alignItems:'center',  justifyContent:'space-between'}}>

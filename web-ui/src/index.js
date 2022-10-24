@@ -31,7 +31,6 @@ typography: {
         fontWeight : 500,
         fontSize : 14,
         color : '#989a9f',
-        textTransform : 'capitalize'
     }
 },
 });
