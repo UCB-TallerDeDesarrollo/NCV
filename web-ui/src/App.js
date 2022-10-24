@@ -21,7 +21,7 @@ import AddKid from './Views/KidsFiles/AddKid'
 import EditKid from './Views/KidsFiles/EditKid'
 
 import NavBar from './Components/NavBar'
-import ShowUser from './Views/User/ShowUsers'
+import ListUsers from './Views/User/ListUsers'
 var Rol = sessionStorage.getItem("Role")
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
                     <Route exact path="/" element={<LoginForm />}></Route>
                     <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
                     <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
-                    <Route path="/vista-usuarios" element={<ShowUser />}></Route>
+                    <Route path="/vista-usuarios" element={<ListUsers />}></Route>
                     <Route path="/registrar-nino" element={<AddKid />}></Route>
                     <Route
                         path="/crear-activo-fijo"
