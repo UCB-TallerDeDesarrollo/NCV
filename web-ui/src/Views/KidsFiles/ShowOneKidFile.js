@@ -49,23 +49,19 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
 }
 
 function formatDate(jsonDateStr){
-    //const options = { month: 'short', day: 'numeric'};
+    const options = { month: 'short', day: 'numeric', year:'numeric'};
     var date  = new Date(jsonDateStr);
-    return date.toLocaleDateString(undefined);
+    return date.toLocaleDateString(undefined,options);
 }
 
 function WeightAndHeight({weightAndHeightData}){
-    // weightAndHeightData.map((wh)=>{
-    //     let registerDate = new Date(wh["registerDate"]);
-    //     //wh["year"] = registerDate.getFullYear();
-    //     wh["registerDate"] = formatDate(wh["registerDate"]);
-    //     return wh;
-    // });
     const [filteredBiometrics, setFilteredBiometrics] = useState([]);
     useEffect(()=>{
-        console.log(weightAndHeightData);
-        setFilteredBiometrics(weightAndHeightData.slice());
-        //setBiometrics(biometrics.filter((b)=>{new Date(b["registerDate"]).getMonth()=="jun"}));
+        setFilteredBiometrics(
+            weightAndHeightData.slice().map((b)=>{
+                return {"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]};
+            })
+        );
     },[weightAndHeightData]);
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
@@ -91,58 +87,62 @@ function WeightAndHeight({weightAndHeightData}){
         // On autofill we get a stringified value.
         typeof value === 'string' ? value.split(',') : value,
       );
-      console.log(filteredBiometrics.length);
     };
 
     useEffect(()=>{
-        console.log(personName);
-        setFilteredBiometrics(weightAndHeightData.filter((b)=>{
-            var ans = false;
-            let biometricYear = (new Date(b["registerDate"]).getFullYear())
-            personName.forEach((y)=>{
-                ans = ans || y == biometricYear;
+        setFilteredBiometrics(
+            weightAndHeightData.filter((b)=>{
+                var ans = false;
+                let biometricYear = (new Date(b["registerDate"]).getFullYear())
+                personName.forEach((y)=>{
+                    ans = ans || y == biometricYear;
+                })
+                return  ans;
+            }).map((b)=>{
+                return {"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]};
             })
-            return  ans;
-        }));
+        )
     },[personName]);
 
-    let yearComboBox = (<FormControl sx={{ m: 1, minWidth: 100, justifySelf:'right', alignSelf:'end'}}>
-        <InputLabel id="demo-multiple-checkbox-label">Año</InputLabel>
-        <Select
-        labelId="demo-multiple-checkbox-label"
-        id="demo-multiple-checkbox"
-        multiple
-        value={personName}
-        onChange={handleChange}
-        input={<OutlinedInput label="Año" />}
-        renderValue={(selected) => selected.join(', ')}
-        MenuProps={MenuProps}
-        >
-        {availableYears.map((name) => (
-            <MenuItem key={name} value={name}>
-            <Checkbox checked={personName.indexOf(name) > -1} />
-            <ListItemText primary={name} />
-            </MenuItem>
-        ))}
-        </Select>
-    </FormControl>);
-
+    let yearComboBox = null;
+    let weightAndHeightTitle = null;
     let table = <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
         <AutoAwesomeIcon sx={{margin:2}}/>
         No existen registros de <b>peso y talla</b>
     </Box>;
     
-    if (filteredBiometrics != null && filteredBiometrics.length > 0){
+    if (weightAndHeightData != null && weightAndHeightData.length > 0){
         let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
         table = (<>
             <Box sx={{display:"flex", flexDirection:"row"}}>
                 <TableBasic columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
             </Box>
         </>);
+        yearComboBox = (<FormControl sx={{ m: 1, minWidth: 100, justifySelf:'right', alignSelf:'end'}}>
+            <InputLabel id="demo-multiple-checkbox-label">Año</InputLabel>
+            <Select
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
+                multiple
+                value={personName}
+                onChange={handleChange}
+                input={<OutlinedInput label="Año" />}
+                renderValue={(selected) => selected.join(', ')}
+                MenuProps={MenuProps}
+            >
+            {availableYears.map((name) => (
+                <MenuItem key={name} value={name}>
+                <Checkbox checked={personName.indexOf(name) > -1} />
+                <ListItemText primary={name} />
+                </MenuItem>
+            ))}
+            </Select>
+        </FormControl>);
+        weightAndHeightTitle = <h4>Peso y talla</h4>;
     }
     return (<Container sx={{ display: 'flex', flexDirection:'column' }}>
         <Box sx={{ display: 'flex', flexDirection:'row', alignItems:'center',  justifyContent:'space-between'}}>
-            <h4>Peso y talla</h4>
+            {weightAndHeightTitle}
             {yearComboBox}
         </Box>
         {table}
@@ -220,7 +220,6 @@ function ShowOneKidFile() {
 
     let birthDate = new Date (kid.birthDate);
     let yeardOld = new Date().getFullYear() - birthDate.getFullYear();
-    console.log("EDAD:  ------------",birthDate.getFullYear())
     let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
 
     const MyKidDetails = { 
