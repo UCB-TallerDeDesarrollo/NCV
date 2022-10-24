@@ -78,7 +78,7 @@ const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, 
                 <Box sx={{ width: {sm:sm_value_box , md:md_value_box}}}>
                         <Typography variant="h2" sx={{marginBottom:1.5}}>{title}</Typography>
                         <h4 style={styles.secondaryField}>{secondaryField}</h4>
-                        <Grid container spacing={1.5} rowSpacing={0}>
+                        <Grid container spacing={1.5} rowSpacing={0} sx={{width:1}}>
                         {detailsElement.map((oneDetail,i)=>{
                                 return (
                                     <Grid item key={i} xs={12} sm={6} md={md_value_griItem}>

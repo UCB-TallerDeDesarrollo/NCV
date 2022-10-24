@@ -20,7 +20,9 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
     let buttonCreateHealthReport = (<Container>
         <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
             <AutoAwesomeIcon sx={{marginTop:2}}/>
-            <Box sx={{margin:3}}>No se registraron datos de <b>salud</b></Box>
+            <Box sx={{margin:3}}>
+                <Typography variant="body2">No se registraron datos de <b>salud</b></Typography>
+            </Box>
             <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
         </Box>
     </Container>);
@@ -45,7 +47,7 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
 function WeightAndHeight({weightAndHeightData=[]}){
     let table = <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
         <AutoAwesomeIcon sx={{margin:2}}/>
-        No existen registros de <b>peso y talla</b>
+        <Typography variant="body2">No existen registros de <b>peso y talla</b></Typography>
     </Box>;
     if (weightAndHeightData != null && weightAndHeightData.length > 0){
         let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];

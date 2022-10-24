@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import { Typography } from '@mui/material';
 export default function FormContainer({children,title=""}) {
     const sxContainer = {
         bgcolor:'#ffff',
@@ -15,8 +16,8 @@ export default function FormContainer({children,title=""}) {
     };
     return (
           <Box sx={sxContainer}>
-              <h4>{title}</h4>
-              {children}
+            <Typography variant="h4">{title}</Typography>
+            {children}
           </Box>
     );
   }
