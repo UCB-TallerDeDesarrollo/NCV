@@ -54,15 +54,27 @@ export default function ShowFixedAssets() {
     if (fixedAssets.length > 0) {
         const listElements = fixedAssets.map((el) => {
             return {
-                id:el.id, 
-                title:`${el.name}`, 
-                description:`Programa: ${el.programHouseAcronym!=null&&el.programHouseAcronym!=""&&el.programHouseAcronym!=undefined?el.programHouseAcronym:"*Sin programa*"}`,                 
-                elementUrl:`${completeInfoFixedAsset}/${el.id}`,
-                imgSrc:`https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg`                
+                id: el.id,
+                title: `${el.name}`,
+                description: `Programa: ${el.programHouseAcronym != null && el.programHouseAcronym != "" && el.programHouseAcronym != undefined ? el.programHouseAcronym : "*Sin programa*"}`,
+                elementUrl: `${completeInfoFixedAsset}/${el.id}`,
+                imgSrc: `https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg`,
+                categoryName: el.assetCategoryCategory
             }
         })
         // console.log();
         // headerIndices.forEach(el => console.log(el))
+        // const result = listElements.reduce((categories, item) => ({
+        //     ...categories,
+        //     [item.categoryName]: [...(categories[item.categoryName] || []), item]
+        // }));
+        const groups = listElements.reduce((groups, item) => {
+            const group = (groups[item.categoryName] || []);
+            group.push(item);
+            groups[item.categoryName] = group;
+            return groups;
+          }, {});
+        console.log('result', groups);
         let fixedAssetsComponent = <ListBasic items={listElements} withImage={false} />
         // console.log('elementos', listElements);
         let nexFixedAsset = "/crear-activo-fijo"
@@ -71,12 +83,13 @@ export default function ShowFixedAssets() {
             <>
                 <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '15vh' }}>
                     <ListContainer title="Lista de activos fijos" header={listHeaderComponents}>
-                        {headerIndices && (
-                                <ListSubheader>
-                                    {getHeaderName(1)}
-                                </ListSubheader>
-                            )}
-                        {fixedAssetsComponent}
+                        {headerIndices.includes('Equipos y Herramientas') && (
+                            <ListSubheader>
+                                {getHeaderName(1)}
+                            </ListSubheader>
+                        )}
+                        {groups}
+                        {/* {fixedAssetsComponent} */}
                     </ListContainer>
                 </Box>
                 <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
