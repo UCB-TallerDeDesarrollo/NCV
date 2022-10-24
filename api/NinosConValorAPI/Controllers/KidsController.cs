@@ -94,6 +94,24 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Something happend: {ex.Message}");
             }
         }
+
+        [HttpDelete("{kidId:int}")]
+        public async Task<IActionResult> DeleteKid (int kidId)
+        {
+            try
+            {
+                await _kidService.DeleteKidAsync(kidId);
+                return Ok();
+            }
+            catch(NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Simething happend.");
+            }
+        }
     }
 
 }

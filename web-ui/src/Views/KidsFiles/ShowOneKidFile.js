@@ -121,6 +121,11 @@ function ShowOneKidFile() {
             })
     }
 
+    const deleteKid = () => {
+        axios.delete(urlKid)
+        .then(response)
+    }
+
     const fetchBiometrics = () => {
         axios.get(urlBiometrics)
             .then((response) => {
@@ -166,7 +171,7 @@ function ShowOneKidFile() {
     const navigateListKid = () =>{ 
         let path = `/ninos`; 
         navigate(path);
-      }
+    }
 
     const confirmedOpen = () => {
         handleCloseToConfirm();

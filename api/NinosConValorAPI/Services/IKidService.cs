@@ -8,6 +8,7 @@ namespace NinosConValorAPI.Services
         Task<KidModel> GetKidAsync(int kidId);
         Task<IEnumerable<KidModel>> GetKidsAsync();
         Task<KidModel> UpdateKidAsync(int kidId, KidModel kidModel);
+        Task DeleteKidAsync(int kidId);
     }
 }
 

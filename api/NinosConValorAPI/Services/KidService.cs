@@ -51,5 +51,16 @@ namespace NinosConValorAPI.Services
             }
             return kidModel;
         }
+        
+        public async Task DeleteKidAsync(int kidId)
+        {
+            await GetKidAsync(kidId);
+            await _NCVRepository.DeleteKid(kidId);
+            var result = await _NCVRepository.SaveChangesAsync();
+            if (!result)
+            {
+                throw new Exception("Database Error.");
+            }
+        }
     }
 }
