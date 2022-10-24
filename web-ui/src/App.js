@@ -18,6 +18,7 @@ import {ShowKidsFiles} from './Views/KidsFiles/ShowKidsFiles'
 import {ShowOneKidFile} from './Views/KidsFiles/ShowOneKidFile'
 import DataHealth from './Views/KidsFiles/DataHealth'
 import AddKid from './Views/KidsFiles/AddKid'
+import EditKid from './Views/KidsFiles/EditKid'
 
 import NavBar from './Components/NavBar'
 import ShowUser from './Views/User/ShowUsers'
@@ -54,8 +55,13 @@ function App() {
                         //element={<><NavBar/><AddHealthReport/></>}
                         element={<AddHealthReport/>}
                     ></Route>
+                    <Route
+                        path="ninos/:kidId/editar-nino"
+                        element={<EditKid/>}
+                    ></Route>
                     <Route path="/kidHealth/:id" element={<DataHealth />} />
                     <Route path="*" element={<Navigate replace to="/" />} />
+
                 </Routes>
             </Router>
         )
