@@ -65,6 +65,13 @@ namespace NinosConValorAPI.Data.Repository
         {
             _dbContext.Kids.Add(kid);
         }
+
+        public async Task DeleteKidAsync(int kidId)
+        {
+            var kidToDelete = await _dbContext.Kids.FirstOrDefaultAsync(c => c.Id == kidId);
+            _dbContext.Kids.Remove(kidToDelete);
+        }
+
         public async Task<bool> SaveChangesAsync()
         {
             try
