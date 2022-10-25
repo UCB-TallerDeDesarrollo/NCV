@@ -73,23 +73,37 @@ export default function ShowFixedAssets() {
             group.push(item);
             groups[item.categoryName] = group;
             return groups;
-          }, {});
-        console.log('result', groups);
+        }, {});
+        //console.log('result', groups["Muebles y Enseres"]);
         let fixedAssetsComponent = <ListBasic items={listElements} withImage={false} />
-        // console.log('elementos', listElements);
+        let fixedAssetsComponentCat1 = <ListBasic items={groups["Equipos y Herramientas"]} withImage={false} />
+        let fixedAssetsComponentCat2 = <ListBasic items={groups["Muebles y Enseres"]} withImage={false} />
         let nexFixedAsset = "/crear-activo-fijo"
         const listHeaderComponents = <ButtonPrimary label={"Crear activo fijo"} onClick={() => navigate(nexFixedAsset)} />
         return (
             <>
                 <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '15vh' }}>
                     <ListContainer title="Lista de activos fijos" header={listHeaderComponents}>
-                        {headerIndices.includes('Equipos y Herramientas') && (
+                        {/* {headerIndices.includes('Equipos y Herramientas') && (
                             <ListSubheader>
                                 {getHeaderName(1)}
                             </ListSubheader>
-                        )}
-                        {groups}
+                        )} */}
+                        {/* {groups} */}
                         {/* {fixedAssetsComponent} */}
+                        <ListSubheader sx={{
+                            typography: { fontSize: 30, },
+                        }}>
+                            {getHeaderName(1)}
+                            {fixedAssetsComponentCat1}
+                        </ListSubheader>
+                        <ListSubheader sx={{
+                            typography: { fontSize: 30, },
+                        }}>
+                            {getHeaderName(2)}
+                            {fixedAssetsComponentCat2}
+                        </ListSubheader>
+
                     </ListContainer>
                 </Box>
                 <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
