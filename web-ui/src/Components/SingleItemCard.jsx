@@ -80,7 +80,7 @@ const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, 
                         <Box sx={{display:'flex', flexDirection:'row', flexWrap:'wrap', width:1}}>
                         {detailsElement.map((oneDetail,i)=>{
                                 return (
-                                    <Box key={i} sx={{mr:3}}>
+                                    <Box key={i} sx={{mr:5}}>
                                         {oneDetail}
                                     </Box>
                                 )})}
