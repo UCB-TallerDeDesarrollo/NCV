@@ -79,7 +79,6 @@ function EditKidFile() {
                     </Alert>
                 </Collapse>
                 <InputText
-                    required
                     id="firstName"
                     name="firstName"
                     type="text"
@@ -87,7 +86,6 @@ function EditKidFile() {
                     onChange={handleInputChange}
                 />
                  <InputText
-                    required
                     id="lastName"
                     name="lastName"
                     type="text"
@@ -103,7 +101,6 @@ function EditKidFile() {
                     onChange={handleInputChange}
                 />
                 <InputText
-                    required
                     id="birthDate"
                     name="birthDate"
                     type="date"
@@ -114,7 +111,6 @@ function EditKidFile() {
                     onChange={handleInputChange}
                 />
                 <InputText
-                    required
                     id="programHouse"
                     name="programHouse"
                     type="text"
@@ -122,7 +118,6 @@ function EditKidFile() {
                     onChange={handleInputChange}
                 />
                 <InputText
-                    required
                     id="birthPlace"
                     name="birthPlace"
                     type="text"
@@ -130,7 +125,6 @@ function EditKidFile() {
                     onChange={handleInputChange}
                 />
                 <InputText
-                    required
                     select
                     id="gender"
                     name="gender"
