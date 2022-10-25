@@ -3,15 +3,16 @@ sessionStorage.setItem('Role',"Soporte")
 
 describe('Show delete button proofs that doesnt exist after delete action', () => {
     it('Verifies the delete button and that files are deleted', () => {
-      cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/kids/50',{
+      cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/kids/42',{
         fixture: 'fixedAssets/aBasicInfo.json'
       }).as('getBasicInfo',);
-      cy.visit('/ninos/50');
+      cy.visit('/ninos/42');
       cy.scrollTo('bottom');
       cy.get('#delete_button').click();
       cy.contains('¿Seguro que desea eliminar el registro?');
       cy.get('#confirm_delete_button').click();
+      cy.visit('/ninos');
       cy.contains('Niños del centro');
-      cy.contains('George Harrison').should('not.exist');
+      cy.contains('Elizabeth Ortega Lara').should('not.exist');
     });
   });
