@@ -27,7 +27,7 @@ export function ShowFixedAsset() {
         <>
             <Navbar />
             <div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
-                <SingleItemCard title={fixedAsset.name} secondaryField={fixedAsset.programHouseName} element={fixedAssetData} imageUrl={imageUrl} imageCirle={false} />        
+                <SingleItemCard title={fixedAsset.name} secondaryField={fixedAsset.programHouseName} element={fixedAssetData} imageUrl={imageUrl} imageCirle={false} imgHeight={300} imgWidth={500} />        
             </div>
         </>
         )
