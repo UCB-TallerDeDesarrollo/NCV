@@ -3,9 +3,6 @@ import InputText from './InputText'
 import { Box } from '@mui/system';
 //orderCriteria funcion que ordena la lista con la logica enviada
 //searchCriteria funcion que busca con la logica enviada. Referencia en showKidsFiles.js
-import { Box } from '@mui/system';
-import InputText from './InputText'
-import SearchIcon from '@mui/icons-material/Search';
 
 
 const SearchBar = ({posts, setSearchResults, orderCriteria, searchCriteria }) => {
@@ -23,6 +20,7 @@ const SearchBar = ({posts, setSearchResults, orderCriteria, searchCriteria }) =>
         <Box sx={{display:'flex', flexDirection:'row', alignItems :'center'}}>
         <SearchIcon sx={{color:'#989a9f'}}/>
         <InputText
+          label='Buscar...'
           className="search__input"
           type="text"
           id="search"
