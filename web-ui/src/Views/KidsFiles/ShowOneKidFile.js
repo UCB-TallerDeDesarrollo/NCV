@@ -179,7 +179,6 @@ function ShowOneKidFile() {
     let showAlert = location.state ? location.state.showAlert : false 
     let alertMessage = location.state ? location.state.alertMessage : null 
     const [open, setOpen] = useState(showAlert);
-    const [openConfirmed, setOpenConfirmed] = useState(showAlert);
     const [openToConfirm, setOpenToConfirm] = useState(showAlert);
 
     function handleClose(event, reason) {
@@ -219,9 +218,9 @@ function ShowOneKidFile() {
     const deleteKid = () => {
         axios.delete(urlKid)
         .then((response) => {
-            console.log("Deleted", response.status)
-            handleCloseToConfirm();
-            setOpenConfirmed(true);
+            if (response.status == 200){
+                navigate(`/ninos`,{state:{showAlert:true,alertMessage:"Registro Eliminado"}})
+            }
         })
         .catch(err=> console.log(err))
     }
@@ -292,16 +291,6 @@ function ShowOneKidFile() {
         setOpen(true);
     };
 
-    const navigateListKid = () =>{ 
-        let path = `/ninos`; 
-        navigate(path);
-    }
-
-    const confirmedOpen = () => {
-        handleCloseToConfirm();
-        setOpenConfirmed(true);
-    };
-
     const ToConfirmOpen = () => {
         handleCloseToConfirm();
         setOpenToConfirm(true);
@@ -325,13 +314,6 @@ function ShowOneKidFile() {
             <DialogActions>
             <ButtonSecondary label="Cancelar" onClick={handleCloseToConfirm}></ButtonSecondary>
             <ButtonDanger label="Si, Quiero Eliminar Registro" id="confirm_delete_button" onClick={deleteKid}></ButtonDanger>
-            </DialogActions>
-            </Dialog>
-            
-            <Dialog open={openConfirmed}>
-            <DialogTitle>Registro Eliminado</DialogTitle>
-            <DialogActions>
-            <ButtonPrimary label="Volver a la lista principal" id="return_button" onClick={navigateListKid}></ButtonPrimary>
             </DialogActions>
             </Dialog>
         </div></>
