@@ -78,22 +78,23 @@ namespace NinosConValorAPI.Data.Repository
             }
         }
 
-        public async Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync(int categoryId)
+        public async Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync()
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
-            query = query.Where(d => d.AssetCategory.Id == categoryId);
+            query = query.Include(f => f.AssetCategory);
             query = query.Include(f => f.ProgramHouse);
             var result = await query.ToListAsync();
             return result;
         }
 
-        public async Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId, int categoryId)
+        public async Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId)
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
+            query = query.Include(f => f.AssetCategory);
             query = query.Include(f=>f.ProgramHouse);
-            var fixedAssetEntity = await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId && g.AssetCategory.Id == categoryId);
+            var fixedAssetEntity = await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
             return fixedAssetEntity;
         }
 
@@ -131,10 +132,14 @@ namespace NinosConValorAPI.Data.Repository
             return programHouse;
         }
 
-        public async Task<IEnumerable<AssetCategoryEntity>> GetAssetCategoriesAsync()
+        public async Task<IEnumerable<AssetCategoryEntity>> GetAssetCategoriesAsync(bool showAssets = false)
         {
             IQueryable<AssetCategoryEntity> query = _dbContext.AssetCategories;
             query = query.AsNoTracking();
+            if (showAssets)
+            {
+                query = query.Include(f => f.FixedAssets);
+            }
             var result = await query.ToListAsync();
             return result;
         }

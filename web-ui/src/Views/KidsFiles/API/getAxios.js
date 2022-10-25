@@ -20,3 +20,14 @@ export const getKidHealthReport = async (id) => {
     const response = await api.get(url)
     return response.data
 }
+
+export const getOneKid = async (kidId) => {
+    const response = await api.get('/api/kids/'+ kidId )
+    return response.data
+}
+
+export const editKidFile = async (kidId) => {
+    const response = await api.put('/api/kids/'+ kidId )
+    return response.data
+}
+

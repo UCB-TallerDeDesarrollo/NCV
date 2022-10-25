@@ -1,0 +1,18 @@
+[{
+    "id": 2,
+    "name": "Sendero de Esperanza",
+    "phoneNumber": null,
+    "acronym": "SDE",
+    "location": "J.Lavadens entre Pablo Casals y Rigoberto Sains, Cochabamba",
+    "responsibleId": null,
+    "fixedAssets": []
+},
+{
+    "id": 6,
+    "name": "Programa 2",
+    "phoneNumber": null,
+    "acronym": "P2",
+    "location": null,
+    "responsibleId": null,
+    "fixedAssets": []
+}]

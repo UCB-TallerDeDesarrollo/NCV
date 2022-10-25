@@ -16,11 +16,17 @@ namespace NinosConValorAPI.Controllers
         }
     
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AssetCategoryModel>>> GetAssetCategoriesAsync()
+        public async Task<ActionResult<IEnumerable<AssetCategoryModel>>> GetAssetCategoriesAsync(string showAssets)
         {
             try
-            {                
-                var assetCategories = await _assetCategoriesService.GetAssetCategoriesAsync();
+            {   
+                bool showAssetsBoolean;
+                if (!Boolean.TryParse(showAssets, out showAssetsBoolean))
+                {
+                    showAssetsBoolean = false;
+                }
+
+                var assetCategories = await _assetCategoriesService.GetAssetCategoriesAsync(showAssetsBoolean);
                 return Ok(assetCategories);
             }
             catch (NotFoundElementException ex)

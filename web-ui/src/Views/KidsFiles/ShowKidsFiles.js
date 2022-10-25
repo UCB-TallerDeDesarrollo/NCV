@@ -69,10 +69,8 @@ function ShowKidsFiles() {
     const navigate = useNavigate();
     const listHeaderComponents = <ButtonPrimary label={"Registrar niño"} onClick={()=>navigate(newKidUrl)}/>
     return (
-        <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
-            
-            <ListContainer title="Niños del centro" header={listHeaderComponents}>
-                {searcher}
+        <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>            
+            <ListContainer title="Niños del centro" header={[searcher,listHeaderComponents]}>
                 {kidsListComponent}
             </ListContainer>
         </Box>

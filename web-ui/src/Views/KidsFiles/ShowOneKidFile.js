@@ -12,6 +12,14 @@ import TableBasic from '../../Components/TableBasic';
 import Container from '../../Components/Container';
 import Box from '@mui/material/Box';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import { Typography } from '@mui/material';
+import Select from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
@@ -19,7 +27,9 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
     let buttonCreateHealthReport = (<Container>
         <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
             <AutoAwesomeIcon sx={{marginTop:2}}/>
-            <Box sx={{margin:3}}>No se registraron datos de <b>salud</b></Box>
+            <Box sx={{margin:3}}>
+                <Typography variant="body2">No se registraron datos de <b>salud</b></Typography>
+            </Box>
             <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
         </Box>
     </Container>);
@@ -41,21 +51,103 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
     return healthReportComponent
 }
 
-function WeightAndHeight({weightAndHeightData=[]}){
+function formatDate(jsonDateStr){
+    const options = { month: 'short', day: 'numeric', year:'numeric'};
+    var date  = new Date(jsonDateStr);
+    return date.toLocaleDateString(undefined,options);
+}
+
+function WeightAndHeight({weightAndHeightData}){
+    const [filteredBiometrics, setFilteredBiometrics] = useState([]);
+    useEffect(()=>{
+        setFilteredBiometrics(
+            weightAndHeightData.slice().map((b)=>{
+                return {"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]};
+            })
+        );
+    },[weightAndHeightData]);
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+      PaperProps: {
+        style: {
+          maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+          width: 250,
+        },
+      },
+    };
+    let availableYears = new Set([]);
+    weightAndHeightData.forEach(b => {
+        availableYears.add(new Date(b["registerDate"]).getFullYear());
+    });
+    availableYears = Array.from(availableYears);
+    const [personName, setPersonName] = useState([]);
+    const handleChange = (event) => {
+      const {
+        target: { value },
+      } = event;
+      setPersonName(
+        // On autofill we get a stringified value.
+        typeof value === 'string' ? value.split(',') : value,
+      );
+    };
+
+    useEffect(()=>{
+        setFilteredBiometrics(
+            weightAndHeightData.filter((b)=>{
+                var ans = false;
+                let biometricYear = (new Date(b["registerDate"]).getFullYear())
+                personName.forEach((y)=>{
+                    ans = ans || y == biometricYear;
+                })
+                return  ans;
+            }).map((b)=>{
+                return {"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]};
+            })
+        )
+    },[personName]);
+
+    let yearComboBox = null;
+    let weightAndHeightTitle = null;
     let table = <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
         <AutoAwesomeIcon sx={{margin:2}}/>
-        No existen registros de <b>peso y talla</b>
+        <Typography variant="body2">No existen registros de <b>peso y talla</b></Typography>
     </Box>;
+    
     if (weightAndHeightData != null && weightAndHeightData.length > 0){
         let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
         table = (<>
-            <h4>Peso y talla</h4>
             <Box sx={{display:"flex", flexDirection:"row"}}>
-                <TableBasic columnHeaders={columnNames} data={weightAndHeightData} sxTableContainer={{width:1}}></TableBasic>
+                <TableBasic columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
             </Box>
         </>);
+        yearComboBox = (<FormControl sx={{ m: 1, minWidth: 100, justifySelf:'right', alignSelf:'end'}}>
+            <InputLabel id="demo-multiple-checkbox-label">Año</InputLabel>
+            <Select
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
+                multiple
+                value={personName}
+                onChange={handleChange}
+                input={<OutlinedInput label="Año" />}
+                renderValue={(selected) => selected.join(', ')}
+                MenuProps={MenuProps}
+            >
+            {availableYears.map((name) => (
+                <MenuItem key={name} value={name}>
+                <Checkbox checked={personName.indexOf(name) > -1} />
+                <ListItemText primary={name} />
+                </MenuItem>
+            ))}
+            </Select>
+        </FormControl>);
+        weightAndHeightTitle = <Typography variant="h3" sx={{marginBottom:1.5}}>Peso y talla</Typography>;
     }
-    return (<Container>
+    return (<Container sx={{ display: 'flex', flexDirection:'column' }}>
+        <Box sx={{ display: 'flex', flexDirection:'row', alignItems:'center',  justifyContent:'space-between'}}>
+            {weightAndHeightTitle}
+            {yearComboBox}
+        </Box>
         {table}
     </Container>);
 }
@@ -71,7 +163,11 @@ function ShowOneKidFile() {
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
     const urlBiometrics = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/biometrics'
-
+    const navigate = useNavigate();
+    const navigateEditKid = () =>{ 
+        let path = `/ninos/${kidId}/editar-nino`; 
+        navigate(path);
+    }
     const location = useLocation()
     
     let showAlert = location.state ? location.state.showAlert : false 
@@ -113,7 +209,6 @@ function ShowOneKidFile() {
             })
             .catch((error)=>{
                 setBiometricsStatusCode(error.response.status);
-                setBiometrics(null);
             })
     }
 
@@ -122,6 +217,7 @@ function ShowOneKidFile() {
         fetchHeltReport();
         fetchBiometrics();
     }, [])
+    
 
     // FIXME: Será necesario contemplar este caso ?? 
     // if (!kid) return null
@@ -131,7 +227,6 @@ function ShowOneKidFile() {
 
     let birthDate = new Date (kid.birthDate);
     let yeardOld = new Date().getFullYear() - birthDate.getFullYear();
-    console.log("EDAD:  ------------",birthDate.getFullYear())
     let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
 
     const MyKidDetails = { 
@@ -142,10 +237,13 @@ function ShowOneKidFile() {
         "Programa de Casa " : kid.programHouse,
         "Lugar de Nacimiento ": kid.birthPlace,
     };
+    
+    
 
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName }/>
+            <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
             <WeightAndHeight weightAndHeightData={biometrics}/>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

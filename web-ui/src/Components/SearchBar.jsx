@@ -1,3 +1,6 @@
+import SearchIcon from '@mui/icons-material/Search';
+import InputText from './InputText'
+import { Box } from '@mui/system';
 //orderCriteria funcion que ordena la lista con la logica enviada
 //searchCriteria funcion que busca con la logica enviada. Referencia en showKidsFiles.js
 import { Box } from '@mui/system';
@@ -16,18 +19,17 @@ const SearchBar = ({posts, setSearchResults, orderCriteria, searchCriteria }) =>
 
   return (
     <header>
-      <Box sx={{width: '30%', display:'flex', flexDirection:'row', alignItems :'center'}}>
+      <form className="search" onSubmit={handleSubmit}>
+        <Box sx={{display:'flex', flexDirection:'row', alignItems :'center'}}>
         <SearchIcon sx={{color:'#989a9f'}}/>
-        <form className="search" onSubmit={handleSubmit}>
-          <InputText
-              id="search"
-              label="Buscar..."
-              type="text"
-              onChange={handleSearchChange}
-          />
-
-        </form>
-      </Box>
+        <InputText
+          className="search__input"
+          type="text"
+          id="search"
+          onChange={handleSearchChange}
+        />
+        </Box>
+      </form>
     </header>
   )
 }

@@ -28,9 +28,8 @@ namespace NinosConValorAPI.Services
             throw new Exception("Database Error.");
         }
 
-        public async Task<IEnumerable<AssetCategoryModel>> GetAssetCategoriesAsync()
-        {
-            var assetCategoriesList = await _NCVRepository.GetAssetCategoriesAsync();
+        public async Task<IEnumerable<AssetCategoryModel>> GetAssetCategoriesAsync(bool showAssets = false)        {
+            var assetCategoriesList = await _NCVRepository.GetAssetCategoriesAsync(showAssets);
 
             if (assetCategoriesList == null || !assetCategoriesList.Any())
                 throw new NotFoundElementException($"La lista de categorías no existe o está vacía.");
