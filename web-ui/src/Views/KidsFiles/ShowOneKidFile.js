@@ -65,13 +65,31 @@ function formatDate(jsonDateStr){
 
 function WeightAndHeight({weightAndHeightData}){
     const [filteredBiometrics, setFilteredBiometrics] = useState([]);
+    var availableYears = new Set([]);
+    weightAndHeightData.slice().forEach((b)=>{
+        availableYears.add(new Date(b["registerDate"]).getFullYear());
+    })
+    
+    availableYears = Array.from(availableYears);
+    // weightAndHeightData.forEach(b => {
+    //     availableYears.add(new Date(b["registerDate"]).getFullYear());
+    // });
     useEffect(()=>{
-        setFilteredBiometrics(
-            weightAndHeightData.slice().map((b)=>{
-                return {"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]};
-            })
-        );
+        let fb = []
+        let yearGroupIdx = 0;
+        let yearGroup = availableYears[yearGroupIdx]
+        fb.push({'groupTitle':yearGroup,'empty1':'','empty2':''})
+        weightAndHeightData.slice().forEach((b)=>{
+            if(yearGroup != (new Date(b["registerDate"]).getFullYear())){
+                fb.push({'groupTitle':(new Date(b["registerDate"]).getFullYear()), 'empty1':'','empty2':''})
+                yearGroupIdx+=1;
+                yearGroup = availableYears[yearGroupIdx]
+            }
+            fb.push({"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]});
+        })
+        setFilteredBiometrics(fb);
     },[weightAndHeightData]);
+    
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -82,17 +100,12 @@ function WeightAndHeight({weightAndHeightData}){
         },
       },
     };
-    let availableYears = new Set([]);
-    weightAndHeightData.forEach(b => {
-        availableYears.add(new Date(b["registerDate"]).getFullYear());
-    });
-    availableYears = Array.from(availableYears);
-    const [personName, setPersonName] = useState([]);
+    const [yearsSelected, setYearsSelected] = useState([]);
     const handleChange = (event) => {
       const {
         target: { value },
       } = event;
-      setPersonName(
+      setYearsSelected(
         // On autofill we get a stringified value.
         typeof value === 'string' ? value.split(',') : value,
       );
@@ -103,7 +116,7 @@ function WeightAndHeight({weightAndHeightData}){
             weightAndHeightData.filter((b)=>{
                 var ans = false;
                 let biometricYear = (new Date(b["registerDate"]).getFullYear())
-                personName.forEach((y)=>{
+                yearsSelected.forEach((y)=>{
                     ans = ans || y == biometricYear;
                 })
                 return  ans;
@@ -111,7 +124,7 @@ function WeightAndHeight({weightAndHeightData}){
                 return {"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]};
             })
         )
-    },[personName]);
+    },[yearsSelected]);
 
     let yearComboBox = null;
     let weightAndHeightTitle = null;
@@ -133,7 +146,7 @@ function WeightAndHeight({weightAndHeightData}){
                 labelId="demo-multiple-checkbox-label"
                 id="demo-multiple-checkbox"
                 multiple
-                value={personName}
+                value={yearsSelected}
                 onChange={handleChange}
                 input={<OutlinedInput label="Año" />}
                 renderValue={(selected) => selected.join(', ')}
@@ -141,7 +154,7 @@ function WeightAndHeight({weightAndHeightData}){
             >
             {availableYears.map((name) => (
                 <MenuItem key={name} value={name}>
-                <Checkbox checked={personName.indexOf(name) > -1} />
+                <Checkbox checked={yearsSelected.indexOf(name) > -1} />
                 <ListItemText primary={name} />
                 </MenuItem>
             ))}
