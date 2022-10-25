@@ -2,6 +2,8 @@
 //searchCriteria funcion que busca con la logica enviada. Referencia en showKidsFiles.js
 import { Box } from '@mui/system';
 import InputText from './InputText'
+import SearchIcon from '@mui/icons-material/Search';
+
 
 const SearchBar = ({posts, setSearchResults, orderCriteria, searchCriteria }) => {
   const handleSubmit = (e) => e.preventDefault()
@@ -14,7 +16,8 @@ const SearchBar = ({posts, setSearchResults, orderCriteria, searchCriteria }) =>
 
   return (
     <header>
-      <Box sx={{width: '30%'}}>
+      <Box sx={{width: '30%', display:'flex', flexDirection:'row', alignItems :'center'}}>
+        <SearchIcon sx={{color:'#989a9f'}}/>
         <form className="search" onSubmit={handleSubmit}>
           <InputText
               id="search"

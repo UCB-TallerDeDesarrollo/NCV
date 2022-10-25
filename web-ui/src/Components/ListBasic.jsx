@@ -1,5 +1,4 @@
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import ListElement from './ListElement'
 
 export default function ListBasic({items, withImage=true}) {
