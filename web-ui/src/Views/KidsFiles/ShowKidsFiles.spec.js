@@ -6,6 +6,8 @@ import {setupServer} from 'msw/node';
 import {act} from 'react-dom/test-utils';
 
 import {MemoryRouter, Route, Routes} from 'react-router-dom'
+import {BrowserRouter as Router} from 'react-router-dom';
+import '@testing-library/jest-dom'
 
 describe('Show Kids Files', () => {
     const filesKidsUrl ='https://ncv-api.herokuapp.com/api/kids';
@@ -61,7 +63,6 @@ describe('Show Kids Files', () => {
   afterAll(() => server.close());
 
   function renderWithRouter(componentToRender, pathToElement, mockedPath){
-    console.log(componentToRender + " " + pathToElement + " " +mockedPath)
     render( 
       <MemoryRouter initialEntries={[mockedPath]}>
           <Routes>
@@ -72,23 +73,20 @@ describe('Show Kids Files', () => {
   }
 
   it('Show files kids data correctly', async () => {
-      act(()=>{
-        renderWithRouter(<ShowKidsFiles/>,"/ninos","/ninos" )
-      }) 
-        await waitFor(() => {
-            expect(screen.getByText('Julieta Venegas')).toBeVisible
-            expect(screen.getByText('Sergio Perez Ramirez')).toBeVisible
-          })  
+    act(()=>{
+      renderWithRouter(<ShowKidsFiles/>,"/ninos","/ninos" )
+    }) 
+      await waitFor(() => {
+          expect(screen.getByText('Julieta Venegas')).toBeVisible
+          expect(screen.getByText('Sergio Perez Ramirez')).toBeVisible
+          expect(screen.getByText('Elizabeth Ortega Lara')).toBeVisible
+        })  
   })
 
-      it('Show file kid data correctly 2', async () => {
-        act(()=>{
-          renderWithRouter(<ShowKidsFiles/>,"/ninos","/ninos" )
-        }) 
-        await waitFor(() => {
-            expect(screen.getByText('Sergio Perez Ramirez')).toBeVisible
-          })  
-      })
+  it('Should capture searcher rendered correctly', () => {
+    const {getByLabelText} = render(<Router><ShowKidsFiles/></Router>);
+    const searcher = getByLabelText(/Buscar.../i);
+    expect(searcher).toBeInTheDocument();
+  })
     
-
 })
