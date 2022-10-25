@@ -13,8 +13,7 @@ function MyCardImage({imageUrl,imageCirle}){
     return <CardMedia
                     component="img"
                     image={ imageUrl}
-                    direction="column" justifycontent="center"
-                    sx={{ width: {xs:200, sm:200}, height:{xs:200, sm:200}, borderRadius:borderRadiusValue }}
+                    sx={{ width:240 , height:240, borderRadius:borderRadiusValue, mr:{md:5}, mb:{xs:5,sm:5, md:0} }}
                 >
             </CardMedia>
 }
@@ -35,10 +34,12 @@ function gridItems(elements){
         gridElements.push(
             <>
                 <div>
-                  <Typography variant="subtitle2" sx={styles.secondaryField}>{prop}</Typography>
+                    <Typography noWrap variant="subtitle2" sx={styles.secondaryField}>{prop}</Typography>
                 </div>
                 <div>
-                    <Typography variant="body1" sx={{display:'inline'}}>{contentOneElement}</Typography>
+                    <Typography variant="body1" >
+                    {contentOneElement}    
+                    </Typography>
                 <p></p>
               </div>
             </> 
@@ -62,9 +63,7 @@ const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, 
     let md_value_griItem = 4
     let contentCard = []
     if (imageUrl != null){
-        contentCard.push( <Box sx={{ width: 260 , height:{md:70, sm:220} }} >
-                            <MyCardImage imageUrl={imageUrl} imageCirle={imageCirle}></MyCardImage>
-                            </Box>)
+        contentCard.push(<MyCardImage imageUrl={imageUrl} imageCirle={imageCirle}></MyCardImage>)
 
     }else{
         // To modify the space of grid: ex -> Card for health Report
@@ -75,27 +74,22 @@ const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, 
 
     let detailsElement = gridItems(element)
     contentCard.push( 
-                <Box sx={{ width: {sm:sm_value_box , md:md_value_box}}}>
-                        <Typography variant="h2" sx={{marginBottom:1.5}}>{title}</Typography>
-                        <h4 style={styles.secondaryField}>{secondaryField}</h4>
-                        <Grid container spacing={1.5} rowSpacing={0} sx={{width:1}}>
+                <Box sx={{width:1}}>
+                        <Typography variant="h2" sx={{marginBottom:1}}>{title}</Typography>
+                        <Typography variant="h4" sx={{marginBottom:3}}>{secondaryField}</Typography>
+                        <Box sx={{display:'flex', flexDirection:'row', flexWrap:'wrap', width:1}}>
                         {detailsElement.map((oneDetail,i)=>{
                                 return (
-                                    <Grid item key={i} xs={12} sm={6} md={md_value_griItem}>
+                                    <Box key={i} sx={{mr:3}}>
                                         {oneDetail}
-                                    </Grid>
+                                    </Box>
                                 )})}
-                        </Grid>
+                        </Box>
                 </Box>)
 
    return (
-            <Card sx={{ p: 5 , pt: 4, m:2, width:0.75, borderRadius:3}}>
-                {contentCard.map((oneContent,i)=>{
-                        return (
-                            <Box key={i} sx={{ display: 'inline-block'}}>
-                                {oneContent}
-                            </Box>
-                        )})}
+            <Card sx={{ p: 5 , pt: 4, m:2, width:0.75, borderRadius:3, display:'flex', flexDirection:{sm:'column',md:'row', xs:'column'}, alignItems:'center'}}>
+                {contentCard.map((oneContent,i)=>oneContent)}
             </Card>
    )
 }
