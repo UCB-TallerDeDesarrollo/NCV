@@ -5,7 +5,8 @@ import {rest} from 'msw';
 import {setupServer} from 'msw/node';
 import {act} from 'react-dom/test-utils';
 
-import {MemoryRouter, Route, Routes, Router} from 'react-router-dom'
+import {MemoryRouter, Route, Routes} from 'react-router-dom'
+import {BrowserRouter as Router} from 'react-router-dom';
 import '@testing-library/jest-dom'
 
 describe('Show Kids Files', () => {
@@ -83,7 +84,7 @@ describe('Show Kids Files', () => {
   })
 
   it('Should capture searcher rendered correctly', () => {
-    const {getByLabelText } = render(<Router><ShowKidsFiles/></Router>);
+    const {getByLabelText} = render(<Router><ShowKidsFiles/></Router>);
     const searcher = getByLabelText(/Buscar.../i);
     expect(searcher).toBeInTheDocument();
   })
