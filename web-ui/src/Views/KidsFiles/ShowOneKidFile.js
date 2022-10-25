@@ -261,8 +261,6 @@ function ShowOneKidFile() {
         "Programa de Casa " : kid.programHouse,
         "Lugar de Nacimiento ": kid.birthPlace,
     };
-    
-    
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -276,19 +274,6 @@ function ShowOneKidFile() {
     const confirmedOpen = () => {
         handleCloseToConfirm();
         setOpenConfirmed(true);
-    };
-
-    const ToConfirmOpen = () => {
-        handleCloseToConfirm();
-        setOpenToConfirm(true);
-    };
-
-    const handleClickOpen = () => {
-        setOpen(true);
-      };
-
-    const handleClickOpen = () => {
-        setOpen(true);
     };
 
     const ToConfirmOpen = () => {
