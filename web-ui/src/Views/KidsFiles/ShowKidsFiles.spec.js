@@ -84,11 +84,8 @@ describe('Show Kids Files', () => {
 
   it('Should capture searcher rendered correctly', () => {
     const {getByLabelText } = render(<Router><ShowKidsFiles/></Router>);
-    const searcher = getByLabelText(/Buscador/i);
+    const searcher = getByLabelText(/Buscar.../i);
     expect(searcher).toBeInTheDocument();
   })
-
-
     
-
 })

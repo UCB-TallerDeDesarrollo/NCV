@@ -1,5 +1,6 @@
 //orderCriteria funcion que ordena la lista con la logica enviada
 //searchCriteria funcion que busca con la logica enviada. Referencia en showKidsFiles.js
+import { Box } from '@mui/system';
 import InputText from './InputText'
 
 const SearchBar = ({posts, setSearchResults, orderCriteria, searchCriteria }) => {
@@ -13,15 +14,17 @@ const SearchBar = ({posts, setSearchResults, orderCriteria, searchCriteria }) =>
 
   return (
     <header>
-      <form className="search" onSubmit={handleSubmit}>
-        <InputText
-            id="search"
-            label="Buscador"
-            type="text"
-            onChange={handleSearchChange}
-        />
+      <Box sx={{width: '30%'}}>
+        <form className="search" onSubmit={handleSubmit}>
+          <InputText
+              id="search"
+              label="Buscar..."
+              type="text"
+              onChange={handleSearchChange}
+          />
 
-      </form>
+        </form>
+      </Box>
     </header>
   )
 }
