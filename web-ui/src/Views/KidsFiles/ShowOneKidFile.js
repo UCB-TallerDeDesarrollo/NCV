@@ -124,7 +124,7 @@ function WeightAndHeight({weightAndHeightData}){
         let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
         table = (<>
             <Box sx={{display:"flex", flexDirection:"row"}}>
-                <TableBasic columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
+                <TableBasic align='left' columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
             </Box>
         </>);
         yearComboBox = (<FormControl sx={{ m: 1, minWidth: 100, justifySelf:'right', alignSelf:'end'}}>
