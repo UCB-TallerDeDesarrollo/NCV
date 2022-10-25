@@ -16,6 +16,7 @@ namespace NinosConValorAPI.Data.Repository
         Task<KidEntity> GetKidAsync(int kidId);
         Task<IEnumerable<KidEntity>> GetKidsAsync();
         bool UpdateKid(KidEntity kidModel);
+        Task DeleteKidAsync(int kidId);
 
         //FIXED ASSETS
         public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int categoryId);

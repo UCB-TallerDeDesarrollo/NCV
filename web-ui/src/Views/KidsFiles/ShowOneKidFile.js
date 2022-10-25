@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import {useLocation} from 'react-router-dom'
 import axios from "axios";
 import Navbar from '../../Components/NavBar';
 import SingleItemCard from '../../Components/SingleItemCard'
-import ButtonPrimary from '../../Components/MUI-Button';
+import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../Components/MUI-Button';
 import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 import TableBasic from '../../Components/TableBasic';
@@ -20,6 +20,12 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import Collapse from '@mui/material/Collapse';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
@@ -173,12 +179,20 @@ function ShowOneKidFile() {
     let showAlert = location.state ? location.state.showAlert : false 
     let alertMessage = location.state ? location.state.alertMessage : null 
     const [open, setOpen] = useState(showAlert);
+    const [openToConfirm, setOpenToConfirm] = useState(showAlert);
 
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
             return
         }
         setOpen(false)
+    }
+
+    function handleCloseToConfirm(event, reason) {
+        if (reason === 'clickaway') {
+            return
+        }
+        setOpenToConfirm(false)
     }
 
     const fetchBasicData = () => {
@@ -199,6 +213,16 @@ function ShowOneKidFile() {
             .catch((error)=>{
                 setHealthReportStatusCode(error.response.status);
             })
+    }
+
+    const deleteKid = () => {
+        axios.delete(urlKid)
+        .then((response) => {
+            if (response.status == 200){
+                navigate(`/ninos`,{state:{showAlert:true,alertMessage:"Registro Eliminado"}})
+            }
+        })
+        .catch(err=> console.log(err))
     }
 
     const fetchBiometrics = () => {
@@ -237,8 +261,25 @@ function ShowOneKidFile() {
         "Programa de Casa " : kid.programHouse,
         "Lugar de Nacimiento ": kid.birthPlace,
     };
-    
-    
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const navigateListKid = () =>{ 
+        let path = `/ninos`; 
+        navigate(path);
+      }
+
+    const confirmedOpen = () => {
+        handleCloseToConfirm();
+        setOpenConfirmed(true);
+    };
+
+    const ToConfirmOpen = () => {
+        handleCloseToConfirm();
+        setOpenToConfirm(true);
+    };
 
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
@@ -251,6 +292,15 @@ function ShowOneKidFile() {
                     {alertMessage}
                 </Alert>
             </Snackbar>
+            
+            <ButtonDanger key={2} label="Eliminar Registro" id="delete_button" onClick={ToConfirmOpen} />
+            <Dialog open={openToConfirm} onClose={handleCloseToConfirm} id="confirmation_popup">
+            <DialogTitle>¿Seguro que desea eliminar el registro?</DialogTitle>
+            <DialogActions>
+            <ButtonSecondary label="Cancelar" onClick={handleCloseToConfirm}></ButtonSecondary>
+            <ButtonDanger label="Si, Quiero Eliminar Registro" id="confirm_delete_button" onClick={deleteKid}></ButtonDanger>
+            </DialogActions>
+            </Dialog>
         </div></>
     )}
 export {ShowOneKidFile}

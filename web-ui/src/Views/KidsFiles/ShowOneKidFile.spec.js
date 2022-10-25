@@ -5,7 +5,7 @@ import {rest} from 'msw';
 import {setupServer} from 'msw/node';
 import {act} from 'react-dom/test-utils';
 
-import {MemoryRouter, Route, Routes} from 'react-router-dom'
+import {MemoryRouter, Route, Routes, BrowserRouter} from 'react-router-dom'
 
 describe('Show One Kid File', () => {
   const fileKidUrl ='https://ncv-api.herokuapp.com/api/kids/1';
