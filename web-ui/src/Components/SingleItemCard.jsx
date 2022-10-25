@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia'
 import Grid from '@mui/material/Unstable_Grid2';
 import { Typography } from '@mui/material';
 
-function MyCardImage({imageUrl,imageCirle}){
+function MyCardImage({imageUrl,imageCirle,width=150,height=150}){
     var borderRadiusValue = 3
     if (imageCirle){
         borderRadiusValue = 50
@@ -13,7 +13,7 @@ function MyCardImage({imageUrl,imageCirle}){
     return <CardMedia
                     component="img"
                     image={ imageUrl}
-                    sx={{ width:240 , height:240, borderRadius:borderRadiusValue, mr:{md:5}, mb:{xs:5,sm:5, md:0} }}
+                    sx={{ width:width , height:height, borderRadius:borderRadiusValue, mr:{md:5}, mb:{xs:5,sm:5, md:0} }}
                 >
             </CardMedia>
 }
@@ -48,7 +48,7 @@ function gridItems(elements){
     return gridElements
   }
 
-const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, secondaryField=null}) => {   
+const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, secondaryField=null, imgWidth=150,imgHeight=150}) => {   
     const styles = {
         secondaryField:{
             color:"#5BCCD9",
@@ -63,7 +63,7 @@ const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, 
     let md_value_griItem = 4
     let contentCard = []
     if (imageUrl != null){
-        contentCard.push(<MyCardImage imageUrl={imageUrl} imageCirle={imageCirle}></MyCardImage>)
+        contentCard.push(<MyCardImage imageUrl={imageUrl} imageCirle={imageCirle} width={imgWidth} height={imgHeight}></MyCardImage>)
 
     }else{
         // To modify the space of grid: ex -> Card for health Report
@@ -76,7 +76,7 @@ const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, 
     contentCard.push( 
                 <Box sx={{width:1}}>
                         <Typography variant="h2" sx={{marginBottom:1}}>{title}</Typography>
-                        <Typography variant="h4" sx={{marginBottom:3}}>{secondaryField}</Typography>
+                        <Typography variant="h5" sx={{marginBottom:3}}>{secondaryField}</Typography>
                         <Box sx={{display:'flex', flexDirection:'row', flexWrap:'wrap', width:1}}>
                         {detailsElement.map((oneDetail,i)=>{
                                 return (
@@ -88,7 +88,7 @@ const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, 
                 </Box>)
 
    return (
-            <Card sx={{ p: 5 , pt: 4, m:2, width:0.75, borderRadius:3, display:'flex', flexDirection:{sm:'column',md:'row', xs:'column'}, alignItems:'center'}}>
+            <Card sx={{ p: 5 , pt: 4, m:2, width:0.75, borderRadius:3, display:'flex', flexDirection:{sm:'column',md:'row', xs:'column'} , alignItems:'center'}}>
                 {contentCard.map((oneContent,i)=>oneContent)}
             </Card>
    )
