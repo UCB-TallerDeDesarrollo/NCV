@@ -58,22 +58,20 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
 }
 
 function formatDate(jsonDateStr){
-    const options = { month: 'short', day: 'numeric', year:'numeric'};
+    const options = { month: 'short', day: 'numeric'};
     var date  = new Date(jsonDateStr);
     return date.toLocaleDateString(undefined,options);
 }
 
 function WeightAndHeight({weightAndHeightData}){
     const [filteredBiometrics, setFilteredBiometrics] = useState([]);
-    var availableYears = new Set([]);
+    
+    let availableYears = new Set([]);
     weightAndHeightData.slice().forEach((b)=>{
         availableYears.add(new Date(b["registerDate"]).getFullYear());
     })
-    
     availableYears = Array.from(availableYears);
-    // weightAndHeightData.forEach(b => {
-    //     availableYears.add(new Date(b["registerDate"]).getFullYear());
-    // });
+    
     useEffect(()=>{
         let fb = []
         let yearGroupIdx = 0;
@@ -89,7 +87,7 @@ function WeightAndHeight({weightAndHeightData}){
         })
         setFilteredBiometrics(fb);
     },[weightAndHeightData]);
-    
+
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -112,18 +110,26 @@ function WeightAndHeight({weightAndHeightData}){
     };
 
     useEffect(()=>{
-        setFilteredBiometrics(
-            weightAndHeightData.filter((b)=>{
-                var ans = false;
-                let biometricYear = (new Date(b["registerDate"]).getFullYear())
-                yearsSelected.forEach((y)=>{
-                    ans = ans || y == biometricYear;
-                })
-                return  ans;
-            }).map((b)=>{
-                return {"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]};
+        let fb = []
+        let finalFilteredBiometrics = []
+        fb = weightAndHeightData.filter((b)=>{
+            var ans = false;
+            let biometricYear = (new Date(b["registerDate"]).getFullYear())
+            yearsSelected.forEach((y)=>{
+                ans = ans || y == biometricYear;
             })
-        )
+            return  ans;
+        })
+        let yearGroup = fb.length > 0 ? (new Date(fb[0]["registerDate"]).getFullYear()) : undefined
+        finalFilteredBiometrics.push({'groupTitle':yearGroup, 'empty1':'','empty2':''})
+        fb.forEach((b)=>{
+            if(yearGroup != (new Date(b["registerDate"]).getFullYear())){
+                finalFilteredBiometrics.push({'groupTitle':(new Date(b["registerDate"]).getFullYear()), 'empty1':'','empty2':''})
+                yearGroup = (new Date(b["registerDate"]).getFullYear())
+            }
+            finalFilteredBiometrics.push({"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]});
+        })
+        setFilteredBiometrics(finalFilteredBiometrics)
     },[yearsSelected]);
 
     let yearComboBox = null;
@@ -137,7 +143,7 @@ function WeightAndHeight({weightAndHeightData}){
         let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
         table = (<>
             <Box sx={{display:"flex", flexDirection:"row"}}>
-                <TableBasic align='left' columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
+                <TableBasic align='center' columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
             </Box>
         </>);
         yearComboBox = (<FormControl sx={{ m: 1, minWidth: 100, justifySelf:'right', alignSelf:'end'}}>
