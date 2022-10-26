@@ -61,7 +61,6 @@ export default function ShowFixedAssets() {
     }
 
     if (hasErrorWithFetch != null){
-        console.log(typeof(hasErrorWithFetch.response.data))
         return ErrorPage(hasErrorWithFetch)
     } 
     if (!fixedAssets) return null
