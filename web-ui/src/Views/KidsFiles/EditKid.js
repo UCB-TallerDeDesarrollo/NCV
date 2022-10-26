@@ -59,7 +59,7 @@ function EditKidFile() {
         axios.put(urlKid, kid)
           .then(function (response) {
             if (response.status == 200){
-                navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de salud creado"}});
+                navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Informacion Básica actualizada correctamente"}});
             }
           })
           .catch(function (error) {
@@ -103,11 +103,9 @@ function EditKidFile() {
                 <InputText
                     id="birthDate"
                     name="birthDate"
+                    InputLabelProps={{ shrink: true }}
                     type="date"
                     value={kid.birthDate}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
                     onChange={handleInputChange}
                 />
                 <InputText
