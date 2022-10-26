@@ -291,8 +291,35 @@ function ShowOneKidFile() {
         return <h1>ERROR: Niño no encontrado en la base de datos</h1>
     }
 
+    function getAge(){
+        let actualYear = new Date().getFullYear();
+        let actualMonth = new Date().getMonth()+1;
+        let actualDate = new Date().getDate();
+        let kidYear = birthDate.getFullYear();
+        let kidMonth = birthDate.getMonth()+1;
+        let kidDate = birthDate.getDate();
+        let age = {};
+        let completeAge = ``;
+        let years = actualYear - kidYear;
+        if(actualMonth>=kidMonth){
+            let months = actualMonth - ki;
+        }
+        //let days = birthDate.getDate();
+        //let completeAge = `${kidMonth} años y ${actualMonth} meses`
+        if(kidYear>=1 && kidMonth==0){
+            completeAge = `${kidMonth} años`
+        }
+        if(kidYear == 0){
+            completeAge = `${kidMonth} meses`
+            if(kidMonth==0){
+                completeAge = `${kidMonth} dias`;
+            }
+        }
+        return completeAge;
+    }
+
     let birthDate = new Date (kid.birthDate);
-    let yeardOld = new Date().getFullYear() - birthDate.getFullYear();
+    let yeardOld = getAge();
     let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
 
     const MyKidDetails = { 
