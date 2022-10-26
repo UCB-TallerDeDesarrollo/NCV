@@ -167,5 +167,19 @@ namespace NinosConValorAPI.Controllers
             }
 
         }
+
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<EditUserViewModel>> GetUserAsync(string userId)
+        {
+            try
+            {
+                var user = await _userService.GetUserByIdAsync(userId);
+                return Ok(user);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
+            }
+        }
     }
 }
