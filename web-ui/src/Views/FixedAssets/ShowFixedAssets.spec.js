@@ -168,12 +168,4 @@ describe('Show Fixed Asset', () => {
       expect(screen.getAllByText('Programa: *Sin programa*')).toHaveLength(5)
       })  
   })
-  it('Shows error when api does not return any data. Should return error 500', async () => {
-    const fixedAssetInternalServiceErrorResponse = getResponse(fixedAssetUrl, null, 500, "Lo sentimos, algo sucedió.")
-    server.use(fixedAssetInternalServiceErrorResponse)
-    act(()=>{
-      renderWithRouter(<ShowFixedAssets/>,"/activos-fijos","/activos-fijos" )
-    }) 
-    expect(screen.getByText("ERROR 500: Lo sentimos, algo sucedió.").toBeVisible)
-  });
 })
