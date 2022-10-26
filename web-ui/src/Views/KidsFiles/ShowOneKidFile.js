@@ -112,24 +112,42 @@ function WeightAndHeight({weightAndHeightData}){
     useEffect(()=>{
         let fb = []
         let finalFilteredBiometrics = []
-        fb = weightAndHeightData.filter((b)=>{
-            var ans = false;
-            let biometricYear = (new Date(b["registerDate"]).getFullYear())
-            yearsSelected.forEach((y)=>{
-                ans = ans || y == biometricYear;
+        if (yearsSelected.length > 0){
+            fb = weightAndHeightData.filter((b)=>{
+                var ans = false;
+                let biometricYear = (new Date(b["registerDate"]).getFullYear())
+                yearsSelected.forEach((y)=>{
+                    ans = ans || y == biometricYear;
+                })
+                return  ans;
             })
-            return  ans;
-        })
-        let yearGroup = fb.length > 0 ? (new Date(fb[0]["registerDate"]).getFullYear()) : undefined
-        finalFilteredBiometrics.push({'groupTitle':yearGroup, 'empty1':'','empty2':''})
-        fb.forEach((b)=>{
-            if(yearGroup != (new Date(b["registerDate"]).getFullYear())){
-                finalFilteredBiometrics.push({'groupTitle':(new Date(b["registerDate"]).getFullYear()), 'empty1':'','empty2':''})
-                yearGroup = (new Date(b["registerDate"]).getFullYear())
-            }
-            finalFilteredBiometrics.push({"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]});
-        })
-        setFilteredBiometrics(finalFilteredBiometrics)
+            let yearGroup = fb.length > 0 ? (new Date(fb[0]["registerDate"]).getFullYear()) : undefined
+            finalFilteredBiometrics.push({'groupTitle':yearGroup, 'empty1':'','empty2':''})
+            fb.forEach((b)=>{
+                if(yearGroup != (new Date(b["registerDate"]).getFullYear())){
+                    finalFilteredBiometrics.push({'groupTitle':(new Date(b["registerDate"]).getFullYear()), 'empty1':'','empty2':''})
+                    yearGroup = (new Date(b["registerDate"]).getFullYear())
+                }
+                finalFilteredBiometrics.push({"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]});
+            })
+            setFilteredBiometrics(finalFilteredBiometrics)
+        }
+        else{
+            //DUPLICATED CODE: TECH DEBT
+            let yearGroupIdx = 0;
+            let yearGroup = availableYears[yearGroupIdx]
+            fb.push({'groupTitle':yearGroup,'empty1':'','empty2':''})
+            weightAndHeightData.slice().forEach((b)=>{
+                if(yearGroup != (new Date(b["registerDate"]).getFullYear())){
+                    fb.push({'groupTitle':(new Date(b["registerDate"]).getFullYear()), 'empty1':'','empty2':''})
+                    yearGroupIdx+=1;
+                    yearGroup = availableYears[yearGroupIdx]
+                }
+                fb.push({"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]});
+            })
+            setFilteredBiometrics(fb);
+            //END OF DUPLICATED CODE
+        }
     },[yearsSelected]);
 
     let yearComboBox = null;
