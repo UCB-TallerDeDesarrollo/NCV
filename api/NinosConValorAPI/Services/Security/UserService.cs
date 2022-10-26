@@ -288,7 +288,7 @@ namespace NinosConValorAPI.Services.Security
             }
             return new EditUserViewModel
             {
-                Id = user.Id,
+                //Id = user.Id,
                 Email = user.Email,
                 CellPhone = user.PhoneNumber,
                 FirstName = user.FirstName,
@@ -313,6 +313,7 @@ namespace NinosConValorAPI.Services.Security
             user.LastName = model.LastName ?? user.LastName;
             user.PhoneNumber = model.CellPhone ?? user.PhoneNumber;
             user.Email = model.Email ?? user.Email;
+            user.UserName = model.Email ?? user.UserName;
 
             var result = await userManager.UpdateAsync(user);
 
