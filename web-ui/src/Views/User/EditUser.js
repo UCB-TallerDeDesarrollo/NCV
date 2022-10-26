@@ -57,7 +57,25 @@ export function EditUser() {
         })
     }
 
-    function handleFormSubmit() {}
+    function handleFormSubmit() {
+        axios
+            .put(url, user)
+            .then(function (response) {
+                if (response.status == 200) {
+                    navigate(`/vista-usuarios/${userId}`, {
+                        state: {
+                            showAlert: true,
+                            alertMessage: 'Usuario editado correctamente'
+                        }
+                    })
+                }
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    if (error.response.status == 400) setOpen(true)
+                }
+            })
+    }
 
     return (
         <>
@@ -110,7 +128,7 @@ export function EditUser() {
                     />
                     <ButtonPrimary
                         label={'Editar'}
-                        //onClick={handleFormSubmit}
+                        onClick={handleFormSubmit}
                     />
                 </FormContainer>
             </div>
