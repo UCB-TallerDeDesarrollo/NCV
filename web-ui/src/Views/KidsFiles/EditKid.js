@@ -4,7 +4,7 @@ import Collapse from '@mui/material/Collapse';
 import MenuItem from '@mui/material/MenuItem';
 import FormContainer from '../../Components/FormContainer';
 import InputText from '../../Components/InputText';
-import ButtonPrimary from '../../Components/MUI-Button';
+import {ButtonPrimary,ButtonSecondary} from '../../Components/MUI-Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { width } from '@mui/system';
@@ -68,6 +68,12 @@ function EditKidFile() {
                     setOpen(true)
             }
           });
+    }
+    function handleClose(event, reason) {
+        if (reason === 'clickaway') {
+            return
+        }
+        setOpen(false)
     }
     
     return (
@@ -136,7 +142,8 @@ function EditKidFile() {
                     </MenuItem>
                 ))}
                 </InputText>
-                <ButtonPrimary label={"Guardar Cambios"} onClick={handleFormSubmit}/>
+                <ButtonPrimary label={"Guardar Cambios"} onClick={handleFormSubmit}></ButtonPrimary>
+                <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
             </FormContainer>
         </div></>
     );
