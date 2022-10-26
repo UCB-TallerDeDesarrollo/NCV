@@ -26,6 +26,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import DialogContentText from '@mui/material/DialogContentText';
 
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
@@ -334,13 +335,18 @@ function ShowOneKidFile() {
                 </Alert>
             </Snackbar>
             
-            <ButtonDanger key={2} label="Eliminar Registro" id="delete_button" onClick={ToConfirmOpen} />
-            <Dialog open={openToConfirm} onClose={handleCloseToConfirm} id="confirmation_popup">
-            <DialogTitle>¿Seguro que desea eliminar el registro?</DialogTitle>
-            <DialogActions>
-            <ButtonSecondary label="Cancelar" onClick={handleCloseToConfirm}></ButtonSecondary>
-            <ButtonDanger label="Si, Quiero Eliminar Registro" id="confirm_delete_button" onClick={deleteKid}></ButtonDanger>
-            </DialogActions>
+            <ButtonDanger key={2} label="Eliminar" id="delete_button" onClick={ToConfirmOpen} />
+            <Dialog open={openToConfirm} onClose={handleCloseToConfirm} id="confirmation_popup" sx={{borderRadius:3 }}>
+                <DialogTitle sx={{display:'flex', justifyContent:'center'}}>Eliminar</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        ¿Desea eliminar todos los datos de {kid.firstName + " " + kid.lastName}?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions sx={{display:'flex',flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                    <ButtonSecondary label="Cancelar" onClick={handleCloseToConfirm}></ButtonSecondary>
+                    <ButtonDanger label="Eliminar" id="confirm_delete_button" onClick={deleteKid}></ButtonDanger>
+                </DialogActions>
             </Dialog>
         </div></>
     )}

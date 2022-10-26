@@ -9,7 +9,7 @@ describe('Show delete button proofs that doesnt exist after delete action', () =
       cy.visit('/ninos/42');
       cy.scrollTo('bottom');
       cy.get('#delete_button').click();
-      cy.contains('¿Seguro que desea eliminar el registro?');
+      cy.contains('¿Desea eliminar todos los datos de Elizabeth Ortega Lara?');
       cy.get('#confirm_delete_button').click();
       cy.visit('/ninos');
       cy.contains('Niños del centro');

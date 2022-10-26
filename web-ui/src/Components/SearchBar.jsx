@@ -1,4 +1,5 @@
 import SearchIcon from '@mui/icons-material/Search';
+import InputAdornment from '@mui/material/InputAdornment';
 import InputText from './InputText'
 import { Box } from '@mui/system';
 //orderCriteria funcion que ordena la lista con la logica enviada
@@ -18,14 +19,22 @@ const SearchBar = ({posts, setSearchResults, orderCriteria, searchCriteria }) =>
     <header>
       <form className="search" onSubmit={handleSubmit}>
         <Box sx={{display:'flex', flexDirection:'row', alignItems :'center'}}>
-        <SearchIcon sx={{color:'#989a9f'}}/>
         <InputText
-          label='Buscar...'
           className="search__input"
           type="text"
           id="search"
           onChange={handleSearchChange}
-        />
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon sx={{color:'#989a9f'}}/>
+              </InputAdornment>
+            ),
+            borderRadius:5
+          }}
+        >
+        
+        </InputText>
         </Box>
       </form>
     </header>
