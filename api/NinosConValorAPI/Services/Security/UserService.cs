@@ -129,7 +129,6 @@ namespace NinosConValorAPI.Services.Security
         {
             var userBasicInformation = new List<UserBasicInformationModel>();
             var userList = userManager.Users.ToList();
-            var user0 = userList[1];
             //var userBasicInfomodel = new UserBasicInformation();
            
             foreach (var user in userList)
@@ -144,6 +143,7 @@ namespace NinosConValorAPI.Services.Security
                         LastName = user.LastName,
                         CellPhone = user.PhoneNumber,
                         NameRole = aux[0],
+                        Id = user.Id,
 
                     };
 
@@ -275,6 +275,61 @@ namespace NinosConValorAPI.Services.Security
             {
                 Token = $"User created successfully with {role} Role!",
                 IsSuccess = true,
+            };
+        }
+
+        public async Task<EditUserViewModel> GetUserByIdAsync(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new NotFoundElementException($"The user doesn't exists");
+            }
+            return new EditUserViewModel
+            {
+                //Id = user.Id,
+                Email = user.Email,
+                CellPhone = user.PhoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            };
+        }
+
+        public async Task<UserManagerResponse> UpdateUsersAsync(EditUserViewModel model, string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return new UserManagerResponse
+                {
+                    Token = "user does not exist",
+                    IsSuccess = false
+                };
+            }
+
+            user.FirstName = model.FirstName ?? user.FirstName;
+            user.LastName = model.LastName ?? user.LastName;
+            user.PhoneNumber = model.CellPhone ?? user.PhoneNumber;
+            user.Email = model.Email ?? user.Email;
+            user.UserName = model.Email ?? user.UserName;
+
+            var result = await userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return new UserManagerResponse
+                {
+                    Token = $"User updated successfully",
+                    IsSuccess = true,
+                };
+            }
+
+            return new UserManagerResponse
+            {
+                Token = $"Something happened",
+                IsSuccess = false,
             };
         }
     }

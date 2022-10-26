@@ -203,5 +203,57 @@ namespace UnitTests.AutomapperUT
             Assert.Equal(kidEntity.Id, actual.Id);
 
         }
+         // BIOMETRICS DATA
+
+        [Fact]
+        public void AutomapperProfile_BiometricsModel_BiometricsEntity()
+        {
+            // ARRANGE
+            var biometricsModel = new BiometricsModel()
+            {
+                Height = 90, 
+                Weight = 35.5m, 
+                RegisterDate = new DateTime(2015, 12, 25)
+            };
+
+            BiometricsEntity biometricsEntity = new BiometricsEntity();
+            var typeOfbiometricsEntity = biometricsEntity.GetType().ToString();
+
+
+            // ACT
+            var actual = _mapper.Map<BiometricsEntity>(biometricsModel);
+            var actualType = actual.GetType().ToString();
+
+            // ASSERT
+            Assert.Equal(typeOfbiometricsEntity, actualType);
+            Assert.Equal(biometricsModel.Height, actual.Height);
+            Assert.Equal(biometricsModel.Weight, actual.Weight);
+        }
+        [Fact]
+        public void AutomapperProfile_BiometricsEntity_BiometricsModel()
+        {
+            // ARRANGE
+            var biometricsEntity = new BiometricsEntity()
+            {
+                Id = 1,
+                Height = 90, 
+                Weight = 35.5m, 
+                RegisterDate = new DateTime(2015, 12, 25)
+            };
+
+            BiometricsModel biometricsModel = new BiometricsModel();
+            var typeOfbiometricsModel = biometricsModel.GetType().ToString();
+
+
+            // ACT
+            var actual = _mapper.Map<BiometricsModel>(biometricsEntity);
+            var actualType = actual.GetType().ToString();
+
+            // ASSERT
+            Assert.Equal(typeOfbiometricsModel, actualType);
+            Assert.Equal(biometricsEntity.Height, actual.Height);
+            Assert.Equal(biometricsEntity.Weight, actual.Weight);
+
+        }
     }
 }

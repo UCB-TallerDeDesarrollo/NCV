@@ -58,20 +58,40 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
 }
 
 function formatDate(jsonDateStr){
-    const options = { month: 'short', day: 'numeric', year:'numeric'};
+    const options = { month: 'short', day: 'numeric'};
     var date  = new Date(jsonDateStr);
     return date.toLocaleDateString(undefined,options);
 }
 
+function formatDecimals(num){
+    return Math.round(num).toFixed(2);
+}
+
 function WeightAndHeight({weightAndHeightData}){
     const [filteredBiometrics, setFilteredBiometrics] = useState([]);
+    
+    let availableYears = new Set([]);
+    weightAndHeightData.slice().forEach((b)=>{
+        availableYears.add(new Date(b["registerDate"]).getFullYear());
+    })
+    availableYears = Array.from(availableYears);
+    
     useEffect(()=>{
-        setFilteredBiometrics(
-            weightAndHeightData.slice().map((b)=>{
-                return {"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]};
-            })
-        );
+        let fb = []
+        let yearGroupIdx = 0;
+        let yearGroup = availableYears[yearGroupIdx]
+        fb.push({'groupTitle':yearGroup,'empty1':'','empty2':''})
+        weightAndHeightData.slice().forEach((b)=>{
+            if(yearGroup != (new Date(b["registerDate"]).getFullYear())){
+                fb.push({'groupTitle':(new Date(b["registerDate"]).getFullYear()), 'empty1':'','empty2':''})
+                yearGroupIdx+=1;
+                yearGroup = availableYears[yearGroupIdx]
+            }
+            fb.push({"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
+        })
+        setFilteredBiometrics(fb);
     },[weightAndHeightData]);
+
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -82,36 +102,57 @@ function WeightAndHeight({weightAndHeightData}){
         },
       },
     };
-    let availableYears = new Set([]);
-    weightAndHeightData.forEach(b => {
-        availableYears.add(new Date(b["registerDate"]).getFullYear());
-    });
-    availableYears = Array.from(availableYears);
-    const [personName, setPersonName] = useState([]);
+    const [yearsSelected, setYearsSelected] = useState([]);
     const handleChange = (event) => {
       const {
         target: { value },
       } = event;
-      setPersonName(
+      setYearsSelected(
         // On autofill we get a stringified value.
         typeof value === 'string' ? value.split(',') : value,
       );
     };
 
     useEffect(()=>{
-        setFilteredBiometrics(
-            weightAndHeightData.filter((b)=>{
+        let fb = []
+        let finalFilteredBiometrics = []
+        if (yearsSelected.length > 0){
+            fb = weightAndHeightData.filter((b)=>{
                 var ans = false;
                 let biometricYear = (new Date(b["registerDate"]).getFullYear())
-                personName.forEach((y)=>{
+                yearsSelected.forEach((y)=>{
                     ans = ans || y == biometricYear;
                 })
                 return  ans;
-            }).map((b)=>{
-                return {"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]};
             })
-        )
-    },[personName]);
+            let yearGroup = fb.length > 0 ? (new Date(fb[0]["registerDate"]).getFullYear()) : undefined
+            finalFilteredBiometrics.push({'groupTitle':yearGroup, 'empty1':'','empty2':''})
+            fb.forEach((b)=>{
+                if(yearGroup != (new Date(b["registerDate"]).getFullYear())){
+                    finalFilteredBiometrics.push({'groupTitle':(new Date(b["registerDate"]).getFullYear()), 'empty1':'','empty2':''})
+                    yearGroup = (new Date(b["registerDate"]).getFullYear())
+                }
+                finalFilteredBiometrics.push({"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
+            })
+            setFilteredBiometrics(finalFilteredBiometrics)
+        }
+        else{
+            //DUPLICATED CODE: TECH DEBT
+            let yearGroupIdx = 0;
+            let yearGroup = availableYears[yearGroupIdx]
+            fb.push({'groupTitle':yearGroup,'empty1':'','empty2':''})
+            weightAndHeightData.slice().forEach((b)=>{
+                if(yearGroup != (new Date(b["registerDate"]).getFullYear())){
+                    fb.push({'groupTitle':(new Date(b["registerDate"]).getFullYear()), 'empty1':'','empty2':''})
+                    yearGroupIdx+=1;
+                    yearGroup = availableYears[yearGroupIdx]
+                }
+                fb.push({"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
+            })
+            setFilteredBiometrics(fb);
+            //END OF DUPLICATED CODE
+        }
+    },[yearsSelected]);
 
     let yearComboBox = null;
     let weightAndHeightTitle = null;
@@ -124,7 +165,7 @@ function WeightAndHeight({weightAndHeightData}){
         let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
         table = (<>
             <Box sx={{display:"flex", flexDirection:"row"}}>
-                <TableBasic columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
+                <TableBasic align='center' columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
             </Box>
         </>);
         yearComboBox = (<FormControl sx={{ m: 1, minWidth: 100, justifySelf:'right', alignSelf:'end'}}>
@@ -133,7 +174,7 @@ function WeightAndHeight({weightAndHeightData}){
                 labelId="demo-multiple-checkbox-label"
                 id="demo-multiple-checkbox"
                 multiple
-                value={personName}
+                value={yearsSelected}
                 onChange={handleChange}
                 input={<OutlinedInput label="Año" />}
                 renderValue={(selected) => selected.join(', ')}
@@ -141,7 +182,7 @@ function WeightAndHeight({weightAndHeightData}){
             >
             {availableYears.map((name) => (
                 <MenuItem key={name} value={name}>
-                <Checkbox checked={personName.indexOf(name) > -1} />
+                <Checkbox checked={yearsSelected.indexOf(name) > -1} />
                 <ListItemText primary={name} />
                 </MenuItem>
             ))}

@@ -53,5 +53,37 @@ namespace UnitTests.ServiceUT
             Assert.Equal(2, actualBiometricsModelList.Count());
             Assert.Equal(biometricsModel2.Height, actualBiometricsModelList[1].Height);
         }
+
+        [Fact]
+        public async Task CreateBiometricsAsync_BiometricsAdded_ReturnsSavedDataBiometricsModel()
+        {
+            //ARRANGE
+            int kidId = 1;
+             var kidEntity = new KidEntity()
+            {
+                Id = 1,
+                FirstName = "Checo",
+                LastName = "Perez"
+            };
+            var biometricsEntity = new BiometricsEntity() { Height = 90, Weight = 35.5m, RegisterDate = new DateTime(2015, 12, 25) };
+            var biometricsModel  = new BiometricsModel() { Height = 90, Weight = 35.5m, RegisterDate = new DateTime(2015, 12, 25) };
+
+            var repositoryMock = new Mock<INCVRepository>();
+            repositoryMock.Setup(s => s.CreateBiometricsAsync(It.IsAny<BiometricsEntity>())).ReturnsAsync(biometricsEntity);
+            repositoryMock.Setup(r => r.GetKidAsync(kidId)).ReturnsAsync(kidEntity);
+            repositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(true);
+
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
+            var mapper = config.CreateMapper();
+            var biometricsService = new BiometricsService(repositoryMock.Object,mapper);
+
+            //ACT
+            var actualBiometricsModel = await biometricsService.CreateBiometricsAsync(kidId,biometricsModel);
+            
+            //ASSERT
+            Assert.Equal(biometricsModel.Height, actualBiometricsModel.Height );
+            Assert.Equal(biometricsModel.Weight, actualBiometricsModel.Weight );
+            Assert.Equal(biometricsModel.RegisterDate, actualBiometricsModel.RegisterDate );
+        }
     }
 }
