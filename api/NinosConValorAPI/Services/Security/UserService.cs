@@ -288,7 +288,7 @@ namespace NinosConValorAPI.Services.Security
             }
             return new EditUserViewModel
             {
-                // Id = user.Id,
+                Id = user.Id,
                 Email = user.Email,
                 CellPhone = user.PhoneNumber,
                 FirstName = user.FirstName,
