@@ -62,46 +62,42 @@ export default function ShowFixedAssets() {
                 categoryName: el.assetCategoryCategory
             }
         })
-        // console.log();
-        // headerIndices.forEach(el => console.log(el))
-        // const result = listElements.reduce((categories, item) => ({
-        //     ...categories,
-        //     [item.categoryName]: [...(categories[item.categoryName] || []), item]
-        // }));
         const groups = listElements.reduce((groups, item) => {
             const group = (groups[item.categoryName] || []);
             group.push(item);
             groups[item.categoryName] = group;
             return groups;
         }, {});
-        //console.log('result', groups["Muebles y Enseres"]);
+        function getFixedAssetsComponent(category){
+            return <ListBasic items={groups[category]} withImage={false} />
+        }
         let fixedAssetsComponent = <ListBasic items={listElements} withImage={false} />
         let fixedAssetsComponentCat1 = <ListBasic items={groups["Equipos y Herramientas"]} withImage={false} />
         let fixedAssetsComponentCat2 = <ListBasic items={groups["Muebles y Enseres"]} withImage={false} />
+        let fixedAssetsComponentCat3 = <ListBasic items={groups["Maquinaria"]} withImage={false} />
+        let fixedAssetsComponentCat4 = <ListBasic items={groups["Herramientas"]} withImage={false} />
         let nexFixedAsset = "/crear-activo-fijo"
         const listHeaderComponents = <ButtonPrimary label={"Crear activo fijo"} onClick={() => navigate(nexFixedAsset)} />
         return (
             <>
                 <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '15vh' }}>
                     <ListContainer title="Lista de activos fijos" header={listHeaderComponents}>
-                        {/* {headerIndices.includes('Equipos y Herramientas') && (
-                            <ListSubheader>
-                                {getHeaderName(1)}
-                            </ListSubheader>
-                        )} */}
-                        {/* {groups} */}
-                        {/* {fixedAssetsComponent} */}
-                        <ListSubheader sx={{
-                            typography: { fontSize: 30, },
-                        }}>
+                        <ListSubheader sx={{ typography: { fontSize: 20, },}}>
                             {getHeaderName(1)}
                             {fixedAssetsComponentCat1}
+                            {/* {getFixedAssetsComponent(getHeaderName(1))} */}
                         </ListSubheader>
-                        <ListSubheader sx={{
-                            typography: { fontSize: 30, },
-                        }}>
+                        <ListSubheader sx={{ typography: { fontSize: 20, },}}>
                             {getHeaderName(2)}
                             {fixedAssetsComponentCat2}
+                        </ListSubheader>
+                        <ListSubheader sx={{ typography: { fontSize: 20, },}}>
+                            {getHeaderName(3)}
+                            {/* {fixedAssetsComponentCat3} */}
+                        </ListSubheader>
+                        <ListSubheader sx={{ typography: { fontSize: 20, },}}>
+                            {getHeaderName(4)}
+                            {/* {fixedAssetsComponentCat4} */}
                         </ListSubheader>
 
                     </ListContainer>
