@@ -28,6 +28,7 @@ namespace NinosConValorAPI.Data.Repository
             IQueryable<BiometricsEntity> query = _dbContext.Biometrics;
             query = query.AsNoTracking();
             query = query.Where(b => b.KidId == kidId);
+            query = query.OrderBy(b => b.RegisterDate);
             return await query.ToListAsync();
         }
         public async Task<BiometricsEntity> CreateBiometricsAsync(BiometricsEntity biometrics)
