@@ -4,7 +4,7 @@ import Collapse from '@mui/material/Collapse';
 import MenuItem from '@mui/material/MenuItem';
 import FormContainer from '../../Components/FormContainer';
 import InputText from '../../Components/InputText';
-import {ButtonPrimary,ButtonSecondary} from '../../Components/MUI-Button';
+import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { width } from '@mui/system';
