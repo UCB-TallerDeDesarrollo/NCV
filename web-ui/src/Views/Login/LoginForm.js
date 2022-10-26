@@ -6,6 +6,7 @@ import InputText from '../../Components/InputText'
 import ButtonPrimary from '../../Components/MUI-Button';
 import FormContainer from '../../Components/FormContainer'
 import './LoginForm.css'
+import issLoggin from '../../security';
 
 function LoginForm() {
     const [email, setEmail] = useState('')
@@ -45,8 +46,9 @@ function LoginForm() {
                 sessionStorage.setItem("jwt", data.token);
                 var parseToken = parseJwt(data.token)
                 var Role = parseToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
-                //showSecrectOptions(Role);
-                sessionStorage.setItem('Role',Role)
+                //localStorage.setItem('Role',Role)
+                const permiss= issLoggin(Role)
+                sessionStorage.setItem('Access',permiss)
                 window.location.href = '/inicio-ncv'
 
             } else {

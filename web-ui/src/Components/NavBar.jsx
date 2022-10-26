@@ -34,6 +34,7 @@ function Navbar() {
   function handleClickExit(){
     sessionStorage.setItem("jwt", "");
     sessionStorage.setItem('Role',"")
+    sessionStorage.setItem('Access',null)
     window.location.href = "/";
   }
   

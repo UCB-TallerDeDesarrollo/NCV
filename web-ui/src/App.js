@@ -21,16 +21,25 @@ import DataHealth from './Views/KidsFiles/DataHealth'
 import AddKid from './Views/KidsFiles/AddKid'
 import EditKid from './Views/KidsFiles/EditKid'
 
+<<<<<<< HEAD
 import NavBar from './Components/NavBar'
 import ListUsers from './Views/User/ListUsers'
 var Rol = sessionStorage.getItem('Role')
+=======
+>>>>>>> 17ef19e (Cambios en control de seguridad)
 
+import ListUsers from './Views/User/ListUsers'
 function App() {
+<<<<<<< HEAD
     if (Rol == 'Soporte' || Rol == 'AdminUser' || Rol == 'AuntUser') {
+=======
+    if(sessionStorage.getItem("Access") != "null"){
+>>>>>>> 17ef19e (Cambios en control de seguridad)
         return (
             <Router>
                 <Routes>
                     <Route exact path="/" element={<LoginForm />}></Route>
+<<<<<<< HEAD
                     <Route
                         path="/inicio-ncv"
                         element={<HomePageForm />}
@@ -43,6 +52,12 @@ function App() {
                         path="/vista-usuarios"
                         element={<ListUsers />}
                     ></Route>
+=======
+                    <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
+                    
+                    <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
+                    <Route path="/vista-usuarios" element={<ListUsers />}></Route>
+>>>>>>> 17ef19e (Cambios en control de seguridad)
                     <Route path="/registrar-nino" element={<AddKid />}></Route>
                     <Route
                         path="/crear-activo-fijo"
