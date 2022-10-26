@@ -33,5 +33,33 @@ namespace UnitTests.ControllersUT
             Assert.Equal(200, result.StatusCode);
 
         }
+        [Fact]
+        public async Task CreateBiometricsAsync_KidBiometricsAdded_ReturnsSavedDataBiometricsModel()
+        {
+            //ARRANGE
+            int kidId = 1;
+            var biometricsModel = new BiometricsModel() { Height = 90, Weight = 35.5m, RegisterDate = new DateTime(2015, 12, 25) }; // FromBody
+            var biometricsServiceMock = new Mock<IBiometricsService>();
+            biometricsServiceMock.Setup(s=>s.CreateBiometricsAsync(kidId,biometricsModel)).ReturnsAsync(new BiometricsModel() {
+                Height = 90, 
+                Weight = 35.5m, 
+                RegisterDate = new DateTime(2015, 12, 25)
+             } );
+
+            var biometricsController = new BiometricsController(biometricsServiceMock.Object);
+
+            //ACT
+            var response = await biometricsController.CreateBiometricsAsync(kidId,biometricsModel);
+            var result = response.Result as CreatedResult;
+            var biometricsDataCreated = result.Value as BiometricsModel;
+
+            //ASSERT
+            Assert.Equal(90, biometricsDataCreated.Height );
+            Assert.Equal(35.5m, biometricsDataCreated.Weight );
+            Assert.Equal(new DateTime(2015, 12, 25), biometricsDataCreated.RegisterDate);
+            Assert.Equal(201, result.StatusCode);
+        }
+
+        
     }
 }

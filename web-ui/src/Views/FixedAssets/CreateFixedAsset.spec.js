@@ -15,7 +15,8 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
       </MemoryRouter>
     )
   }
-  const programHousesUrl ='https://ncv-api.herokuapp.com/api/programHouses'  
+  const programHousesUrl ='https://ncv-api.herokuapp.com/api/programHouses'
+  const categoriesUrl ='https://ncv-api.herokuapp.com/api/AssetCategories'  
 
   function getResponse(url, jsonData=null, code=200, text=null){
       const response = rest.get(url, (req, res, ctx) => {
@@ -37,9 +38,34 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
       }
   ]
 
-  const programHousesResponse = getResponse(programHousesUrl, programHouses)
+  const assetCategories =
+  [
+    {
+        "id": 1,
+        "category": "Equipos y Herramientas",
+        "fixedAssets": []
+    },
+    {
+        "id": 2,
+        "category": "Muebles y Enseres",
+        "fixedAssets": []
+    },
+    {
+        "id": 4,
+        "category": "Herramientas",
+        "fixedAssets": []
+    },
+    {
+        "id": 3,
+        "category": "Maquinaria",
+        "fixedAssets": []
+    }
+  ]
 
-  const handlers = [programHousesResponse]
+  const programHousesResponse = getResponse(programHousesUrl, programHouses)
+  const categoriesResponse = getResponse(categoriesUrl, assetCategories)
+
+  const handlers = [programHousesResponse, categoriesResponse]
 
   const server = new setupServer(...handlers)
 

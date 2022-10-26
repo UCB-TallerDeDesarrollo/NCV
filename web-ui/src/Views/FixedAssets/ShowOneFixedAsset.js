@@ -17,11 +17,12 @@ export function ShowFixedAsset() {
     }
     if (!fixedAsset) return null
     const fixedAssetData = {
+        "CATEGORÍA": fixedAsset.assetCategoryCategory,
+        "DESCRIPCIÓN": fixedAsset.description,
+        "CARACTERÍSTICAS": fixedAsset.features,
         "FECHA DE ENTRADA": fixedAsset.entryDate!=null? fixedAsset.entryDate.split('T')[0]:null,
-        "DESCRIPCIÓN" : fixedAsset.description,
-        "PRECIO" : fixedAsset.price, 
-        "CARACTERÍSTICAS":fixedAsset.features,
-        "CANTIDAD" : fixedAsset.quantity,        
+        "CANTIDAD": fixedAsset.quantity,
+        "PRECIO": fixedAsset.price,
     }
     return (
         <>
