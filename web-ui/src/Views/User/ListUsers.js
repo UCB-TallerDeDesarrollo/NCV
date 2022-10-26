@@ -9,8 +9,7 @@ import ListBasic from '../../Components/ListBasic';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function ListUsers() {
-    //const url="https://ncv-api.herokuapp.com/api/auth";
-    const url="http://localhost:5009/api/auth";
+    const url="https://ncv-api.herokuapp.com/api/auth";
     const { apiData:users, error } = getFromApi(url)
    // const location = useLocation()
     const completeInfoUser= "/vista-usuarios"
