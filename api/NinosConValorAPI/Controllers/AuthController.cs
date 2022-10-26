@@ -181,5 +181,18 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
             }
         }
+
+        [HttpPut("{userId}")]
+        public async Task<IActionResult> UpdateUserAsync([FromBody] EditUserViewModel model, string userId)
+        {
+            
+            var result = await _userService.UpdateUsersAsync(model, userId);
+
+            if (result.IsSuccess)
+                return Ok(result); // Status Code: 200 
+
+            return BadRequest(result);
+           
+        }
     }
 }
