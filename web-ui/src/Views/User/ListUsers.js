@@ -9,9 +9,11 @@ import ListBasic from '../../Components/ListBasic';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function ListUsers() {
-    const url="https://ncv-api.herokuapp.com/api/auth";
+    //const url="https://ncv-api.herokuapp.com/api/auth";
+    const url="http://localhost:5009/api/auth";
     const { apiData:users, error } = getFromApi(url)
    // const location = useLocation()
+    const completeInfoUser= "/vista-usuarios"
     const navigate = useNavigate()
     if(error){
         return ErrorPage(error)
@@ -20,10 +22,10 @@ function ListUsers() {
     if (users.length>0){
         const listElements = users.map((el) => {
             return {
-                //id:el.id, 
+                id:el.id, 
                 title: `${el.firstName} ${el.lastName}`,
                 description: `${el.email} - ${el.cellPhone} - ${el.nameRole}`,
-                //elementUrl:`${completeInfoUser}/${el.id}`,
+                elementUrl:`${completeInfoUser}/${el.id}`,
             };
         })
     
