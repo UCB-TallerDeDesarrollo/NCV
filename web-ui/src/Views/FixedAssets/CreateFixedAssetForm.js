@@ -14,8 +14,8 @@ import Dropdown from '../../Components/Dropdown'
 
 function CreateFixedAssetForm(props) {
     const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
-    //const url = 'http://localhost:5009/api/fixedAssets'
     const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
+    const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories'
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null)
     const navigate = useNavigate()
@@ -26,19 +26,34 @@ function CreateFixedAssetForm(props) {
         Price: '', // decimal
         Features: '', // string
         Quantity: '', // int
-        ProgramHouseId : ''//int
+        ProgramHouseId : '', //int
+        AssetCategoryId : '' //int
     })
-    const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null);
-    const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)
+    //programHouses
+    const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
+    const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)    
+
+    //categories
+    const [categorySelectedValue, setCategorySelectedValue] = useState(null)
+    const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
     if(errorProgramHouses){
         return ErrorPage(errorProgramHouses)
     }
-    if (!programHouses) return null
+    if (!programHouses) return null 
     let programHousesList = programHouses.map( programHouse =>  { return{
         label: programHouse.acronym,
         value: programHouse.id      
-    }})    
-    const programHousesOptions = programHousesList
+    }}) 
+    const programHousesOptions = programHousesList 
+    if(errorCategory){
+        return ErrorPage(errorCategory)
+    }
+    if (!categories) return null        
+    let categoriesList = categories.map( category =>  { return{
+        label: category.category,
+        value: category.id      
+    }}) 
+    const categoriesOptions = categoriesList    
     function handle(e) {
         const newData = { ...data }
         newData[e.target.id] = e.target.value
@@ -64,7 +79,8 @@ function CreateFixedAssetForm(props) {
             Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
             Features: data.Features==''? null:data.Features, // string
             Quantity: data.Quantity==''? null:parseInt(data.Quantity), // int
-            ProgramHouseId : programHouseSelectedValue
+            ProgramHouseId : programHouseSelectedValue,
+            AssetCategoryId : categorySelectedValue
         }).then((res) => {
             if (res.status == 201) {               
                 navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo creado exitosamente"}})
@@ -91,6 +107,16 @@ function CreateFixedAssetForm(props) {
                     label="Nombre"
                     type="text"
                 />
+                <Dropdown 
+                    name={"Categoría"} 
+                    id="category-drop" 
+                    options={categoriesOptions} 
+                    helperText = "Seleccione una categoría" 
+                    selectedValue={categorySelectedValue}
+                    setSelectedValue = {setCategorySelectedValue}
+                    required
+                    >                                        
+                </Dropdown> 
                 <InputText
                     onChange={(e) => handle(e)}
                     id="Description"
