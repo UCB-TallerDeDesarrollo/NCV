@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { width } from '@mui/system';
 import Navbar from '../../Components/NavBar';
+import { Box } from '@mui/system';
 
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
@@ -69,11 +70,8 @@ function EditKidFile() {
             }
           });
     }
-    function handleClose(event, reason) {
-        if (reason === 'clickaway') {
-            return
-        }
-        setOpen(false)
+    function handleClose() {
+        navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Informacion Básica sin modificaciones"}});
     }
     
     return (
@@ -84,6 +82,7 @@ function EditKidFile() {
                         Todos los campos son requeridos
                     </Alert>
                 </Collapse>
+                <Box sx={{alignItems :'center'}}>
                 <InputText
                     id="firstName"
                     name="firstName"
@@ -112,6 +111,7 @@ function EditKidFile() {
                     InputLabelProps={{ shrink: true }}
                     type="date"
                     value={kid.birthDate}
+                    defaultValue={kid.birthDate}
                     onChange={handleInputChange}
                 />
                 <InputText
@@ -129,22 +129,16 @@ function EditKidFile() {
                     onChange={handleInputChange}
                 />
                 <InputText
-                    select
                     id="gender"
                     name="gender"
                     type="text"
                     value={kid.gender}
                     onChange={handleInputChange}
                 >
-                {genders.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                    </MenuItem>
-                ))}
                 </InputText>
-                <ButtonPrimary label={"Guardar Cambios"} onClick={handleFormSubmit} ></ButtonPrimary>
-                <div></div>
+                <ButtonPrimary label={"Guardar Cambios"} onClick={handleFormSubmit}></ButtonPrimary>
                 <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
+                </Box>
             </FormContainer>
         </div></>
     );

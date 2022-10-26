@@ -10,6 +10,8 @@ export default function ButtonPrimary({label, onClick, id}) {
             color: "#023859", 
             boxShadow: 3,
             fontWeight: 'bold',
+            marginRight: 3,
+            marginLeft: 3,
             textTransform: 'none',
             px:4
             }}>{label}
@@ -24,8 +26,10 @@ export default function ButtonPrimary({label, onClick, id}) {
             background: "#E0E0E0",
             color: "#023859", 
             boxShadow: 3,
+            marginRight: 3,
+            marginLeft: 3,
             fontWeight: 'bold',
-            marginBottom: 2,
+            marginBottom: 1,
             "&:hover": {
               background: "#cecccc"
             }
