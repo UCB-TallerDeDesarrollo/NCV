@@ -277,5 +277,23 @@ namespace NinosConValorAPI.Services.Security
                 IsSuccess = true,
             };
         }
+
+        public async Task<EditUserViewModel> GetUserByIdAsync(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new NotFoundElementException($"The user doesn't exists");
+            }
+            return new EditUserViewModel
+            {
+                // Id = user.Id,
+                Email = user.Email,
+                CellPhone = user.PhoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            };
+        }
     }
 }
