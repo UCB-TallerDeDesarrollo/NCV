@@ -99,7 +99,6 @@ export default function ShowFixedAssets() {
             }
         })
         let assetCategoriesComponent = <ListWithSubheader itemsHeader={listCategories} itemsSubheader={listElements} withImage={false} />
-        let fixedAssetsComponent = <ListBasic items={listElements} withImage={false} />
         let nexFixedAsset = "/crear-activo-fijo"
         const listHeaderComponents = <ButtonPrimary label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
         return (
@@ -108,7 +107,6 @@ export default function ShowFixedAssets() {
                     <ListContainer title="Lista de activos fijos" header={listHeaderComponents}>
                         {searcher}
                         {assetCategoriesComponent}
-                        {fixedAssetsComponent}
                     </ListContainer>
                 </Box>
                 <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

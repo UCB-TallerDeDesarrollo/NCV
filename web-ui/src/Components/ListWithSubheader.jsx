@@ -5,10 +5,15 @@ import { ListSubheader } from '@mui/material';
 export default function ListWithSubheader({itemsHeader, itemsSubheader, withImage=true}) {
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper', alignItems :"flex-start" }}>
-      {itemsHeader.map((n,i)=>{
+      {itemsHeader.map((h,i)=>{
         return (<>
-            <ListElement sx={{ width: '10%'}} key={n.id ? n.id : i} id={n.id} title={n.title} description={n.description} elementUrl={n.elementUrl} imgSrc={n.imgSrc} withImage={withImage}/>
-
+            <ListElement sx={{ width: '10%'}} key={h.id ? h.id : i} id={h.id} title={h.title} description={h.description} elementUrl={h.elementUrl} imgSrc={h.imgSrc} withImage={withImage}/>
+            <ListSubheader sx={{ typography: { fontSize: 20, },}}>
+                {itemsSubheader.map((s,i)=>{
+                        return (
+                            <ListElement sx={{ width: '10%'}} key={s.id ? s.id : i} id={s.id} title={s.title} description={s.description} elementUrl={s.elementUrl} imgSrc={s.imgSrc} withImage={withImage}/>
+                        )})}
+            </ListSubheader>
         </>)})}
     </List>
   )};
