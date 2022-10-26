@@ -80,7 +80,6 @@ export function EditUser() {
                         required
                         id="firstName"
                         name="firstName"
-                        label="Nombre"
                         type="text"
                         value={user.firstName}
                         onChange={handleInputChange}
@@ -89,7 +88,6 @@ export function EditUser() {
                         required
                         id="lastName"
                         name="lastName"
-                        label="Apellido"
                         type="text"
                         value={user.lastName}
                         onChange={handleInputChange}
@@ -98,7 +96,6 @@ export function EditUser() {
                         required
                         id="cellPhone"
                         name="cellPhone"
-                        label="Celular"
                         type="number"
                         value={user.cellPhone}
                         onChange={handleInputChange}
@@ -107,45 +104,10 @@ export function EditUser() {
                         required
                         id="email"
                         name="email"
-                        label="Correo electronico"
                         type="email"
                         value={user.email}
                         onChange={handleInputChange}
                     />
-                    <InputText
-                        required
-                        id="password"
-                        name="password"
-                        label="Contraseña"
-                        type="password"
-                        value={user.password}
-                        onChange={handleInputChange}
-                    />
-                    <InputText
-                        required
-                        id="confirmPassword"
-                        name="confirmPassword"
-                        label="Confirmar contraseña"
-                        type="password"
-                        value={user.confirmPassword}
-                        onChange={handleInputChange}
-                    />
-                    <InputText
-                        required
-                        select
-                        id="rol"
-                        name="rol"
-                        label="Rol"
-                        type="text"
-                        value={user.rol}
-                        onChange={handleInputChange}
-                    >
-                        {roles.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </InputText>
                     <ButtonPrimary
                         label={'Editar'}
                         //onClick={handleFormSubmit}
