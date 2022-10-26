@@ -6,10 +6,12 @@ import ListContainer from "../../Components/ListContainer";
 import Navbar from '../../Components/NavBar';
 import ButtonPrimary from '../../Components/MUI-Button';
 import ListBasic from '../../Components/ListBasic';
+import { useNavigate } from 'react-router-dom';
 
 function ListUsers() {
     const url="https://ncv-api.herokuapp.com/api/auth";
     const { apiData:users, error } = getFromApi(url);
+    const navigate = useNavigate();
     if(error){
         return ErrorPage(error)
     }
