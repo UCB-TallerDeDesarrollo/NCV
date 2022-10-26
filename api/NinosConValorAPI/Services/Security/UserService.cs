@@ -295,5 +295,41 @@ namespace NinosConValorAPI.Services.Security
                 LastName = user.LastName
             };
         }
+
+        public async Task<UserManagerResponse> UpdateUsersAsync(EditUserViewModel model, string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return new UserManagerResponse
+                {
+                    Token = "user does not exist",
+                    IsSuccess = false
+                };
+            }
+
+            user.FirstName = model.FirstName ?? user.FirstName;
+            user.LastName = model.LastName ?? user.LastName;
+            user.PhoneNumber = model.CellPhone ?? user.PhoneNumber;
+            user.Email = model.Email ?? user.Email;
+
+            var result = await userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return new UserManagerResponse
+                {
+                    Token = $"User updated successfully",
+                    IsSuccess = true,
+                };
+            }
+
+            return new UserManagerResponse
+            {
+                Token = $"Something happened",
+                IsSuccess = false,
+            };
+        }
     }
 }

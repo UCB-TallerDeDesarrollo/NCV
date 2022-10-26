@@ -15,6 +15,7 @@ namespace NinosConValorAPI.Services.Security
         Task<UserManagerResponse> CreateUserRoleAsync(CreateUserRoleViewModel model);
         Task<IEnumerable<UserBasicInformationModel>> GetUsersAsync();
         Task<EditUserViewModel> GetUserByIdAsync(string userId);
+        Task<UserManagerResponse> UpdateUsersAsync(EditUserViewModel model, string userId);
 
         //Roles
         Task<UserManagerResponse> RegisterAdminUserAsync(RegisterViewModel model);
