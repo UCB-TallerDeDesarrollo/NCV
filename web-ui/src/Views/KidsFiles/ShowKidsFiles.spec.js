@@ -1,4 +1,4 @@
-import {render, screen, waitFor} from '@testing-library/react';
+import {render, screen, waitFor, queryByAttribute} from '@testing-library/react';
 import { ShowKidsFiles } from './ShowKidsFiles'
 
 import {rest} from 'msw';
@@ -84,9 +84,10 @@ describe('Show Kids Files', () => {
   })
 
   it('Should capture searcher rendered correctly', () => {
-    const {getByLabelText} = render(<Router><ShowKidsFiles/></Router>);
-    const searcher = getByLabelText(/Buscar.../i);
-    expect(searcher).toBeInTheDocument();
+    const getById = queryByAttribute.bind(null, 'id');
+    const dom = render(<Router><ShowKidsFiles/></Router>);
+    const searchBar = getById(dom.container, 'search');
+    expect(searchBar).toBeVisible();
   })
     
 })
