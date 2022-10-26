@@ -59,7 +59,7 @@ namespace NinosConValorAPI.Data.Repository
         {
             IQueryable<KidEntity> query = _dbContext.Kids;
             query = query.AsNoTracking();
-
+            query = query.OrderBy(k => k.FirstName).ThenBy(k => k.LastName);
             return await query.ToListAsync() ;
         }
         public void CreateKid(KidEntity kid)
