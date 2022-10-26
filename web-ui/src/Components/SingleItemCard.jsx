@@ -26,6 +26,7 @@ function gridItems(elements){
     }
 
     let gridElements = []
+    //NEW IDEA: if prop == 'with' -> <Box key={i} sx={{mr:5, width:width}}>
     for (const prop in elements ){
         var contentOneElement = elements[prop]
         if (elements[prop] == null){
@@ -48,7 +49,7 @@ function gridItems(elements){
     return gridElements
   }
 
-const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, secondaryField=null, imgWidth=150,imgHeight=150}) => {   
+const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, secondaryField=null, imgWidth=150,imgHeight=150, itemsPerLine=false}) => {   
     const styles = {
         secondaryField:{
             color:"#5BCCD9",
@@ -57,6 +58,10 @@ const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, 
         title:{
             display:"inline"
         }
+    }
+    let flexGrow = null;
+    if(itemsPerLine!=false){
+        flexGrow = 1/itemsPerLine - 0.1;
     }
     let sm_value_box = 200
     let md_value_box = 450
@@ -80,7 +85,7 @@ const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, 
                         <Box sx={{display:'flex', flexDirection:'row', flexWrap:'wrap', width:1}}>
                         {detailsElement.map((oneDetail,i)=>{
                                 return (
-                                    <Box key={i} sx={{mr:5}}>
+                                    <Box key={i} sx={{mr:5, width:flexGrow}}>
                                         {oneDetail}
                                     </Box>
                                 )})}
