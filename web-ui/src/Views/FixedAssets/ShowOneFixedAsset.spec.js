@@ -84,7 +84,7 @@ describe('Show Fixed Asset', () => {
         expect(screen.getByText('cuaderno')).toBeVisible
         expect(screen.getByText('50')).toBeVisible
         expect(screen.getByText('2')).toBeVisible
-        expect(screen.getAllByText('-----')).toHaveLength(3)
+        expect(screen.getAllByText('-----')).toHaveLength(4)
       })  
   })
 
