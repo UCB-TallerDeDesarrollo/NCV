@@ -7,6 +7,7 @@ import getFromApi from '../../Components/GetFromApi'
 import Navbar from '../../Components/NavBar'
 import ListContainer from "../../Components/ListContainer"
 import ListBasic from '../../Components/ListBasic'
+import ListWithSubheader from '../../Components/ListWithSubheader'
 import ButtonPrimary from '../../Components/MUI-Button';    
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
@@ -97,7 +98,7 @@ export default function ShowFixedAssets() {
                 categoryId: el.assetCategoryId
             }
         })
-        let assetCategoriesComponent = <ListBasic items={listCategories} withImage={false} />
+        let assetCategoriesComponent = <ListWithSubheader itemsHeader={listCategories} itemsSubheader={listElements} withImage={false} />
         let fixedAssetsComponent = <ListBasic items={listElements} withImage={false} />
         let nexFixedAsset = "/crear-activo-fijo"
         const listHeaderComponents = <ButtonPrimary label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
