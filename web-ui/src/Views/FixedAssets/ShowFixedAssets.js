@@ -16,6 +16,8 @@ export default function ShowFixedAssets() {
     const [open, setOpen] = useState(null);
     const [fixedAssets, setFixedAssets] = useState()
     const [searchResult, setSearchResults] = useState ([])
+    const [hasErrorWithFetch, setHasErrorWithFetch] = useState(null)
+
 
     const location = useLocation()
     const navigate = useNavigate();
@@ -33,16 +35,19 @@ export default function ShowFixedAssets() {
 
     function searchCriteria (e, posts) {
         if (!e.target.value) return posts
-        console.log(e.target.value)
         const resultsArray = posts.filter(post => post.name.toLowerCase().includes(e.target.value.toLowerCase()))
         return resultsArray;
     }
 
     useEffect(()=>{
         getFixedAssets(url).then(
-            json => {
-                setFixedAssets(json)
-                setSearchResults(json)
+            response => {
+                if(response.name != "AxiosError"){
+                    setFixedAssets(response.data)
+                    setSearchResults(response.data)
+                    return response
+                }
+                setHasErrorWithFetch(response)
             }
         )
         setOpen(showAlert)
@@ -55,6 +60,10 @@ export default function ShowFixedAssets() {
         setOpen(false)
     }
 
+    if (hasErrorWithFetch != null){
+        console.log(typeof(hasErrorWithFetch.response.data))
+        return ErrorPage(hasErrorWithFetch)
+    } 
     if (!fixedAssets) return null
     const searcher = <SearchBar posts={fixedAssets} setSearchResults={setSearchResults} orderCriteria={ordenCriteria} searchCriteria={searchCriteria} />
     
@@ -68,7 +77,6 @@ export default function ShowFixedAssets() {
                 imgSrc:`https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg`                
             }
         })
-        //console.log(listElements)
         let fixedAssetsComponent = <ListBasic items={listElements} withImage={false} />
         let nexFixedAsset = "/crear-activo-fijo"
         const listHeaderComponents = <ButtonPrimary label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>

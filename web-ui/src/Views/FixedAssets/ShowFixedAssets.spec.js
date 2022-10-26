@@ -174,8 +174,6 @@ describe('Show Fixed Asset', () => {
     act(()=>{
       renderWithRouter(<ShowFixedAssets/>,"/activos-fijos","/activos-fijos" )
     }) 
-    await waitFor(() => {
-        expect(screen.getByText("ERROR 500: Lo sentimos, algo sucedió.").toBeVisible)
-      })  
+    expect(screen.getByText("ERROR 500: Lo sentimos, algo sucedió.").toBeVisible)
   });
 })
