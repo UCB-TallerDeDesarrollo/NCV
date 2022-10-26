@@ -63,6 +63,10 @@ function formatDate(jsonDateStr){
     return date.toLocaleDateString(undefined,options);
 }
 
+function formatDecimals(num){
+    return Math.round(num).toFixed(2);
+}
+
 function WeightAndHeight({weightAndHeightData}){
     const [filteredBiometrics, setFilteredBiometrics] = useState([]);
     
@@ -83,7 +87,7 @@ function WeightAndHeight({weightAndHeightData}){
                 yearGroupIdx+=1;
                 yearGroup = availableYears[yearGroupIdx]
             }
-            fb.push({"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]});
+            fb.push({"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
         })
         setFilteredBiometrics(fb);
     },[weightAndHeightData]);
@@ -128,7 +132,7 @@ function WeightAndHeight({weightAndHeightData}){
                     finalFilteredBiometrics.push({'groupTitle':(new Date(b["registerDate"]).getFullYear()), 'empty1':'','empty2':''})
                     yearGroup = (new Date(b["registerDate"]).getFullYear())
                 }
-                finalFilteredBiometrics.push({"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]});
+                finalFilteredBiometrics.push({"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
             })
             setFilteredBiometrics(finalFilteredBiometrics)
         }
@@ -143,7 +147,7 @@ function WeightAndHeight({weightAndHeightData}){
                     yearGroupIdx+=1;
                     yearGroup = availableYears[yearGroupIdx]
                 }
-                fb.push({"registerDate":formatDate(b["registerDate"]), "weight":b["weight"], "height":b["height"]});
+                fb.push({"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
             })
             setFilteredBiometrics(fb);
             //END OF DUPLICATED CODE
