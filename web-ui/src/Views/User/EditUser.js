@@ -10,6 +10,7 @@ import Collapse from '@mui/material/Collapse'
 import MenuItem from '@mui/material/MenuItem'
 import ButtonPrimary from '../../Components/MUI-Button'
 import Alert from '@mui/material/Alert'
+import { useParams } from 'react-router-dom'
 
 const roles = [
     {
@@ -28,7 +29,8 @@ const roles = [
 
 export function EditUser() {
     const navigate = useNavigate()
-    const userId = '4cf62dc7-5e67-46fa-a227-f8dae70cba5a'
+    //const userId = '4cf62dc7-5e67-46fa-a227-f8dae70cba5a'
+    const { userId } = useParams()
     var url = 'https://ncv-api.herokuapp.com/api/auth/' + userId
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)
@@ -62,7 +64,7 @@ export function EditUser() {
             .put(url, user)
             .then(function (response) {
                 if (response.status == 200) {
-                    navigate(`/vista-usuarios/${userId}`, {
+                    navigate(`/vista-usuarios`, {
                         state: {
                             showAlert: true,
                             alertMessage: 'Usuario editado correctamente'
