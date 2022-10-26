@@ -129,7 +129,6 @@ namespace NinosConValorAPI.Services.Security
         {
             var userBasicInformation = new List<UserBasicInformationModel>();
             var userList = userManager.Users.ToList();
-            var user0 = userList[1];
             //var userBasicInfomodel = new UserBasicInformation();
            
             foreach (var user in userList)
@@ -144,6 +143,7 @@ namespace NinosConValorAPI.Services.Security
                         LastName = user.LastName,
                         CellPhone = user.PhoneNumber,
                         NameRole = aux[0],
+                        Id = user.Id,
 
                     };
 
