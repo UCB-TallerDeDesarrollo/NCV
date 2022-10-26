@@ -93,7 +93,8 @@ export default function ShowFixedAssets() {
                 title:`${el.name}`,
                 description:`Programa: ${el.programHouseAcronym!=null&&el.programHouseAcronym!=""&&el.programHouseAcronym!=undefined?el.programHouseAcronym:"*Sin programa*"}`,                 
                 elementUrl:`${completeInfoFixedAsset}/${el.id}`,
-                imgSrc:`https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg`                
+                imgSrc:`https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg`,
+                categoryId: el.assetCategoryId
             }
         })
         let assetCategoriesComponent = <ListBasic items={listCategories} withImage={false} />
