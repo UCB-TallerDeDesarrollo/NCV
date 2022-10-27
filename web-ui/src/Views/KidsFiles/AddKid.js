@@ -62,6 +62,11 @@ function CreateFile() {
         });
     }
 
+    //const todayDate = ()=>{
+    //    let today = new Date().toISOString().split("T")[0];
+    //    document.getElementsByName("birthDate")[0].setAttribute('max',today);
+    //}
+
     return (
         <><Navbar /><div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
             <FormContainer title="Registrar nuevo niño">
@@ -103,6 +108,7 @@ function CreateFile() {
                     name="birthDate"
                     label="Fecha de nacimiento"
                     type="date"
+                    //max={todayDate}
                     value={data.birthDate}
                     InputLabelProps={{
                         shrink: true,
