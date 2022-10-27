@@ -7,7 +7,6 @@ import Navbar from '../../Components/NavBar'
 import FormContainer from '../../Components/FormContainer'
 import InputText from '../../Components/InputText'
 import Collapse from '@mui/material/Collapse'
-import MenuItem from '@mui/material/MenuItem'
 import ButtonPrimary from '../../Components/MUI-Button'
 import Alert from '@mui/material/Alert'
 import { useParams } from 'react-router-dom'
@@ -34,6 +33,8 @@ export function EditUser() {
     var url = 'https://ncv-api.herokuapp.com/api/auth/' + userId
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)
+    const [formErrors, setFormErrors] = useState({})
+    const [isSubmit, setIsSubmit] = useState(false)
 
     const fetchData = () => {
         var responseUser = axios(url)
@@ -47,8 +48,36 @@ export function EditUser() {
 
     useEffect(() => {
         fetchData()
-    }, [])
+        console.log(formErrors)
+        if (Object.keys(formErrors).length === 0 && isSubmit){
+           console.log(user);
+        }
+    }, [formErrors])
     console.log('user json: ', user)
+
+    const validate = (datas) => {
+        const errors = {}
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
+        if (!datas.firstName) {
+            errors.firstName = 'El nombre es requerido!'
+        }
+
+        if (!datas.lastName) {
+            errors.lastName = 'El apellido es requerido!'
+        }
+
+        if (!datas.cellPhone) {
+            errors.cellPhone = 'El celular es requerido!'
+        }
+
+        if (!datas.email) {
+            errors.email = 'El correo es requerido!'
+        } else if (!regex.test(datas.email)) {
+            errors.email = 'Formato de correo incorrecto!'
+        }
+
+        return errors
+    }
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -60,21 +89,24 @@ export function EditUser() {
     }
 
     function handleFormSubmit() {
+        setFormErrors(validate(user));
+        setIsSubmit(true)
         axios
             .put(url, user)
             .then(function (response) {
                 if (response.status == 200) {
                     navigate(`/vista-usuarios`, {
                         state: {
-                            showAlert: true,
-                            alertMessage: 'Usuario editado correctamente'
+                            //showAlert: true,
+                            //alertMessage: 'Usuario editado correctamente'
                         }
                     })
                 }
             })
             .catch(function (error) {
                 if (error.response) {
-                    if (error.response.status == 400) setOpen(true)
+                    if (error.response.status >= 400|| error.response.status <= 500) 
+                        setOpen(true)
                 }
             })
     }
@@ -104,6 +136,13 @@ export function EditUser() {
                         value={user.firstName}
                         onChange={handleInputChange}
                     />
+                    {formErrors.firstName ? (
+                        <Alert sx={{ width: 1, pt: 1 }} severity="error">
+                            {formErrors.firstName}
+                        </Alert>
+                    ) : (
+                        <p></p>
+                    )}
                     <InputText
                         required
                         id="lastName"
@@ -112,6 +151,13 @@ export function EditUser() {
                         value={user.lastName}
                         onChange={handleInputChange}
                     />
+                    {formErrors.lastName ? (
+                        <Alert sx={{ width: 1, pt: 1 }} severity="error">
+                            {formErrors.lastName}
+                        </Alert>
+                    ) : (
+                        <p></p>
+                    )}
                     <InputText
                         required
                         id="cellPhone"
@@ -120,6 +166,13 @@ export function EditUser() {
                         value={user.cellPhone}
                         onChange={handleInputChange}
                     />
+                    {formErrors.cellPhone ? (
+                        <Alert sx={{ width: 1, pt: 1 }} severity="error">
+                            {formErrors.cellPhone}
+                        </Alert>
+                    ) : (
+                        <p></p>
+                    )}
                     <InputText
                         required
                         id="email"
@@ -128,6 +181,13 @@ export function EditUser() {
                         value={user.email}
                         onChange={handleInputChange}
                     />
+                    {formErrors.email ? (
+                        <Alert sx={{ width: 1, pt: 1 }} severity="error">
+                            {formErrors.email}
+                        </Alert>
+                    ) : (
+                        <p></p>
+                    )}
                     <ButtonPrimary
                         label={'Editar'}
                         onClick={handleFormSubmit}
