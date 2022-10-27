@@ -70,7 +70,7 @@ function formatDate(jsonDateStr){
 }
 
 function formatDecimals(num){
-    return Math.round(num).toFixed(2);
+    return num.toFixed(2);
 }
 
 const biometricsForm = {
@@ -129,23 +129,25 @@ function AddRowWeightAndHeight({setBiometrics}){
     return <div><TableContainer component={Paper}>
                 <Table sx={{ minWidth: 50 }} size="small" aria-label="a dense table">
                     <TableRow key={0} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                        <TableCell key={0} align={'center'}>
+                        <TableCell key={0} align={'center'} sx={{width:0.285}} >
                         {formatDate(actualDate)}
                         </TableCell>
                         <TableCell key={1} align={'center'}>
                             <input
-                                placeholder="Ingrese peso"
+                                placeholder="peso..."
                                 name="weight"
                                 value={biometricsData.weight}
                                 onChange={handleInputChange}
+                                style={{ width:70, textAlign:'center'}}
                             ></input>
                         </TableCell>
                         <TableCell key={2} align={'center'}>
                             <input
-                                placeholder="Ingrese talla"
+                                placeholder="talla..."
                                 name="height"
                                 value={biometricsData.height}
                                 onChange={handleInputChange}
+                                style={{ width:70, textAlign:'center' }}
                             ></input>
                         </TableCell>
                     </TableRow>
@@ -246,13 +248,22 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
 
     let yearComboBox = null;
     let weightAndHeightTitle = null;
-    let table = <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
-        <AutoAwesomeIcon sx={{margin:2}}/>
-        <Typography variant="body2">No existen registros de <b>peso y talla</b></Typography>
-    </Box>;
+    let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
+    let table = <>
+        <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
+                <AutoAwesomeIcon sx={{margin:2}}/>
+                <Typography variant="body2" sx={{marginBottom:3}}>No existen registros de <b>peso y talla</b></Typography>
+        </Box>
+        <Box sx={{display:"flex", flexDirection:"row"}}>
+            <TableBasic align='center' columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
+        </Box>
+    </>
+    // let table = <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
+    //     <AutoAwesomeIcon sx={{margin:2}}/>
+    //     <Typography variant="body2" sx={{marginBottom:3}}>No existen registros de <b>peso y talla</b></Typography>
+    // </Box>;
     
     if (weightAndHeightData != null && weightAndHeightData.length > 0){
-        let columnNames = ["Fecha","Peso (Kg)","Talla (cm)"];
         table = (<>
             <Box sx={{display:"flex", flexDirection:"row"}}>
                 <TableBasic align='center' columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
