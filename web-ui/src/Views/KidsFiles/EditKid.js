@@ -4,15 +4,16 @@ import Collapse from '@mui/material/Collapse';
 import MenuItem from '@mui/material/MenuItem';
 import FormContainer from '../../Components/FormContainer';
 import InputText from '../../Components/InputText';
-import ButtonPrimary from '../../Components/MUI-Button';
+import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { width } from '@mui/system';
 import Navbar from '../../Components/NavBar';
+import { Box } from '@mui/system';
 
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-
+import TextField from '@mui/material/TextField';
 import {editKidFile } from './API/getAxios';
 const genders = [
     {
@@ -59,7 +60,7 @@ function EditKidFile() {
         axios.put(urlKid, kid)
           .then(function (response) {
             if (response.status == 200){
-                navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de salud creado"}});
+                navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Informacion Básica actualizada correctamente"}});
             }
           })
           .catch(function (error) {
@@ -68,6 +69,9 @@ function EditKidFile() {
                     setOpen(true)
             }
           });
+    }
+    function handleClose() {
+        navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Informacion Básica sin modificaciones"}});
     }
     
     return (
@@ -78,8 +82,8 @@ function EditKidFile() {
                         Todos los campos son requeridos
                     </Alert>
                 </Collapse>
+                <Box sx={{alignItems :'center'}}>
                 <InputText
-                    required
                     id="firstName"
                     name="firstName"
                     type="text"
@@ -87,7 +91,6 @@ function EditKidFile() {
                     onChange={handleInputChange}
                 />
                  <InputText
-                    required
                     id="lastName"
                     name="lastName"
                     type="text"
@@ -103,18 +106,16 @@ function EditKidFile() {
                     onChange={handleInputChange}
                 />
                 <InputText
-                    required
                     id="birthDate"
                     name="birthDate"
+                    InputLabelProps={{ shrink: true }}
                     type="date"
                     value={kid.birthDate}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
+                    defaultValue={kid.birthDate}
                     onChange={handleInputChange}
+                    renderInput={(params) => <TextField {...params} />}
                 />
                 <InputText
-                    required
                     id="programHouse"
                     name="programHouse"
                     type="text"
@@ -122,7 +123,6 @@ function EditKidFile() {
                     onChange={handleInputChange}
                 />
                 <InputText
-                    required
                     id="birthPlace"
                     name="birthPlace"
                     type="text"
@@ -130,21 +130,16 @@ function EditKidFile() {
                     onChange={handleInputChange}
                 />
                 <InputText
-                    required
-                    select
                     id="gender"
                     name="gender"
                     type="text"
                     value={kid.gender}
                     onChange={handleInputChange}
                 >
-                {genders.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                    </MenuItem>
-                ))}
                 </InputText>
-                <ButtonPrimary label={"Guardar Cambios"} onClick={handleFormSubmit}/>
+                <ButtonPrimary label={"Guardar Cambios"} onClick={handleFormSubmit}></ButtonPrimary>
+                <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
+                </Box>
             </FormContainer>
         </div></>
     );
