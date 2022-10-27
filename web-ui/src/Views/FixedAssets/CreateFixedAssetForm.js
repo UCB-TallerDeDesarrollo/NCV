@@ -20,6 +20,16 @@ function CreateFixedAssetForm(props) {
     const [error, setError] = useState(null)
     const [formErrors,setFormErrors] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
+    const [nameInputError, setNameInputError] = useState(null)
+    const [nameError, setNameError] = useState("")
+    const [categoryInputError, setCategoryInputError] = useState(null)
+    const [categoryError, setCategoryError] = useState("Seleccione una categoría")
+    const [priceInputError, setPriceInputError] = useState(null)
+    const [priceError, setPriceError] = useState("")
+    const [programInputError, setProgramInputError] = useState(null)
+    const [programError, setProgramError] = useState("Seleccione un programa")
+    const [quantityInputError, setQuantityInputError] = useState(null)
+    const [quantityError, setQuantityError] = useState("")
     const navigate = useNavigate()
     const [data, setData] = useState({
         Name: '', // string
@@ -182,12 +192,24 @@ function CreateFixedAssetForm(props) {
             <FormContainer title="Crear activo fijo">
                 <InputText
                     required
-                    onChange={(e) => handle(e)}
                     id="Name"
                     name="Name"
                     value={data.Name}
                     label="Nombre"
                     type="text"
+                    error={nameInputError}
+                    helperText={nameError}
+                    onChange={(e) => {
+                        handle(e)
+                        if(data.Name.length === 0){
+                            setNameInputError(true);
+                            setNameError("El nombre del activo no puede estar vacío");
+                        }
+                        else{
+                            setNameInputError(false);
+                            setNameError("");
+                        } 
+                    }}
                 />
                 {formErrors.Name? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
                     {formErrors.Name}                   
@@ -196,11 +218,24 @@ function CreateFixedAssetForm(props) {
                     name={"Categoría"} 
                     id="category-drop" 
                     options={categoriesOptions} 
-                    helperText = "Seleccione una categoría" 
+                    // helperText = "Seleccione una categoría"
+                    error={categoryInputError}
+                    helperText={categoryError} 
                     selectedValue={categorySelectedValue}
                     setSelectedValue = {setCategorySelectedValue}
                     required
-                    >                                       
+                    onChange={(e) => {
+                        handle(e)
+                        if(data.AssetCategoryId.length === 0){
+                            setCategoryInputError(true);
+                            setCategoryError("La categoría del activo no puede estar vacío");
+                        }
+                        else{
+                            setCategoryInputError(false);
+                            setCategoryError("");
+                        } 
+                    }}
+                    >                                        
                 </Dropdown> 
                 {formErrors.AssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.AssetCategoryId}  </Alert>:<p></p> }             
@@ -225,11 +260,23 @@ function CreateFixedAssetForm(props) {
                 />
                 <InputText
                     required
-                    onChange={(e) => handle(e)}
+                    onChange={(e) => {
+                        handle(e)
+                        if(data.Price.length === 0){
+                            setPriceInputError(true);
+                            setPriceError("El precio del activo no puede estar vacío");
+                        }
+                        else{
+                            setPriceInputError(false);
+                            setPriceError("");
+                        } 
+                    }}
                     id="Price"
                     value={data.Price}
                     label="Precio"
                     type="number"
+                    error={priceInputError}
+                    helperText={priceError}
                 />
                 {formErrors.Price? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.Price}  </Alert>:<p></p> }
@@ -237,10 +284,23 @@ function CreateFixedAssetForm(props) {
                     name={"Programa"} 
                     id="programa-drop" 
                     options={programHousesOptions} 
-                    helperText = "Seleccione un programa" 
+                    // helperText = "Seleccione un programa" 
+                    error={programInputError}
+                    helperText={programError}
                     selectedValue={programHouseSelectedValue}
                     setSelectedValue = {setProgramHouseSelectedValue}
                     required
+                    onChange={(e) => {
+                        handle(e)
+                        if(data.ProgramHouseId.length === 0){
+                            setProgramInputError(true);
+                            setProgramError("El programa del activo no puede estar vacía");
+                        }
+                        else{
+                            setProgramInputError(false);
+                            setProgramError("");
+                        } 
+                    }}
                     >                                        
                 </Dropdown>   
                 {formErrors.ProgramHouseId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
@@ -257,11 +317,23 @@ function CreateFixedAssetForm(props) {
                         {formErrors.Features} </Alert>:<p></p> }
                 <InputText
                     required
-                    onChange={(e) => handle(e)}
+                    onChange={(e) => {
+                        handle(e)
+                        if(data.Quantity.length === 0){
+                            setQuantityInputError(true);
+                            setQuantityError("La cantidad del activo no puede estar vacía");
+                        }
+                        else{
+                            setQuantityInputError(false);
+                            setQuantityError("");
+                        } 
+                    }}
                     id="Quantity"
                     value={data.Quantity}
                     label="Cantidad"
                     type="number"
+                    error={quantityInputError}
+                    helperText={quantityError}
                 />
                 {formErrors.Quantity? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.Quantity}  </Alert>:<p></p> }
