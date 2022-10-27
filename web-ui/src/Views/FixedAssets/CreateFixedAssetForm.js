@@ -218,7 +218,6 @@ function CreateFixedAssetForm(props) {
                     name={"Categoría"} 
                     id="category-drop" 
                     options={categoriesOptions} 
-                    // helperText = "Seleccione una categoría"
                     error={categoryInputError}
                     helperText={categoryError} 
                     selectedValue={categorySelectedValue}
@@ -228,7 +227,7 @@ function CreateFixedAssetForm(props) {
                         handle(e)
                         if(data.AssetCategoryId.length === 0){
                             setCategoryInputError(true);
-                            setCategoryError("La categoría del activo no puede estar vacío");
+                            setCategoryError("La categoría del activo no puede estar vacía");
                         }
                         else{
                             setCategoryInputError(false);
@@ -284,7 +283,6 @@ function CreateFixedAssetForm(props) {
                     name={"Programa"} 
                     id="programa-drop" 
                     options={programHousesOptions} 
-                    // helperText = "Seleccione un programa" 
                     error={programInputError}
                     helperText={programError}
                     selectedValue={programHouseSelectedValue}
@@ -294,7 +292,7 @@ function CreateFixedAssetForm(props) {
                         handle(e)
                         if(data.ProgramHouseId.length === 0){
                             setProgramInputError(true);
-                            setProgramError("El programa del activo no puede estar vacía");
+                            setProgramError("El programa del activo no puede estar vacío");
                         }
                         else{
                             setProgramInputError(false);
