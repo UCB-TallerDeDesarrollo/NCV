@@ -73,7 +73,13 @@ function formatDecimals(num){
     return Math.round(num).toFixed(2);
 }
 
-function AddRowWeightAndHeight({setFilteredBiometrics}){
+const biometricsForm = {
+    registerDate: '',
+    weight: '',
+    height: ''
+}
+
+function AddRowWeightAndHeight({setBiometrics}){
     let actualDate = new Date()
     const {kidId} = useParams()
     var url = "https://ncv-api.herokuapp.com/api/kids/" + kidId +"/biometrics"
@@ -82,8 +88,9 @@ function AddRowWeightAndHeight({setFilteredBiometrics}){
     const [open, setOpen] = useState(false)
 
     function handleFormSubmit() {
-        // biometricsData = DefaultValues(biometrics);
-        biometricsData.registerDate = actualDate
+        let diffWithUTCTime = actualDate.getTimezoneOffset();
+        actualDate.setMinutes(actualDate.getMinutes()-diffWithUTCTime);
+        biometricsData.registerDate = actualDate.toJSON()
         console.log("Datos enviados: ", biometricsData)
         axios.post(url, biometricsData)
           .then(function (response) {
@@ -91,7 +98,7 @@ function AddRowWeightAndHeight({setFilteredBiometrics}){
                 console.log("Datos biometricos agregados¡¡¡")
                 axios.get(url)
                     .then((res) => {
-                        setFilteredBiometrics(res.data)
+                        setBiometrics(res.data)
                     })
                     .catch((e)=>{
                     })
@@ -150,7 +157,7 @@ function AddRowWeightAndHeight({setFilteredBiometrics}){
            </div>
 }
 
-function WeightAndHeight({weightAndHeightData}){
+function WeightAndHeight({weightAndHeightData,setBiometrics}){
     const [filteredBiometrics, setFilteredBiometrics] = useState([]);
     
     let availableYears = new Set([]);
@@ -279,7 +286,7 @@ function WeightAndHeight({weightAndHeightData}){
             {yearComboBox}
         </Box>
         {table}
-        <AddRowWeightAndHeight setFilteredBiometrics={setFilteredBiometrics}/>
+        <AddRowWeightAndHeight setBiometrics={setBiometrics}/>
     </Container>);
 }
 
