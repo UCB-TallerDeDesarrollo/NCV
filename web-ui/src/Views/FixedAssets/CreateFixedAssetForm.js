@@ -169,6 +169,7 @@ function CreateFixedAssetForm(props) {
         console.log('errs',errors)
         return errors
     }
+    
 
     if(error){
         //setOpen(true)
