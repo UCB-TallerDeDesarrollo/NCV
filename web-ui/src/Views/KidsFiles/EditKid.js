@@ -137,7 +137,7 @@ function EditKidFile() {
                     onChange={handleInputChange}
                 >
                 </InputText>
-                <ButtonPrimary label={"Guardar Cambios"} onClick={handleFormSubmit} sx={{marginLeft:10}}></ButtonPrimary>
+                <ButtonPrimary label={"Guardar Cambios"} onClick={handleFormSubmit} sx={{marginLeft:5}}></ButtonPrimary>
                 <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
                 </Box>
             </FormContainer>

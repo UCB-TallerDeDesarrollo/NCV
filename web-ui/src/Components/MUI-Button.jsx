@@ -24,8 +24,8 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
             background: "#E0E0E0",
             color: "#023859", 
             boxShadow: 3,
-            marginRight: 3,
-            marginLeft: 3,
+            marginRight: 2,
+            marginLeft: 2,
             fontWeight: 'bold',
             textTransform: 'none',
             "&:hover": {
