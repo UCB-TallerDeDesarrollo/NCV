@@ -10,6 +10,7 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
     sx.fontWeight = sx.fontWeight ?? 'bold'
     sx.textTransform = sx.textTransform ?? 'none'
     sx.px = sx.px ?? 4
+    sx.marginLeft = sx.marginLeft ?? 0
     return (
         <Button variant="contained" type="input" label={label} onClick={onClick} id={id} sx={sx}>{label}
             </Button>
@@ -26,8 +27,6 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
             marginRight: 3,
             marginLeft: 3,
             fontWeight: 'bold',
-            marginBottom: 1,
-            marginBottom: 2,
             textTransform: 'none',
             "&:hover": {
               background: "#cecccc"
