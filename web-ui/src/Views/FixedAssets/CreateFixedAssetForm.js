@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
@@ -18,6 +18,8 @@ function CreateFixedAssetForm(props) {
     const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories'
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null)
+    const [formErrors,setFormErrors] = useState({})
+    const [isSubmit, setIsSubmit] = useState(false)
     const navigate = useNavigate()
     const [data, setData] = useState({
         Name: '', // string
@@ -33,6 +35,12 @@ function CreateFixedAssetForm(props) {
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
     const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)    
 
+    useEffect(()=>{
+        // console.log(formErrors)
+        if (Object.keys(formErrors).length === 0 && isSubmit){
+        //    console.log(data);
+        }
+    },[formErrors]);
     //categories
     const [categorySelectedValue, setCategorySelectedValue] = useState(null)
     const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
@@ -53,26 +61,46 @@ function CreateFixedAssetForm(props) {
         label: category.category,
         value: category.id      
     }}) 
-    const categoriesOptions = categoriesList    
+    const categoriesOptions = categoriesList  
+
     function handle(e) {
         const newData = { ...data }
         newData[e.target.id] = e.target.value
         setData(newData)
+        setOpen(false)
+        // console.log(newData)
     }
+
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
             return
         }
         setOpen(false)
     }
+    
     function checkError(){
         if(error){
+            //setOpen(true)
             return ErrorPage(error)
         }
     }
+    function hasFormErrors(errorsFromForm){
+        console.log('form errors',errorsFromForm)
+        let hasErrors=true
+        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.Quantity && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features){
+            hasErrors = false
+        }
+        return hasErrors
+    }
     function submit(e) {
-        e.preventDefault()  
-        Axios.post(url, {
+        //e.preventDefault()
+        const errorsFromForm= validate(data)
+        setFormErrors(errorsFromForm)
+        setIsSubmit(true)
+        //console.log(formErrors)
+        //debugger
+        if(!hasFormErrors(errorsFromForm)){
+            Axios.post(url, {
             Name: data.Name,
             Description: data.Description==''? null:data.Description, // string
             EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
@@ -81,17 +109,70 @@ function CreateFixedAssetForm(props) {
             Quantity: data.Quantity==''? null:parseInt(data.Quantity), // int
             ProgramHouseId : programHouseSelectedValue,
             AssetCategoryId : categorySelectedValue
-        }).then((res) => {
-            if (res.status == 201) {               
-                navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo creado exitosamente"}})
-            }            
-        }).catch ((apiError) => {
-            setError(apiError) 
-            checkError()                    
-        })
+            }).then((res) => {
+                if (res.status == 201) {               
+                    navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo creado exitosamente"}})
+                }            
+            }).catch ((apiError) => {
+                setError(apiError) 
+                checkError()                    
+            })
+        }
     }
 
+    const validate = (datas) => {        
+        const errors = {
+            Name: '', // string
+            Description: '', // string
+            EntryDate: '', // dateTime
+            Price: '', // decimal
+            Features: '', // string
+            Quantity: '', // int
+            ProgramHouseId : '', //int
+            AssetCategoryId : '' //int
+        }
+        const regexNumber = /^[0-9]+([.][0-9]+)?$/;
+        //debugger
+        if(!datas.Name){
+            errors.Name="El Nombre del Activo Fijo es requerido!";
+        }else if(datas.Name.length>60){
+            errors.Name="El campo Nombre del Activo Fijo debe ser menor o igual a 60 caracteres!";
+        }
+    
+        if(datas.Description.length>1000){
+            errors.Description="El campo Descripción del Activo Fijo debe ser menor o igual a 1000 caracteres!";
+        }
+    
+        if(!datas.Price){
+            errors.Price= "El Precio del Activo Fijo es requerido!";
+        }else if(datas.Price < 0){
+            errors.Price= "El Precio del Activo Fijo debe ser un número positivo!";
+        }else if(!regexNumber.test(datas.Price)){
+            errors.Price= "El Precio del Activo Fijo debe ser ingresado en formato decimal!";
+        }
+    
+        if(!datas.Quantity){
+            errors.Quantity= "La Cantidad del Activo Fijo es requerida!";
+        }
+
+        if(!programHouseSelectedValue){
+            errors.ProgramHouseId= "El programa del Activo Fijo es requerido!";
+        }
+
+        if(!categorySelectedValue){
+            errors.AssetCategoryId= "La categoría del Activo Fijo es requerida!";
+        }
+    
+        if(datas.Features.length>1000){
+            errors.Features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
+        }
+        console.log('errs',errors)
+        return errors
+    }
+    
+
     if(error){
+        //setOpen(true)
         return ErrorPage(error)
     }
     return (
@@ -103,10 +184,14 @@ function CreateFixedAssetForm(props) {
                     required
                     onChange={(e) => handle(e)}
                     id="Name"
+                    name="Name"
                     value={data.Name}
                     label="Nombre"
                     type="text"
                 />
+                {formErrors.Name? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
+                    {formErrors.Name}                   
+                </Alert>:<p></p> }
                 <Dropdown 
                     name={"Categoría"} 
                     id="category-drop" 
@@ -115,8 +200,10 @@ function CreateFixedAssetForm(props) {
                     selectedValue={categorySelectedValue}
                     setSelectedValue = {setCategorySelectedValue}
                     required
-                    >                                        
+                    >                                       
                 </Dropdown> 
+                {formErrors.AssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.AssetCategoryId}  </Alert>:<p></p> }             
                 <InputText
                     onChange={(e) => handle(e)}
                     id="Description"
@@ -124,6 +211,8 @@ function CreateFixedAssetForm(props) {
                     label="Descripción"
                     type="text"
                 />
+                {formErrors.Description? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.Description} </Alert>:<p></p> }
                 <InputText
                     onChange={(e) => handle(e)}
                     id="EntryDate"
@@ -142,7 +231,8 @@ function CreateFixedAssetForm(props) {
                     label="Precio"
                     type="number"
                 />
-                
+                {formErrors.Price? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.Price}  </Alert>:<p></p> }
                 <Dropdown 
                     name={"Programa"} 
                     id="programa-drop" 
@@ -152,7 +242,9 @@ function CreateFixedAssetForm(props) {
                     setSelectedValue = {setProgramHouseSelectedValue}
                     required
                     >                                        
-                </Dropdown>                    
+                </Dropdown>   
+                {formErrors.ProgramHouseId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.ProgramHouseId}  </Alert>:<p></p> }                 
                 
                 <InputText
                     onChange={(e) => handle(e)}
@@ -161,6 +253,8 @@ function CreateFixedAssetForm(props) {
                     label="Características"
                     type="text"
                 />
+                 {formErrors.Features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.Features} </Alert>:<p></p> }
                 <InputText
                     required
                     onChange={(e) => handle(e)}
@@ -169,15 +263,14 @@ function CreateFixedAssetForm(props) {
                     label="Cantidad"
                     type="number"
                 />
+                {formErrors.Quantity? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.Quantity}  </Alert>:<p></p> }
                 <ButtonPrimary label={"Crear"} id="submit_button" onClick={submit}/>
                 <Snackbar
                     open={open}
                     autoHideDuration={6000}
                     onClose={handleClose}
                 >
-                    <Alert onClose={handleClose} severity="success">
-                        Activo Fijo Creado
-                    </Alert>
                 </Snackbar>
             </FormContainer>
         </div>
