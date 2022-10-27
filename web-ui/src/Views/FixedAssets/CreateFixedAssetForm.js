@@ -163,12 +163,13 @@ function CreateFixedAssetForm(props) {
             errors.AssetCategoryId= "La categoría del Activo Fijo es requerida!";
         }
     
-        if(datas.Features.length>1000){
+        if(datas.Features>1000){
             errors.Features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
         }
         console.log('errs',errors)
         return errors
     }
+    
 
     if(error){
         //setOpen(true)
