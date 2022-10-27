@@ -3,26 +3,26 @@ import { AppBar, Grid, Typography, Toolbar, Tabs , Link, Tab, Box, Button ,useTh
 import imgNiñosConValor from '../Assets/img/logo-ncv2.png'
 /* import NewUserForm from './NewUserForm'; */
 
-var Rol = sessionStorage.getItem("Role")
+var accesPermiss = sessionStorage.getItem("Access")
 function Navbar() {
   const theme = useTheme();
   
   const isMatch = useMediaQuery(theme.breakpoints.down('md'));
 
   function handleClickViewUsers(){
-    if(Rol=="Soporte" || Rol=="Admin"){  
+    if(accesPermiss== "ComplitAcces"){  
       window.location.href = "/vista-usuarios";
     }
   }
 
   function handleClickFiles(){
-    if(Rol=="Soporte" || Rol=="Admin"){  
+    if(accesPermiss=="ComplitAcces" || accesPermiss=="RestrinccionAcces"){  
       window.location.href = "/ninos";
     }
   }
 
   function handleClickAssets(){
-    if(Rol=="Soporte" || Rol=="Admin"){
+    if(accesPermiss=="ComplitAcces"){
       window.location.href = '/activos-fijos';
     }
   }
@@ -58,18 +58,22 @@ function Navbar() {
             </Grid>
             
             <Grid item xs={4} />
-            <Grid  item xs={1}>
-                <Button sx={{marginLeft:35,width:150,textTransform:'none'}} color="inherit" onClick={handleClickViewUsers}>Lista de usuarios</Button>
-            </Grid>
-            
-            <Grid  item xs={1}>
-                <Button  sx={{marginLeft:40,width:150,textTransform:'none'}} className='btn-files' color="inherit" onClick={handleClickFiles}>Files de los niños</Button>
-            </Grid>
+            {accesPermiss=="ComplitAcces" &&
+              <Grid  item xs={1}>
+                  <Button sx={{marginLeft:35,width:150,textTransform:'none'}} color="inherit" onClick={handleClickViewUsers}>Lista de usuarios</Button>
+              </Grid>
+            }
+            {((accesPermiss=="ComplitAcces") || (accesPermiss=="RestrinccionAcces")) &&
+              <Grid  item xs={1}>
+                  <Button  sx={{marginLeft:40,width:150,textTransform:'none'}} className='btn-files' color="inherit" onClick={handleClickFiles}>Files de los niños</Button>
+              </Grid>
+            }
 
-            <Grid  item xs={1}>
-                <Button sx={{marginLeft:45, width:150,textTransform:'none'}} className='btn-activosFijos' color="inherit" onClick={handleClickAssets}>Activos Fijos</Button>
-            </Grid>
-
+            {accesPermiss=="ComplitAcces" &&
+              <Grid  item xs={1}>
+                  <Button sx={{marginLeft:45, width:150,textTransform:'none'}} className='btn-activosFijos' color="inherit" onClick={handleClickAssets}>Activos Fijos</Button>
+              </Grid>
+            }
 
             <Grid item xs={1}>
                 <Button sx={{marginLeft:50,width:100,textTransform:'none'}} color="inherit" onClick={handleClickExit}>Salir</Button>
