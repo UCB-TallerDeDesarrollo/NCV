@@ -10,9 +10,12 @@ export default function ListWithSubheader({itemsHeader, itemsSubheader, withImag
             <ListElement sx={{ width: '10%'}} key={h.id ? h.id : i} id={h.id} title={h.title} description={h.description} elementUrl={h.elementUrl} imgSrc={h.imgSrc} withImage={withImage}/>
             <ListSubheader sx={{ typography: { fontSize: 20, },}}>
                 {itemsSubheader.map((s,i)=>{
-                        return (
-                            <ListElement sx={{ width: '10%'}} key={s.id ? s.id : i} id={s.id} title={s.title} description={s.description} elementUrl={s.elementUrl} imgSrc={s.imgSrc} withImage={withImage}/>
-                        )})}
+                        if (h.id == s.categoryId) {
+                            return (
+                                <ListElement sx={{ width: '10%'}} key={s.id ? s.id : i} id={s.id} title={s.title} description={s.description} elementUrl={s.elementUrl} imgSrc={s.imgSrc} withImage={withImage}/>
+                            )
+                        }
+                })}
             </ListSubheader>
         </>)})}
     </List>
