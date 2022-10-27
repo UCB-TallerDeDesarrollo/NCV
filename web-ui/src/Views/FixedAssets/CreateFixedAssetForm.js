@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
@@ -18,6 +18,8 @@ function CreateFixedAssetForm(props) {
     const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories'
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null)
+    const [formErrors,setFormErrors] = useState({})
+    const [isSubmit, setIsSubmit] = useState(false)
     const navigate = useNavigate()
     const [data, setData] = useState({
         Name: '', // string
@@ -33,6 +35,12 @@ function CreateFixedAssetForm(props) {
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
     const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)    
 
+    useEffect(()=>{
+        // console.log(formErrors)
+        if (Object.keys(formErrors).length === 0 && isSubmit){
+        //    console.log(data);
+        }
+    },[formErrors]);
     //categories
     const [categorySelectedValue, setCategorySelectedValue] = useState(null)
     const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
@@ -53,25 +61,32 @@ function CreateFixedAssetForm(props) {
         label: category.category,
         value: category.id      
     }}) 
-    const categoriesOptions = categoriesList    
+    const categoriesOptions = categoriesList  
+
     function handle(e) {
         const newData = { ...data }
         newData[e.target.id] = e.target.value
         setData(newData)
+        // console.log(newData)
     }
+
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
             return
         }
         setOpen(false)
     }
+    
     function checkError(){
         if(error){
             return ErrorPage(error)
         }
     }
+
     function submit(e) {
-        e.preventDefault()  
+        e.preventDefault()
+        // setFormErrors(validate(data)); 
+        // setIsSubmit(true);
         Axios.post(url, {
             Name: data.Name,
             Description: data.Description==''? null:data.Description, // string
@@ -91,6 +106,37 @@ function CreateFixedAssetForm(props) {
         })
     }
 
+    const validate = (datas) => {
+        // console.log(datas);
+        const errors = {};
+        const regexNumber = /^[0-9]+([.][0-9]+)?$/;
+        if(!datas.Name){
+            errors.Name="El Nombre del Activo Fijo es requerido!";
+        }else if(datas.Name.length>60){
+            errors.Name="El campo Nombre del Activo Fijo debe ser menor o igual a 60 caracteres!";
+        }
+    
+        if(datas.Description.length>1000){
+            errors.Description="El campo Descripción del Activo Fijo debe ser menor o igual a 1000 caracteres!";
+        }
+    
+        if(!datas.Price){
+            errors.Price= "El Precio del Activo Fijo es requerido!";
+        }else if(datas.Price < 0){
+            errors.Price= "El Precio del Activo Fijo debe ser un número positivo!";
+        }else if(!regexNumber.test(datas.Price)){
+            errors.Price= "El Precio del Activo Fijo debe ser ingresado en formato decimal!";
+        }
+    
+        if(!datas.Quantity){
+            errors.Quantity= "La Cantidad del Activo Fijo es requerida!";
+        }
+    
+        if(!datas.Features){
+            errors.Features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
+        }
+    }
+
     if(error){
         return ErrorPage(error)
     }
@@ -103,10 +149,14 @@ function CreateFixedAssetForm(props) {
                     required
                     onChange={(e) => handle(e)}
                     id="Name"
+                    name="Name"
                     value={data.Name}
                     label="Nombre"
                     type="text"
                 />
+                {formErrors.Name? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
+                    {formErrors.Name}                          
+                </Alert>:<p></p> }
                 <Dropdown 
                     name={"Categoría"} 
                     id="category-drop" 

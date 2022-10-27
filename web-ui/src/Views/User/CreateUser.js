@@ -70,7 +70,12 @@ function CreateUser() {
                         },
                         'gP3o_iD52sF8GJvJH'
                     )
-                    navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario creado exitosamente"}})
+                    navigate(`/inicio-ncv`, {
+                        state: {
+                            showAlert: true,
+                            alertMessage: 'Usuario creado exitosamente'
+                        }
+                    })
                 }
             })
             .catch(function (error) {
