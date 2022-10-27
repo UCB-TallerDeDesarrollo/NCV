@@ -21,28 +21,18 @@ import DataHealth from './Views/KidsFiles/DataHealth'
 import AddKid from './Views/KidsFiles/AddKid'
 import EditKid from './Views/KidsFiles/EditKid'
 
-import NavBar from './Components/NavBar'
 import ListUsers from './Views/User/ListUsers'
-var Rol = sessionStorage.getItem('Role')
 
+let accesPermiss=sessionStorage.getItem("Access") 
 function App() {
-    if (Rol == 'Soporte' || Rol == 'AdminUser' || Rol == 'AuntUser') {
+    if(accesPermiss== "ComplitAcces"){
         return (
             <Router>
                 <Routes>
                     <Route exact path="/" element={<LoginForm />}></Route>
-                    <Route
-                        path="/inicio-ncv"
-                        element={<HomePageForm />}
-                    ></Route>
-                    <Route
-                        path="/registrarse-ncv"
-                        element={<CreateUser />}
-                    ></Route>
-                    <Route
-                        path="/vista-usuarios"
-                        element={<ListUsers />}
-                    ></Route>
+                    <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
+                    <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
+                    <Route path="/vista-usuarios" element={<ListUsers />}></Route>
                     <Route path="/registrar-nino" element={<AddKid />}></Route>
                     <Route
                         path="/crear-activo-fijo"
@@ -81,9 +71,35 @@ function App() {
                 </Routes>
             </Router>
         )
-    } else {
-        return (
-            <Router>
+    }
+    else if(accesPermiss== "RestrinccionAcces"){
+        return(
+        <Router>
+            <Routes>
+                <Route exact path="/" element={<LoginForm />}></Route>
+                <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
+                <Route path="/registrar-nino" element={<AddKid />}></Route>
+                <Route path="/ninos" element={<ShowKidsFiles />}></Route>
+                <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
+                <Route
+                    path="ninos/:kidId/crear-reporte/"
+                    //element={<><NavBar/><AddHealthReport/></>}
+                    element={<AddHealthReport/>}
+                ></Route>
+                <Route
+                    path="ninos/:kidId/editar-nino"
+                    element={<EditKid/>}
+                ></Route>
+                <Route path="/kidHealth/:id" element={<DataHealth />} />
+                
+                    <Route exact path="/" element={<LoginForm />}></Route>
+                    <Route path="*" element={<Navigate replace to="/" />} />
+            </Routes>
+        </Router>)
+    }
+    else {
+        return(
+        <Router>
                 <Routes>
                     <Route exact path="/" element={<LoginForm />}></Route>
                     <Route path="*" element={<Navigate replace to="/" />} />
