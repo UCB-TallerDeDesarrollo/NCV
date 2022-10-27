@@ -221,7 +221,7 @@ function ShowOneKidFile() {
     let showAlert = location.state ? location.state.showAlert : false 
     let alertMessage = location.state ? location.state.alertMessage : null 
     const [open, setOpen] = useState(showAlert);
-    const [openToConfirm, setOpenToConfirm] = useState(showAlert);
+    const [openToConfirm, setOpenToConfirm] = useState(false);
 
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
