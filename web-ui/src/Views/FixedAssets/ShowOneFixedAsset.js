@@ -17,17 +17,18 @@ export function ShowFixedAsset() {
     }
     if (!fixedAsset) return null
     const fixedAssetData = {
+        "CATEGORÍA": fixedAsset.assetCategoryCategory,
+        "DESCRIPCIÓN": fixedAsset.description,
+        "CARACTERÍSTICAS": fixedAsset.features,
         "FECHA DE ENTRADA": fixedAsset.entryDate!=null? fixedAsset.entryDate.split('T')[0]:null,
-        "DESCRIPCIÓN" : fixedAsset.description,
-        "PRECIO" : fixedAsset.price, 
-        "CARACTERÍSTICAS":fixedAsset.features,
-        "CANTIDAD" : fixedAsset.quantity,        
+        "CANTIDAD": fixedAsset.quantity,
+        "PRECIO": fixedAsset.price,
     }
     return (
         <>
             <Navbar />
             <div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
-                <SingleItemCard title={fixedAsset.name} secondaryField={fixedAsset.programHouseName} element={fixedAssetData} imageUrl={imageUrl} imageCirle={false} />        
+                <SingleItemCard title={fixedAsset.name} secondaryField={fixedAsset.programHouseName} element={fixedAssetData} imageUrl={imageUrl} imageCirle={false} imgHeight={300} imgWidth={500} />        
             </div>
         </>
         )

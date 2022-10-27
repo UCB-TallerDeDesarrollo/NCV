@@ -64,13 +64,18 @@ function ShowKidsFiles() {
         })
         kidsListComponent = <ListGrid items={listElements} />
     }
-    const searcher = <SearchBar posts={kidsList} setSearchResults={setSearchResults} orderCriteria={ordenCriteria} searchCriteria={searchCriteria} />
+    const searcher = <Box sx={{display: 'flex', alignSelf:'right', justifyContent:'center'}}>
+        <SearchBar posts={kidsList} setSearchResults={setSearchResults} orderCriteria={ordenCriteria} searchCriteria={searchCriteria} />
+    </Box>
     const newKidUrl = "/registrar-nino"
     const navigate = useNavigate();
-    const listHeaderComponents = <ButtonPrimary label={"Registrar niño"} onClick={()=>navigate(newKidUrl)}/>
+    const listHeaderComponents = <Box sx={{display: 'flex'}}>
+        {searcher}
+        <ButtonPrimary label={"Registrar niño"} onClick={()=>navigate(newKidUrl)} sx={{alignSelf:'center'}}/>
+    </Box>
     return (
         <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>            
-            <ListContainer title="Niños del centro" header={[searcher,listHeaderComponents]}>
+            <ListContainer title="Niños del centro" header={listHeaderComponents}>
                 {kidsListComponent}
             </ListContainer>
         </Box>

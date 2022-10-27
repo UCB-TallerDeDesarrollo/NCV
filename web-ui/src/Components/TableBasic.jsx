@@ -23,7 +23,15 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
         >
         {
-          rowKeys.map((rk,i)=>(<TableCell key={i} align={align}>{row[rk]}</TableCell>))
+          rowKeys.map((rk,i)=>{
+            let backgroundColor = null
+            if (rk.includes('empty'))
+              backgroundColor = '#f2f2f2'
+            let cell = (<TableCell key={i} align={align} sx={{backgroundColor:backgroundColor}}>{row[rk]}</TableCell>)
+            if (rk=='groupTitle')
+              cell = (<TableCell key={i} align={align} sx={{fontWeight:'bold',paddingTop:3, fontSize:20, backgroundColor:'#f2f2f2'}}>{row[rk]}</TableCell>)
+            return cell
+          })
         }
         </TableRow>
       )}

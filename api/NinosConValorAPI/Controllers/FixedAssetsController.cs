@@ -24,7 +24,7 @@ namespace NinosConValorAPI.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
                 int programHouseId = fixedAsset.ProgramHouseId;
-                int categoryId = 1; // OJOOOO! modificar esto cuando este implementado FRONT END!!!
+                int categoryId = fixedAsset.AssetCategoryId; 
                 var newFixedAsset = await _fixedAssetService.CreateFixedAssetAsync(fixedAsset, programHouseId, categoryId);
                 return Created($"/api/fixedAssets/{newFixedAsset.Id}", newFixedAsset);
             }

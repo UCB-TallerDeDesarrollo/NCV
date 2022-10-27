@@ -28,6 +28,7 @@ namespace NinosConValorAPI.Data.Repository
             IQueryable<BiometricsEntity> query = _dbContext.Biometrics;
             query = query.AsNoTracking();
             query = query.Where(b => b.KidId == kidId);
+            query = query.OrderBy(b => b.RegisterDate);
             return await query.ToListAsync();
         }
         public async Task<BiometricsEntity> CreateBiometricsAsync(BiometricsEntity biometrics)
@@ -58,7 +59,7 @@ namespace NinosConValorAPI.Data.Repository
         {
             IQueryable<KidEntity> query = _dbContext.Kids;
             query = query.AsNoTracking();
-
+            query = query.OrderBy(k => k.FirstName).ThenBy(k => k.LastName);
             return await query.ToListAsync() ;
         }
         public void CreateKid(KidEntity kid)
