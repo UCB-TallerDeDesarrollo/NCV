@@ -103,6 +103,7 @@ function CreateFile() {
                     name="birthDate"
                     label="Fecha de nacimiento"
                     type="date"
+                    //max={new Date().toISOString().split("T")[0]}
                     value={data.birthDate}
                     InputLabelProps={{
                         shrink: true,

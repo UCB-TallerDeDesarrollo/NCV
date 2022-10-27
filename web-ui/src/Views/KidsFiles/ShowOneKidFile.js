@@ -396,25 +396,47 @@ function ShowOneKidFile() {
         let actualYear = new Date().getFullYear();
         let actualMonth = new Date().getMonth()+1;
         let actualDate = new Date().getDate();
+
         let kidYear = birthDate.getFullYear();
         let kidMonth = birthDate.getMonth()+1;
         let kidDate = birthDate.getDate();
+
         let age = {};
-        let completeAge = ``;
+        let completeAge = "";
+
         let years = actualYear - kidYear;
+        let months = 0;
+        let date = 0;
+
         if(actualMonth>=kidMonth){
-            let months = actualMonth - ki;
+            months = actualMonth - kidMonth;
+        } else {
+            years--;
+            months = 12 + actualMonth - kidMonth; 
         }
-        //let days = birthDate.getDate();
-        //let completeAge = `${kidMonth} años y ${actualMonth} meses`
-        if(kidYear>=1 && kidMonth==0){
-            completeAge = `${kidMonth} años`
-        }
-        if(kidYear == 0){
-            completeAge = `${kidMonth} meses`
-            if(kidMonth==0){
-                completeAge = `${kidMonth} dias`;
+
+        if(actualDate>=kidDate){
+            date = actualDate - kidDate;
+        } else {
+            months--;
+            date = 31 + actualDate - kidDate;
+            if(months<0){
+                months=11;
+                years--;
             }
+        }
+        age={
+            yearsAge:years,
+            monthsAge:months,
+            daysAge:date
+        };
+
+        if(age.yearsAge>0 && age.monthsAge>0){
+            completeAge = `${age.yearsAge} años y ${age.monthsAge} meses`;
+        }else if(age.yearsAge==0 && age.monthsAge==0 && age.daysAge>0){
+            completeAge = `${age.daysAge} dias`;
+        } else if(age.yearsAge==0 && age.monthsAge>0){
+            completeAge = `${age.monthsAge} meses`;
         }
         return completeAge;
     }
