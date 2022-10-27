@@ -34,7 +34,7 @@ function ShowKidsFiles() {
 
     function searchCriteria (e, posts) {
         if (!e.target.value) return posts
-        const resultsArray = posts.filter(post => post.firstName.toLowerCase().includes(e.target.value.toLowerCase()) || post.lastName.toLowerCase().includes(e.target.value.toLowerCase()) || post.ci.toLowerCase().includes(e.target.value.toLowerCase()))
+        const resultsArray = posts.filter(post => (post.firstName.toLowerCase() + " " + post.lastName.toLowerCase()).includes(e.target.value.toLowerCase()) || post.ci.toLowerCase().includes(e.target.value.toLowerCase()))
         return resultsArray;
     }
 
