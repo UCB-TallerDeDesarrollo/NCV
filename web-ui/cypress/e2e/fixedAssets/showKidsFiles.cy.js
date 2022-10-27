@@ -1,4 +1,4 @@
-sessionStorage.setItem('Role',"Soporte")
+sessionStorage.setItem('Access',"ComplitAcces")
 
 describe('Show kids end to end tests', () => {
   it('Shows the list of kids', () => {

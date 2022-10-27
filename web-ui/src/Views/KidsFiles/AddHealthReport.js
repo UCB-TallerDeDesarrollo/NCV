@@ -74,7 +74,6 @@ function AddHealthReport() {
     }
     
     function handleFormSubmit() {
-        formReport = DefaultValues(formReport);
         axios.post(url, formReport)
           .then(function (response) {
             if (response.status == 201){
@@ -87,30 +86,6 @@ function AddHealthReport() {
                     setOpen(true)
             }
           });
-    }
-
-    function DefaultValues(formReport) {
-        if(formReport.CIDiscapacidad == ""){
-            formReport.CIDiscapacidad = 'Ninguno';
-        }
-
-        if(formReport.HealthProblems == ""){
-            formReport.HealthProblems = 'Ninguno';
-        }
-
-        if(formReport.NeurologicalDiagnosis == ""){
-            formReport.NeurologicalDiagnosis = 'Ninguno';
-        }
-
-        if(formReport.PsychologicalDiagnosis == ""){
-            formReport.PsychologicalDiagnosis = 'Ninguno';
-        }
-
-        if(formReport.SpecialDiagnosis == ""){
-            formReport.SpecialDiagnosis = 'Ninguno';
-        }
-
-        return formReport;
     }
 
     return (
