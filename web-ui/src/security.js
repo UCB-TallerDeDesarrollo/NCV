@@ -1,6 +1,6 @@
 function issLoggin(obtainRole){
     let permiss = ""
-    let logginState= false
+    //let logginState= falselogginState =true
     if(obtainRole != null){
 
         switch (obtainRole) {
@@ -19,7 +19,7 @@ function issLoggin(obtainRole){
             default:
                 break;
         }
-        logginState =true
+        
         
     }
     return permiss

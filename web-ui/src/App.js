@@ -21,47 +21,18 @@ import DataHealth from './Views/KidsFiles/DataHealth'
 import AddKid from './Views/KidsFiles/AddKid'
 import EditKid from './Views/KidsFiles/EditKid'
 
-<<<<<<< HEAD
-import NavBar from './Components/NavBar'
 import ListUsers from './Views/User/ListUsers'
-var Rol = sessionStorage.getItem('Role')
-=======
->>>>>>> 17ef19e (Cambios en control de seguridad)
 
-import ListUsers from './Views/User/ListUsers'
 let accesPermiss=sessionStorage.getItem("Access") 
 function App() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    if (Rol == 'Soporte' || Rol == 'AdminUser' || Rol == 'AuntUser') {
-=======
-    if(sessionStorage.getItem("Access") != "null"){
->>>>>>> 17ef19e (Cambios en control de seguridad)
-=======
     if(accesPermiss== "ComplitAcces"){
->>>>>>> 66732ac (Se controla seguridad en la rutas)
         return (
             <Router>
                 <Routes>
                     <Route exact path="/" element={<LoginForm />}></Route>
-<<<<<<< HEAD
-                    <Route
-                        path="/inicio-ncv"
-                        element={<HomePageForm />}
-                    ></Route>
-                    <Route
-                        path="/registrarse-ncv"
-                        element={<CreateUser />}
-                    ></Route>
-                    <Route
-                        path="/vista-usuarios"
-                        element={<ListUsers />}
-                    ></Route>
-=======
                     <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
                     <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
                     <Route path="/vista-usuarios" element={<ListUsers />}></Route>
->>>>>>> 17ef19e (Cambios en control de seguridad)
                     <Route path="/registrar-nino" element={<AddKid />}></Route>
                     <Route
                         path="/crear-activo-fijo"
@@ -100,15 +71,13 @@ function App() {
                 </Routes>
             </Router>
         )
-<<<<<<< HEAD
-    } else {
-        return (
-            <Router>
-=======
     }
     else if(accesPermiss== "RestrinccionAcces"){
         return(
         <Router>
+            <Routes>
+                <Route exact path="/" element={<LoginForm />}></Route>
+                <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
                 <Route path="/registrar-nino" element={<AddKid />}></Route>
                 <Route path="/ninos" element={<ShowKidsFiles />}></Route>
                 <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
@@ -122,16 +91,15 @@ function App() {
                     element={<EditKid/>}
                 ></Route>
                 <Route path="/kidHealth/:id" element={<DataHealth />} />
-                <Routes>
+                
                     <Route exact path="/" element={<LoginForm />}></Route>
                     <Route path="*" element={<Navigate replace to="/" />} />
-                </Routes>
+            </Routes>
         </Router>)
     }
     else {
         return(
         <Router>
->>>>>>> 66732ac (Se controla seguridad en la rutas)
                 <Routes>
                     <Route exact path="/" element={<LoginForm />}></Route>
                     <Route path="*" element={<Navigate replace to="/" />} />

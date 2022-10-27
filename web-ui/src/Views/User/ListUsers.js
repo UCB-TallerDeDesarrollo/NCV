@@ -8,7 +8,6 @@ import Navbar from '../../Components/NavBar';
 import ButtonPrimary from '../../Components/MUI-Button';
 import ListBasic from '../../Components/ListBasic';
 import { useNavigate, useLocation } from 'react-router-dom';
-<<<<<<< HEAD
 import { useState, useEffect } from 'react'
 
 function ListUsers() {
@@ -33,14 +32,6 @@ function ListUsers() {
  
 
     const navigate = useNavigate()
-=======
-
-function ListUsers() {
-    const url="https://ncv-api.herokuapp.com/api/auth";
-    const location = useLocation()
-    const navigate = useNavigate();
-    const { apiData:users, error } = getFromApi(url);
->>>>>>> 66732ac (Se controla seguridad en la rutas)
     if(error){
         return ErrorPage(error)
     }

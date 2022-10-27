@@ -1,4 +1,4 @@
-/*sessionStorage.setItem('Role',"Soporte")
+sessionStorage.setItem('Access',"ComplitAcces")
 
 describe('Add a fixed asset end to end tests', () => {
     it('Creates a fixed asset', () => {
@@ -25,4 +25,3 @@ describe('Add a fixed asset end to end tests', () => {
       cy.wait('@anAssetPost').its('response.statusCode').should('equal', 201);
     });
   });
-*/

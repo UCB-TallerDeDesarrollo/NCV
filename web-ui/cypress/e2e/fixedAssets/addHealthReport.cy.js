@@ -1,4 +1,4 @@
-/*sessionStorage.setItem('Role',"Soporte")
+/*sessionStorage.setItem('Access',"ComplitAcces")
 
 describe('Add a Health report end to end tests', () => {
     it('Creates a health report', () => {
