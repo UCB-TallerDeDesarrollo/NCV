@@ -68,6 +68,83 @@ function formatDecimals(num){
     return Math.round(num).toFixed(2);
 }
 
+function AddRowWeightAndHeight({setFilteredBiometrics}){
+    let actualDate = new Date()
+    const {kidId} = useParams()
+    var url = "https://ncv-api.herokuapp.com/api/kids/" + kidId +"/biometrics"
+
+    const [biometricsData, setbiometricsData] = useState(biometricsForm)
+    const [open, setOpen] = useState(false)
+
+    function handleFormSubmit() {
+        // biometricsData = DefaultValues(biometrics);
+        biometricsData.registerDate = actualDate
+        console.log("Datos enviados: ", biometricsData)
+        axios.post(url, biometricsData)
+          .then(function (response) {
+            if (response.status == 201){
+                console.log("Datos biometricos agregados¡¡¡")
+                axios.get(url)
+                    .then((res) => {
+                        setFilteredBiometrics(res.data)
+                    })
+                    .catch((e)=>{
+                    })
+                // Será que aqui hay que llamar nuevamente la función de ver datos biometricos ?? , para que este actualizado el nuevo valor 
+                // navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Nuevo datos de  talla y peso añadido correctamente"}});
+                // O lo agrego manualmente?
+            }
+          })
+          .catch(function (error) {
+            if (error.response){
+                if (error.response.status == 400 )
+                // Esto que hace ??
+                    setOpen(true)
+            }
+          });
+          biometricsData.height = ''
+          biometricsData.weight = ''
+    }
+    const handleInputChange = (e) => {
+        const { name, value } = e.target
+        setOpen(false)
+        setbiometricsData({
+            ...biometricsData,
+            [name]: value
+        })
+    }
+    
+    return <div><TableContainer component={Paper}>
+                <Table sx={{ minWidth: 50 }} size="small" aria-label="a dense table">
+                    <TableRow key={0} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                        <TableCell key={0} align={'center'}>
+                        {formatDate(actualDate)}
+                        </TableCell>
+                        <TableCell key={1} align={'center'}>
+                            <input
+                                placeholder="Ingrese peso"
+                                name="weight"
+                                value={biometricsData.weight}
+                                onChange={handleInputChange}
+                            ></input>
+                        </TableCell>
+                        <TableCell key={2} align={'center'}>
+                            <input
+                                placeholder="Ingrese talla"
+                                name="height"
+                                value={biometricsData.height}
+                                onChange={handleInputChange}
+                            ></input>
+                        </TableCell>
+                    </TableRow>
+                </Table>
+           </TableContainer>
+           <Box sx={{pt: 3,display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
+                <ButtonPrimary key={2} label="Añadir datos" onClick={handleFormSubmit} />
+            </Box>
+           </div>
+}
+
 function WeightAndHeight({weightAndHeightData}){
     const [filteredBiometrics, setFilteredBiometrics] = useState([]);
     
@@ -197,6 +274,7 @@ function WeightAndHeight({weightAndHeightData}){
             {yearComboBox}
         </Box>
         {table}
+        <AddRowWeightAndHeight setFilteredBiometrics={setFilteredBiometrics}/>
     </Container>);
 }
 
@@ -328,7 +406,7 @@ function ShowOneKidFile() {
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName } itemsPerLine={3}/>
             <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
-            <WeightAndHeight weightAndHeightData={biometrics}/>
+            <WeightAndHeight weightAndHeightData={biometrics} setBiometrics={setBiometrics}/>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
