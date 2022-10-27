@@ -26,6 +26,11 @@ typography: {
         fontWeight : 600,
         fontSize : 25
     },
+    h5 : {
+        fontFamily : `"DM Sans", sans-serif`,
+        fontWeight : 500,
+        fontSize : 23
+    },
     subtitle2 : {
         fontFamily : `"DM Sans", sans-serif`,
         fontWeight : 500,

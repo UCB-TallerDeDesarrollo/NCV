@@ -2,19 +2,16 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Input } from '@mui/material';
 
-export default function ButtonPrimary({label, onClick, id}) {
+export default function ButtonPrimary({label, onClick, id, sx={}}) {
+    sx.borderRadius = sx.borderRadius ?? 40
+    sx.background = sx.background ?? "#5CD4E2"
+    sx.color = sx.color ?? "#023859"
+    sx.boxShadow = sx.boxShadow ?? 3
+    sx.fontWeight = sx.fontWeight ?? 'bold'
+    sx.textTransform = sx.textTransform ?? 'none'
+    sx.px = sx.px ?? 4
     return (
-        <Button variant="contained" type="input" label={label} onClick={onClick} id={id} sx={{ 
-            borderRadius: 40, 
-            background: "#5CD4E2",
-            color: "#023859", 
-            boxShadow: 3,
-            fontWeight: 'bold',
-            marginRight: 3,
-            marginLeft: 3,
-            textTransform: 'none',
-            px:4
-            }}>{label}
+        <Button variant="contained" type="input" label={label} onClick={onClick} id={id} sx={sx}>{label}
             </Button>
     );
   }
@@ -30,6 +27,8 @@ export default function ButtonPrimary({label, onClick, id}) {
             marginLeft: 3,
             fontWeight: 'bold',
             marginBottom: 1,
+            marginBottom: 2,
+            textTransform: 'none',
             "&:hover": {
               background: "#cecccc"
             }
@@ -48,6 +47,7 @@ export default function ButtonPrimary({label, onClick, id}) {
             boxShadow: 3,
             fontWeight: 'bold',
             marginBottom: 2,
+            textTransform: 'none',
             "&:hover": {
               background: "#c63e39"
             }
