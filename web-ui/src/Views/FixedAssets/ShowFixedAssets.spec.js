@@ -10,6 +10,7 @@ import ShowFixedAssets from './ShowFixedAssets';
 
 describe('Show Fixed Asset', () => {
   const fixedAssetUrl ='https://ncv-api.herokuapp.com/api/fixedAssets'  
+  const fixedAssetCategoriesUrl ='https://ncv-api.herokuapp.com/api/assetCategories?showAssets=true'
 
   function getResponse(url, jsonData=null, code=200, text=null){
     const response = rest.get(url, (req, res, ctx) => {
@@ -18,6 +19,29 @@ describe('Show Fixed Asset', () => {
     })
     return response
   }
+  const assetCategories =
+  [
+    {
+        "id": 1,
+        "category": "Equipos y Herramientas",
+        "fixedAssets": []
+    },
+    {
+        "id": 2,
+        "category": "Muebles y Enseres",
+        "fixedAssets": []
+    },
+    {
+        "id": 4,
+        "category": "Herramientas",
+        "fixedAssets": []
+    },
+    {
+        "id": 3,
+        "category": "Maquinaria",
+        "fixedAssets": []
+    }
+  ]
 
   const fixedAssets =
   [
@@ -118,8 +142,8 @@ describe('Show Fixed Asset', () => {
   ]
 
 	const fixedAssetResponse = getResponse(fixedAssetUrl, fixedAssets)
-
-  const handlers = [fixedAssetResponse];
+  const fixedAssetCategoriesResponse = getResponse(fixedAssetCategoriesUrl, assetCategories)
+  const handlers = [fixedAssetResponse, fixedAssetCategoriesResponse];
 
   const server = new setupServer(...handlers);
 
@@ -137,22 +161,22 @@ describe('Show Fixed Asset', () => {
     )
   }
 
-  // it('Shows a list of fixed assets data correctly', async () => {
-  //   act(()=>{
-  //     renderWithRouter(<ShowFixedAssets/>,"/activos-fijos","/activos-fijos" )
-  //   }) 
-  //   await waitFor(() => {
-  //       expect(screen.getByText('Lista de activos fijos')).toBeVisible
-  //       expect(screen.getByText('Crear activo fijo')).toBeVisible
-  //       expect(screen.getByText('Herramientas')).toBeVisible
-  //       expect(screen.queryByText('Asset name 1')).toBeVisible
-  //       expect(screen.queryByText('Asset name 2')).toBeVisible
-  //       expect(screen.queryByText('Asset name 3')).toBeVisible
-  //       expect(screen.queryByText('Asset name 4')).toBeVisible
-  //       expect(screen.queryByText('Asset name 5')).toBeVisible
-  //       //expect(screen.getAllByText('Programa: *Sin programa*')).toHaveLength(5)
-  //     })  
-  // })
+   it('Shows a list of fixed assets data correctly', async () => {
+     act(()=>{
+       renderWithRouter(<ShowFixedAssets/>,"/activos-fijos","/activos-fijos" )
+     }) 
+     await waitFor(() => {
+         expect(screen.getByText('Lista de activos fijos')).toBeVisible
+         expect(screen.getByText('Crear activo fijo')).toBeVisible
+         expect(screen.getByText('Herramientas')).toBeVisible
+         expect(screen.queryByText('Asset name 1')).toBeVisible
+         expect(screen.queryByText('Asset name 2')).toBeVisible
+         expect(screen.queryByText('Asset name 3')).toBeVisible
+         expect(screen.queryByText('Asset name 4')).toBeVisible
+         expect(screen.queryByText('Asset name 5')).toBeVisible
+         //expect(screen.getAllByText('Programa: *Sin programa*')).toHaveLength(5)
+       })  
+   })
   
   it('Shows fixed assets data when non-required fields are null', async () => {    
     const fixedAssestWithOnlyRequiredFields = getResponse(fixedAssetUrl, fixedAssetsOnlyRequiredFields)
