@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "category": "Vehículos",
+        "fixedAssets": []
+    },
+    {
+        "id": 2,
+        "category": "Muebles y Enseres",
+        "fixedAssets": []
+    },
+    {
+        "id": 4,
+        "category": "Herramientas",
+        "fixedAssets": []
+    },
+    {
+        "id": 3,
+        "category": "Maquinaria y Equipos",
+        "fixedAssets": []
+    }
+  ]
