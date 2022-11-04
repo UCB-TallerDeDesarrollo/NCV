@@ -1,6 +1,7 @@
 
 ﻿using Microsoft.EntityFrameworkCore;
 using NinosConValorAPI.Data.Entity;
+using NinosConValorAPI.Models;
 using System.Security.Cryptography;
 
 namespace NinosConValorAPI.Data.Repository
@@ -104,6 +105,12 @@ namespace NinosConValorAPI.Data.Repository
             query = query.Include(f=>f.ProgramHouse);
             var fixedAssetEntity = await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
             return fixedAssetEntity;
+        }
+
+        public async Task UpdateFixedAssetAsync(int fixedAssetId, FixedAssetEntity fixedAsset)
+        {
+            var fixedAssetToUpdate = await _dbContext.FixedAssets.FirstOrDefaultAsync(f => f.Id == fixedAssetId);
+            _dbContext.Entry(fixedAssetToUpdate).CurrentValues.SetValues(fixedAsset);
         }
 
         public async Task<HealthReportEntity> GetHealthReportAsync(int kidId)
