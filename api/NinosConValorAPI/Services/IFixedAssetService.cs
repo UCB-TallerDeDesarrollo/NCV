@@ -7,5 +7,6 @@ namespace NinosConValorAPI.Services
         public Task<FixedAssetModel> CreateFixedAssetAsync(FixedAssetModel fixedAsset, int programHouseId, int categoryId);
         Task<IEnumerable<FixedAssetModel>> GetFixedAssetsAsync();
         Task<FixedAssetModel> GetFixedAssetAsync(int fixedAssetId);
+        Task<FixedAssetModel> UpdateFixedAssetAsync(int fixedAssetId, FixedAssetModel fixedAsset);
     }
 }
