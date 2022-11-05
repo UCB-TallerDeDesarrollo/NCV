@@ -31,7 +31,8 @@ namespace UnitTests.ControllersUT
                 Features = "8Gb de RAM",
                 Quantity = 5,
                 ProgramHouseId = 2,
-                AssetCategoryId = 1
+                AssetCategoryId = 1,
+                State = "Obsoleto"
             };           
 
             var fixedAssetServiceMock = new Mock<IFixedAssetService>();
@@ -45,7 +46,8 @@ namespace UnitTests.ControllersUT
                 Features = "8Gb de RAM",
                 Quantity = 5,
                 ProgramHouseId=2,
-                AssetCategoryId=1
+                AssetCategoryId=1,
+                State = "Obsoleto"
             });
 
             var fixedAssetController = new FixedAssetsController(fixedAssetServiceMock.Object);
@@ -69,7 +71,8 @@ namespace UnitTests.ControllersUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5
+                Quantity = 5,
+                State = "Obsoleto"
             };
 
             var fixedAsset2 = new FixedAssetModel()
@@ -80,7 +83,8 @@ namespace UnitTests.ControllersUT
                 EntryDate = new DateTime(2006, 6, 6),
                 Price = 20.32m,
                 Features = "Tachas de oro",
-                Quantity = 1
+                Quantity = 1,
+                State = "Obsoleto"
             };
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
             var mapper = config.CreateMapper();
@@ -108,7 +112,8 @@ namespace UnitTests.ControllersUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5
+                Quantity = 5,
+                State = "Obsoleto"
             };
 
             var fixedAssetServiceMock = new Mock<IFixedAssetService>();

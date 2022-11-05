@@ -48,7 +48,8 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 Quantity = 5,
                 ProgramHouse = programHouse,
-                AssetCategory = assetCategory
+                AssetCategory = assetCategory,
+                State= "Obsoleto"
             };
 
             ctx.Add(programHouse);
@@ -92,7 +93,8 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 Quantity = 5,
                 ProgramHouse = programHouse,
-                AssetCategory = assetCategory
+                AssetCategory = assetCategory,
+                State = "Obsoleto"
             };
 
             ctx.Add(programHouse);
@@ -110,6 +112,7 @@ namespace UnitTests.NCVRepositoryUT
             Assert.Equal(100.58m, fixedAsset.Price);
             Assert.Null(fixedAsset.Features);
             Assert.Equal(5, fixedAsset.Quantity);
+            Assert.Equal("Obsoleto", fixedAsset.State);
         }
 
         [Fact]
@@ -143,7 +146,8 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 Quantity = 5,
                 ProgramHouse = programHouse,
-                AssetCategory = assetCategory
+                AssetCategory = assetCategory,
+                State = "Obsoleto"
             };
 
             ctx.Add(programHouse);
@@ -161,6 +165,7 @@ namespace UnitTests.NCVRepositoryUT
             Assert.Equal(100.58m, fixedAsset.Price);
             Assert.Null(fixedAsset.Features);
             Assert.Equal(5, fixedAsset.Quantity);
+            Assert.Equal("Obsoleto", fixedAsset.State);
         }
 
         [Fact]
@@ -196,7 +201,8 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 Quantity = 5,
                 ProgramHouse= programHouse,
-                AssetCategory = assetCategory
+                AssetCategory = assetCategory,
+                State = "Obsoleto"
             };           
             ctx.Add(programHouse);
             ctx.Add(assetCategory);
@@ -243,7 +249,8 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 Quantity = 5,
                 ProgramHouse = programHouse,
-                AssetCategory = assetCategory
+                AssetCategory = assetCategory,
+                State = "Obsoleto"
             };
             ctx.Add(programHouse);
             ctx.Add(assetCategory);
@@ -290,7 +297,8 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 Quantity = 5,
                 ProgramHouse = programHouse,
-                AssetCategory = assetCategory
+                AssetCategory = assetCategory,
+                State = "Obsoleto"
             };
             ctx.Add(programHouse);
             ctx.Add(assetCategory);
@@ -337,7 +345,8 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 Quantity = 5,
                 ProgramHouse = programHouse,
-                AssetCategory = assetCategory
+                AssetCategory = assetCategory,
+                State = "Obsoleto"
             };
             ctx.Add(programHouse);
             ctx.Add(assetCategory);

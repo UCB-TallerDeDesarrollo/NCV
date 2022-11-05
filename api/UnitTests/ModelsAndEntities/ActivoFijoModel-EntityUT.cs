@@ -22,7 +22,8 @@ namespace UnitTests.ModelsAndEntities
                 EntryDate = new DateTime(2001,3,2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5
+                Quantity = 5,
+                State = "Obsoleto"
             };           
 
 
@@ -33,7 +34,7 @@ namespace UnitTests.ModelsAndEntities
             Assert.Equal(100.58m, fixedAssetmodel.Price);
             Assert.Equal("8Gb de RAM", fixedAssetmodel.Features);
             Assert.Equal(5, fixedAssetmodel.Quantity);
-
+            Assert.Equal("Obsoleto", fixedAssetmodel.State);
 
         }
 
@@ -49,7 +50,8 @@ namespace UnitTests.ModelsAndEntities
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5
+                Quantity = 5,
+                State = "Obsoleto"
             };
 
 
@@ -60,7 +62,7 @@ namespace UnitTests.ModelsAndEntities
             Assert.Equal(100.58m, fixedAssetEntity.Price);
             Assert.Equal("8Gb de RAM", fixedAssetEntity.Features);
             Assert.Equal(5, fixedAssetEntity.Quantity);
-
+            Assert.Equal("Obsoleto", fixedAssetEntity.State);
 
         }
     }

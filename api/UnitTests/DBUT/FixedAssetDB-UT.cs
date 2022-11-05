@@ -20,7 +20,8 @@ namespace UnitTests.DBUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5
+                Quantity = 5,
+                State = "Obsoleto"
             };
 
             var fixedAssetAdded = ctx.Add(fixedAsset);
