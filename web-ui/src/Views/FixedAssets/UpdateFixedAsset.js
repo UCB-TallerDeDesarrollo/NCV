@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import ButtonPrimary from '../../Components/MUI-Button'
 import getFromApi from '../../Components/GetFromApi'
 import Dropdown from '../../Components/Dropdown'
+import axios from 'axios';
 
 export default UpdateFixedAssetForm(props) {
     const { fixedAssetId } = useParams()
@@ -32,22 +33,22 @@ export default UpdateFixedAssetForm(props) {
     const [quantityInputError, setQuantityInputError] = useState(null)
     const [quantityError, setQuantityError] = useState("")
     const navigate = useNavigate()
-    const [data, setData] = useState({
-        Name: '', // string
-        Description: '', // string
-        EntryDate: '', // dateTime
-        Price: '', // decimal
-        Features: '', // string
-        Quantity: '', // int
-        ProgramHouseId : '', //int
-        AssetCategoryId : '' //int
-    })
+    const [data, setData] = useState([])
     //programHouses
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
     const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)    
 
+    const fetchBasicData = () => {
+        const responseData = axios(url);
+        axios.all([responseData]).then(
+            axios.spread((...allData) => {
+                setData(allData[0].data)
+            }))
+    }
+
     useEffect(()=>{
         // console.log(formErrors)
+        fetchBasicData();
         if (Object.keys(formErrors).length === 0 && isSubmit){
         //    console.log(data);
         }
@@ -75,11 +76,12 @@ export default UpdateFixedAssetForm(props) {
     const categoriesOptions = categoriesList  
 
     function handle(e) {
-        const newData = { ...data }
-        newData[e.target.id] = e.target.value
-        setData(newData)
+        const {name, value} = e.target
+        setData({
+            ...data,
+            [name]:value
+        })
         setOpen(false)
-        // console.log(newData)
     }
 
     function handleClose(event, reason) {
@@ -103,26 +105,16 @@ export default UpdateFixedAssetForm(props) {
         }
         return hasErrors
     }
-    function submit(e) {
-        //e.preventDefault()
-        const errorsFromForm= validate(data)
+    function submit() {
+        const errorsFromForm= validate(data);
         setFormErrors(errorsFromForm)
         setIsSubmit(true)
         //console.log(formErrors)
         //debugger
         if(!hasFormErrors(errorsFromForm)){
-            Axios.put(url, {
-            Name: data.Name,
-            Description: data.Description==''? null:data.Description, // string
-            EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
-            Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
-            Features: data.Features==''? null:data.Features, // string
-            Quantity: data.Quantity==''? null:parseInt(data.Quantity), // int
-            ProgramHouseId : programHouseSelectedValue,
-            AssetCategoryId : categorySelectedValue
-            }).then((res) => {
+            axios.put(url, data).then((res) => {
                 if (res.status == 201) {               
-                    navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo creado exitosamente"}})
+                    navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo actualizado exitosamente"}})
                 }            
             }).catch ((apiError) => {
                 setError(apiError) 
