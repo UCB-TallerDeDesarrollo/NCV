@@ -14,5 +14,6 @@ describe('Show a fixed asset end to end tests', () => {
     cy.contains(2424.24)
     cy.contains('16 GB de Ram con targeta grafica NVIDIA')
     cy.contains(3)
+    cy.contains('Obsoleto')
   });
 });
