@@ -44,6 +44,7 @@ export default function UpdateFixedAssetForm(props) {
         axios.all([responseData]).then(
             axios.spread((...allData) => {
                 setData(allData[0].data)
+                console.log(allData[0].data)
             }))
     }
 
@@ -101,7 +102,7 @@ export default function UpdateFixedAssetForm(props) {
     function hasFormErrors(errorsFromForm){
         console.log('form errors',errorsFromForm)
         let hasErrors=true
-        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.Quantity && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features){
+        if(!errorsFromForm.name && !errorsFromForm.description && !errorsFromForm.price && !errorsFromForm.quantity && !errorsFromForm.programHouseId && !errorsFromForm.assetCategoryId && !errorsFromForm.features){
             hasErrors = false
         }
         return hasErrors
@@ -111,7 +112,7 @@ export default function UpdateFixedAssetForm(props) {
         setFormErrors(errorsFromForm)
         setIsSubmit(true)
         //console.log(formErrors)
-        //debugger
+        debugger;
         if(!hasFormErrors(errorsFromForm)){
             axios.put(url, data).then((res) => {
                 if (res.status == 201) {               
@@ -126,48 +127,48 @@ export default function UpdateFixedAssetForm(props) {
 
     const validate = (datas) => {        
         const errors = {
-            Name: '', // string
-            Description: '', // string
-            EntryDate: '', // dateTime
-            Price: '', // decimal
-            Features: '', // string
-            Quantity: '', // int
-            ProgramHouseId : '', //int
-            AssetCategoryId : '' //int
+            name: '', // string
+            description: '', // string
+            entryDate: '', // dateTime
+            price: '', // decimal
+            features: '', // string
+            quantity: '', // int
+            programHouseId : '', //int
+            assetCategoryId : '' //int
         }
         const regexNumber = /^[0-9]+([.][0-9]+)?$/;
         //debugger
-        if(!datas.Name){
-            errors.Name="El Nombre del Activo Fijo es requerido!";
-        }else if(datas.Name.length>60){
-            errors.Name="El campo Nombre del Activo Fijo debe ser menor o igual a 60 caracteres!";
+        if(!datas.name){
+            errors.name="El Nombre del Activo Fijo es requerido!";
+        }else if(datas.name.length>60){
+            errors.name="El campo Nombre del Activo Fijo debe ser menor o igual a 60 caracteres!";
         }
     
-        if(datas.Description.length>1000){
-            errors.Description="El campo Descripción del Activo Fijo debe ser menor o igual a 1000 caracteres!";
+        if(datas.description.length>1000){
+            errors.description="El campo Descripción del Activo Fijo debe ser menor o igual a 1000 caracteres!";
         }
     
-        if(!datas.Price){
-            errors.Price= "El Precio del Activo Fijo es requerido!";
-        }else if(datas.Price < 0){
-            errors.Price= "El Precio del Activo Fijo debe ser un número positivo!";
-        }else if(!regexNumber.test(datas.Price)){
-            errors.Price= "El Precio del Activo Fijo debe ser ingresado en formato decimal!";
+        if(!datas.price){
+            errors.price= "El Precio del Activo Fijo es requerido!";
+        }else if(datas.price < 0){
+            errors.price= "El Precio del Activo Fijo debe ser un número positivo!";
+        }else if(!regexNumber.test(datas.price)){
+            errors.price= "El Precio del Activo Fijo debe ser ingresado en formato decimal!";
         }
     
-        if(!datas.Quantity){
-            errors.Quantity= "La Cantidad del Activo Fijo es requerida!";
+        if(!datas.quantity){
+            errors.quantity= "La Cantidad del Activo Fijo es requerida!";
         }
 
         if(!programHouseSelectedValue){
-            errors.ProgramHouseId= "El programa del Activo Fijo es requerido!";
+            errors.programHouseId= "El programa del Activo Fijo es requerido!";
         }
 
         if(!categorySelectedValue){
-            errors.AssetCategoryId= "La categoría del Activo Fijo es requerida!";
+            errors.assetCategoryId= "La categoría del Activo Fijo es requerida!";
         }
     
-        if(datas.Features.length>1000){
+        if(datas.features.length>1000){
             errors.Features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
         }
         console.log('errs',errors)
@@ -188,14 +189,14 @@ export default function UpdateFixedAssetForm(props) {
                     required
                     id="Name"
                     name="Name"
-                    value={data.Name}
+                    value={data.name}
                     label="Nombre"
                     type="text"
                     error={nameInputError}
                     helperText={nameError}
                     onChange={(e) => {
                         handle(e)
-                        if(data.Name.length === 0){
+                        if(data.name.length === 0){
                             setNameInputError(true);
                             setNameError("El nombre del activo no puede estar vacío");
                         }
@@ -205,8 +206,8 @@ export default function UpdateFixedAssetForm(props) {
                         } 
                     }}
                 />
-                {formErrors.Name? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
-                    {formErrors.Name}                   
+                {formErrors.name? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
+                    {formErrors.name}                   
                 </Alert>:<p></p> }
                 <Dropdown 
                     name={"Categoría"} 
@@ -230,21 +231,21 @@ export default function UpdateFixedAssetForm(props) {
                     }}
                     >                                        
                 </Dropdown> 
-                {formErrors.AssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.AssetCategoryId}  </Alert>:<p></p> }             
+                {formErrors.assetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.assetCategoryId}  </Alert>:<p></p> }             
                 <InputText
                     onChange={(e) => handle(e)}
                     id="Description"
-                    value={data.Description}
+                    value={data.description}
                     label="Descripción"
                     type="text"
                 />
-                {formErrors.Description? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Description} </Alert>:<p></p> }
+                {formErrors.description? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.description} </Alert>:<p></p> }
                 <InputText
                     onChange={(e) => handle(e)}
                     id="EntryDate"
-                    value={data.EntryDate}
+                    value={data.entryDate}
                     label="Fecha de Entrada"
                     type="date"
                     InputLabelProps={{
@@ -255,7 +256,7 @@ export default function UpdateFixedAssetForm(props) {
                     required
                     onChange={(e) => {
                         handle(e)
-                        if(data.Price.length === 0){
+                        if(data.price.length === 0){
                             setPriceInputError(true);
                             setPriceError("El precio del activo no puede estar vacío");
                         }
@@ -265,14 +266,14 @@ export default function UpdateFixedAssetForm(props) {
                         } 
                     }}
                     id="Price"
-                    value={data.Price}
+                    value={data.price}
                     label="Precio"
                     type="number"
                     error={priceInputError}
                     helperText={priceError}
                 />
-                {formErrors.Price? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Price}  </Alert>:<p></p> }
+                {formErrors.price? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.price}  </Alert>:<p></p> }
                 <Dropdown 
                     name={"Programa"} 
                     id="programa-drop" 
@@ -284,7 +285,7 @@ export default function UpdateFixedAssetForm(props) {
                     required
                     onChange={(e) => {
                         handle(e)
-                        if(data.ProgramHouseId.length === 0){
+                        if(data.programHouseId.length === 0){
                             setProgramInputError(true);
                             setProgramError("El programa del activo no puede estar vacío");
                         }
@@ -295,23 +296,23 @@ export default function UpdateFixedAssetForm(props) {
                     }}
                     >                                        
                 </Dropdown>   
-                {formErrors.ProgramHouseId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.ProgramHouseId}  </Alert>:<p></p> }                 
+                {formErrors.programHouseId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.programHouseId}  </Alert>:<p></p> }                 
                 
                 <InputText
                     onChange={(e) => handle(e)}
                     id="Features"
-                    value={data.Features}
+                    value={data.features}
                     label="Características"
                     type="text"
                 />
-                 {formErrors.Features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Features} </Alert>:<p></p> }
+                 {formErrors.features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.features} </Alert>:<p></p> }
                 <InputText
                     required
                     onChange={(e) => {
                         handle(e)
-                        if(data.Quantity.length === 0){
+                        if(data.quantity.length === 0){
                             setQuantityInputError(true);
                             setQuantityError("La cantidad del activo no puede estar vacía");
                         }
@@ -321,14 +322,14 @@ export default function UpdateFixedAssetForm(props) {
                         } 
                     }}
                     id="Quantity"
-                    value={data.Quantity}
+                    value={data.quantity}
                     label="Cantidad"
                     type="number"
                     error={quantityInputError}
                     helperText={quantityError}
                 />
-                {formErrors.Quantity? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Quantity}  </Alert>:<p></p> }
+                {formErrors.quantity? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.quantity}  </Alert>:<p></p> }
                 <ButtonPrimary label={"Guardar cambios"} id="submit_button" onClick={submit}/>
                 <Snackbar
                     open={open}
