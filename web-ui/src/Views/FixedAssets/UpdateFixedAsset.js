@@ -8,12 +8,13 @@ import InputText from '../../Components/InputText'
 import Navbar from '../../Components/NavBar'
 import Box from '@mui/material/Box'
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom'
 import ButtonPrimary from '../../Components/MUI-Button'
 import getFromApi from '../../Components/GetFromApi'
 import Dropdown from '../../Components/Dropdown'
 import axios from 'axios';
 
-export default UpdateFixedAssetForm(props) {
+export default function UpdateFixedAssetForm(props) {
     const { fixedAssetId } = useParams()
     const url = `https://ncv-api.herokuapp.com/api/fixedAssets/${fixedAssetId}`
     const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
@@ -182,7 +183,7 @@ export default UpdateFixedAssetForm(props) {
         <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
         </Box>
         <div style={{display:'flex', justifyContent:'center'}}>
-            <FormContainer title="Crear activo fijo">
+            <FormContainer title="Editar activo fijo">
                 <InputText
                     required
                     id="Name"
@@ -328,7 +329,7 @@ export default UpdateFixedAssetForm(props) {
                 />
                 {formErrors.Quantity? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.Quantity}  </Alert>:<p></p> }
-                <ButtonPrimary label={"Crear"} id="submit_button" onClick={submit}/>
+                <ButtonPrimary label={"Guardar cambios"} id="submit_button" onClick={submit}/>
                 <Snackbar
                     open={open}
                     autoHideDuration={6000}
