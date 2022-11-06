@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NinosConValorAPI.Data.Entity;
 using NinosConValorAPI.Data.Repository;
@@ -75,6 +76,22 @@ namespace NinosConValorAPI.Services
 
             var fixedAssetEnumerable = _mapper.Map<FixedAssetModel>(fixedAsset);
             return fixedAssetEnumerable;
+        }
+
+        public async Task<FixedAssetModel> UpdateFixedAssetAsync(int fixedAssetId, FixedAssetModel fixedAsset)
+        {
+            await GetFixedAssetAsync(fixedAssetId);
+            var fixedAssetEntity = _mapper.Map<FixedAssetEntity>(fixedAsset);
+            fixedAssetEntity.Id = fixedAssetId;
+            await _NCVRepository.UpdateFixedAssetAsync(fixedAssetId, fixedAssetEntity);
+
+            var result = await _NCVRepository.SaveChangesAsync();
+            if (result)
+            {
+                return _mapper.Map<FixedAssetModel>(fixedAssetEntity);
+            }
+
+            throw new Exception("Error en la base de datos.");
         }
     }
 }

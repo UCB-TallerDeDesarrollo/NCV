@@ -22,7 +22,8 @@ namespace NinosConValorAPI.Data.Repository
         public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int categoryId);
         Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync();
         Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId);
-      
+        Task UpdateFixedAssetAsync(int fixedAssetId, FixedAssetEntity fixedAsset);
+
         // BIOMETRICS
         Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId);
         Task<BiometricsEntity> CreateBiometricsAsync(BiometricsEntity biometrics);

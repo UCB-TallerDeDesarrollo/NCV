@@ -73,5 +73,22 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió.");
             }
         }
+
+        [HttpPut("{fixedAssetId:int}")]
+        public async Task<IActionResult> UpdateFixedAssetAsync(int fixedAssetId, [FromBody] FixedAssetModel fixedAsset)
+        {
+            try
+            {
+                return Ok(await _fixedAssetService.UpdateFixedAssetAsync(fixedAssetId, fixedAsset));
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Lo sentimos, algo sucedió: {ex.Message}");
+            }
+        }
     }
 }

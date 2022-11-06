@@ -5,13 +5,15 @@ import ErrorPage from '../../Components/ErrorPage'
 import Navbar from '../../Components/NavBar'
 import SingleItemCard from '../../Components/SingleItemCard'
 import BoxWithButton from '../../Components/BoxWithButton'
+import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../Components/MUI-Button';
 
 export function ShowFixedAsset() {
     const { fixedAssetId } = useParams()
     const url = `https://ncv-api.herokuapp.com/api/fixedAssets/${fixedAssetId}`
     const { apiData:fixedAsset, error } = getFromApi(url)
     let imageUrl = "https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg" 
-        
+    const navigateUpdateFixedAsset = () => { navigate(`/activos-fijos/${fixedAssetId}/editar-activo-fijo`); }
+
     if(error){
         return ErrorPage(error)
     }
@@ -29,6 +31,7 @@ export function ShowFixedAsset() {
             <Navbar />
             <div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
                 <SingleItemCard title={fixedAsset.name} secondaryField={fixedAsset.programHouseName} element={fixedAssetData} imageUrl={imageUrl} imageCirle={false} imgHeight={300} imgWidth={500} />        
+                <ButtonPrimary label="Editar Activo Fijo" onClick={navigateUpdateFixedAsset}/>
             </div>
         </>
         )
