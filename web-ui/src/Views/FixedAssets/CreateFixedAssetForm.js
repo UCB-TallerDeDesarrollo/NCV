@@ -30,6 +30,24 @@ function CreateFixedAssetForm(props) {
     const [programError, setProgramError] = useState("Seleccione un programa")
     const [quantityInputError, setQuantityInputError] = useState(null)
     const [quantityError, setQuantityError] = useState("")
+    const [statusSelectedValue, setStatusSelectedValue] = useState(null)
+    const statusOptions = [
+        {
+            value: 'Bueno',
+            label: 'Bueno',
+        },
+        {
+            value: 'Regular',
+            label: 'Regular',
+        },
+        {
+          value: 'Baja',
+          label: 'Baja',
+        },
+        {
+          value: 'Obsoleto',
+          label: 'Obsoleto'
+        }]
     const navigate = useNavigate()
     const [data, setData] = useState({
         Name: '', // string
@@ -39,7 +57,8 @@ function CreateFixedAssetForm(props) {
         Features: '', // string
         Quantity: '', // int
         ProgramHouseId : '', //int
-        AssetCategoryId : '' //int
+        AssetCategoryId : '', //int
+        Status: '' //string
     })
     //programHouses
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
@@ -118,7 +137,8 @@ function CreateFixedAssetForm(props) {
             Features: data.Features==''? null:data.Features, // string
             Quantity: data.Quantity==''? null:parseInt(data.Quantity), // int
             ProgramHouseId : programHouseSelectedValue,
-            AssetCategoryId : categorySelectedValue
+            AssetCategoryId : categorySelectedValue,
+            State: statusSelectedValue //string
             }).then((res) => {
                 if (res.status == 201) {               
                     navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo creado exitosamente"}})
@@ -139,7 +159,8 @@ function CreateFixedAssetForm(props) {
             Features: '', // string
             Quantity: '', // int
             ProgramHouseId : '', //int
-            AssetCategoryId : '' //int
+            AssetCategoryId : '', //int
+            Status: ''//string
         }
         const regexNumber = /^[0-9]+([.][0-9]+)?$/;
         //debugger
@@ -171,6 +192,10 @@ function CreateFixedAssetForm(props) {
 
         if(!categorySelectedValue){
             errors.AssetCategoryId= "La categoría del Activo Fijo es requerida!";
+        }
+
+        if(!statusSelectedValue){
+            errors.Status= "El estado del Activo Fijo es requerido!";
         }
     
         if(datas.Features.length>1000){
@@ -313,6 +338,17 @@ function CreateFixedAssetForm(props) {
                 />
                  {formErrors.Features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.Features} </Alert>:<p></p> }
+                <Dropdown 
+                    name={"Estado"} 
+                    id="estado-drop" 
+                    options={statusOptions}                                         
+                    selectedValue={statusSelectedValue}
+                    setSelectedValue = {setStatusSelectedValue}
+                    required                    
+                    >                                        
+                </Dropdown>   
+                {formErrors.Status? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.Status}  </Alert>:<p></p> }
                 <InputText
                     required
                     onChange={(e) => {

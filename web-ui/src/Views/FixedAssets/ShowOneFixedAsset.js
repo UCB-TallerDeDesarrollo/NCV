@@ -25,6 +25,7 @@ export function ShowFixedAsset() {
         "FECHA DE ENTRADA": fixedAsset.entryDate!=null? fixedAsset.entryDate.split('T')[0]:null,
         "CANTIDAD": fixedAsset.quantity,
         "PRECIO": fixedAsset.price,
+        "ESTADO": fixedAsset.state
     }
     return (
         <>
