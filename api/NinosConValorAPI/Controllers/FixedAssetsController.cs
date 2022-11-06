@@ -79,17 +79,6 @@ namespace NinosConValorAPI.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    foreach (var pair in ModelState)
-                    {
-                        if (pair.Key == nameof(fixedAsset.Name) && pair.Value.Errors.Count > 0)
-                        {
-                            return BadRequest(pair.Value.Errors);
-                        }
-                    }
-                }
-
                 return Ok(await _fixedAssetService.UpdateFixedAssetAsync(fixedAssetId, fixedAsset));
             }
             catch (NotFoundElementException ex)
@@ -98,7 +87,7 @@ namespace NinosConValorAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Algo paso: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Lo sentimos, algo sucedió: {ex.Message}");
             }
         }
     }
