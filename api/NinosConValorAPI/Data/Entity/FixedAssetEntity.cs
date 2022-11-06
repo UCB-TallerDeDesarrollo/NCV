@@ -25,5 +25,7 @@ namespace NinosConValorAPI.Data.Entity
         
         [ForeignKey("AssetCategoryId")]
         public virtual AssetCategoryEntity? AssetCategory { get; set; }
+
+        public string? State { get; set; }
     }
 }
