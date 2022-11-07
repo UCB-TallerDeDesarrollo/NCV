@@ -93,6 +93,7 @@ namespace NinosConValorAPI.Data.Repository
             query = query.AsNoTracking();
             query = query.Include(f => f.AssetCategory);
             query = query.Include(f => f.ProgramHouse);
+            query = query.Where(f => f.Deleted == false);
             var result = await query.ToListAsync();
             return result;
         }
@@ -178,6 +179,13 @@ namespace NinosConValorAPI.Data.Repository
 
             _dbContext.Entry(kidToUpdate).CurrentValues.SetValues(kidModel);
             return true;
+        }
+
+        public async Task DeleteFixedAssetAsync(int fixedAssetId)
+        {
+            IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
+            var fixedAssetToDelete = await query.FirstOrDefaultAsync(g => (g.Id == fixedAssetId) & (g.Deleted == false));
+            fixedAssetToDelete.Deleted = true;
         }
     }
 }

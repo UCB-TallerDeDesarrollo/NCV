@@ -90,5 +90,23 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Lo sentimos, algo sucedió: {ex.Message}");
             }
         }
+
+        [HttpDelete("{fixedAssetId:int}")]
+        public async Task<ActionResult> DeleteRestaurantAsync(int fixedAssetId)
+        {
+            try
+            {
+                await _fixedAssetService.DeleteFixedAssetAsync(fixedAssetId);
+                return Ok();
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Lo sentimos, algo sucedió: {ex.Message}");
+            }
+        }
     }
 }

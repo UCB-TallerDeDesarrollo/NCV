@@ -23,6 +23,7 @@ namespace NinosConValorAPI.Data.Repository
         Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync();
         Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId);
         Task UpdateFixedAssetAsync(int fixedAssetId, FixedAssetEntity fixedAsset);
+        Task DeleteFixedAssetAsync(int fixedAssetId);
 
         // BIOMETRICS
         Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId);
