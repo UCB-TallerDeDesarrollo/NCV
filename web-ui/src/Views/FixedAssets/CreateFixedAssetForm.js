@@ -28,8 +28,6 @@ function CreateFixedAssetForm(props) {
     const [priceError, setPriceError] = useState("")
     const [programInputError, setProgramInputError] = useState(null)
     const [programError, setProgramError] = useState("Seleccione un programa")
-    const [quantityInputError, setQuantityInputError] = useState(null)
-    const [quantityError, setQuantityError] = useState("")
     const [statusSelectedValue, setStatusSelectedValue] = useState(null)
     const statusOptions = [
         {
@@ -56,7 +54,6 @@ function CreateFixedAssetForm(props) {
         EntryDate: '', // dateTime
         Price: '', // decimal
         Features: '', // string
-        Quantity: '', // int
         ProgramHouseId : '', //int
         AssetCategoryId : '', //int
         Status: '' //string
@@ -117,7 +114,7 @@ function CreateFixedAssetForm(props) {
     function hasFormErrors(errorsFromForm){
         console.log('form errors',errorsFromForm)
         let hasErrors=true
-        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.Quantity && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features){
+        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features){
             hasErrors = false
         }
         return hasErrors
@@ -137,7 +134,6 @@ function CreateFixedAssetForm(props) {
             EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
             Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
             Features: data.Features==''? null:data.Features, // string
-            Quantity: data.Quantity==''? null:parseInt(data.Quantity), // int
             ProgramHouseId : programHouseSelectedValue,
             AssetCategoryId : categorySelectedValue,
             State: statusSelectedValue //string
@@ -160,7 +156,6 @@ function CreateFixedAssetForm(props) {
             EntryDate: '', // dateTime
             Price: '', // decimal
             Features: '', // string
-            Quantity: '', // int
             ProgramHouseId : '', //int
             AssetCategoryId : '', //int
             Status: ''//string
@@ -187,10 +182,6 @@ function CreateFixedAssetForm(props) {
             errors.Price= "El Precio del Activo Fijo debe ser un número positivo!";
         }else if(!regexNumber.test(datas.Price)){
             errors.Price= "El Precio del Activo Fijo debe ser ingresado en formato decimal!";
-        }
-    
-        if(!datas.Quantity){
-            errors.Quantity= "La Cantidad del Activo Fijo es requerida!";
         }
 
         if(!programHouseSelectedValue){
@@ -378,28 +369,6 @@ function CreateFixedAssetForm(props) {
                 </Dropdown>   
                 {formErrors.Status? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.Status}  </Alert>:<p></p> }
-                <InputText
-                    required
-                    onChange={(e) => {
-                        handle(e)
-                        if(data.Quantity.length === 0){
-                            setQuantityInputError(true);
-                            setQuantityError("La cantidad del activo no puede estar vacía");
-                        }
-                        else{
-                            setQuantityInputError(false);
-                            setQuantityError("");
-                        } 
-                    }}
-                    id="Quantity"
-                    value={data.Quantity}
-                    label="Cantidad"
-                    type="number"
-                    error={quantityInputError}
-                    helperText={quantityError}
-                />
-                {formErrors.Quantity? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Quantity}  </Alert>:<p></p> }
                 <ButtonPrimary label={"Crear"} id="submit_button" onClick={submit}/>
                 <Snackbar
                     open={open}
