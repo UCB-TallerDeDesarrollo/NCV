@@ -13,6 +13,7 @@ import { EditUser } from './Views/User/EditUser'
 import CreateFixedAssetForm from './Views/FixedAssets/CreateFixedAssetForm'
 import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
 import { ShowFixedAsset } from './Views/FixedAssets/ShowOneFixedAsset'
+import UpdateFixedAssetForm from './Views/FixedAssets/UpdateFixedAsset'
 
 import AddHealthReport from './Views/KidsFiles/AddHealthReport'
 import { ShowKidsFiles } from './Views/KidsFiles/ShowKidsFiles'
@@ -47,6 +48,10 @@ function App() {
                     <Route
                         path="/activos-fijos/:fixedAssetId"
                         element={<ShowFixedAsset />}
+                    ></Route>
+                    <Route
+                        path="activos-fijos/:fixedAssetId/editar-activo-fijo"
+                        element={<UpdateFixedAssetForm />}
                     ></Route>
                     <Route
                         path="/vista-usuarios/:userId"

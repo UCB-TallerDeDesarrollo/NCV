@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import getFromApi from '../../Components/GetFromApi'
 import ErrorPage from '../../Components/ErrorPage'
 import Navbar from '../../Components/NavBar'
@@ -12,6 +13,7 @@ export function ShowFixedAsset() {
     const url = `https://ncv-api.herokuapp.com/api/fixedAssets/${fixedAssetId}`
     const { apiData:fixedAsset, error } = getFromApi(url)
     let imageUrl = "https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg" 
+    const navigate = useNavigate();
     const navigateUpdateFixedAsset = () => { navigate(`/activos-fijos/${fixedAssetId}/editar-activo-fijo`); }
 
     if(error){
