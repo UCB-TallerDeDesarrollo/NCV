@@ -15,6 +15,7 @@ namespace UnitTests.DBUT
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
+                Code = "TEC-489",
                 Name = "Computadora",
                 Description = "Computadora de escritorio",
                 EntryDate = new DateTime(2001, 3, 2),
