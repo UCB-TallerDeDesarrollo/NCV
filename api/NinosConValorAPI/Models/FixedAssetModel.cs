@@ -15,9 +15,6 @@ namespace NinosConValorAPI.Models
         [Required(ErrorMessage = "Precio Requerido")]
         public decimal? Price { get; set; }
         public string? Features { get; set; }
-
-        [Required(ErrorMessage = "Cantidad Requerida")]
-        public int? Quantity { get; set; }
         public int ProgramHouseId { get; set; }
         public int AssetCategoryId { get; set; }
         public string? AssetCategoryCategory { get; set; }

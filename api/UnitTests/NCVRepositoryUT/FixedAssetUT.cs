@@ -46,7 +46,6 @@ namespace UnitTests.NCVRepositoryUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5,
                 ProgramHouse = programHouse,
                 AssetCategory = assetCategory,
                 State= "Obsoleto"
@@ -91,7 +90,6 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 1,
                 Name = "Computadora",
                 Price = 100.58m,
-                Quantity = 5,
                 ProgramHouse = programHouse,
                 AssetCategory = assetCategory,
                 State = "Obsoleto"
@@ -111,7 +109,6 @@ namespace UnitTests.NCVRepositoryUT
             Assert.Null(fixedAsset.EntryDate);
             Assert.Equal(100.58m, fixedAsset.Price);
             Assert.Null(fixedAsset.Features);
-            Assert.Equal(5, fixedAsset.Quantity);
             Assert.Equal("Obsoleto", fixedAsset.State);
         }
 
@@ -144,7 +141,6 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 1,
                 Name = "Computadora",
                 Price = 100.58m,
-                Quantity = 5,
                 ProgramHouse = programHouse,
                 AssetCategory = assetCategory,
                 State = "Obsoleto"
@@ -164,7 +160,6 @@ namespace UnitTests.NCVRepositoryUT
             Assert.Null(fixedAsset.EntryDate);
             Assert.Equal(100.58m, fixedAsset.Price);
             Assert.Null(fixedAsset.Features);
-            Assert.Equal(5, fixedAsset.Quantity);
             Assert.Equal("Obsoleto", fixedAsset.State);
         }
 
@@ -199,7 +194,6 @@ namespace UnitTests.NCVRepositoryUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5,
                 ProgramHouse= programHouse,
                 AssetCategory = assetCategory,
                 State = "Obsoleto"
@@ -247,7 +241,6 @@ namespace UnitTests.NCVRepositoryUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5,
                 ProgramHouse = programHouse,
                 AssetCategory = assetCategory,
                 State = "Obsoleto"
@@ -295,7 +288,6 @@ namespace UnitTests.NCVRepositoryUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5,
                 ProgramHouse = programHouse,
                 AssetCategory = assetCategory,
                 State = "Obsoleto"
@@ -343,7 +335,6 @@ namespace UnitTests.NCVRepositoryUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                Quantity = 5,
                 ProgramHouse = programHouse,
                 AssetCategory = assetCategory,
                 State = "Obsoleto"
