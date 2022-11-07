@@ -93,5 +93,13 @@ namespace NinosConValorAPI.Services
 
             throw new Exception("Error en la base de datos.");
         }
+
+        public async Task DeleteFixedAssetAsync(int fixedAssetId)
+        {
+            //validate if it exist
+            await GetFixedAssetAsync(fixedAssetId);
+            await _NCVRepository.DeleteFixedAssetAsync(fixedAssetId);
+            var result = await _NCVRepository.SaveChangesAsync();
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace NinosConValorAPI.Services
         Task<IEnumerable<FixedAssetModel>> GetFixedAssetsAsync();
         Task<FixedAssetModel> GetFixedAssetAsync(int fixedAssetId);
         Task<FixedAssetModel> UpdateFixedAssetAsync(int fixedAssetId, FixedAssetModel fixedAsset);
+        Task DeleteFixedAssetAsync(int fixedAssetId);
     }
 }
