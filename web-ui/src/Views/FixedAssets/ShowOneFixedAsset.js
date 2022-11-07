@@ -33,7 +33,7 @@ export function ShowFixedAsset() {
         <>
             <Navbar />
             <div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
-                <SingleItemCard title={fixedAsset.name} secondaryField={fixedAsset.programHouseName} element={fixedAssetData} imageUrl={imageUrl} imageCirle={false} imgHeight={300} imgWidth={500} />        
+                <SingleItemCard title={fixedAsset.code ? `${fixedAsset.name} #${fixedAsset.code}` : `${fixedAsset.name}`} secondaryField={fixedAsset.programHouseName} element={fixedAssetData} imageUrl={imageUrl} imageCirle={false} imgHeight={300} imgWidth={500} />        
                 <ButtonPrimary label="Editar Activo Fijo" onClick={navigateUpdateFixedAsset}/>
             </div>
         </>
