@@ -7,6 +7,8 @@ namespace NinosConValorAPI.Models
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage ="Código Requerido")]
+        public string? Code { get; set; }
         [Required(ErrorMessage ="Nombre Requerido")]
         public string? Name { get; set; }
         public string? Description { get; set; }
