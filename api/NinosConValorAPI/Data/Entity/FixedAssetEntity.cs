@@ -13,9 +13,6 @@ namespace NinosConValorAPI.Data.Entity
         public string? Name { get; set; }
         [Required(ErrorMessage = "Precio Requerido")]
         public decimal? Price { get; set; }
-        [Required(ErrorMessage = "Cantidad Requerida")]
-        public int? Quantity { get; set; }
-
         public string? Description { get; set; }
         public DateTime? EntryDate { get; set; }
         public string? Features { get; set; }
