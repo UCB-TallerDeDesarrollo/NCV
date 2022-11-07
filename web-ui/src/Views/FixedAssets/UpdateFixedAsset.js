@@ -33,8 +33,26 @@ export default function UpdateFixedAssetForm(props) {
     const [programError, setProgramError] = useState("Seleccione un programa")
     const [quantityInputError, setQuantityInputError] = useState(null)
     const [quantityError, setQuantityError] = useState("")
+    const [statusSelectedValue, setStatusSelectedValue] = useState(null)
     const navigate = useNavigate()
     const [data, setData] = useState([])
+    const statusOptions = [
+        {
+            value: 'Bueno',
+            label: 'Bueno',
+        },
+        {
+            value: 'Regular',
+            label: 'Regular',
+        },
+        {
+          value: 'Baja',
+          label: 'Baja',
+        },
+        {
+          value: 'Obsoleto',
+          label: 'Obsoleto'
+        }]
     //programHouses
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
     const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)    
@@ -112,7 +130,7 @@ export default function UpdateFixedAssetForm(props) {
         setFormErrors(errorsFromForm)
         setIsSubmit(true)
         //console.log(formErrors)
-        debugger;
+        //debugger;
         if(!hasFormErrors(errorsFromForm)){
             axios.put(url, data).then((res) => {
                 if (res.status == 201) {               
@@ -308,6 +326,15 @@ export default function UpdateFixedAssetForm(props) {
                 />
                  {formErrors.features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.features} </Alert>:<p></p> }
+                <Dropdown 
+                    name={"Estado"} 
+                    id="estado-drop" 
+                    options={statusOptions}                                         
+                    selectedValue={statusSelectedValue}
+                    setSelectedValue = {setStatusSelectedValue}
+                    required                    
+                    >                                        
+                </Dropdown>
                 <InputText
                     required
                     onChange={(e) => {
