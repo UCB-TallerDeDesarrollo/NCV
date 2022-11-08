@@ -92,7 +92,7 @@ namespace NinosConValorAPI.Controllers
         }
 
         [HttpDelete("{fixedAssetId:int}")]
-        public async Task<ActionResult> DeleteRestaurantAsync(int fixedAssetId)
+        public async Task<ActionResult> DeleteFixedAssetAsync(int fixedAssetId)
         {
             try
             {
