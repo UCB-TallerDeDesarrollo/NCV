@@ -76,13 +76,14 @@ function formatDecimals(num){
 }
 
 const biometricsForm = {
-    registerDate: '',
+    registerDate: "2018-07-22",
     weight: '',
     height: ''
 }
 
 function AddRowWeightAndHeight({setBiometrics}){
     let actualDate = new Date()
+    biometricsForm.registerDate = actualDate.toJSON().split("T")[0]
     const {kidId} = useParams()
     var url = "https://ncv-api.herokuapp.com/api/kids/" + kidId +"/biometrics"
 
@@ -104,9 +105,6 @@ function AddRowWeightAndHeight({setBiometrics}){
                     })
                     .catch((e)=>{
                     })
-                // Será que aqui hay que llamar nuevamente la función de ver datos biometricos ?? , para que este actualizado el nuevo valor 
-                // navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Nuevo datos de  talla y peso añadido correctamente"}});
-                // O lo agrego manualmente?
             }
           })
           .catch(function (error) {
@@ -118,6 +116,7 @@ function AddRowWeightAndHeight({setBiometrics}){
           });
           biometricsData.height = ''
           biometricsData.weight = ''
+          biometricsData.registerDate = actualDate.toJSON().split("T")[0]
     }
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -127,13 +126,20 @@ function AddRowWeightAndHeight({setBiometrics}){
             [name]: value
         })
     }
-    
+    // {formatDate(actualDate)}
     return <div><TableContainer component={Paper}>
                 <Table sx={{ minWidth: 50 }} size="small" aria-label="a dense table">
                     {accesPermiss=="ComplitAcces"&&
                         <TableRow key={0} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell key={0} align={'center'} sx={{width:0.285}} >
-                            {formatDate(actualDate)}
+                                <input
+                                    placeholder="fecha..."
+                                    name="registerDate"
+                                    type="date"
+                                    value={biometricsData.registerDate}
+                                    onChange={handleInputChange}
+                                    style={{ width:120, textAlign:'center'}}
+                                ></input>
                             </TableCell>
                             <TableCell key={1} align={'center'}>
                                 <input
