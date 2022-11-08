@@ -51,6 +51,7 @@ function CreateFixedAssetForm(props) {
     const navigate = useNavigate()
     const [data, setData] = useState({
         Name: '', // string
+        Code: '', // string
         Description: '', // string
         EntryDate: '', // dateTime
         Price: '', // decimal
@@ -131,6 +132,7 @@ function CreateFixedAssetForm(props) {
         if(!hasFormErrors(errorsFromForm)){
             Axios.post(url, {
             Name: data.Name,
+            Code: data.Code,
             Description: data.Description==''? null:data.Description, // string
             EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
             Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
@@ -153,6 +155,7 @@ function CreateFixedAssetForm(props) {
     const validate = (datas) => {        
         const errors = {
             Name: '', // string
+            Code: '', // string
             Description: '', // string
             EntryDate: '', // dateTime
             Price: '', // decimal
@@ -168,6 +171,10 @@ function CreateFixedAssetForm(props) {
             errors.Name="El Nombre del Activo Fijo es requerido!";
         }else if(datas.Name.length>60){
             errors.Name="El campo Nombre del Activo Fijo debe ser menor o igual a 60 caracteres!";
+        }
+
+        if(!datas.Code){
+            errors.Code="El Código del Activo Fijo es requerido!";
         }
     
         if(datas.Description.length>1000){
@@ -238,6 +245,28 @@ function CreateFixedAssetForm(props) {
                 />
                 {formErrors.Name? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
                     {formErrors.Name}                   
+                </Alert>:<p></p> }
+                <InputText
+                    required
+                    id="Code"
+                    name="Code"
+                    value={data.Code}
+                    label="Código"
+                    type="text"
+                    onChange={(e) => {
+                        handle(e)
+                        // if(data.Code.length === 0){
+                        //     setNameInputError(true);
+                        //     setNameError("El código del activo no puede estar vacío");
+                        // }
+                        // else{
+                        //     setNameInputError(false);
+                        //     setNameError("");
+                        // } 
+                    }}
+                />
+                {formErrors.Code? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
+                    {formErrors.Code}                   
                 </Alert>:<p></p> }
                 <Dropdown 
                     name={"Categoría"} 
