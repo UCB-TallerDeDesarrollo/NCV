@@ -13,6 +13,7 @@ namespace NinosConValorAPI.Data
         public DbSet<HealthReportEntity> HealthReports { get; set; }
         public DbSet<AssetCategoryEntity> AssetCategories => Set<AssetCategoryEntity>();
         public DbSet<BiometricsEntity> Biometrics { get; set; }
+        public DbSet<EducationReportEntity> EducationReports { get; set; }
 
         public NCV_DBContext(DbContextOptions<NCV_DBContext> options) : base(options)
         {
@@ -61,6 +62,10 @@ namespace NinosConValorAPI.Data
             modelBuilder.Entity<AssetCategoryEntity>().ToTable("AssetCategory");
             modelBuilder.Entity<AssetCategoryEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<AssetCategoryEntity>().HasMany(d => d.FixedAssets).WithOne(d => d.AssetCategory);
+
+            //Education
+            modelBuilder.Entity<EducationReportEntity>().ToTable("EducationReports");
+            modelBuilder.Entity<EducationReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
         }
     }
 }
