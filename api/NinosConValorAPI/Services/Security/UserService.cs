@@ -343,10 +343,8 @@ namespace NinosConValorAPI.Services.Security
                     IsSuccess = false
                 };
             }
-
-            user.State = 0;
-            var result = await userManager.UpdateAsync(user);
-
+            
+            var result = await userManager.DeleteAsync(user);
             if (result.Succeeded)
             {
                 return new UserManagerResponse
