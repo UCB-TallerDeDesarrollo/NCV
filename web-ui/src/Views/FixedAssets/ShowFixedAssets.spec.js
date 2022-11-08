@@ -96,6 +96,7 @@ describe('Show Fixed Asset', () => {
   [
     {
        "id":1,
+       "code": "TEC-001",
        "name":"Asset name 1",
        "description":null,
        "entryDate":null,
@@ -105,6 +106,7 @@ describe('Show Fixed Asset', () => {
     },
     {
        "id":2,
+       "code": "TEC-002",
        "name":"Asset name 2",
        "description":null,
        "entryDate":null,
@@ -114,6 +116,7 @@ describe('Show Fixed Asset', () => {
     },
     {
        "id":3,
+       "code": "TEC-003",
        "name":"Asset name 3",
        "description":null,
        "entryDate":null,
@@ -123,6 +126,7 @@ describe('Show Fixed Asset', () => {
     },
     {
        "id":4,
+       "code": "TEC-004",
        "name":"Asset name 4",
        "description":null,
        "entryDate":null,
@@ -132,6 +136,7 @@ describe('Show Fixed Asset', () => {
     },
     {
        "id":5,
+       "code": "TEC-005",
        "name":"Asset name 5",
        "description":null,
        "entryDate":null,
