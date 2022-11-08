@@ -63,9 +63,7 @@ function CreateFixedAssetForm(props) {
     const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)    
 
     useEffect(()=>{
-        // console.log(formErrors)
         if (Object.keys(formErrors).length === 0 && isSubmit){
-        //    console.log(data);
         }
     },[formErrors]);
     //categories
@@ -95,7 +93,6 @@ function CreateFixedAssetForm(props) {
         newData[e.target.id] = e.target.value
         setData(newData)
         setOpen(false)
-        // console.log(newData)
     }
 
     function handleClose(event, reason) {
@@ -107,7 +104,6 @@ function CreateFixedAssetForm(props) {
     
     function checkError(){
         if(error){
-            //setOpen(true)
             return ErrorPage(error)
         }
     }
@@ -120,12 +116,9 @@ function CreateFixedAssetForm(props) {
         return hasErrors
     }
     function submit(e) {
-        //e.preventDefault()
         const errorsFromForm= validate(data)
         setFormErrors(errorsFromForm)
         setIsSubmit(true)
-        //console.log(formErrors)
-        //debugger
         if(!hasFormErrors(errorsFromForm)){
             Axios.post(url, {
             Name: data.Name,
@@ -161,7 +154,6 @@ function CreateFixedAssetForm(props) {
             Status: ''//string
         }
         const regexNumber = /^[0-9]+([.][0-9]+)?$/;
-        //debugger
         if(!datas.Name){
             errors.Name="El Nombre del Activo Fijo es requerido!";
         }else if(datas.Name.length>60){
@@ -205,7 +197,6 @@ function CreateFixedAssetForm(props) {
     
 
     if(error){
-        //setOpen(true)
         return ErrorPage(error)
     }
     return (
