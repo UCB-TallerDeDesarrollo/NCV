@@ -112,6 +112,10 @@ export function EditUser() {
             })
     }
 
+    function handleClose() {
+        navigate(`/vista-usuarios`);
+    }
+
     return (
         <>
             <Navbar />
@@ -198,7 +202,7 @@ export function EditUser() {
                     />
                     <ButtonSecondary
                         label={'Cancelar'}
-                        onClick={handleFormSubmit}
+                        onClick={handleClose}
                     />
                     </Box>
                    
