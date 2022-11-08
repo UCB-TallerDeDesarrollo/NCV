@@ -16,11 +16,14 @@ namespace NinosConValorAPI.Services.Security
         Task<IEnumerable<UserBasicInformationModel>> GetUsersAsync();
         Task<EditUserViewModel> GetUserByIdAsync(string userId);
         Task<UserManagerResponse> UpdateUsersAsync(EditUserViewModel model, string userId);
+        Task<UserManagerResponse> DeleteUserAsync(string userId);
 
         //Roles
         Task<UserManagerResponse> RegisterAdminUserAsync(RegisterViewModel model);
         Task<UserManagerResponse> RegisterAuntUserAsync(RegisterViewModel model);
         Task<UserManagerResponse> RegisterSuperUserAsync(RegisterViewModel model);
+
+
 
     }
 }
