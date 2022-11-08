@@ -44,7 +44,7 @@ function Navbar() {
         
             
             
-              <Typography sx={{cursor:'pointer' , flexGrow: 1, display: { xs: 'none', sm: 'block' }}}>
+              <Typography sx={{cursor:'pointer' , flexGrow: 1, display: {sm: 'block' }}}>
                  <img
                     onClick={handleClickHome}
                     height="60"
