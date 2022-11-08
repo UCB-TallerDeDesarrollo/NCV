@@ -17,6 +17,7 @@ namespace UnitTests.ModelsAndEntities
             var fixedAssetmodel = new FixedAssetModel()
             {
                 Id = 1,
+                Code = "TEC-489",
                 Name = "Computadora",
                 Description = "Computadora de escritorio",
                 EntryDate = new DateTime(2001,3,2),
@@ -27,6 +28,7 @@ namespace UnitTests.ModelsAndEntities
 
 
             Assert.Equal(1, fixedAssetmodel.Id);
+            Assert.Equal("TEC-489", fixedAssetmodel.Code);
             Assert.Equal("Computadora", fixedAssetmodel.Name);
             Assert.Equal("Computadora de escritorio", fixedAssetmodel.Description);
             Assert.Equal(new DateTime(2001, 3, 2), fixedAssetmodel.EntryDate);
@@ -43,6 +45,7 @@ namespace UnitTests.ModelsAndEntities
             var fixedAssetEntity = new FixedAssetEntity()
             {
                 Id = 1,
+                Code = "TEC-489",
                 Name = "Computadora",
                 Description = "Computadora de escritorio",
                 EntryDate = new DateTime(2001, 3, 2),
@@ -53,6 +56,7 @@ namespace UnitTests.ModelsAndEntities
 
 
             Assert.Equal(1, fixedAssetEntity.Id);
+            Assert.Equal("TEC-489", fixedAssetEntity.Code);
             Assert.Equal("Computadora", fixedAssetEntity.Name);
             Assert.Equal("Computadora de escritorio", fixedAssetEntity.Description);
             Assert.Equal(new DateTime(2001, 3, 2), fixedAssetEntity.EntryDate);
