@@ -33,6 +33,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+var accesPermiss = sessionStorage.getItem("Access")
+
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
     let urlCreateHealthReport = `/ninos/${kidId}/crear-reporte/`
@@ -128,33 +130,37 @@ function AddRowWeightAndHeight({setBiometrics}){
     
     return <div><TableContainer component={Paper}>
                 <Table sx={{ minWidth: 50 }} size="small" aria-label="a dense table">
-                    <TableRow key={0} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                        <TableCell key={0} align={'center'} sx={{width:0.285}} >
-                        {formatDate(actualDate)}
-                        </TableCell>
-                        <TableCell key={1} align={'center'}>
-                            <input
-                                placeholder="peso..."
-                                name="weight"
-                                value={biometricsData.weight}
-                                onChange={handleInputChange}
-                                style={{ width:70, textAlign:'center'}}
-                            ></input>
-                        </TableCell>
-                        <TableCell key={2} align={'center'}>
-                            <input
-                                placeholder="talla..."
-                                name="height"
-                                value={biometricsData.height}
-                                onChange={handleInputChange}
-                                style={{ width:70, textAlign:'center' }}
-                            ></input>
-                        </TableCell>
-                    </TableRow>
+                    {accesPermiss=="ComplitAcces"&&
+                        <TableRow key={0} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                            <TableCell key={0} align={'center'} sx={{width:0.285}} >
+                            {formatDate(actualDate)}
+                            </TableCell>
+                            <TableCell key={1} align={'center'}>
+                                <input
+                                    placeholder="peso..."
+                                    name="weight"
+                                    value={biometricsData.weight}
+                                    onChange={handleInputChange}
+                                    style={{ width:70, textAlign:'center'}}
+                                ></input>
+                            </TableCell>
+                            <TableCell key={2} align={'center'}>
+                                <input
+                                    placeholder="talla..."
+                                    name="height"
+                                    value={biometricsData.height}
+                                    onChange={handleInputChange}
+                                    style={{ width:70, textAlign:'center' }}
+                                ></input>
+                            </TableCell>
+                        </TableRow>
+                    }
                 </Table>
            </TableContainer>
            <Box sx={{pt: 3,display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
-                <ButtonPrimary key={2} label="Añadir datos" onClick={handleFormSubmit} />
+                {accesPermiss=="ComplitAcces"&&
+                    <ButtonPrimary key={2} label="Añadir datos" onClick={handleFormSubmit} />
+                }
             </Box>
            </div>
 }
@@ -476,7 +482,9 @@ function ShowOneKidFile() {
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName } itemsPerLine={3}/>
-            <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
+            {accesPermiss=="ComplitAcces"&&
+                <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
+            }
             <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
             <WeightAndHeight weightAndHeightData={biometrics} setBiometrics={setBiometrics}/>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
@@ -484,8 +492,9 @@ function ShowOneKidFile() {
                     {alertMessage}
                 </Alert>
             </Snackbar>
-            
-            <ButtonDanger key={2} label="Eliminar" id="delete_button" onClick={ToConfirmOpen} />
+            {accesPermiss=="ComplitAcces"&&
+                <ButtonDanger key={2} label="Eliminar" id="delete_button" onClick={ToConfirmOpen} />
+            }
             <Dialog open={openToConfirm} onClose={handleCloseToConfirm} id="confirmation_popup" sx={{borderRadius:3 }}>
                 <DialogTitle sx={{display:'flex', justifyContent:'center'}}>Eliminar</DialogTitle>
                 <DialogContent>
