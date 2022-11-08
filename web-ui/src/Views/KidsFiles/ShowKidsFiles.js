@@ -10,7 +10,7 @@ import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 import SearchBar from '../../Components/SearchBar';
 import { getListKids } from './API/getAxios';
-
+var accesPermiss = sessionStorage.getItem("Access")
 function ShowKidsFiles() {
     const [kidsList, setKidList] = useState([])
     const [searchResult, setSearchResults] = useState ([])
@@ -71,7 +71,9 @@ function ShowKidsFiles() {
     const navigate = useNavigate();
     const listHeaderComponents = <Box sx={{display: 'flex'}}>
         {searcher}
-        <ButtonPrimary label={"Registrar niño"} onClick={()=>navigate(newKidUrl)} sx={{alignSelf:'center'}}/>
+        {accesPermiss=="ComplitAcces"&&
+            <ButtonPrimary label={"Registrar niño"} onClick={()=>navigate(newKidUrl)} sx={{alignSelf:'center'}}/>
+        }
     </Box>
     return (
         <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>            

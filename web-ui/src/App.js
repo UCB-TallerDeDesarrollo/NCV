@@ -83,7 +83,7 @@ function App() {
             <Routes>
                 <Route exact path="/" element={<LoginForm />}></Route>
                 <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
-                <Route path="/registrar-nino" element={<AddKid />}></Route>
+                
                 <Route path="/ninos" element={<ShowKidsFiles />}></Route>
                 <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
                 <Route
