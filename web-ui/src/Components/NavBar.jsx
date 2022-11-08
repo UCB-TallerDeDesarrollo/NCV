@@ -42,10 +42,9 @@ function Navbar() {
     <AppBar sx={{backgroundColor: '#5CD4E2'}}>
       <Toolbar>
         
-       <Grid sx={{ placeItems: 'center', color:'#023859'}} container>
             
-            <Grid item xs={1}>
-              <Typography sx={{cursor:'pointer'}}>
+            
+              <Typography sx={{cursor:'pointer' , flexGrow: 1, display: { xs: 'none', sm: 'block' }}}>
                  <img
                     onClick={handleClickHome}
                     height="60"
@@ -53,35 +52,30 @@ function Navbar() {
                     src={imgNiñosConValor}
                     alt="Niños con Valor"
                     className="logo-img-nvar"
+
                 />
               </Typography>
-            </Grid>
             
-            <Grid item xs={4} />
+            
+       <Box sx={{color:'#023859', display: { xs: 'none', sm: 'block' }}} >
+            
             {accesPermiss=="ComplitAcces" &&
-              <Grid  item xs={1}>
-                  <Button sx={{marginLeft:35,width:150,textTransform:'none'}} color="inherit" onClick={handleClickViewUsers}>Usuarios</Button>
-              </Grid>
+                  <Button sx={{marginLeft:5,textTransform:'none'}} color="inherit" onClick={handleClickViewUsers}>Usuarios</Button>
             }
+
             {((accesPermiss=="ComplitAcces") || (accesPermiss=="RestrinccionAcces")) &&
-              <Grid  item xs={1}>
-                  <Button  sx={{marginLeft:40,width:150,textTransform:'none'}} className='btn-files' color="inherit" onClick={handleClickFiles}>Niños</Button>
-              </Grid>
+                  <Button  sx={{marginLeft:5,textTransform:'none'}} className='btn-files' color="inherit" onClick={handleClickFiles}>Niños</Button>
             }
 
             {accesPermiss=="ComplitAcces" &&
-              <Grid  item xs={1}>
-                  <Button sx={{marginLeft:45, width:150,textTransform:'none'}} className='btn-activosFijos' color="inherit" onClick={handleClickAssets}>Activos Fijos</Button>
-              </Grid>
+                  <Button sx={{marginLeft:5,textTransform:'none'}} className='btn-activosFijos' color="inherit" onClick={handleClickAssets}>Activos Fijos</Button>
             }
 
-            <Grid item xs={1}>
-                <Button sx={{marginLeft:50,width:100,textTransform:'none'}} color="inherit" onClick={handleClickExit}>Salir</Button>
-            </Grid>
+                <Button sx={{marginLeft:5,textTransform:'none'}} color="inherit" onClick={handleClickExit}>Salir</Button>
 
 
 
-        </Grid>
+        </Box>
         
       </Toolbar>
     </AppBar>
