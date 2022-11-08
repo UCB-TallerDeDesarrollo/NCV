@@ -7,9 +7,10 @@ import Navbar from '../../Components/NavBar'
 import FormContainer from '../../Components/FormContainer'
 import InputText from '../../Components/InputText'
 import Collapse from '@mui/material/Collapse'
-import ButtonPrimary from '../../Components/MUI-Button'
+import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
 import Alert from '@mui/material/Alert'
 import { useParams } from 'react-router-dom'
+import { Box } from '@mui/system'
 
 const roles = [
     {
@@ -111,6 +112,10 @@ export function EditUser() {
             })
     }
 
+    function handleClose() {
+        navigate(`/vista-usuarios`);
+    }
+
     return (
         <>
             <Navbar />
@@ -188,10 +193,20 @@ export function EditUser() {
                     ) : (
                         <p></p>
                     )}
+                    <Box sx={{alignItems :'center'}}>
                     <ButtonPrimary
-                        label={'Editar'}
+                        label={'Guardar Cambios'}
                         onClick={handleFormSubmit}
+                        sx={{marginRight:1}}
+                        
                     />
+                    <ButtonSecondary
+                        label={'Cancelar'}
+                        onClick={handleClose}
+                    />
+                    </Box>
+                   
+                    
                 </FormContainer>
             </div>
         </>
