@@ -60,12 +60,12 @@ function Navbar() {
             <Grid item xs={4} />
             {accesPermiss=="ComplitAcces" &&
               <Grid  item xs={1}>
-                  <Button sx={{marginLeft:35,width:150,textTransform:'none'}} color="inherit" onClick={handleClickViewUsers}>Lista de usuarios</Button>
+                  <Button sx={{marginLeft:35,width:150,textTransform:'none'}} color="inherit" onClick={handleClickViewUsers}>Usuarios</Button>
               </Grid>
             }
             {((accesPermiss=="ComplitAcces") || (accesPermiss=="RestrinccionAcces")) &&
               <Grid  item xs={1}>
-                  <Button  sx={{marginLeft:40,width:150,textTransform:'none'}} className='btn-files' color="inherit" onClick={handleClickFiles}>Files de los niños</Button>
+                  <Button  sx={{marginLeft:40,width:150,textTransform:'none'}} className='btn-files' color="inherit" onClick={handleClickFiles}>Niños</Button>
               </Grid>
             }
 
