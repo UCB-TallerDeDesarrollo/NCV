@@ -52,7 +52,7 @@ namespace UnitTests.ServiceUT
 
             // ASSERT
             Assert.Equal(1, educationReportCreated.KidId);
-            Assert.Equal("", educationReportCreated.Grade);
+            Assert.Equal("Primero Secundaria", educationReportCreated.Grade);
             Assert.Equal(1, educationReportCreated.Id);
         }
     }
