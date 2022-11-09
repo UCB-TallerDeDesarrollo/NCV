@@ -22,6 +22,7 @@ builder.Services.AddTransient<IBiometricsService, BiometricsService>();
 builder.Services.AddTransient<IProgramHouseService, ProgramHouseService>();
 builder.Services.AddTransient<IAssetCategoryService, AssetCategoryService>();
 builder.Services.AddTransient<INCVRepository, NCVRepository>();
+builder.Services.AddTransient<IEducationReportService, EducationReportService>();
 
 
 //entity framework config
