@@ -15,12 +15,12 @@ import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
 import { ShowFixedAsset } from './Views/FixedAssets/ShowOneFixedAsset'
 import UpdateFixedAssetForm from './Views/FixedAssets/UpdateFixedAsset'
 
-import AddHealthReport from './Views/KidsFiles/AddHealthReport'
+import AddHealthReport from './Views/KidsFiles/HealthReport/AddHealthReport'
 import { ShowKidsFiles } from './Views/KidsFiles/ShowKidsFiles'
 import { ShowOneKidFile } from './Views/KidsFiles/ShowOneKidFile'
-import DataHealth from './Views/KidsFiles/DataHealth'
-import AddKid from './Views/KidsFiles/AddKid'
-import EditKid from './Views/KidsFiles/EditKid'
+import DataHealth from './Views/KidsFiles/HealthReport/DataHealth'
+import AddKid from './Views/KidsFiles/BasicInformationReport/AddKid'
+import EditKid from './Views/KidsFiles/BasicInformationReport/EditKid'
 
 import ListUsers from './Views/User/ListUsers'
 

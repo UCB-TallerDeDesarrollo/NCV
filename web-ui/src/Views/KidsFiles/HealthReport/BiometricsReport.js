@@ -1,15 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom';
-import {useLocation} from 'react-router-dom'
+import {useParams } from 'react-router-dom'
 import axios from "axios";
-import Navbar from '../../Components/NavBar';
-import SingleItemCard from '../../Components/SingleItemCard'
-import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../Components/MUI-Button';
-import Alert from '@mui/material/Alert';
-import { Snackbar } from '@mui/material';
-import TableBasic from '../../Components/TableBasic';
-import Container from '../../Components/Container';
+import TableBasic from '../../../Components/TableBasic';
+import Container from '../../../Components/Container';
 import Box from '@mui/material/Box';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { Typography } from '@mui/material';
@@ -20,53 +13,15 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import Collapse from '@mui/material/Collapse';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContentText from '@mui/material/DialogContentText';
 import Table from '@mui/material/Table';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../../Components/MUI-Button';
 
-
-import WeightAndHeight from '../../Views/KidsFiles/HealthReport/BiometricsReport.js'
 var accesPermiss = sessionStorage.getItem("Access")
 
-function HealthReport({kidId, healthReport, healthReportStatusCode}){
-    const navigate = useNavigate();
-    let urlCreateHealthReport = `/ninos/${kidId}/crear-reporte/`
-    let buttonCreateHealthReport = (<Container>
-        <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
-            <AutoAwesomeIcon sx={{marginTop:2}}/>
-            <Box sx={{margin:3}}>
-                <Typography variant="body2">No se registraron datos de <b>salud</b></Typography>
-            </Box>
-            <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
-        </Box>
-    </Container>);
-    let healthReportComponent = null
-    if (healthReportStatusCode == 404){
-        healthReportComponent = buttonCreateHealthReport
-    }
-    if (healthReport != null && healthReportStatusCode == 200){
-        var healthReportElement = {
-            "Tipo de Sangre" : healthReport.bloodType ,
-            "CI Discapacitado" : healthReport.ciDiscapacidad ,
-            "Diagnostico Fisico" : healthReport.psychologicalDiagnosis ,
-            "Diagnostico Neurologico" : healthReport.neurologicalDiagnosis ,
-            "Diagnostico especial" : healthReport.specialDiagnosis ,
-            "Problemas de salud" : healthReport.healthProblems ,
-        }
-        healthReportComponent = <SingleItemCard key={1} element={healthReportElement} title={"Reporte de salud"} />
-    }
-    return healthReportComponent
-}
-/*
 function formatDate(jsonDateStr){
     const options = { month: 'short', day: 'numeric'};
     var date  = new Date(jsonDateStr);
@@ -172,7 +127,6 @@ function AddRowWeightAndHeight({setBiometrics}){
             </Box>
            </div>
 }
-
 
 function WeightAndHeight({weightAndHeightData,setBiometrics}){
     const [filteredBiometrics, setFilteredBiometrics] = useState([]);
@@ -315,207 +269,6 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
         <AddRowWeightAndHeight setBiometrics={setBiometrics}/>
     </Container>);
 }
-*/
-function ShowOneKidFile() {
-    
-    const { kidId } = useParams()
-    const [kid, setKid] = useState([])     
-    const [healthReport, setHealthReport] = useState(null)
-    const [healthReportStatusCode, setHealthReportStatusCode] = useState(null)
-    const [biometrics, setBiometrics] = useState([])
-    const [biometricsStatusCode, setBiometricsStatusCode] = useState(null)
-    const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
-    const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
-    const urlBiometrics = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/biometrics'
-    const navigate = useNavigate();
-    const navigateEditKid = () =>{ 
-        let path = `/ninos/${kidId}/editar-nino`; 
-        navigate(path);
-    }
-    const location = useLocation()
-    
-    let showAlert = location.state ? location.state.showAlert : false 
-    let alertMessage = location.state ? location.state.alertMessage : null 
-    const [open, setOpen] = useState(showAlert);
-    const [openToConfirm, setOpenToConfirm] = useState(false);
 
-    function handleClose(event, reason) {
-        if (reason === 'clickaway') {
-            return
-        }
-        setOpen(false)
-    }
 
-    function handleCloseToConfirm(event, reason) {
-        if (reason === 'clickaway') {
-            return
-        }
-        setOpenToConfirm(false)
-    }
-
-    const fetchBasicData = () => {
-        var responseBasicKid = axios(urlKid);
-        axios.all([responseBasicKid]).then(
-            axios.spread((...allData) => {
-                var dataBK = allData[0].data
-                setKid(dataBK)
-            })
-    )}
-
-    const fetchHeltReport = () => {
-        axios.get(urlHealthKid)
-            .then((response) => {
-                setHealthReportStatusCode(response.status)
-                setHealthReport(response.data)
-            })
-            .catch((error)=>{
-                setHealthReportStatusCode(error.response.status);
-            })
-    }
-
-    const deleteKid = () => {
-        axios.delete(urlKid)
-        .then((response) => {
-            if (response.status == 200){
-                navigate(`/ninos`,{state:{showAlert:true,alertMessage:"Registro Eliminado"}})
-            }
-        })
-        .catch(err=> console.log(err))
-    }
-
-    const fetchBiometrics = () => {
-        axios.get(urlBiometrics)
-            .then((response) => {
-                setBiometricsStatusCode(response.status)
-                setBiometrics(response.data)
-            })
-            .catch((error)=>{
-                setBiometricsStatusCode(error.response.status);
-            })
-    }
-
-    useEffect(() => { 
-        fetchBasicData();
-        fetchHeltReport();
-        fetchBiometrics();
-    }, [])
-    
-
-    // FIXME: Será necesario contemplar este caso ?? 
-    // if (!kid) return null
-    if (!kid){
-        return <h1>ERROR: Niño no encontrado en la base de datos</h1>
-    }
-
-    function getAge(){
-        let actualYear = new Date().getFullYear();
-        let actualMonth = new Date().getMonth()+1;
-        let actualDate = new Date().getDate();
-
-        let kidYear = birthDate.getFullYear();
-        let kidMonth = birthDate.getMonth()+1;
-        let kidDate = birthDate.getDate();
-
-        let age = {};
-        let completeAge = "";
-
-        let years = actualYear - kidYear;
-        let months = 0;
-        let date = 0;
-
-        if(actualMonth>=kidMonth){
-            months = actualMonth - kidMonth;
-        } else {
-            years--;
-            months = 12 + actualMonth - kidMonth; 
-        }
-
-        if(actualDate>=kidDate){
-            date = actualDate - kidDate;
-        } else {
-            months--;
-            date = 31 + actualDate - kidDate;
-            if(months<0){
-                months=11;
-                years--;
-            }
-        }
-        age={
-            yearsAge:years,
-            monthsAge:months,
-            daysAge:date
-        };
-
-        if(age.yearsAge>0 && age.monthsAge>0){
-            completeAge = `${age.yearsAge} años y ${age.monthsAge} meses`;
-        }else if(age.yearsAge==0 && age.monthsAge==0 && age.daysAge>0){
-            completeAge = `${age.daysAge} dias`;
-        } else if(age.yearsAge==0 && age.monthsAge>0){
-            completeAge = `${age.monthsAge} meses`;
-        }
-        return completeAge;
-    }
-
-    let birthDate = new Date (kid.birthDate);
-    let yeardOld = getAge();
-    let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
-
-    const MyKidDetails = { 
-        "Edad ": yeardOld ,
-        "Genero ": kid.gender,
-        "Carnet de Identidad (CI) " : kid.ci, 
-        "Fecha de Nacimiento ": birthDate.toLocaleDateString(),
-        "Programa de Casa " : kid.programHouse,
-        "Lugar de Nacimiento ": kid.birthPlace,
-    };
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const navigateListKid = () =>{ 
-        let path = `/ninos`; 
-        navigate(path);
-      }
-
-    const confirmedOpen = () => {
-        handleCloseToConfirm();
-        setOpenConfirmed(true);
-    };
-
-    const ToConfirmOpen = () => {
-        handleCloseToConfirm();
-        setOpenToConfirm(true);
-    };
-
-    return (
-        <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
-            <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName } itemsPerLine={3}/>
-            {accesPermiss=="ComplitAcces"&&
-                <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
-            }
-            <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
-            <WeightAndHeight weightAndHeightData={biometrics} setBiometrics={setBiometrics}/>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="success">
-                    {alertMessage}
-                </Alert>
-            </Snackbar>
-            {accesPermiss=="ComplitAcces"&&
-                <ButtonDanger key={2} label="Eliminar" id="delete_button" onClick={ToConfirmOpen} />
-            }
-            <Dialog open={openToConfirm} onClose={handleCloseToConfirm} id="confirmation_popup" sx={{borderRadius:3 }}>
-                <DialogTitle sx={{display:'flex', justifyContent:'center'}}>Eliminar</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        ¿Desea eliminar todos los datos de {kid.firstName + " " + kid.lastName}?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions sx={{display:'flex',flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-                    <ButtonSecondary label="Cancelar" onClick={handleCloseToConfirm}></ButtonSecondary>
-                    <ButtonDanger label="Eliminar" id="confirm_delete_button" onClick={deleteKid}></ButtonDanger>
-                </DialogActions>
-            </Dialog>
-        </div></>
-    )}
-export {ShowOneKidFile}
+export default WeightAndHeight;

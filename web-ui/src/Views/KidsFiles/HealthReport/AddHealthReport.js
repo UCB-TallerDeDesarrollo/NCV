@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
 import MenuItem from '@mui/material/MenuItem';
-import ButtonPrimary from '../../Components/MUI-Button'
-import InputText from '../../Components/InputText'
-import FormContainer from '../../Components/FormContainer'
+import ButtonPrimary from '../../../Components/MUI-Button'
+import InputText from '../../../Components/InputText'
+import FormContainer from '../../../Components/FormContainer'
 import axios from 'axios'
-import Navbar from '../../Components/NavBar';
+import Navbar from '../../../Components/NavBar';
 
 
 const healtReport = {
