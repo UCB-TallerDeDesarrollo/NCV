@@ -22,6 +22,14 @@ namespace NinosConValorAPI.Data.Repository
             return healthReport;
         }
 
+        // FOUNDATION REPORT
+
+        public async Task<FoundationReportEntity> CreateFoundationReportAsync(FoundationReportEntity foundationReport)
+        {
+            await _dbContext.FoundationReport.AddAsync(foundationReport);
+            return foundationReport;
+        }
+
         // BIOMETRICS
 
         public async Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId)
@@ -127,6 +135,24 @@ namespace NinosConValorAPI.Data.Repository
         }
 
         public Task<HealthReportEntity> UpdateHealthReportAsync(int kidId, HealthReportEntity healthReport)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<FoundationReportEntity> GetFoundationReportAsync(int kidId)
+        {
+            IQueryable<FoundationReportEntity> query = _dbContext.FoundationReport;
+            query = query.AsNoTracking();
+            var foundationReport = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            return foundationReport;
+        }
+
+        public Task DeleteFoundationReportAsync(int kidId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<FoundationReportEntity> UpdateFoundationReportAsync(int kidId, FoundationReportEntity foundationReport)
         {
             throw new NotImplementedException();
         }
