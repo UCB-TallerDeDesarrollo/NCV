@@ -30,6 +30,8 @@ namespace NinosConValorAPI
                 .ForMember(ent => ent.ResponsibleUser, mod => mod.MapFrom(modSrc => new IdentityAppUser() { Id = modSrc.ResponsibleId }));
             this.CreateMap<AssetCategoryEntity, AssetCategoryModel>()
                 .ReverseMap();
+            this.CreateMap<EducationReportEntity, EducationReportModel>()
+                .ReverseMap();
         }
     }
 }
