@@ -94,6 +94,7 @@ namespace NinosConValorAPI.Data.Repository
             query = query.AsNoTracking();
             query = query.Include(f => f.AssetCategory);
             query = query.Include(f => f.ProgramHouse);
+            query = query.Include(f => f.AssetState);
             query = query.Where(f => f.Deleted == false);
             var result = await query.ToListAsync();
             return result;

@@ -38,6 +38,11 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 2,
                 Category = "Teclados",
             };
+            var assetState = new AssetStateEntity()
+            {
+                Id = 1,
+                State = "Obsoleto",
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -49,6 +54,7 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 ProgramHouse = programHouse,
                 AssetCategory = assetCategory,
+                AssetState = assetState,
                 State= "Obsoleto"
             };
 
@@ -86,6 +92,11 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 2,
                 Category = "Teclados",
             };
+            var assetState = new AssetStateEntity()
+            {
+                Id = 1,
+                State = "Obsoleto",
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -94,6 +105,7 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 ProgramHouse = programHouse,
                 AssetCategory = assetCategory,
+                AssetState = assetState,
                 State = "Obsoleto"
             };
 
@@ -139,6 +151,11 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 2,
                 Category = "Teclados",
             };
+            var assetState = new AssetStateEntity()
+            {
+                Id = 1,
+                State = "Obsoleto",
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -147,6 +164,7 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 ProgramHouse = programHouse,
                 AssetCategory = assetCategory,
+                AssetState = assetState,
                 State = "Obsoleto"
             };
 
@@ -191,6 +209,11 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 1,
                 Category = "Teclados",
             };
+            var assetState = new AssetStateEntity()
+            {
+                Id = 1,
+                State = "Obsoleto",
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -202,6 +225,7 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 ProgramHouse= programHouse,
                 AssetCategory = assetCategory,
+                AssetState = assetState,
                 State = "Obsoleto"
             };           
             ctx.Add(programHouse);
@@ -239,6 +263,11 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 1,
                 Category = "Teclados",
             };
+            var assetState = new AssetStateEntity()
+            {
+                Id = 1,
+                State = "Obsoleto",
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -250,6 +279,7 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 ProgramHouse = programHouse,
                 AssetCategory = assetCategory,
+                AssetState = assetState,
                 State = "Obsoleto"
             };
             ctx.Add(programHouse);
@@ -287,6 +317,11 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 1,
                 Category = "Teclados",
             };
+            var assetState = new AssetStateEntity()
+            {
+                Id = 1,
+                State = "Obsoleto",
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -298,6 +333,7 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 ProgramHouse = programHouse,
                 AssetCategory = assetCategory,
+                AssetState = assetState,
                 State = "Obsoleto"
             };
             ctx.Add(programHouse);
@@ -335,6 +371,11 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 1,
                 Category = "Teclados",
             };
+            var assetState = new AssetStateEntity()
+            {
+                Id = 1,
+                State = "Obsoleto",
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -346,6 +387,7 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 ProgramHouse = programHouse,
                 AssetCategory = assetCategory,
+                AssetState = assetState,
                 State = "Obsoleto"
             };
             ctx.Add(programHouse);

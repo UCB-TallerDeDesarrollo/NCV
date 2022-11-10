@@ -43,10 +43,10 @@ namespace NinosConValorAPI.Services
 
         public async Task<FixedAssetModel> CreateFixedAssetAsync(FixedAssetModel fixedAsset, int programHouseId, int categoryId)
         {
-            //fixedAsset.ProgramHouseId = fixedAsset.ProgramHouseId == 0 ? 2 : fixedAsset.ProgramHouseId;
+
             await GetProgramHouseAsync(programHouseId);
             await GetAssetCategoryAsync(categoryId);
-            await GetAssetCategoryAsync(fixedAsset.AssetStateId);
+            await GetAssetStateAsync(fixedAsset.AssetStateId);
             fixedAsset.ProgramHouseId = programHouseId;
             fixedAsset.AssetCategoryId = categoryId;
             var fixedAssetEntity = _mapper.Map<FixedAssetEntity>(fixedAsset);
