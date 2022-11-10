@@ -332,5 +332,33 @@ namespace NinosConValorAPI.Services.Security
                 IsSuccess = false,
             };
         }
+        public async Task<UserManagerResponse> DeleteUserAsync(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return new UserManagerResponse
+                {
+                    Token = "user does not exist",
+                    IsSuccess = false
+                };
+            }
+            
+            var result = await userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                return new UserManagerResponse
+                {
+                    Token = $"User deleted successfully",
+                    IsSuccess = true,
+                };
+            }
+
+            return new UserManagerResponse
+            {
+                Token = $"Something happened",
+                IsSuccess = false,
+            };
+        }
     }
 }

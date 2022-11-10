@@ -18,7 +18,6 @@ describe('<AddHealthReport />', () => {
         const {getByLabelText } = render(<Router><AddHealthReport /></Router>);
         const psychologicalDiagnosisLabel = getByLabelText(/Diagnostico Fisico/i);
         expect(psychologicalDiagnosisLabel).toBeInTheDocument();
-
     })
     it(' Should capture NeurologicalDiagnosis rendered correctly', () => {
         const {getByLabelText } = render(<Router><AddHealthReport /></Router>);

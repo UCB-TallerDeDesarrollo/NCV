@@ -180,12 +180,19 @@ namespace NinosConValorAPI.Data.Repository
             _dbContext.Entry(kidToUpdate).CurrentValues.SetValues(kidModel);
             return true;
         }
-
+        
         public async Task DeleteFixedAssetAsync(int fixedAssetId)
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             var fixedAssetToDelete = await query.FirstOrDefaultAsync(g => (g.Id == fixedAssetId) & (g.Deleted == false));
             fixedAssetToDelete.Deleted = true;
         }
+        
+        public async Task<EducationReportEntity> CreateEducationReportAsync(EducationReportEntity educationReport)
+        {
+            await _dbContext.EducationReports.AddAsync(educationReport);
+            return educationReport;
+        }
+        
     }
 }

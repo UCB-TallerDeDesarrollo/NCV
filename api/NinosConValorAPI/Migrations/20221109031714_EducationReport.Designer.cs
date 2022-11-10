@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NinosConValorAPI.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NinosConValorAPI.Migrations
 {
     [DbContext(typeof(NCV_DBContext))]
-    partial class NCV_DBContextModelSnapshot : ModelSnapshot
+    [Migration("20221109031714_EducationReport")]
+    partial class EducationReport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,9 +241,6 @@ namespace NinosConValorAPI.Migrations
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");

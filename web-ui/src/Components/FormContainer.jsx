@@ -13,11 +13,20 @@ export default function FormContainer({children,title=""}) {
         justifyContent: 'flex-start', 
         alignItems: 'center',
         flexDirection: 'column',
+        flexGrow: 12,
+        flexBasis: '80%',
     };
+    const styleBox = {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+    }
     return (
-          <Box sx={sxContainer}>
-            <Typography variant="h4">{title}</Typography>
-            {children}
-          </Box>
+      <div style={styleBox}>
+        <Box sx={sxContainer}>
+          <Typography variant="h4">{title}</Typography>
+          {children}
+        </Box>
+      </div>
     );
   }

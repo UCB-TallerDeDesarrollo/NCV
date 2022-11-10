@@ -253,5 +253,62 @@ namespace UnitTests.AutomapperUT
             Assert.Equal(biometricsEntity.Weight, actual.Weight);
 
         }
+        // EDUCATION REPORTS
+
+        [Fact]
+        public void AutomapperProfile_EducationReportModel_ReturnsEducationReportEntity()
+        {
+            // ARRANGE
+            var educationReportModel = new EducationReportModel()
+            {
+                Id = 1,
+                KidId = 1,
+                Grade = "Primero Secundaria",
+                School = "21 de Mayo",
+                Rude = "12345678"
+            };
+
+            EducationReportEntity educationReportEntity = new EducationReportEntity();
+            var typeOfEducationReportEntity = educationReportEntity.GetType().ToString();
+
+
+            // ACT
+            var actual = _mapper.Map<EducationReportEntity>(educationReportModel);
+            var actualType = actual.GetType().ToString();
+
+            // ASSERT
+            Assert.Equal(typeOfEducationReportEntity, actualType);
+            Assert.Equal(educationReportModel.Grade, actual.Grade);
+            Assert.Equal(educationReportModel.Id, actual.Id);
+
+        }
+
+        [Fact]
+        public void AutomapperProfile_EducationReportEntity_ReturnsEducationReportModel()
+        {
+            // ARRANGE
+            var educationReportEntity = new EducationReportEntity()
+            {
+                Id = 1,
+                KidId = 1,
+                Grade = "Primero Secundaria",
+                School = "21 de Mayo",
+                Rude = "12345678"
+            };
+
+            EducationReportModel educationReportModel = new EducationReportModel();
+            var typeOfEducationReportModel = educationReportModel.GetType().ToString();
+
+
+            // ACT
+            var actual = _mapper.Map<EducationReportModel>(educationReportEntity);
+            var actualType = actual.GetType().ToString();
+
+            // ASSERT
+            Assert.Equal(typeOfEducationReportModel, actualType);
+            Assert.Equal(educationReportEntity.Grade, actual.Grade);
+            Assert.Equal(educationReportEntity.Id, actual.Id);
+
+        }
     }
 }

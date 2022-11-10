@@ -194,5 +194,19 @@ namespace NinosConValorAPI.Controllers
             return BadRequest(result);
            
         }
+
+        [HttpDelete("{userId}")]
+        public async Task<IActionResult> DeleteUserAsync(string userId)
+        {
+            
+            if (userId == null)
+            {
+                return BadRequest("Id invalid"); // Status code: 400
+            }
+            var result = await _userService.DeleteUserAsync(userId);
+            if (result.IsSuccess)
+                return Ok(result);
+            return BadRequest(result);
+        }
     }
 }
