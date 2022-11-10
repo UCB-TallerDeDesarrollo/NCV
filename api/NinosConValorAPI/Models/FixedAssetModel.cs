@@ -22,6 +22,8 @@ namespace NinosConValorAPI.Models
         public string? AssetCategoryCategory { get; set; }
         public string? ProgramHouseName { get; set; }
         public string? ProgramHouseAcronym { get; set; }
+        public int AssetStateId { get; set; }
+        public string? AssetStateState { get; set; }
 
         public string? State { get; set; }
 
