@@ -26,7 +26,6 @@ describe('Show Fixed Asset', () => {
       entryDate: "2022-09-30T00:00:00",
       price: 200,
       features: "Color negro a medio uso",
-      quantity: 2,
       state: "Obsoleto"
   }
 
@@ -38,7 +37,6 @@ describe('Show Fixed Asset', () => {
     entryDate: null,
     price: 50,
     features: null,
-    quantity: 2,
     state: "Obsoleto"
   }
 
@@ -72,7 +70,6 @@ describe('Show Fixed Asset', () => {
         expect(screen.getByText('2022-09-30')).toBeVisible
         expect(screen.getByText('200')).toBeVisible
         expect(screen.getByText('Color negro a medio uso')).toBeVisible
-        expect(screen.getByText('2')).toBeVisible
         expect(screen.getByText('Obsoleto')).toBeVisible
       })  
   })
@@ -86,8 +83,6 @@ describe('Show Fixed Asset', () => {
     await waitFor(() => {
         expect(screen.getByText('cuaderno')).toBeVisible
         expect(screen.getByText('50')).toBeVisible
-        expect(screen.getByText('2')).toBeVisible
-        expect(screen.getAllByText('-----')).toHaveLength(4)
         expect(screen.getByText('Obsoleto')).toBeVisible
       })  
   })

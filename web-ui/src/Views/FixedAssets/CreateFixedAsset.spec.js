@@ -115,14 +115,6 @@ describe('Inputs from CreateFixedAsset component must be empty in the beginning'
             expect(screen.getByLabelText(/Características/i)).toHaveDisplayValue('')
         })
     })
-    it('Doesnt show any result in the beginning at Quantity space', async () => {
-        act(()=>{
-            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
-        })
-        await waitFor(() => {
-            expect(screen.getByLabelText(/Cantidad/i)).toHaveDisplayValue('')
-        })
-    })
 })
 describe('Validating inputs from CreateFixedAssets component', () => {
     it('Price Input cant receive characters', async () => {
@@ -133,16 +125,6 @@ describe('Validating inputs from CreateFixedAssets component', () => {
             const priceInput = screen.getByLabelText(/Precio/i)
             priceInput.value = 'test'
             expect(priceInput).toHaveDisplayValue('')
-        })
-    })
-    it('Quantity Input cant receive characters', async () => {
-        act(()=>{
-            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
-        })        
-        await waitFor(() => {
-            const quantityInput = screen.getByLabelText(/Cantidad/i)
-            quantityInput.value = 'test'
-            expect(quantityInput).toHaveDisplayValue('')
         })
     })
     it('EntryDate Input cant have more than 32 days', async () => {
