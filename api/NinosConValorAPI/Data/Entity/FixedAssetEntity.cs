@@ -26,5 +26,7 @@ namespace NinosConValorAPI.Data.Entity
         public virtual AssetCategoryEntity? AssetCategory { get; set; }
 
         public string? State { get; set; }
+
+        public bool Deleted { get; set; }
     }
 }

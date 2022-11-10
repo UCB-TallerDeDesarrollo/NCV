@@ -24,5 +24,7 @@ namespace NinosConValorAPI.Models
         public string? ProgramHouseAcronym { get; set; }
 
         public string? State { get; set; }
+
+        public bool Deleted { get; set; }
     }
 }
