@@ -58,10 +58,15 @@ namespace NinosConValorAPI.Data
             modelBuilder.Entity<ProgramHouseEntity>().HasOne(d => d.ResponsibleUser);
             modelBuilder.Entity<ProgramHouseEntity>().HasMany(d => d.FixedAssets).WithOne(d => d.ProgramHouse);
 
-            //Categories
+            //AssetCategories
             modelBuilder.Entity<AssetCategoryEntity>().ToTable("AssetCategory");
             modelBuilder.Entity<AssetCategoryEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<AssetCategoryEntity>().HasMany(d => d.FixedAssets).WithOne(d => d.AssetCategory);
+
+            //AssetStates
+            modelBuilder.Entity<AssetStateEntity>().ToTable("AssetState");
+            modelBuilder.Entity<AssetStateEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<AssetStateEntity>().HasMany(d => d.FixedAssets).WithOne(d => d.AssetState);
 
             //Education
             modelBuilder.Entity<EducationReportEntity>().ToTable("EducationReports");
