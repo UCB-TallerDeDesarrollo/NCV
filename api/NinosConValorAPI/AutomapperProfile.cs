@@ -16,7 +16,11 @@ namespace NinosConValorAPI
                 .ReverseMap()
                 .ForMember(mod => mod.AssetCategoryId, ent => ent.MapFrom(entSrc => entSrc.AssetCategory.Id))
                 .ReverseMap()
-                .ForMember(ent => ent.AssetCategory, mod => mod.MapFrom(modSrc => new AssetCategoryEntity() { Id = modSrc.AssetCategoryId }))
+                .ForMember(ent => ent.AssetCategory, mod => mod.MapFrom(modSrc => new AssetCategoryEntity() { Id = modSrc.AssetCategoryId }))                
+                .ReverseMap()
+                .ForMember(mod => mod.AssetStateId, ent => ent.MapFrom(entSrc => entSrc.AssetState.Id))
+                .ReverseMap()
+                .ForMember(ent => ent.AssetState, mod => mod.MapFrom(modSrc => new AssetStateEntity() { Id = modSrc.AssetStateId }))
                 .ReverseMap();
             this.CreateMap<KidEntity, KidModel>()
                 .ReverseMap();
@@ -29,6 +33,8 @@ namespace NinosConValorAPI
                 .ReverseMap()
                 .ForMember(ent => ent.ResponsibleUser, mod => mod.MapFrom(modSrc => new IdentityAppUser() { Id = modSrc.ResponsibleId }));
             this.CreateMap<AssetCategoryEntity, AssetCategoryModel>()
+                .ReverseMap();
+            this.CreateMap<AssetStateEntity, AssetStateModel>()
                 .ReverseMap();
             this.CreateMap<EducationReportEntity, EducationReportModel>()
                 .ReverseMap();

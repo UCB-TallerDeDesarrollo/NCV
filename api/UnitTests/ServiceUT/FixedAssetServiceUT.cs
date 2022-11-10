@@ -26,6 +26,11 @@ namespace UnitTests.ServiceUT
                 Id = 1,
                 Category = "Teclados",
             };
+            var assetState = new AssetStateEntity()
+            {
+                Id = 1,
+                State = "Obsoleto",
+            };
             var fixedAssetEntity = new FixedAssetEntity()
             {
                 Id = 1,
@@ -35,12 +40,15 @@ namespace UnitTests.ServiceUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 AssetCategory = assetCategory,
+                AssetState = assetState,
                 State = "Obsoleto"
             };
             var fixedAssetModel = mapper.Map<FixedAssetModel>(fixedAssetEntity);
             var fixedAssetRepositoryMock = new Mock<INCVRepository>();
             fixedAssetRepositoryMock.Setup(r => r.GetAssetCategoryAsync(1)).ReturnsAsync(assetCategory);
             fixedAssetRepositoryMock.Setup(r => r.GetProgramHouseAsync(2)).ReturnsAsync(new ProgramHouseEntity());
+            fixedAssetRepositoryMock.Setup(r => r.GetAssetStateAsync(1)).ReturnsAsync(new AssetStateEntity());
+
             fixedAssetRepositoryMock.Setup(r => r.CreateFixedAsset(fixedAssetEntity,2,1));
             fixedAssetRepositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(true);
 
@@ -169,7 +177,7 @@ namespace UnitTests.ServiceUT
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
             var mapper = config.CreateMapper();
             var fixedAssetEntity = new FixedAssetEntity() { };
-            var fixedAssetModel = new FixedAssetModel() { };
+            var fixedAssetModel = new FixedAssetModel() { AssetStateId = 1};
             var assetCategory = new AssetCategoryEntity()
             {
                 Id = 1,
@@ -178,6 +186,7 @@ namespace UnitTests.ServiceUT
             var fixedAssetRepositoryMock = new Mock<INCVRepository>();
             fixedAssetRepositoryMock.Setup(r => r.GetAssetCategoryAsync(1)).ReturnsAsync(assetCategory);
             fixedAssetRepositoryMock.Setup(r => r.GetProgramHouseAsync(2)).ReturnsAsync(new ProgramHouseEntity());
+            fixedAssetRepositoryMock.Setup(r => r.GetAssetStateAsync(1)).ReturnsAsync(new AssetStateEntity());
             fixedAssetRepositoryMock.Setup(r => r.CreateFixedAsset(fixedAssetEntity,2,1));
             fixedAssetRepositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(false);
 
@@ -192,7 +201,7 @@ namespace UnitTests.ServiceUT
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
             var mapper = config.CreateMapper();
             var fixedAssetEntity = new FixedAssetEntity() { };
-            var fixedAssetModel = new FixedAssetModel() { };
+            var fixedAssetModel = new FixedAssetModel() {AssetStateId=1 };
             var assetCategory = new AssetCategoryEntity()
             {
                 Id = 1,
@@ -201,6 +210,7 @@ namespace UnitTests.ServiceUT
             var fixedAssetRepositoryMock = new Mock<INCVRepository>();
             fixedAssetRepositoryMock.Setup(r => r.GetAssetCategoryAsync(1)).ReturnsAsync(assetCategory);
             fixedAssetRepositoryMock.Setup(r => r.GetProgramHouseAsync(2)).ReturnsAsync(new ProgramHouseEntity());
+            fixedAssetRepositoryMock.Setup(r => r.GetAssetStateAsync(1)).ReturnsAsync(new AssetStateEntity());
             fixedAssetRepositoryMock.Setup(r => r.CreateFixedAsset(fixedAssetEntity,2,1));
             fixedAssetRepositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(true);
 

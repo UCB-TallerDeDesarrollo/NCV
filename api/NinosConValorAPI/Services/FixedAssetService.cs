@@ -34,11 +34,19 @@ namespace NinosConValorAPI.Services
                 throw new NotFoundElementException($"La categoría con Id:{categoryId} no existe.");
         }
 
+        private async Task GetAssetStateAsync(int stateId)
+        {
+            var assetStateEntity = await _NCVRepository.GetAssetStateAsync(stateId);
+            if (assetStateEntity == null)
+                throw new NotFoundElementException($"El estado con Id:{stateId} no existe.");
+        }
+
         public async Task<FixedAssetModel> CreateFixedAssetAsync(FixedAssetModel fixedAsset, int programHouseId, int categoryId)
         {
-            //fixedAsset.ProgramHouseId = fixedAsset.ProgramHouseId == 0 ? 2 : fixedAsset.ProgramHouseId;
+
             await GetProgramHouseAsync(programHouseId);
             await GetAssetCategoryAsync(categoryId);
+            await GetAssetStateAsync(fixedAsset.AssetStateId);
             fixedAsset.ProgramHouseId = programHouseId;
             fixedAsset.AssetCategoryId = categoryId;
             var fixedAssetEntity = _mapper.Map<FixedAssetEntity>(fixedAsset);

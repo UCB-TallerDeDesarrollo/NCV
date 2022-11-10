@@ -38,6 +38,9 @@ namespace NinosConValorAPI.Data.Repository
         Task<IEnumerable<AssetCategoryEntity>> GetAssetCategoriesAsync(bool showAssets = false);
         Task<AssetCategoryEntity> GetAssetCategoryAsync(int categoryId);
 
+        //ASSET STATES
+        Task<AssetStateEntity> GetAssetStateAsync(int stateId);
+
         //TASKS
         Task<bool> SaveChangesAsync();
         // EDUCATION REPORT

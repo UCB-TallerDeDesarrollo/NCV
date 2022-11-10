@@ -47,6 +47,7 @@ namespace NinosConValorAPI.Data.Repository
         {
             _dbContext.Entry(fixedAsset.AssetCategory).State = EntityState.Unchanged;
             _dbContext.Entry(fixedAsset.ProgramHouse).State = EntityState.Unchanged;
+            _dbContext.Entry(fixedAsset.AssetState).State = EntityState.Unchanged;
             _dbContext.FixedAssets.Add(fixedAsset);
         }
         public async Task<KidEntity> GetKidAsync(int kidId)
@@ -93,6 +94,7 @@ namespace NinosConValorAPI.Data.Repository
             query = query.AsNoTracking();
             query = query.Include(f => f.AssetCategory);
             query = query.Include(f => f.ProgramHouse);
+            query = query.Include(f => f.AssetState);
             query = query.Where(f => f.Deleted == false);
             var result = await query.ToListAsync();
             return result;
@@ -193,6 +195,13 @@ namespace NinosConValorAPI.Data.Repository
             await _dbContext.EducationReports.AddAsync(educationReport);
             return educationReport;
         }
-        
+
+        public async Task<AssetStateEntity> GetAssetStateAsync(int stateId)
+        {
+            IQueryable<AssetStateEntity> query = _dbContext.AssetStates;
+            query = query.AsNoTracking();
+            var assetState = await query.FirstOrDefaultAsync(g => (g.Id == stateId));
+            return assetState;
+        }
     }
 }
