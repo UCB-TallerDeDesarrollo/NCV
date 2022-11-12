@@ -106,6 +106,7 @@ namespace NinosConValorAPI.Data.Repository
             query = query.AsNoTracking();
             query = query.Include(f => f.AssetCategory);
             query = query.Include(f=>f.ProgramHouse);
+            query = query.Include(f => f.AssetState);
             var fixedAssetEntity = await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
             return fixedAssetEntity;
         }

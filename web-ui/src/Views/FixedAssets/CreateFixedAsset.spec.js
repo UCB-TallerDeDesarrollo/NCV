@@ -17,6 +17,7 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
   }
   const programHousesUrl ='https://ncv-api.herokuapp.com/api/programHouses'
   const categoriesUrl ='https://ncv-api.herokuapp.com/api/AssetCategories'  
+  const statesUrl ='https://ncv-api.herokuapp.com/api/AssetStates'  
 
   function getResponse(url, jsonData=null, code=200, text=null){
       const response = rest.get(url, (req, res, ctx) => {
@@ -62,10 +63,40 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
     }
   ]
 
+  const assetStates = 
+  [
+    {
+        "id": 3,
+        "state": "Malo",
+        "fixedAssets": []
+    },
+    {
+        "id": 4,
+        "state": "Obsoleto",
+        "fixedAssets": []
+    },
+    {
+        "id": 5,
+        "state": "Verificar",
+        "fixedAssets": []
+    },
+    {
+        "id": 2,
+        "state": "Regular",
+        "fixedAssets": []
+    },
+    {
+        "id": 1,
+        "state": "Bueno",
+        "fixedAssets": []
+    }
+  ]
+
   const programHousesResponse = getResponse(programHousesUrl, programHouses)
   const categoriesResponse = getResponse(categoriesUrl, assetCategories)
+  const statesResponse = getResponse(statesUrl, assetStates)
 
-  const handlers = [programHousesResponse, categoriesResponse]
+  const handlers = [programHousesResponse, categoriesResponse, statesResponse]
 
   const server = new setupServer(...handlers)
 

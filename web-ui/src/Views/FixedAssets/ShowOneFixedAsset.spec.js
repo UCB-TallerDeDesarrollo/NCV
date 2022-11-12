@@ -26,7 +26,7 @@ describe('Show Fixed Asset', () => {
       entryDate: "2022-09-30T00:00:00",
       price: 200,
       features: "Color negro a medio uso",
-      state: "Obsoleto"
+      assetStateState: "Obsoleto"
   }
 
   const fixedAssetOnlyRequiredFields = 
@@ -37,7 +37,7 @@ describe('Show Fixed Asset', () => {
     entryDate: null,
     price: 50,
     features: null,
-    state: "Obsoleto"
+    assetStateState: "Obsoleto"
   }
 
 	const fixedAssetResponse = getResponse(fixedAssetUrl, fixedAssetWithAllFields)
