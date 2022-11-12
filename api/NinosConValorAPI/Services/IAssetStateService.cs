@@ -6,8 +6,9 @@ namespace NinosConValorAPI.Services
     {
         Task<AssetStateModel> CreateAssetStateAsync(AssetStateModel assetState);
         Task<IEnumerable<AssetStateModel>> GetAssetStatesAsync();
-        Task<AssetStateModel> UpdateStateAsync(int StateId, AssetStateModel assetState);
-        Task<AssetStateModel> GetStateAsync(int stateID);
+        Task<AssetStateModel> UpdateAssetStateAsync(int StateId, AssetStateModel assetState);
+        Task<AssetStateModel> GetAssetStateAsync(int stateID);
+        Task DeleteAssetStateAsync(int stateID);
 
     }
 }

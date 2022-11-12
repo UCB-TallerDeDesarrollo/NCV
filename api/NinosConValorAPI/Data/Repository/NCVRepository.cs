@@ -221,7 +221,7 @@ namespace NinosConValorAPI.Data.Repository
 
         public async Task<bool> UpdateAssetStateAsync(int assetStateId, AssetStateEntity assetState)
         {
-            var assetStateToUpdate = _dbContext.Kids.FirstOrDefault(c => c.Id == assetState.Id);
+            var assetStateToUpdate = _dbContext.AssetStates.FirstOrDefault(c => c.Id == assetState.Id);
 
             _dbContext.Entry(assetStateToUpdate).CurrentValues.SetValues(assetState);
             return true;

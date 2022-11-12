@@ -19,6 +19,7 @@ namespace NinosConValorAPI.Services
         public async Task<AssetStateModel> CreateAssetStateAsync(AssetStateModel assetState)
         {
             var assetStateEntity = _mapper.Map<AssetStateEntity>(assetState);
+            assetStateEntity.Deleted = false;
             _NCVRepository.CreateAssetState(assetStateEntity);
             var result = await _NCVRepository.SaveChangesAsync();
             if (result)
@@ -37,16 +38,16 @@ namespace NinosConValorAPI.Services
 
             return _mapper.Map<IEnumerable<AssetStateModel>>(assetStatesList);
         }
-        public async Task<AssetStateModel> GetStateAsync(int stateID)
+        public async Task<AssetStateModel> GetAssetStateAsync(int stateID)
         {
             var state = await _NCVRepository.GetAssetStateAsync(stateID);
 
             return _mapper.Map<AssetStateModel>(state);
         }
-        public async Task<AssetStateModel> UpdateStateAsync(int stateId, AssetStateModel stateModel)
+        public async Task<AssetStateModel> UpdateAssetStateAsync(int stateId, AssetStateModel stateModel)
         {
             var stateEntity = _mapper.Map<AssetStateEntity>(stateModel);
-            await GetStateAsync(stateId);
+            await GetAssetStateAsync(stateId);
             stateEntity.Id = stateId;
             var res = await _NCVRepository.UpdateAssetStateAsync(stateId, stateEntity);
             if (!res)
@@ -59,9 +60,19 @@ namespace NinosConValorAPI.Services
             {
                 throw new Exception("Database Error");
             }
+            stateModel.Id = stateId;
             return stateModel;
         }
 
-
+        public async Task DeleteAssetStateAsync(int stateID)
+        {
+            await GetAssetStateAsync(stateID);
+            await _NCVRepository.DeleteAssetStateAsync(stateID);
+            var result = await _NCVRepository.SaveChangesAsync();
+            if (!result)
+            {
+                throw new Exception("Database Error.");
+            }
+        }
     }
 }
