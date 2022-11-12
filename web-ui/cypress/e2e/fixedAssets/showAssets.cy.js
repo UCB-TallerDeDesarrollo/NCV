@@ -11,7 +11,10 @@ describe('Show fixed assets end to end tests', () => {
     }).as('listOfAssets',);
 
     cy.visit('/activos-fijos');
-
+    cy.get('.ListElement').contains('Herramientas').click()
+    cy.get('.ListElement').contains('Muebles y Enseres').click()
+    cy.get('.ListElement').contains('Maquinaria y Equipos').click()
+    cy.get('.ListElement').contains('Vehículos').click()
     cy.get('.ListElement')
     .and('contain', 'Herramientas')  
     .and('contain', 'Muebles y Enseres')
