@@ -30,7 +30,6 @@ export function ShowFixedAsset() {
         return ErrorPage(error)
     }
     if (!fixedAsset) return null
-    console.log(fixedAsset)
     const fixedAssetData = {
         "CATEGORÍA": fixedAsset.assetCategoryCategory,
         "DESCRIPCIÓN": fixedAsset.description,

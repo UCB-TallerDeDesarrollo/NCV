@@ -112,7 +112,6 @@ function CreateFixedAssetForm(props) {
         }
     }
     function hasFormErrors(errorsFromForm){
-        console.log('form errors',errorsFromForm)
         let hasErrors=true
         if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features && !errorsFromForm.Code && !errorsFromForm.AssetStateId){
             hasErrors = false
