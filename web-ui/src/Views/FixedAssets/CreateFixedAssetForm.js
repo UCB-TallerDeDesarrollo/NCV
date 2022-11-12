@@ -16,6 +16,7 @@ function CreateFixedAssetForm(props) {
     const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
     const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
     const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories'
+    const urlStates = 'https://ncv-api.herokuapp.com/api/assetStates'
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null)
     const [formErrors,setFormErrors] = useState({})
@@ -28,24 +29,7 @@ function CreateFixedAssetForm(props) {
     const [priceError, setPriceError] = useState("")
     const [programInputError, setProgramInputError] = useState(null)
     const [programError, setProgramError] = useState("Seleccione un programa")
-    const [statusSelectedValue, setStatusSelectedValue] = useState(null)
-    const statusOptions = [
-        {
-            value: 'Bueno',
-            label: 'Bueno',
-        },
-        {
-            value: 'Regular',
-            label: 'Regular',
-        },
-        {
-          value: 'Baja',
-          label: 'Baja',
-        },
-        {
-          value: 'Obsoleto',
-          label: 'Obsoleto'
-        }]
+    
     const navigate = useNavigate()
     const [data, setData] = useState({
         Name: '', // string
@@ -56,7 +40,7 @@ function CreateFixedAssetForm(props) {
         Features: '', // string
         ProgramHouseId : '', //int
         AssetCategoryId : '', //int
-        Status: '' //string
+        AssetStateId: '' //string
     })
     //programHouses
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
@@ -66,9 +50,16 @@ function CreateFixedAssetForm(props) {
         if (Object.keys(formErrors).length === 0 && isSubmit){
         }
     },[formErrors]);
+
     //categories
     const [categorySelectedValue, setCategorySelectedValue] = useState(null)
     const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
+
+    //states
+    const [stateSelectedValue, setStateSelectedValue] = useState(null)
+    const { apiData:states, error:errorStates } = getFromApi(urlStates)   
+
+    // program Houses Options for DROPDOWN
     if(errorProgramHouses){
         return ErrorPage(errorProgramHouses)
     }
@@ -78,6 +69,8 @@ function CreateFixedAssetForm(props) {
         value: programHouse.id      
     }}) 
     const programHousesOptions = programHousesList 
+
+    // categories options for DROPDOWN
     if(errorCategory){
         return ErrorPage(errorCategory)
     }
@@ -87,6 +80,17 @@ function CreateFixedAssetForm(props) {
         value: category.id      
     }}) 
     const categoriesOptions = categoriesList  
+
+    //states options for DROPDOWN
+    if(errorStates){
+        return ErrorPage(errorStates)
+    }
+    if (!states) return null 
+    let statesList = states.map( state =>  { return{
+        label: state.state,
+        value: state.id      
+    }}) 
+    const stateOptions = statesList 
 
     function handle(e) {
         const newData = { ...data }
@@ -110,7 +114,7 @@ function CreateFixedAssetForm(props) {
     function hasFormErrors(errorsFromForm){
         console.log('form errors',errorsFromForm)
         let hasErrors=true
-        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features){
+        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features && !errorsFromForm.Code && !errorsFromForm.AssetStateId){
             hasErrors = false
         }
         return hasErrors
@@ -129,7 +133,7 @@ function CreateFixedAssetForm(props) {
             Features: data.Features==''? null:data.Features, // string
             ProgramHouseId : programHouseSelectedValue,
             AssetCategoryId : categorySelectedValue,
-            State: statusSelectedValue //string
+            AssetStateId: stateSelectedValue //string
             }).then((res) => {
                 if (res.status == 201) {               
                     navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo creado exitosamente"}})
@@ -151,7 +155,7 @@ function CreateFixedAssetForm(props) {
             Features: '', // string
             ProgramHouseId : '', //int
             AssetCategoryId : '', //int
-            Status: ''//string
+            AssetStateId: ''//string
         }
         const regexNumber = /^[0-9]+([.][0-9]+)?$/;
         if(!datas.Name){
@@ -184,14 +188,14 @@ function CreateFixedAssetForm(props) {
             errors.AssetCategoryId= "La categoría del Activo Fijo es requerida!";
         }
 
-        if(!statusSelectedValue){
-            errors.Status= "El estado del Activo Fijo es requerido!";
+        if(!stateSelectedValue){
+            errors.AssetStateId= "El estado del Activo Fijo es requerido!";
         }
     
         if(datas.Features.length>1000){
             errors.Features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
         }
-        console.log('errs',errors)
+    
         return errors
     }
     
@@ -339,7 +343,18 @@ function CreateFixedAssetForm(props) {
                 </Dropdown>   
                 {formErrors.ProgramHouseId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.ProgramHouseId}  </Alert>:<p></p> }                 
-                
+                        <Dropdown 
+                    name={"Estado"} 
+                    id="estado-drop" 
+                    options={stateOptions}                                         
+                    selectedValue={stateSelectedValue}
+                    setSelectedValue = {setStateSelectedValue}
+                    helperText = "Seleccione un estado"
+                    required                    
+                    >                                        
+                </Dropdown>   
+                {formErrors.AssetStateId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.AssetStateId}  </Alert>:<p></p> }
                 <InputText
                     onChange={(e) => handle(e)}
                     id="Features"
@@ -348,18 +363,7 @@ function CreateFixedAssetForm(props) {
                     type="text"
                 />
                  {formErrors.Features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Features} </Alert>:<p></p> }
-                <Dropdown 
-                    name={"Estado"} 
-                    id="estado-drop" 
-                    options={statusOptions}                                         
-                    selectedValue={statusSelectedValue}
-                    setSelectedValue = {setStatusSelectedValue}
-                    required                    
-                    >                                        
-                </Dropdown>   
-                {formErrors.Status? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Status}  </Alert>:<p></p> }
+                        {formErrors.Features} </Alert>:<p></p> }                
                 <ButtonPrimary label={"Crear"} id="submit_button" onClick={submit}/>
                 <Snackbar
                     open={open}
