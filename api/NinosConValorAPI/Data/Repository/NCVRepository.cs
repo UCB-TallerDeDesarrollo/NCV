@@ -196,12 +196,42 @@ namespace NinosConValorAPI.Data.Repository
             return educationReport;
         }
 
-        public async Task<AssetStateEntity> GetAssetStateAsync(int stateId)
+        public async Task<AssetStateEntity> CreateAssetState(AssetStateEntity assetState)
+        {
+            await _dbContext.AssetStates.AddAsync(assetState);
+            return assetState;
+        }
+
+        public async Task<IEnumerable<AssetStateEntity>> GetAssetStatesAsync()
         {
             IQueryable<AssetStateEntity> query = _dbContext.AssetStates;
             query = query.AsNoTracking();
-            var assetState = await query.FirstOrDefaultAsync(g => (g.Id == stateId));
+            query = query.Where(f => f.Deleted == false);
+            var result = await query.ToListAsync();
+            return result;
+        }
+
+        public async Task<AssetStateEntity> GetAssetStateAsync(int assetStateId)
+        {
+            IQueryable<AssetStateEntity> query = _dbContext.AssetStates;
+            query = query.AsNoTracking();
+            var assetState = await query.FirstOrDefaultAsync(g => (g.Id == assetStateId));
             return assetState;
+        }
+
+        public async Task<bool> UpdateAssetStateAsync(int assetStateId, AssetStateEntity assetState)
+        {
+            var assetStateToUpdate = _dbContext.Kids.FirstOrDefault(c => c.Id == assetState.Id);
+
+            _dbContext.Entry(assetStateToUpdate).CurrentValues.SetValues(assetState);
+            return true;
+        }
+
+        public async Task DeleteAssetStateAsync(int assetStateId)
+        {
+            IQueryable<AssetStateEntity> query = _dbContext.AssetStates;
+            var assetStateToDelete = await query.FirstOrDefaultAsync(g => (g.Id == assetStateId) & (g.Deleted == false));
+            assetStateToDelete.Deleted = true;
         }
     }
 }

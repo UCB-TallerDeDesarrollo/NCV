@@ -39,7 +39,11 @@ namespace NinosConValorAPI.Data.Repository
         Task<AssetCategoryEntity> GetAssetCategoryAsync(int categoryId);
 
         //ASSET STATES
-        Task<AssetStateEntity> GetAssetStateAsync(int stateId);
+        Task<AssetStateEntity> CreateAssetState(AssetStateEntity assetState);
+        Task<IEnumerable<AssetStateEntity>> GetAssetStatesAsync();
+        Task<AssetStateEntity> GetAssetStateAsync(int assetStateId);
+        Task<bool> UpdateAssetStateAsync(int assetStateId, AssetStateEntity assetState);
+        Task DeleteAssetStateAsync(int assetStateId);
 
         //TASKS
         Task<bool> SaveChangesAsync();
