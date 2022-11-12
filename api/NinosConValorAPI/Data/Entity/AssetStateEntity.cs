@@ -11,6 +11,8 @@ namespace NinosConValorAPI.Data.Entity
         [Required]
         public string State { get; set; }
 
+        public bool Deleted { get; set; }
+
         public ICollection<FixedAssetEntity>? FixedAssets { get; set; }
     }
 }
