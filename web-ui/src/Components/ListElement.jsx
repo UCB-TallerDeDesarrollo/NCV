@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-export default function ListElement({id=0, title = "default title", description = "default description", imgSrc = "", elementUrl = "", withImage=true, withEditIcon=false, withDeleteIcon=false}){
+export default function ListElement({id=0, title = "default title", description = "default description", imgSrc = "", elementUrl = "", withImage=true, withEditIcon=false, editAction=null, withDeleteIcon=false, deleteAction=null}){
   const navigate = useNavigate();
   
   const sxListItemText = {
@@ -23,13 +23,13 @@ export default function ListElement({id=0, title = "default title", description 
     img = <ListItemAvatar> <Avatar alt="Remy Sharp" src={imgSrc}/> </ListItemAvatar>;
   if (withDeleteIcon){
     deleteIcon = 
-    <IconButton aria-label="delete" size="small" className={"delete-assetState-button"}>
+    <IconButton aria-label="delete" size="small" className={"delete-assetState-button"} onClick={()=>{deleteAction(id)}}>
       <DeleteIcon fontSize="small" />
     </IconButton>
   }
   if (withEditIcon){
     editIcon = 
-    <IconButton aria-label="delete" size="small" className={"delete-assetState-button"} onClick={()=>alert("hola")}>
+    <IconButton aria-label="delete" size="small" className={"delete-assetState-button"} onClick={editAction}>
       <EditIcon fontSize="small" />
     </IconButton>
   }
