@@ -15,6 +15,7 @@ import { Snackbar } from '@mui/material'
 import ListGrid from '../../../Components/ListGrid'
 import { useNavigate, useLocation } from 'react-router-dom'
 import axios from "axios"
+import { WindowSharp } from '@mui/icons-material'
 var accesPermiss = sessionStorage.getItem("Access")
 
 export default function ShowFixedAssets() {
@@ -39,15 +40,17 @@ export default function ShowFixedAssets() {
                 setShowAlert(true)
                 setAlertMessage("Registro Eliminado")
                 setOpen(true)
-                setOpenToConfirm(false)                 
+                setOpenToConfirm(false) 
+                window.location.reload()
+                //navigate(`/activos-fijos/estados`,{state:{showAlert:true,alertMessage:"Registro Eliminado"}})                             
             }
         })
         .catch(err=> {
             console.log(err)
-            setErrorAssetStateDelete(err)
+            setErrorAssetStateDelete(err)            
         })
     }
-    console.log(errorAssetStatDelete)
+
     if (errorAssetStates) return ErrorPage(errorAssetStates)
     if (errorAssetStatDelete) return ErrorPage(errorAssetStateDelete)
     if (!assetStates) return null
@@ -82,8 +85,8 @@ export default function ShowFixedAssets() {
     let deleteAction = (id) => {
         setAssetStateId(id)
         setUrlAssetState(urlAssetState + id)        
-        handleCloseToConfirm();
-        setOpenToConfirm(true);
+        handleCloseToConfirm()
+        ToConfirmOpen()
     }
     assetStatesComponent = <ListGrid items={assetStatesListElements} withImage={false}  withEditIcon={true} editAction={editAction} withDeleteIcon={true} deleteAction={deleteAction}/>
     let createStateFixedAssetView = "/crear-estado-activo-fijo"    
