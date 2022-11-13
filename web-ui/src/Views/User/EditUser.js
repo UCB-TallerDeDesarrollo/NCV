@@ -10,7 +10,11 @@ import Collapse from '@mui/material/Collapse'
 import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
 import Alert from '@mui/material/Alert'
 import { useParams } from 'react-router-dom'
+<<<<<<< HEAD
 import { Box } from '@mui/system'
+=======
+import MenuItem from '@mui/material/MenuItem'
+>>>>>>> ea1f970 (last change)
 
 const roles = [
     {
@@ -31,7 +35,8 @@ export function EditUser() {
     const navigate = useNavigate()
     //const userId = '4cf62dc7-5e67-46fa-a227-f8dae70cba5a'
     const { userId } = useParams()
-    var url = 'https://ncv-api.herokuapp.com/api/auth/' + userId
+    //var url = 'https://ncv-api.herokuapp.com/api/auth/' + userId
+    var url = 'http://localhost:5009/api/auth/' + userId
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)
     const [formErrors, setFormErrors] = useState({})
@@ -186,6 +191,22 @@ export function EditUser() {
                         value={user.email}
                         onChange={handleInputChange}
                     />
+                    <InputText
+                        required
+                        select
+                        id="rol"
+                        name="rol"
+                        label="Rol"
+                        type="text"
+                        value={data.rol}
+                        onChange={handleInputChange}
+                    >
+                        {roles.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </InputText>
                     {formErrors.email ? (
                         <Alert sx={{ width: 1, pt: 1 }} severity="error">
                             {formErrors.email}

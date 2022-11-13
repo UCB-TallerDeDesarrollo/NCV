@@ -281,7 +281,8 @@ namespace NinosConValorAPI.Services.Security
         public async Task<EditUserViewModel> GetUserByIdAsync(string userId)
         {
             var user = await userManager.FindByIdAsync(userId);
-
+            var aux = await userManager.GetRolesAsync(user);
+            Console.WriteLine(aux);
             if (user == null)
             {
                 throw new NotFoundElementException($"The user doesn't exists");
@@ -292,13 +293,15 @@ namespace NinosConValorAPI.Services.Security
                 Email = user.Email,
                 CellPhone = user.PhoneNumber,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                Role= aux[0]
             };
         }
 
         public async Task<UserManagerResponse> UpdateUsersAsync(EditUserViewModel model, string userId)
         {
             var user = await userManager.FindByIdAsync(userId);
+            var aux = await userManager.GetRolesAsync(user);
 
             if (user == null)
             {
