@@ -16,6 +16,7 @@ function CreateFixedAssetForm(props) {
     const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
     const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
     const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories'
+    const urlStates = 'https://ncv-api.herokuapp.com/api/assetStates'
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null)
     const [formErrors,setFormErrors] = useState({})
@@ -28,26 +29,7 @@ function CreateFixedAssetForm(props) {
     const [priceError, setPriceError] = useState("")
     const [programInputError, setProgramInputError] = useState(null)
     const [programError, setProgramError] = useState("Seleccione un programa")
-    const [quantityInputError, setQuantityInputError] = useState(null)
-    const [quantityError, setQuantityError] = useState("")
-    const [statusSelectedValue, setStatusSelectedValue] = useState(null)
-    const statusOptions = [
-        {
-            value: 'Bueno',
-            label: 'Bueno',
-        },
-        {
-            value: 'Regular',
-            label: 'Regular',
-        },
-        {
-          value: 'Baja',
-          label: 'Baja',
-        },
-        {
-          value: 'Obsoleto',
-          label: 'Obsoleto'
-        }]
+    
     const navigate = useNavigate()
     const [data, setData] = useState({
         Name: '', // string
@@ -56,24 +38,28 @@ function CreateFixedAssetForm(props) {
         EntryDate: '', // dateTime
         Price: '', // decimal
         Features: '', // string
-        Quantity: '', // int
         ProgramHouseId : '', //int
         AssetCategoryId : '', //int
-        Status: '' //string
+        AssetStateId: '' //string
     })
     //programHouses
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
     const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)    
 
     useEffect(()=>{
-        // console.log(formErrors)
         if (Object.keys(formErrors).length === 0 && isSubmit){
-        //    console.log(data);
         }
     },[formErrors]);
+
     //categories
     const [categorySelectedValue, setCategorySelectedValue] = useState(null)
     const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
+
+    //states
+    const [stateSelectedValue, setStateSelectedValue] = useState(null)
+    const { apiData:states, error:errorStates } = getFromApi(urlStates)   
+
+    // program Houses Options for DROPDOWN
     if(errorProgramHouses){
         return ErrorPage(errorProgramHouses)
     }
@@ -83,6 +69,8 @@ function CreateFixedAssetForm(props) {
         value: programHouse.id      
     }}) 
     const programHousesOptions = programHousesList 
+
+    // categories options for DROPDOWN
     if(errorCategory){
         return ErrorPage(errorCategory)
     }
@@ -93,12 +81,22 @@ function CreateFixedAssetForm(props) {
     }}) 
     const categoriesOptions = categoriesList  
 
+    //states options for DROPDOWN
+    if(errorStates){
+        return ErrorPage(errorStates)
+    }
+    if (!states) return null 
+    let statesList = states.map( state =>  { return{
+        label: state.state,
+        value: state.id      
+    }}) 
+    const stateOptions = statesList 
+
     function handle(e) {
         const newData = { ...data }
         newData[e.target.id] = e.target.value
         setData(newData)
         setOpen(false)
-        // console.log(newData)
     }
 
     function handleClose(event, reason) {
@@ -110,25 +108,20 @@ function CreateFixedAssetForm(props) {
     
     function checkError(){
         if(error){
-            //setOpen(true)
             return ErrorPage(error)
         }
     }
     function hasFormErrors(errorsFromForm){
-        console.log('form errors',errorsFromForm)
         let hasErrors=true
-        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.Quantity && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features){
+        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features && !errorsFromForm.Code && !errorsFromForm.AssetStateId){
             hasErrors = false
         }
         return hasErrors
     }
     function submit(e) {
-        //e.preventDefault()
         const errorsFromForm= validate(data)
         setFormErrors(errorsFromForm)
         setIsSubmit(true)
-        //console.log(formErrors)
-        //debugger
         if(!hasFormErrors(errorsFromForm)){
             Axios.post(url, {
             Name: data.Name,
@@ -137,10 +130,9 @@ function CreateFixedAssetForm(props) {
             EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
             Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
             Features: data.Features==''? null:data.Features, // string
-            Quantity: data.Quantity==''? null:parseInt(data.Quantity), // int
             ProgramHouseId : programHouseSelectedValue,
             AssetCategoryId : categorySelectedValue,
-            State: statusSelectedValue //string
+            AssetStateId: stateSelectedValue //string
             }).then((res) => {
                 if (res.status == 201) {               
                     navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo creado exitosamente"}})
@@ -160,13 +152,11 @@ function CreateFixedAssetForm(props) {
             EntryDate: '', // dateTime
             Price: '', // decimal
             Features: '', // string
-            Quantity: '', // int
             ProgramHouseId : '', //int
             AssetCategoryId : '', //int
-            Status: ''//string
+            AssetStateId: ''//string
         }
         const regexNumber = /^[0-9]+([.][0-9]+)?$/;
-        //debugger
         if(!datas.Name){
             errors.Name="El Nombre del Activo Fijo es requerido!";
         }else if(datas.Name.length>60){
@@ -188,10 +178,6 @@ function CreateFixedAssetForm(props) {
         }else if(!regexNumber.test(datas.Price)){
             errors.Price= "El Precio del Activo Fijo debe ser ingresado en formato decimal!";
         }
-    
-        if(!datas.Quantity){
-            errors.Quantity= "La Cantidad del Activo Fijo es requerida!";
-        }
 
         if(!programHouseSelectedValue){
             errors.ProgramHouseId= "El programa del Activo Fijo es requerido!";
@@ -201,20 +187,19 @@ function CreateFixedAssetForm(props) {
             errors.AssetCategoryId= "La categoría del Activo Fijo es requerida!";
         }
 
-        if(!statusSelectedValue){
-            errors.Status= "El estado del Activo Fijo es requerido!";
+        if(!stateSelectedValue){
+            errors.AssetStateId= "El estado del Activo Fijo es requerido!";
         }
     
         if(datas.Features.length>1000){
             errors.Features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
         }
-        console.log('errs',errors)
+    
         return errors
     }
     
 
     if(error){
-        //setOpen(true)
         return ErrorPage(error)
     }
     return (
@@ -357,7 +342,18 @@ function CreateFixedAssetForm(props) {
                 </Dropdown>   
                 {formErrors.ProgramHouseId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.ProgramHouseId}  </Alert>:<p></p> }                 
-                
+                        <Dropdown 
+                    name={"Estado"} 
+                    id="estado-drop" 
+                    options={stateOptions}                                         
+                    selectedValue={stateSelectedValue}
+                    setSelectedValue = {setStateSelectedValue}
+                    helperText = "Seleccione un estado"
+                    required                    
+                    >                                        
+                </Dropdown>   
+                {formErrors.AssetStateId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.AssetStateId}  </Alert>:<p></p> }
                 <InputText
                     onChange={(e) => handle(e)}
                     id="Features"
@@ -366,40 +362,7 @@ function CreateFixedAssetForm(props) {
                     type="text"
                 />
                  {formErrors.Features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Features} </Alert>:<p></p> }
-                <Dropdown 
-                    name={"Estado"} 
-                    id="estado-drop" 
-                    options={statusOptions}                                         
-                    selectedValue={statusSelectedValue}
-                    setSelectedValue = {setStatusSelectedValue}
-                    required                    
-                    >                                        
-                </Dropdown>   
-                {formErrors.Status? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Status}  </Alert>:<p></p> }
-                <InputText
-                    required
-                    onChange={(e) => {
-                        handle(e)
-                        if(data.Quantity.length === 0){
-                            setQuantityInputError(true);
-                            setQuantityError("La cantidad del activo no puede estar vacía");
-                        }
-                        else{
-                            setQuantityInputError(false);
-                            setQuantityError("");
-                        } 
-                    }}
-                    id="Quantity"
-                    value={data.Quantity}
-                    label="Cantidad"
-                    type="number"
-                    error={quantityInputError}
-                    helperText={quantityError}
-                />
-                {formErrors.Quantity? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Quantity}  </Alert>:<p></p> }
+                        {formErrors.Features} </Alert>:<p></p> }                
                 <ButtonPrimary label={"Crear"} id="submit_button" onClick={submit}/>
                 <Snackbar
                     open={open}

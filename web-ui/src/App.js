@@ -15,12 +15,12 @@ import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
 import { ShowFixedAsset } from './Views/FixedAssets/ShowOneFixedAsset'
 import UpdateFixedAssetForm from './Views/FixedAssets/UpdateFixedAsset'
 
-import AddHealthReport from './Views/KidsFiles/AddHealthReport'
+import AddHealthReport from './Views/KidsFiles/HealthReport/AddHealthReport'
 import { ShowKidsFiles } from './Views/KidsFiles/ShowKidsFiles'
 import { ShowOneKidFile } from './Views/KidsFiles/ShowOneKidFile'
-import DataHealth from './Views/KidsFiles/DataHealth'
-import AddKid from './Views/KidsFiles/AddKid'
-import EditKid from './Views/KidsFiles/EditKid'
+import AddKid from './Views/KidsFiles/BasicDataReport/AddKid'
+import EditKid from './Views/KidsFiles/BasicDataReport/EditKid'
+
 
 import ListUsers from './Views/User/ListUsers'
 
@@ -71,7 +71,6 @@ function App() {
                         path="ninos/:kidId/editar-nino"
                         element={<EditKid />}
                     ></Route>
-                    <Route path="/kidHealth/:id" element={<DataHealth />} />
                     <Route path="*" element={<Navigate replace to="/" />} />
                 </Routes>
             </Router>
@@ -95,7 +94,6 @@ function App() {
                     path="ninos/:kidId/editar-nino"
                     element={<EditKid/>}
                 ></Route>
-                <Route path="/kidHealth/:id" element={<DataHealth />} />
                 
                     <Route exact path="/" element={<LoginForm />}></Route>
                     <Route path="*" element={<Navigate replace to="/" />} />

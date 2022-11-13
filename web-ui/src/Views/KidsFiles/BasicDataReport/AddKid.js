@@ -2,12 +2,12 @@ import React,{useState} from 'react';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
 import MenuItem from '@mui/material/MenuItem';
-import FormContainer from '../../Components/FormContainer';
-import InputText from '../../Components/InputText';
-import ButtonPrimary from '../../Components/MUI-Button';
+import FormContainer from '../../../Components/FormContainer';
+import InputText from '../../../Components/InputText';
+import ButtonPrimary from '../../../Components/MUI-Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../../Components/NavBar';
+import Navbar from '../../../Components/NavBar';
 
 
 const kidFile = {

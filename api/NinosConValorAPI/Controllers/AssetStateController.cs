@@ -5,46 +5,23 @@ using NinosConValorAPI.Services;
 
 namespace NinosConValorAPI.Controllers
 {
-    [Route("api/fixedAssets")]
-
-    public class FixedAssetsController : Controller
+    [Route("api/assetStates")]
+    public class AssetStateController : Controller
     {
-        private IFixedAssetService _fixedAssetService;
+        private IAssetStateService _assetStateService;
 
-        public FixedAssetsController(IFixedAssetService fixedAssetService)
+        public AssetStateController(IAssetStateService assetStateService)
         {
-            _fixedAssetService = fixedAssetService;
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<FixedAssetModel>> CreateFixedAssetAsync([FromBody] FixedAssetModel fixedAsset)
-        {
-            try
-            {                               
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-                int programHouseId = fixedAsset.ProgramHouseId;
-                int categoryId = fixedAsset.AssetCategoryId;                
-                var newFixedAsset = await _fixedAssetService.CreateFixedAssetAsync(fixedAsset, programHouseId, categoryId);
-                return Created($"/api/fixedAssets/{newFixedAsset.Id}", newFixedAsset);
-            }
-            catch (NotFoundElementException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió.");
-            }
+            _assetStateService = assetStateService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FixedAssetModel>>> GetFixedAssetsAsync()
+        public async Task<ActionResult<IEnumerable<AssetStateModel>>> GetAssetStatesAsync()
         {
             try
-            {
-                var fixedAssets = await _fixedAssetService.GetFixedAssetsAsync();
-                return Ok(fixedAssets);
+            {                
+                var assetStates = await _assetStateService.GetAssetStatesAsync();
+                return Ok(assetStates);
             }
             catch (NotFoundElementException ex)
             {
@@ -56,13 +33,16 @@ namespace NinosConValorAPI.Controllers
             }
         }
 
-        [HttpGet("{fixedAssetId:int}")]
-        public async Task<ActionResult<FixedAssetModel>> GetFixedAssetAsync(int fixedAssetId)
+        [HttpPost]
+        public async Task<ActionResult<AssetStateModel>> CreateAssetStateAsync([FromBody] AssetStateModel assetState)
         {
             try
             {
-                var fixedAsset = await _fixedAssetService.GetFixedAssetAsync(fixedAssetId);
-                return Ok(fixedAsset);
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+                
+                var newAssetState = await _assetStateService.CreateAssetStateAsync(assetState);
+                return Created($"/api/assetStates/{newAssetState.Id}", newAssetState);
             }
             catch (NotFoundElementException ex)
             {
@@ -74,12 +54,31 @@ namespace NinosConValorAPI.Controllers
             }
         }
 
-        [HttpPut("{fixedAssetId:int}")]
-        public async Task<IActionResult> UpdateFixedAssetAsync(int fixedAssetId, [FromBody] FixedAssetModel fixedAsset)
+
+        [HttpGet("{assetStateId:int}")]
+        public async Task<ActionResult<AssetStateModel>> GetAssetStateAsync(int assetStateId)
         {
             try
             {
-                return Ok(await _fixedAssetService.UpdateFixedAssetAsync(fixedAssetId, fixedAsset));
+                var assetState = await _assetStateService.GetAssetStateAsync(assetStateId);
+                return Ok(assetState);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió.");
+            }
+        }
+
+        [HttpPut("{assetStateId:int}")]
+        public async Task<IActionResult> UpdateAssetStateAsync(int assetStateId, [FromBody] AssetStateModel assetState)
+        {
+            try
+            {
+                return Ok(await _assetStateService.UpdateAssetStateAsync(assetStateId, assetState));
             }
             catch (NotFoundElementException ex)
             {
@@ -91,12 +90,12 @@ namespace NinosConValorAPI.Controllers
             }
         }
 
-        [HttpDelete("{fixedAssetId:int}")]
-        public async Task<ActionResult> DeleteFixedAssetAsync(int fixedAssetId)
+        [HttpDelete("{assetStateId:int}")]
+        public async Task<ActionResult> DeleteAssetStateAsync(int assetStateId)
         {
             try
             {
-                await _fixedAssetService.DeleteFixedAssetAsync(fixedAssetId);
+                await _assetStateService.DeleteAssetStateAsync(assetStateId);
                 return Ok();
             }
             catch (NotFoundElementException ex)

@@ -10,6 +10,15 @@ export async function getFixedAssets(url){
   }
 }
 
+export async function deleteFixedAssets(url){
+  try{
+    const response = await axios.delete(url)
+    return response
+  }catch(apiError){
+    return apiError
+  }
+}
+
 export default function getFromApi(url){
   const [apiData, setApiData] = useState(null);
   const [error, setError] = useState(null);

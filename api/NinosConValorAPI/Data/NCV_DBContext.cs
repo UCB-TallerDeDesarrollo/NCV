@@ -13,6 +13,8 @@ namespace NinosConValorAPI.Data
         public DbSet<HealthReportEntity> HealthReports { get; set; }
         public DbSet<FoundationReportEntity> FoundationReport { get; set; }
         public DbSet<AssetCategoryEntity> AssetCategories => Set<AssetCategoryEntity>();
+
+        public DbSet<AssetStateEntity> AssetStates => Set<AssetStateEntity>();
         public DbSet<BiometricsEntity> Biometrics { get; set; }
         public DbSet<EducationReportEntity> EducationReports { get; set; }
 
@@ -39,7 +41,10 @@ namespace NinosConValorAPI.Data
             modelBuilder.Entity<FixedAssetEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<FixedAssetEntity>().HasOne(d => d.ProgramHouse).WithMany(d=>d.FixedAssets);
             modelBuilder.Entity<FixedAssetEntity>().HasOne(d => d.AssetCategory).WithMany(d => d.FixedAssets);
+            modelBuilder.Entity<FixedAssetEntity>().HasOne(d => d.AssetState).WithMany(d => d.FixedAssets);
 
+
+            //kid
             modelBuilder.Entity<KidEntity>().ToTable("Kid");
             modelBuilder.Entity<KidEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
 
@@ -63,10 +68,15 @@ namespace NinosConValorAPI.Data
             modelBuilder.Entity<ProgramHouseEntity>().HasOne(d => d.ResponsibleUser);
             modelBuilder.Entity<ProgramHouseEntity>().HasMany(d => d.FixedAssets).WithOne(d => d.ProgramHouse);
 
-            //Categories
+            //AssetCategories
             modelBuilder.Entity<AssetCategoryEntity>().ToTable("AssetCategory");
             modelBuilder.Entity<AssetCategoryEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<AssetCategoryEntity>().HasMany(d => d.FixedAssets).WithOne(d => d.AssetCategory);
+
+            //AssetStates
+            modelBuilder.Entity<AssetStateEntity>().ToTable("AssetState");
+            modelBuilder.Entity<AssetStateEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<AssetStateEntity>().HasMany(d => d.FixedAssets).WithOne(d => d.AssetState);
 
             //Education
             modelBuilder.Entity<EducationReportEntity>().ToTable("EducationReports");
