@@ -100,8 +100,13 @@ export default function ShowFixedAssets() {
             }
         })
         let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={listElements} withImage={false} />
+        let assetStatesView = "/activos-fijos/estados"
         let nexFixedAsset = "/crear-activo-fijo"
-        const listHeaderComponents = <ButtonPrimary label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
+        const listHeaderComponents = 
+        <>
+            <ButtonPrimary label={"Gestionar Estados"} onClick={()=>navigate(assetStatesView)}/>
+            <ButtonPrimary label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
+        </>
         return (
             <>
                 <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>

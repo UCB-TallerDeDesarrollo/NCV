@@ -3,8 +3,11 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import { ListItemButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
-export default function ListElement({id=0, title = "default title", description = "default description", imgSrc = "", elementUrl = "", withImage=true}){
+export default function ListElement({id=0, title = "default title", description = "default description", imgSrc = "", elementUrl = "", withImage=true, withEditIcon=false, editAction=null, withDeleteIcon=false, deleteAction=null}){
   const navigate = useNavigate();
   
   const sxListItemText = {
@@ -14,11 +17,26 @@ export default function ListElement({id=0, title = "default title", description 
   }
   
   let img = null;
+  let deleteIcon = null
+  let editIcon = null
   if (withImage)
     img = <ListItemAvatar> <Avatar alt="Remy Sharp" src={imgSrc}/> </ListItemAvatar>;
-  
+  if (withDeleteIcon){
+    deleteIcon = 
+    <IconButton aria-label="delete" size="small" className={"delete-assetState-button"} onClick={()=>{deleteAction(id)}}>
+      <DeleteIcon fontSize="small" />
+    </IconButton>
+  }
+  if (withEditIcon){
+    editIcon = 
+    <IconButton aria-label="delete" size="small" className={"delete-assetState-button"} onClick={editAction}>
+      <EditIcon fontSize="small" />
+    </IconButton>
+  }
   return <ListItemButton sx={{borderTop: 1, borderColor:'#CDCDCD', margin:0}} key={id} alignItems="flex-start" onClick={()=>navigate(elementUrl)}>
-      {img}
+      {img}      
     <ListItemText primary={title} secondary={description} className="ListElement" sx={sxListItemText}/>
+    {editIcon}
+    {deleteIcon}
   </ListItemButton>;
 }
