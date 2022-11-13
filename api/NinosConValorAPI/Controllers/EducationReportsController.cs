@@ -33,5 +33,24 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
             }
         }
+        [HttpGet("{kidId:int}")]
+        public async Task<ActionResult<EducationReportModel>> GetEducationReportAsync(int kidId)
+        {
+            ActionResult<EducationReportModel> response;
+            try
+            {
+                var educationReportModel = await _educationReportService.GetEducationReportAsync(kidId);
+                response = Ok(educationReportModel);
+            }
+            catch (NotFoundElementException ex)
+            {
+                response = NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                response = StatusCode(StatusCodes.Status500InternalServerError, "General exception: Something happened");
+            }
+            return response;
+        }
     }
 }
