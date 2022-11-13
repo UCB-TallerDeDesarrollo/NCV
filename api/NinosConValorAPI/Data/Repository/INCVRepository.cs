@@ -49,5 +49,6 @@ namespace NinosConValorAPI.Data.Repository
         Task<bool> SaveChangesAsync();
         // EDUCATION REPORT
         public Task<EducationReportEntity> CreateEducationReportAsync(EducationReportEntity educationReport);
+        Task<EducationReportEntity> GetEducationReportAsync(int kidId);
     }
 }
