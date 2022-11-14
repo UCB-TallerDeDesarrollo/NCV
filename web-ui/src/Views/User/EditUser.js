@@ -94,6 +94,7 @@ export function EditUser() {
 
     function handleFormSubmit() {
         setFormErrors(validate(user));
+        user.role=user.rol
         setIsSubmit(true)
         axios
             .put(url, user)
@@ -189,6 +190,13 @@ export function EditUser() {
                         value={user.email}
                         onChange={handleInputChange}
                     />
+                    {formErrors.email ? (
+                        <Alert sx={{ width: 1, pt: 1 }} severity="error">
+                            {formErrors.email}
+                        </Alert>
+                    ) : (
+                        <p></p>
+                    )}
                     <InputText
                         required
                         select
@@ -196,7 +204,7 @@ export function EditUser() {
                         name="rol"
                         label= {TranslateRole(user.role)}
                         type="text"
-                        value={option.role}
+                        value={user.rol}
                         onChange={handleInputChange}
                     >
                         {roles.map((option) => (
@@ -205,13 +213,9 @@ export function EditUser() {
                             </MenuItem>
                         ))}
                     </InputText>
-                    {formErrors.email ? (
-                        <Alert sx={{ width: 1, pt: 1 }} severity="error">
-                            {formErrors.email}
-                        </Alert>
-                    ) : (
-                        <p></p>
-                    )}
+                    {formErrors.rol? <Alert sx={{ width: 1, pt: 1, marginBottom:2 }} severity="error"> 
+                        {formErrors.rol}                          
+                    </Alert>:<p></p> }
                     <Box sx={{alignItems :'center'}}>
                     <ButtonPrimary
                         label={'Guardar Cambios'}
