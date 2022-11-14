@@ -15,30 +15,37 @@ import DialogContentText from '@mui/material/DialogContentText';
 import Navbar from '../../Components/NavBar';
 import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../Components/MUI-Button';
 
-import WeightAndHeight from '../../Views/KidsFiles/HealthReport/BiometricsReport.js'
-import HealthReport from '../../Views/KidsFiles/HealthReport/ShowHealthReport.js'
 import BasicData from '../../Views/KidsFiles/BasicDataReport/ShowBasicDataReport.js'
-
+import HealthReport from '../../Views/KidsFiles/HealthReport/ShowHealthReport.js'
+import WeightAndHeight from '../../Views/KidsFiles/HealthReport/BiometricsReport.js'
+import LegalReport from '../../Views/KidsFiles/LegalReport/ShowLegalReport.js'
 var accesPermiss = sessionStorage.getItem("Access")
 
 function ShowOneKidFile() {
     
     const { kidId } = useParams()
-    const [kid, setKid] = useState([])     
+    const [kid, setKid] = useState([])
+
     const [healthReport, setHealthReport] = useState(null)
     const [healthReportStatusCode, setHealthReportStatusCode] = useState(null)
+
     const [biometrics, setBiometrics] = useState([])
     const [biometricsStatusCode, setBiometricsStatusCode] = useState(null)
+
+    const [legalReport, setLegalReport] = useState(null)
+    const [legalReportStatusCode, setLegalReportStatusCode] = useState(null)
+
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
     const urlBiometrics = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/biometrics'
+    const urlLegalKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/legalreports'
+
     const navigate = useNavigate();
     const navigateEditKid = () =>{ 
         let path = `/ninos/${kidId}/editar-nino`; 
         navigate(path);
     }
     const location = useLocation()
-    
     let showAlert = location.state ? location.state.showAlert : false 
     let alertMessage = location.state ? location.state.alertMessage : null 
     const [open, setOpen] = useState(showAlert);
@@ -84,11 +91,22 @@ function ShowOneKidFile() {
                 setBiometricsStatusCode(error.response.status);
             })
     }
+    const fetchLegalReport = () => {
+        axios.get(urlLegalKid)
+            .then((response) => {
+                setLegalReportStatusCode(response.status)
+                setLegalReport(response.data)
+            })
+            .catch((error)=>{
+                setLegalReportStatusCode(error.response.status);
+            })
+    }
 
     useEffect(() => { 
         fetchBasicData();
         fetchHeltReport();
         fetchBiometrics();
+        fetchLegalReport();
     }, [])
     
     if (!kid){
@@ -141,6 +159,7 @@ function ShowOneKidFile() {
                     <ButtonDanger label="Eliminar" id="confirm_delete_button" onClick={fetchDeleteKid}></ButtonDanger>
                 </DialogActions>
             </Dialog>
+            <LegalReport kidId={kidId} legalReport={legalReport} legalReportStatusCode={legalReportStatusCode}/>
         </div></>
     )}
 export {ShowOneKidFile}

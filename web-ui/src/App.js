@@ -21,7 +21,7 @@ import { ShowKidsFiles } from './Views/KidsFiles/ShowKidsFiles'
 import { ShowOneKidFile } from './Views/KidsFiles/ShowOneKidFile'
 import AddKid from './Views/KidsFiles/BasicDataReport/AddKid'
 import EditKid from './Views/KidsFiles/BasicDataReport/EditKid'
-
+import AddLegalReport from './Views/KidsFiles/LegalReport/AddLegalReport'
 
 import ListUsers from './Views/User/ListUsers'
 
@@ -71,6 +71,10 @@ function App() {
                         path="ninos/:kidId/crear-reporte/"
                         //element={<><NavBar/><AddHealthReport/></>}
                         element={<AddHealthReport />}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/crear-reporte-legal/"
+                        element={<AddLegalReport />}
                     ></Route>
                     <Route
                         path="ninos/:kidId/editar-nino"
