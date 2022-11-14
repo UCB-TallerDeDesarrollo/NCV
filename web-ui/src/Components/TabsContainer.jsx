@@ -5,6 +5,8 @@ import TabsListUnstyled from '@mui/base/TabsListUnstyled';
 import TabPanelUnstyled from '@mui/base/TabPanelUnstyled';
 import { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
 import TabUnstyled, { tabUnstyledClasses } from '@mui/base/TabUnstyled';
+import Container from './Container';
+import { Box } from '@mui/material';
 
 const blue = {
   50: '#F0F7FF',
@@ -74,18 +76,15 @@ const TabPanel = styled(TabPanelUnstyled)(
   font-size: 0.875rem;
   padding: 20px 12px;
   background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-  border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
-  border-radius: 12px;
-  opacity: 0.6;
   `,
 );
 
 const TabsList = styled(TabsListUnstyled)(
   ({ theme }) => `
+  width: 40%;
   min-width: 400px;
   background-color: ${blue[500]};
   border-radius: 12px;
-  margin-bottom: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,17 +95,21 @@ const TabsList = styled(TabsListUnstyled)(
 
 export default function TabsContainer({tabsNames,tabsContent}) {
   return (
-    <TabsUnstyled defaultValue={0}>
-      <TabsList>
-      {
-        tabsNames.map((tab,i)=>{
-          return (<Tab key={i}>{tab}</Tab>);
-        })
-      }
-      </TabsList>
-      {
-        tabsContent.map((tab,i)=>(<TabPanel key={i} value={i}>{tab}</TabPanel>))
-      }
-    </TabsUnstyled>
+    <Box sx={{width:0.75}}>
+      <TabsUnstyled defaultValue={0}>
+        <TabsList>
+        {
+          tabsNames.map((tab,i)=>{
+            return (<Tab key={i}>{tab}</Tab>);
+          })
+        }
+        </TabsList>
+        <Container sx={{width:1,margin:0, borderTopLeftRadius:0 }}>
+        {
+          tabsContent.map((tab,i)=>(<TabPanel key={i} value={i}>{tab}</TabPanel>))
+        }
+        </Container>
+      </TabsUnstyled>
+    </Box>
   );
 }

@@ -260,14 +260,14 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
         </FormControl>);
         weightAndHeightTitle = <Typography variant="h3" sx={{marginBottom:1.5}}>Peso y talla</Typography>;
     }
-    return (<Container sx={{ display: 'flex', flexDirection:'column' }}>
+    return (<Box sx={{ display: 'flex', flexDirection:'column' }}>
         <Box sx={{ display: 'flex', flexDirection:'row', alignItems:'center',  justifyContent:'space-between'}}>
             {weightAndHeightTitle}
             {yearComboBox}
         </Box>
         {table}
         <AddRowWeightAndHeight setBiometrics={setBiometrics}/>
-    </Container>);
+    </Box>);
 }
 
 

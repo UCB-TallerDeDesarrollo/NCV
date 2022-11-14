@@ -10,15 +10,14 @@ import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../../Component
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
     let urlCreateHealthReport = `/ninos/${kidId}/crear-reporte/`
-    let buttonCreateHealthReport = (<Container>
+    let buttonCreateHealthReport = (
         <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
             <AutoAwesomeIcon sx={{marginTop:2}}/>
             <Box sx={{margin:3}}>
                 <Typography variant="body2">No se registraron datos de <b>salud</b></Typography>
             </Box>
             <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
-        </Box>
-    </Container>);
+        </Box>);
     let healthReportComponent = null
     if (healthReportStatusCode == 404){
         healthReportComponent = buttonCreateHealthReport
@@ -32,7 +31,7 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
             "Diagnostico especial" : healthReport.specialDiagnosis ,
             "Problemas de salud" : healthReport.healthProblems ,
         }
-        healthReportComponent = <SingleItemCard key={1} element={healthReportElement} title={"Reporte de salud"} />
+        healthReportComponent = <SingleItemCard key={1} element={healthReportElement} title={"Reporte de salud"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}} />
     }
     return healthReportComponent
 }
