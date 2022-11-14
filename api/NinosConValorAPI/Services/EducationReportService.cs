@@ -29,6 +29,23 @@ namespace NinosConValorAPI.Services
             }
             throw new Exception("Database Error");
         }
-        
+        public async Task<EducationReportModel> GetEducationReportAsync(int kidId)
+        {
+            await ValidateKidAsync(kidId);
+            var educationReportEntity = await _appRepository.GetEducationReportAsync(kidId);
+            if (educationReportEntity == null)
+                throw new NotFoundElementException($"The kid with id:{kidId} does not have a education report.");
+            return _mapper.Map<EducationReportModel>(educationReportEntity);
+        }
+
+        private async Task ValidateKidAsync(int kidId)
+        {
+            var kid = await _appRepository.GetKidAsync(kidId);
+            if (kid == null)
+            {
+                throw new NotFoundElementException($"The kid with id: {kidId} doesn't exists.");
+            }
+        }
+
     }
 }
