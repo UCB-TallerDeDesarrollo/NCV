@@ -141,18 +141,11 @@ export default function ShowFixedAssets() {
         setOpen(false)
     }
     assetStatesComponent = <ListGrid items={assetStatesListElements} withImage={false}  withEditIcon={true} editAction={editAction} withDeleteIcon={true} deleteAction={deleteAction}/>
-    
-    const listHeaderComponents = 
-    <>
-        <ButtonPrimary label={"Crear estado"} onClick={()=>showCreateForm()}/>
-    </>
-    return (
-        
-        <>
-        
+    return (        
+        <>        
             <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
             {accesPermiss=="ComplitAcces"&&
-                <ListContainer title="Lista de Estados de Activos Fijos" header={listHeaderComponents}>
+                <ListContainer title="Lista de Estados de Activos Fijos">
                     {assetStatesComponent}
                 </ListContainer>
             }   
