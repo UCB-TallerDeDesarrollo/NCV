@@ -10,12 +10,10 @@ import Collapse from '@mui/material/Collapse'
 import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
 import Alert from '@mui/material/Alert'
 import { useParams } from 'react-router-dom'
-<<<<<<< HEAD
-import { Box } from '@mui/system'
-=======
-import MenuItem from '@mui/material/MenuItem'
->>>>>>> ea1f970 (last change)
 
+import { Box } from '@mui/system'
+import MenuItem from '@mui/material/MenuItem'
+import TranslateRole from './Translate'
 const roles = [
     {
         label: 'Tia',
@@ -196,9 +194,9 @@ export function EditUser() {
                         select
                         id="rol"
                         name="rol"
-                        label="Rol"
+                        label= {TranslateRole(user.role)}
                         type="text"
-                        value={data.rol}
+                        value={option.role}
                         onChange={handleInputChange}
                     >
                         {roles.map((option) => (

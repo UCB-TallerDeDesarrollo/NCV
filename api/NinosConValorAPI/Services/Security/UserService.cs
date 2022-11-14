@@ -134,7 +134,7 @@ namespace NinosConValorAPI.Services.Security
             foreach (var user in userList)
             {
                 var aux =  await userManager.GetRolesAsync(user);
-                if (aux != null)
+                if (aux.Count >0)
                 {
                     var userBasicInfomodel = new UserBasicInformationModel
                     {
@@ -148,6 +148,22 @@ namespace NinosConValorAPI.Services.Security
                     };
 
                     userBasicInformation.Add(userBasicInfomodel);
+                }
+                else
+                {
+                    /*var userBasicInfomodel = new UserBasicInformationModel
+                    {
+                        Email = user.Email,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        CellPhone = user.PhoneNumber,
+                        NameRole = "Rol no asignado",
+                        Id = user.Id,
+
+                    };
+
+                    userBasicInformation.Add(userBasicInfomodel);*/
+                    throw new NotFoundElementException($"El usuario " +user.UserName+ "no tiene asignado un rol");
                 }
             }
             if (userBasicInformation == null || !userBasicInformation.Any())
@@ -282,6 +298,7 @@ namespace NinosConValorAPI.Services.Security
         {
             var user = await userManager.FindByIdAsync(userId);
             var aux = await userManager.GetRolesAsync(user);
+
             Console.WriteLine(aux);
             if (user == null)
             {
@@ -298,11 +315,11 @@ namespace NinosConValorAPI.Services.Security
             };
         }
 
+        
         public async Task<UserManagerResponse> UpdateUsersAsync(EditUserViewModel model, string userId)
         {
             var user = await userManager.FindByIdAsync(userId);
-            var aux = await userManager.GetRolesAsync(user);
-
+            var actuallyRole = await userManager.GetRolesAsync(user);
             if (user == null)
             {
                 return new UserManagerResponse
@@ -312,6 +329,8 @@ namespace NinosConValorAPI.Services.Security
                 };
             }
 
+            await userManager.RemoveFromRoleAsync(user, actuallyRole[0]);
+            var expected = await userManager.AddToRoleAsync(user, model.Role);
             user.FirstName = model.FirstName ?? user.FirstName;
             user.LastName = model.LastName ?? user.LastName;
             user.PhoneNumber = model.CellPhone ?? user.PhoneNumber;
