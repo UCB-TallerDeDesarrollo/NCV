@@ -33,8 +33,8 @@ export function EditUser() {
     const navigate = useNavigate()
     //const userId = '4cf62dc7-5e67-46fa-a227-f8dae70cba5a'
     const { userId } = useParams()
-    //var url = 'https://ncv-api.herokuapp.com/api/auth/' + userId
-    var url = 'http://localhost:5009/api/auth/' + userId
+    var url = 'https://ncv-api.herokuapp.com/api/auth/' + userId
+    //var url = 'http://localhost:5009/api/auth/' + userId
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)
     const [formErrors, setFormErrors] = useState({})
