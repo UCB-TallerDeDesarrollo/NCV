@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import ButtonPrimary from '../../Components/MUI-Button'
 import getFromApi from '../../Components/GetFromApi'
 import Dropdown from '../../Components/Dropdown'
+import {getFixedAssets} from '../../Components/GetFromApi'
 
 function CreateFixedAssetForm(props) {
     const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
@@ -29,7 +30,8 @@ function CreateFixedAssetForm(props) {
     const [priceError, setPriceError] = useState("")
     const [programInputError, setProgramInputError] = useState(null)
     const [programError, setProgramError] = useState("Seleccione un programa")
-    
+    const assetsCodes = []
+    getAssetsCodes();
     const navigate = useNavigate()
     const [data, setData] = useState({
         Name: '', // string
@@ -118,6 +120,22 @@ function CreateFixedAssetForm(props) {
         }
         return hasErrors
     }
+
+    function getAssetsCodes(){
+        const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
+        getFixedAssets(url).then(
+            response => {
+                if(response.name != "AxiosError"){
+                    response.data.map((el)=>{
+                        assetsCodes.push(el.code);
+                        return response;
+                    })
+                }
+                setHasErrorWithFetch(response)
+            }
+        )
+    }
+
     function submit(e) {
         const errorsFromForm= validate(data)
         setFormErrors(errorsFromForm)
@@ -165,6 +183,8 @@ function CreateFixedAssetForm(props) {
 
         if(!datas.Code){
             errors.Code="El Código del Activo Fijo es requerido!";
+        } else if(assetsCodes.includes(datas.Code)){
+            errors.Code="El Código del Activo Fijo ya existe!";
         }
     
         if(datas.Description.length>1000){
@@ -240,14 +260,6 @@ function CreateFixedAssetForm(props) {
                     type="text"
                     onChange={(e) => {
                         handle(e)
-                        // if(data.Code.length === 0){
-                        //     setNameInputError(true);
-                        //     setNameError("El código del activo no puede estar vacío");
-                        // }
-                        // else{
-                        //     setNameInputError(false);
-                        //     setNameError("");
-                        // } 
                     }}
                 />
                 {formErrors.Code? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
