@@ -49,6 +49,41 @@ namespace UnitTests.ControllersUT
             Assert.Equal(1, educationReportCreated.Id);
             Assert.Equal(201, status.StatusCode);
         }
-        
+        [Fact]
+        public async Task GetEducationReportAsync_GetAnExistingEducationReport_ReturnsEducationReportModel()
+        {
+            // ARRANGE
+            var educationReportModel = new EducationReportModel()
+            {
+                Grade = "Primero Secundaria",
+                School = "21 de Mayo",
+                Rude = "12345678"
+            };
+
+            int kidId = 1;
+            var educationReportServiceMock = new Mock<IEducationReportService>();
+            educationReportServiceMock.Setup(r => r.GetEducationReportAsync(kidId)).ReturnsAsync(new EducationReportModel()
+            {
+                Id = 1,
+                KidId = 1,
+                Grade = "Primero Secundaria",
+                School = "21 de Mayo",
+                Rude = "12345678"
+            });
+
+            var educationReportsController = new EducationReportsController(educationReportServiceMock.Object);
+
+            // ACT
+            var response = await educationReportsController.GetEducationReportAsync(kidId);
+            var status = response.Result as OkObjectResult;
+            var educationReportCreated = status.Value as EducationReportModel;
+
+            // ASSERT
+            Assert.Equal(1, educationReportCreated.KidId);
+            Assert.Equal("Primero Secundaria", educationReportCreated.Grade);
+            Assert.Equal(1, educationReportCreated.Id);
+            Assert.Equal(200, status.StatusCode);
+        }
+
     }
 }
