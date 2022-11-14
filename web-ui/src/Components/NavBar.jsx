@@ -1,6 +1,7 @@
 import React from 'react'
 import { AppBar, Grid, Typography, Toolbar, Tabs , Link, Tab, Box, Button ,useTheme , useMediaQuery} from '@mui/material';
 import imgNiñosConValor from '../Assets/img/logo-ncv2.png'
+import DrawerComp from './DrawnerComp';
 /* import NewUserForm from './NewUserForm'; */
 
 var accesPermiss = sessionStorage.getItem("Access")
@@ -41,6 +42,23 @@ function Navbar() {
   return (
     <AppBar sx={{backgroundColor: '#5CD4E2'}}>
       <Toolbar>
+        { isMatch ? <>
+            <Grid item xs={2}  >
+              <Typography sx={{cursor:'pointer' , flexGrow: 1, display: {sm: 'block' }}}>
+                 <img
+                    onClick={handleClickHome}
+                    height="60"
+                    width='150'
+                    src={imgNiñosConValor}
+                    alt="Niños con Valor"
+                    className="logo-img-nvar"
+
+                />
+              </Typography>
+            </Grid>
+            <DrawerComp/>
+          </> 
+          :<Grid sx={{ placeItems: 'center', color:'#023859'}} container>
         
             
             
@@ -56,7 +74,8 @@ function Navbar() {
                 />
               </Typography>
             
-            
+        
+        
        <Box sx={{color:'#023859', display: { xs: 'none', sm: 'block' }}} >
             
             {accesPermiss=="ComplitAcces" &&
@@ -76,6 +95,7 @@ function Navbar() {
 
 
         </Box>
+        </Grid>}
         
       </Toolbar>
     </AppBar>
