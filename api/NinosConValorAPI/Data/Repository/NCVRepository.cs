@@ -197,7 +197,7 @@ namespace NinosConValorAPI.Data.Repository
             return educationReport;
         }
 
-        public async Task<EducationReportEntity> GetEducatioReportAsync(int kidId)
+        public async Task<EducationReportEntity> GetEducationReportAsync(int kidId)
         {
             IQueryable<EducationReportEntity> query = _dbContext.EducationReports;
             query = query.AsNoTracking();
