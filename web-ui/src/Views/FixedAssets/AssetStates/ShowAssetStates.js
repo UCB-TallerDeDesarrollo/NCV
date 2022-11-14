@@ -15,6 +15,8 @@ import { Snackbar } from '@mui/material'
 import ListGrid from '../../../Components/ListGrid'
 import { useNavigate, useLocation } from 'react-router-dom'
 import axios from "axios"
+import FormContainer from '../../../Components/FormContainer'
+import InputText from '../../../Components/InputText'
 import { WindowSharp } from '@mui/icons-material'
 var accesPermiss = sessionStorage.getItem("Access")
 
@@ -26,13 +28,18 @@ export default function ShowFixedAssets() {
     const urlAssetStates = 'https://ncv-api.herokuapp.com/api/assetStates/'
     let [urlAssetState, setUrlAssetState] = useState('https://ncv-api.herokuapp.com/api/assetStates/')
     let { apiData: assetStates, error: errorAssetStates } = getFromApi(urlAssetStates) 
+    let errorsFromForm = null
     const [assetState, setAssetState] = useState([]) 
     const [open, setOpen] = useState(showAlert)
     const [assetStateId, setAssetStateId] = useState(0)
     const [openToConfirm, setOpenToConfirm] = useState(false)
     const [errorAssetStatDelete, setErrorAssetStateDelete] = useState(null)
-    let assetStatesComponent = null      
-
+    const [data, setData] = useState({
+        state:''//string
+    })
+    const [formErrors, setFormErrors] = useState({})
+    let assetStatesComponent = null   
+    
     const fetchDeleteAssetState = () => {
         axios.delete(urlAssetState)
         .then((response) => {
@@ -51,6 +58,44 @@ export default function ShowFixedAssets() {
         })
     }
 
+    function hasFormErrors(errorsFromForm){
+        let hasErrors=true
+        if(!errorsFromForm.state){
+            hasErrors = false
+        }
+        return hasErrors
+    }
+
+    const validate = (datas) => {      
+        console.log(datas)  
+        const errors = {
+            state: '', // string            
+        }        
+        if(!datas.state||datas.state.length==0)
+            errors.state= "El Estado es requerido!"
+        return errors     
+    }
+
+    function submitCreate(){
+        errorsFromForm = validate(data)
+        setFormErrors(errorsFromForm)
+        if(!hasFormErrors(errorsFromForm)){
+            axios.post(urlAssetState, data).then((res) => {
+                if (res.status == 201) {     
+                    setShowAlert(true)
+                    setAlertMessage("Estado creado")
+                    setOpen(true)
+                    window.location.reload()
+                    //navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo actualizado exitosamente"}})
+                }            
+            }).catch ((apiError) => {
+                setError(apiError) 
+                checkError()                    
+            })
+        }else{
+            console.log(errorsFromForm)
+        }
+    }
     if (errorAssetStates) return ErrorPage(errorAssetStates)
     if (errorAssetStatDelete) return ErrorPage(errorAssetStateDelete)
     if (!assetStates) return null
@@ -87,12 +132,19 @@ export default function ShowFixedAssets() {
         setUrlAssetState(urlAssetState + id)        
         handleCloseToConfirm()
         ToConfirmOpen()
+    }         
+
+    function handle(e) {
+        const newData = { ...data }
+        newData[e.target.id] = e.target.value
+        setData(newData)
+        setOpen(false)
     }
     assetStatesComponent = <ListGrid items={assetStatesListElements} withImage={false}  withEditIcon={true} editAction={editAction} withDeleteIcon={true} deleteAction={deleteAction}/>
-    let createStateFixedAssetView = "/crear-estado-activo-fijo"    
+    
     const listHeaderComponents = 
     <>
-        <ButtonPrimary label={"Crear estado"} onClick={()=>navigate(createStateFixedAssetView)}/>
+        <ButtonPrimary label={"Crear estado"} onClick={()=>showCreateForm()}/>
     </>
     return (
         
@@ -122,7 +174,25 @@ export default function ShowFixedAssets() {
                     <ButtonDanger label="Eliminar" id="confirm_delete_button" onClick={fetchDeleteAssetState}></ButtonDanger>
                 </DialogActions>
             </Dialog>
-        </>
-        
+            <div style={{display:'flex', justifyContent:'center'}}>
+        <FormContainer title="Crear estado">
+            <InputText
+                required
+                id="state"
+                name="state"
+                value={data.state}
+                label="Estado"
+                type="text"
+                onChange={(e) => {
+                    handle(e)            
+                }}
+            />
+            {formErrors.state? <Alert  sx={{ wieditdth: 1, pt: 1 }} severity="error"> 
+                {formErrors.state}                   
+            </Alert>:<p></p> }
+            <ButtonPrimary label={"Crear estado"} id="submit_button" onClick={submitCreate}/>
+            </FormContainer>
+            </div>            
+        </>                
     )
 }
