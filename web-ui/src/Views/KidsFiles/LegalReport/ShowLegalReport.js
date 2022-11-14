@@ -8,7 +8,6 @@ import SingleItemCard from '../../../Components/SingleItemCard'
 import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../../Components/MUI-Button';
 
 function LegalReport({kidId, legalReport, legalReportStatusCode}){
-    console.log("Entraste a legalReport")
     const navigate = useNavigate();
     let urlCreateLegalReport = `/ninos/${kidId}/crear-reporte-legal/`
     let buttonCreateLegalReport = (<Container>
