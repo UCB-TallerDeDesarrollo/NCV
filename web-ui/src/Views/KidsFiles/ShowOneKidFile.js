@@ -19,6 +19,9 @@ import BasicData from '../../Views/KidsFiles/BasicDataReport/ShowBasicDataReport
 import HealthReport from '../../Views/KidsFiles/HealthReport/ShowHealthReport.js'
 import WeightAndHeight from '../../Views/KidsFiles/HealthReport/BiometricsReport.js'
 import LegalReport from '../../Views/KidsFiles/LegalReport/ShowLegalReport.js'
+
+import TabsContainer from '../../Components/TabsContainer';
+
 var accesPermiss = sessionStorage.getItem("Access")
 
 function ShowOneKidFile() {
@@ -130,15 +133,15 @@ function ShowOneKidFile() {
         handleCloseToConfirm();
         setOpenToConfirm(true);
     };
-
+    let healthTabContent = (<HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>);
+    let weightAndHeightTabContent = (<WeightAndHeight weightAndHeightData={biometrics} setBiometrics={setBiometrics}/>);
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <BasicData kid={kid}/>
             {accesPermiss=="ComplitAcces"&&
                 <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
             }
-            <HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>
-            <WeightAndHeight weightAndHeightData={biometrics} setBiometrics={setBiometrics}/>
+            <TabsContainer tabsNames={["Pesos y tallas","Salud"]} tabsContent={[weightAndHeightTabContent,healthTabContent]}></TabsContainer>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
