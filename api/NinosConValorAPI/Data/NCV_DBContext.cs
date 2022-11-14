@@ -11,6 +11,7 @@ namespace NinosConValorAPI.Data
         public DbSet<KidEntity> Kids => Set<KidEntity>();
         public DbSet<ProgramHouseEntity> ProgramHouses => Set<ProgramHouseEntity>();
         public DbSet<HealthReportEntity> HealthReports { get; set; }
+        public DbSet<LegalReportEntity> LegalReports { get; set; }
         public DbSet<AssetCategoryEntity> AssetCategories => Set<AssetCategoryEntity>();
 
         public DbSet<AssetStateEntity> AssetStates => Set<AssetStateEntity>();
@@ -49,9 +50,13 @@ namespace NinosConValorAPI.Data
 
             // Configure the primary key for the OfficeAssignment'
 
-            // Configure the primary key for the OfficeAssignment
+            // HealthReport
             modelBuilder.Entity<HealthReportEntity>().ToTable("HealthReports");
             modelBuilder.Entity<HealthReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
+            
+            // LegalReport
+            modelBuilder.Entity<LegalReportEntity>().ToTable("LegalReports");
+            modelBuilder.Entity<LegalReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
  
             //Biometrics
             modelBuilder.Entity<BiometricsEntity>().ToTable("Biometrics");

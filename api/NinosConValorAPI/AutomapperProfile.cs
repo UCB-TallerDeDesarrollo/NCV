@@ -26,6 +26,8 @@ namespace NinosConValorAPI
                 .ReverseMap();
             this.CreateMap<HealthReportEntity, HealthReportModel>()
                 .ReverseMap();
+            this.CreateMap<LegalReportEntity, LegalReportModel>()
+                .ReverseMap();
             this.CreateMap<BiometricsEntity, BiometricsModel>()
                 .ReverseMap();
             this.CreateMap<ProgramHouseEntity, ProgramHouseModel>()
