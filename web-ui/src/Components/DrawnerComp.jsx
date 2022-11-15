@@ -7,10 +7,7 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 const DrawerComp = () => {
     var accesPermiss = sessionStorage.getItem("Access")
     const [open, setOpen] = useState(false)
-    function handleClickUser(){
-      console.log("Button clicked")
-      window.location.href = "/user";
-    }
+    
 
     function handleClickViewUsers(){
         if(accesPermiss== "ComplitAcces"){  
@@ -29,10 +26,7 @@ const DrawerComp = () => {
           window.location.href = '/activos-fijos';
         }
       }
-    
-      function handleClickHome(){
-        window.location.href = "/inicio-ncv";
-      }
+  
     
       function handleClickExit(){
         sessionStorage.setItem("jwt", "");
@@ -48,25 +42,27 @@ const DrawerComp = () => {
         }} 
         open={open} 
         onClose={()=>setOpen(false)} >
-        <List>
-            {accesPermiss=="ComplitAcces" &&
-                  <Button sx={{marginLeft:5,textTransform:'none'}} color="inherit" onClick={handleClickViewUsers}>Usuarios</Button>
-            }
 
+        <List sx={{color:'#023859'}}>
+            {accesPermiss=="ComplitAcces" &&
+                  <Button sx={{marginRight:4,marginLeft:4,textTransform:'none'}} color="inherit" onClick={handleClickViewUsers}>Usuarios</Button>
+            }
+            <br></br>
             {((accesPermiss=="ComplitAcces") || (accesPermiss=="RestrinccionAcces")) &&
-                  <Button  sx={{marginLeft:5,textTransform:'none'}} className='btn-files' color="inherit" onClick={handleClickFiles}>Niños</Button>
+                  <Button  sx={{marginRight:4,marginLeft:4,textTransform:'none'}} className='btn-files' color="inherit" onClick={handleClickFiles}>Niños</Button>
             }
-
+            <br></br>
             {accesPermiss=="ComplitAcces" &&
-                  <Button sx={{marginLeft:5,textTransform:'none'}} className='btn-activosFijos' color="inherit" onClick={handleClickAssets}>Activos Fijos</Button>
+                  <Button sx={{marginRight:4,marginLeft:4,textTransform:'none'}} className='btn-activosFijos' color="inherit" onClick={handleClickAssets}>Activos Fijos</Button>
             }
+            <br></br>
 
-                <Button sx={{marginLeft:5,textTransform:'none'}} color="inherit" onClick={handleClickExit}>Salir</Button>
+                <Button sx={{marginRight:4,marginLeft:4,textTransform:'none'}} color="inherit" onClick={handleClickExit}>Salir</Button>
 
           
         </List>
       </Drawer>
-      <IconButton sx={{marginLeft: 'auto', color: 'white'}} onClick= {()=>setOpen(!open)}>
+      <IconButton sx={{marginLeft: 'auto', color:'#023859'}} onClick= {()=>setOpen(!open)}>
           <MenuRoundedIcon/>
       </IconButton>
     </>
