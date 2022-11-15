@@ -18,11 +18,11 @@ code {
     margin-left: auto;
     margin-right: auto;
     background-repeat: no-repeat;
-    background-attachment: fixed;  
-    background-size: 200% 200%;
+    background-attachment: local;  
+    background-size: 100% auto;
     background-position: center;
     background-size: cover;
-    height: 700px; 
+    height: 100%; 
     opacity: 0.4;
 }
 
