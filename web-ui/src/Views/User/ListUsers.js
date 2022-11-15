@@ -10,7 +10,7 @@ import ListBasic from '../../Components/ListBasic';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react'
 import TranslateRole from './Translate'
-
+import  { ButtonDanger } from '../../Components/MUI-Button';
 
 function ListUsers() {
     const url="https://ncv-api.herokuapp.com/api/auth";
@@ -48,14 +48,16 @@ function ListUsers() {
             };
         })
     
-        let usersComponents = <ListBasic items={listElements} withImage={false}/>
+        let usersComponents = <ListBasic items={listElements} withImage={false} withDeleteIcon={true} />
         let registerUser = "/registrarse-ncv"
         let listHeaderComponents = <ButtonPrimary label={"Registrar Usuario"} onClick={()=>navigate(registerUser)}/>
+        let deltOption = <ButtonDanger label="Eliminar" id="confirm_delete_button" ></ButtonDanger>
         return ( 
             <>
                 <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
                     <ListContainer title="Lista de usuarios" header={listHeaderComponents}>
                         {usersComponents}
+                        <ButtonDanger label="Eliminar" id="confirm_delete_button" ></ButtonDanger>
                     </ListContainer>
                 </Box>
                 
