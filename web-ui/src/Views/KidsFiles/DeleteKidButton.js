@@ -24,6 +24,7 @@ import TabsContainer from '../../Components/TabsContainer';
 var accesPermiss = sessionStorage.getItem("Access")
 
 function DeleteKidButton() {
+    /*
     const location = useLocation()
     
     let showAlert = location.state ? location.state.showAlert : false 
@@ -81,5 +82,8 @@ function DeleteKidButton() {
                 </DialogActions>
             </Dialog>
         </div></>
-    )}
+        )
+        */
+       return <h>boton de eliminado -- componente</h>
+    }
 export {DeleteKidButton}
