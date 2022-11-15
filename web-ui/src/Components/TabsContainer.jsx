@@ -36,16 +36,15 @@ const grey = {
 
 const Tab = styled(TabUnstyled)`
   font-family: IBM Plex Sans, sans-serif;
-  color: #fff;
+  color: #023859;
   cursor: pointer;
-  font-size: 0.875rem;
   font-weight: 600;
   background-color: transparent;
   width: 100%;
   padding: 10px 12px;
-  margin: 6px 6px;
+  margin: 6px 0px 0px 0px;
   border: none;
-  border-radius: 7px;
+  border-radius: 12px 12px 0px 0px;
   display: flex;
   justify-content: center;
 
@@ -54,13 +53,12 @@ const Tab = styled(TabUnstyled)`
   }
 
   &:focus {
-    color: #fff;
     outline: 3px solid ${blue[200]};
   }
 
   &.${tabUnstyledClasses.selected} {
     background-color: #fff;
-    color: ${blue[600]};
+    color: #023859;
   }
 
   &.${buttonUnstyledClasses.disabled} {
@@ -81,10 +79,9 @@ const TabPanel = styled(TabPanelUnstyled)(
 
 const TabsList = styled(TabsListUnstyled)(
   ({ theme }) => `
-  width: 40%;
-  min-width: 400px;
-  background-color: ${blue[500]};
-  border-radius: 12px;
+  max-width: 600px;
+  background-color: #5cd4e2;
+  border-radius: 12px 12px 0px 0px;
   display: flex;
   align-items: center;
   justify-content: center;

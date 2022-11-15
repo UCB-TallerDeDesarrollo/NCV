@@ -135,13 +135,14 @@ function ShowOneKidFile() {
     };
     let healthTabContent = (<HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>);
     let weightAndHeightTabContent = (<WeightAndHeight weightAndHeightData={biometrics} setBiometrics={setBiometrics}/>);
+    let legalTabContent = (<LegalReport kidId={kidId} legalReport={legalReport} legalReportStatusCode={legalReportStatusCode}/>);
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <BasicData kid={kid}/>
             {accesPermiss=="ComplitAcces"&&
                 <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
             }
-            <TabsContainer tabsNames={["Pesos y tallas","Salud"]} tabsContent={[weightAndHeightTabContent,healthTabContent]}></TabsContainer>
+            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent]}></TabsContainer>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
@@ -162,7 +163,6 @@ function ShowOneKidFile() {
                     <ButtonDanger label="Eliminar" id="confirm_delete_button" onClick={fetchDeleteKid}></ButtonDanger>
                 </DialogActions>
             </Dialog>
-            <LegalReport kidId={kidId} legalReport={legalReport} legalReportStatusCode={legalReportStatusCode}/>
         </div></>
     )}
 export {ShowOneKidFile}

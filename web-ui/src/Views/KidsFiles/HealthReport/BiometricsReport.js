@@ -128,14 +128,23 @@ function AddRowWeightAndHeight({setBiometrics}){
            </div>
 }
 
+function getMaxOfArray(numArray) {
+    return Math.max.apply(null, numArray);
+}
+
 function WeightAndHeight({weightAndHeightData,setBiometrics}){
     const [filteredBiometrics, setFilteredBiometrics] = useState([]);
-    
+    const [yearsSelected, setYearsSelected] = useState([]);
+
     let availableYears = new Set([]);
     weightAndHeightData.slice().forEach((b)=>{
         availableYears.add(new Date(b["registerDate"]).getFullYear());
     })
     availableYears = Array.from(availableYears);
+    let maxYear = getMaxOfArray(availableYears);
+    useEffect(()=>{
+        setYearsSelected([maxYear.toString()]);
+    },[]);
     
     useEffect(()=>{
         let fb = []
@@ -163,7 +172,7 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
         },
       },
     };
-    const [yearsSelected, setYearsSelected] = useState([]);
+   
     const handleChange = (event) => {
       const {
         target: { value },
@@ -250,12 +259,15 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
                 renderValue={(selected) => selected.join(', ')}
                 MenuProps={MenuProps}
             >
-            {availableYears.map((name) => (
-                <MenuItem key={name} value={name}>
-                <Checkbox checked={yearsSelected.indexOf(name) > -1} />
-                <ListItemText primary={name} />
+            {availableYears.map((year) => {
+                console.log(maxYear);
+                console.log(year);
+                let checked = year == maxYear || yearsSelected.indexOf(year) > -1;
+                return (<MenuItem key={year} value={year}>
+                <Checkbox checked={checked}/>
+                <ListItemText primary={year} />
                 </MenuItem>
-            ))}
+            )})}
             </Select>
         </FormControl>);
         weightAndHeightTitle = <Typography variant="h3" sx={{marginBottom:1.5}}>Peso y talla</Typography>;
