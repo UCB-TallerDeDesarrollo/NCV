@@ -27,33 +27,58 @@ export default function ShowFixedAssets() {
     const [alertMessage, setAlertMessage] = useState(location.state ? location.state.alertMessage : null)
     const urlAssetStates = 'https://ncv-api.herokuapp.com/api/assetStates/'
     let [urlAssetState, setUrlAssetState] = useState('https://ncv-api.herokuapp.com/api/assetStates/')
-    let { apiData: assetStates, error: errorAssetStates } = getFromApi(urlAssetStates) 
+    const [assetStates, setAssetStates] = useState(null)
+    const [errorAssetStates, setErrorAssetStates] = useState(null)
+    //let { apiData:assetStates, error: errorAssetStates } = getFromApi(urlAssetStates)     
+    //const [assetStates,setAssetStates] = useState(apiData)
     let errorsFromForm = null
     const [assetState, setAssetState] = useState([]) 
     const [open, setOpen] = useState(showAlert)
     const [assetStateId, setAssetStateId] = useState(0)
     const [openToConfirm, setOpenToConfirm] = useState(false)
-    const [errorAssetStatDelete, setErrorAssetStateDelete] = useState(null)
+    const [errorAssetStateDelete, setErrorAssetStateDelete] = useState(null)
+    const [errorCreateAssetState, setErrorCreateAssetState] = useState(null)
+    
     const [data, setData] = useState({
         state:''//string
     })
     const [formErrors, setFormErrors] = useState({})
     let assetStatesComponent = null   
+
+    function getAssetStates(){
+        axios.get(urlAssetStates).then(            
+            (res) => {
+                setAssetStates(res.data)
+            }
+        ).catch((e)=>{
+            setErrorAssetStates(e)
+        })
+    }
+
+    useEffect(() => {
+        axios.get(urlAssetStates).then(
+            res => setAssetStates(res.data)
+        ).catch((e)=>{
+            setErrorAssetStates(e)
+        })
+    }, [])
     
-    const fetchDeleteAssetState = () => {
-        axios.delete(urlAssetState)
-        .then((response) => {
+    const fetchDeleteAssetState = () => {    
+        axios.delete(urlAssetState + assetStateId)
+        .then(function (response) {
             if (response.status == 200){
                 setShowAlert(true)
                 setAlertMessage("Registro Eliminado")
                 setOpen(true)
                 setOpenToConfirm(false) 
-                window.location.reload()
+                getAssetStates()
+                //let { apiData:assetStates, error: errorAssetStates } = getFromApi(urlAssetStates)    
+                //setAssetStates(apiData)
+                //window.location.reload()
                 //navigate(`/activos-fijos/estados`,{state:{showAlert:true,alertMessage:"Registro Eliminado"}})                             
             }
         })
         .catch(err=> {
-            console.log(err)
             setErrorAssetStateDelete(err)            
         })
     }
@@ -67,7 +92,6 @@ export default function ShowFixedAssets() {
     }
 
     const validate = (datas) => {      
-        console.log(datas)  
         const errors = {
             state: '', // string            
         }        
@@ -85,11 +109,13 @@ export default function ShowFixedAssets() {
                     setShowAlert(true)
                     setAlertMessage("Estado creado")
                     setOpen(true)
-                    window.location.reload()
-                    //navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo actualizado exitosamente"}})
+                    getAssetStates()
+                    setData({
+                        state:''//string
+                    })
                 }            
             }).catch ((apiError) => {
-                setError(apiError) 
+                setErrorCreateAssetState(apiError) 
                 checkError()                    
             })
         }else{
@@ -97,8 +123,9 @@ export default function ShowFixedAssets() {
         }
     }
     if (errorAssetStates) return ErrorPage(errorAssetStates)
-    if (errorAssetStatDelete) return ErrorPage(errorAssetStateDelete)
-    if (!assetStates) return null
+    if (errorAssetStateDelete) return ErrorPage(errorAssetStateDelete)
+    if (errorCreateAssetState) return ErrorPage(errorCreateAssetState)
+    if (!assetStates) return null    
     if (!assetState)return <h1>ERROR: Estado de activo fijo no encontrado en la base de datos</h1>
     const assetStatesListElements = assetStates.map((assetState)=>{
         return {
@@ -128,8 +155,7 @@ export default function ShowFixedAssets() {
     let editAction = () => alert("hola")
     
     let deleteAction = (id) => {
-        setAssetStateId(id)
-        setUrlAssetState(urlAssetState + id)        
+        setAssetStateId(id)          
         handleCloseToConfirm()
         ToConfirmOpen()
     }         
