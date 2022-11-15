@@ -9,6 +9,7 @@ namespace NinosConValorAPI.Data.Repository
     public class NCVRepository:INCVRepository
     {
         private NCV_DBContext _dbContext;
+        
         public NCVRepository(NCV_DBContext NCV_DBContext)
         {
             _dbContext = NCV_DBContext;
@@ -80,6 +81,27 @@ namespace NinosConValorAPI.Data.Repository
             return biometrics;
         }
 
+        // CONTACTS
+
+        public async Task<IEnumerable<ContactsEntity>> GetContactsAsync(int kidId)
+        {
+            /*
+            IQueryable<ContactsEntity> query = _dbContext.Contacts;
+            query = query.AsNoTracking();
+            query = query.Where(b => b.KidId == kidId);
+            // query = query.OrderBy(b => b.Name); // será necesario ordenar ?
+            return await query.ToListAsync();
+            */
+             throw new NotImplementedException();
+        }
+        public async Task<ContactsEntity> CreateContactsAsync(ContactsEntity contacts)
+        {
+            /*
+            await _dbContext.Contacts.AddAsync(contacts);
+            return contacts;
+            */
+             throw new NotImplementedException();
+        }
 
         // FIXED ASSET
 
