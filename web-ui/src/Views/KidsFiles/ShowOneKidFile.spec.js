@@ -1,4 +1,4 @@
-import {render, screen, waitFor} from '@testing-library/react';
+import {render, screen, waitFor,fireEvent} from '@testing-library/react';
 import {ShowOneKidFile} from './ShowOneKidFile';
 
 import {rest} from 'msw';
@@ -102,6 +102,10 @@ describe('Show One Kid File', () => {
         </Routes>
     </MemoryRouter>
     )})
+
+    //const tab = screen.getByRole('tab', { name: 'Pesos y tallas' }); // Salud
+    const tab = screen.getByRole('tab', { name: 'Salud' }); 
+    fireEvent.click(tab);
     await waitFor(() => {
         expect(screen.getByText('ABRH-')).toBeVisible
         expect(screen.getByText('15678234')).toBeVisible
@@ -109,8 +113,10 @@ describe('Show One Kid File', () => {
         expect(screen.getByText('Diagnostico neurologico de ejemplo')).toBeVisible
         expect(screen.getByText('Diagnostico especial de ejemplo')).toBeVisible
         expect(screen.getByText('Problemas de salud de ejemplo')).toBeVisible
-      })  
+      }) 
   })
+
+  
 
   it('Shows health report data when is null', async () => {
     server.use(healthReportIncompletedResponse)
@@ -121,6 +127,8 @@ describe('Show One Kid File', () => {
         </Routes>
     </MemoryRouter>
     )})
+    const tab = screen.getByRole('tab', { name: 'Salud' }); 
+    fireEvent.click(tab);
     await waitFor(() => {
       expect(screen.getAllByText('-----')).toHaveLength(6)
       })  
