@@ -17,8 +17,8 @@ export function Profile() {
     let parseToken=parseJwt(sessionStorage.getItem("jwt") )
     const navigate = useNavigate()
     const userIdLogin  = parseToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
-    var url = 'https://ncv-api.herokuapp.com/api/auth/' + userIdLogin
-    //var url = 'http://localhost:5009/api/auth/' + userId
+    //var url = 'https://ncv-api.herokuapp.com/api/auth/' + userIdLogin
+    var url = 'http://localhost:5009/api/auth/' + userIdLogin
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)
     const [formErrors, setFormErrors] = useState({})
@@ -43,29 +43,7 @@ export function Profile() {
     }, [formErrors])
     console.log('user json: ', user)
 
-    const validate = (datas) => {
-        const errors = {}
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
-        if (!datas.firstName) {
-            errors.firstName = 'El nombre es requerido!'
-        }
-
-        if (!datas.lastName) {
-            errors.lastName = 'El apellido es requerido!'
-        }
-
-        if (!datas.cellPhone) {
-            errors.cellPhone = 'El celular es requerido!'
-        }
-
-        if (!datas.email) {
-            errors.email = 'El correo es requerido!'
-        } else if (!regex.test(datas.email)) {
-            errors.email = 'Formato de correo incorrecto!'
-        }
-
-        return errors
-    }
+   
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
