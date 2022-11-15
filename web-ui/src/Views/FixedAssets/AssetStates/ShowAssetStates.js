@@ -25,8 +25,10 @@ export default function ShowFixedAssets() {
     const location = useLocation()    
     const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
     const [alertMessage, setAlertMessage] = useState(location.state ? location.state.alertMessage : null)
-    const urlAssetStates = 'https://ncv-api.herokuapp.com/api/assetStates'
-    let [urlAssetState, setUrlAssetState] = useState('https://ncv-api.herokuapp.com/api/assetStates/')
+    //const urlAssetStates = 'https://ncv-api.herokuapp.com/api/assetStates'\
+    const urlAssetStates = 'http://localhost:5009/api/assetStates/'
+    //let [urlAssetState, setUrlAssetState] = useState('https://ncv-api.herokuapp.com/api/assetStates/')
+    let [urlAssetState, setUrlAssetState] = useState('http://localhost:5009/api/assetStates/')
     const [assetStates, setAssetStates] = useState(null)
     const [errorAssetStates, setErrorAssetStates] = useState(null)
     let errorsFromForm = null
@@ -39,10 +41,6 @@ export default function ShowFixedAssets() {
     const [errorUpdateAssetState, setErrorUpdateAssetState] = useState(null)
     
     const [data, setData] = useState({
-        state:''//string
-    })
-
-    const [editData, setEditData] = useState({
         state:''//string
     })
 
@@ -68,6 +66,7 @@ export default function ShowFixedAssets() {
     }, [])
     
     const fetchDeleteAssetState = () => {    
+        console.log(urlAssetState + assetStateId)
         axios.delete(urlAssetState + assetStateId)
         .then(function (response) {
             if (response.status == 200){
@@ -75,11 +74,7 @@ export default function ShowFixedAssets() {
                 setAlertMessage("Registro Eliminado")
                 setOpen(true)
                 setOpenToConfirm(false) 
-                getAssetStates()
-                //let { apiData:assetStates, error: errorAssetStates } = getFromApi(urlAssetStates)    
-                //setAssetStates(apiData)
-                //window.location.reload()
-                //navigate(`/activos-fijos/estados`,{state:{showAlert:true,alertMessage:"Registro Eliminado"}})                             
+                getAssetStates()                                          
             }
         })
         .catch(err=> {
@@ -104,54 +99,41 @@ export default function ShowFixedAssets() {
         return errors     
     }
 
-    const validateUpdate = (datas) => {      
-        const errorsUpdate = {
-            id:'',//int
-            state: '' // string            
-        }        
-        if(!datas.state||datas.state.length==0)
-            errors.state= "El Estado no puede estar vacío!"
-        return errors     
+    const handleSave = ({name,value,previousValue},id) => {
+        if(value==previousValue || value=='') {
+            console.log("no change")
+            window.location.reload()
+        }      
+        else{
+            let updateData = {
+                state:value
+            }
+            submitUpdate(id,updateData)
+        }  
+        
     }
 
-    const handleSave = ({name,value,previousValue},id) => {
-        if(value==previousValue) {
-            console.log("no change")
-            return
-        }
-        let updateData = {
-            state:value
-        }
-        submitUpdate(id,updateData)
-    };
-   /* const handleSave = ({name, value, previousValue }) => {
-        //console.log(assetStateId)
-        alert(name + ' saved as: ' + value + ' (prev: ' + previousValue )//')), id='+id);
-      };*/
     function submitUpdate(id,updateData){
         console.log("submitUpdate")
         console.log(updateData)
-        //errorsFromForm= validateUpdate(data)
-        //setFormErrors(errorsFromForm)
-        //if(!hasFormErrors(errorsFromForm)){
         console.log(urlAssetState + id)
-            /*axios.put(urlAssetState + id, updateData).then((res) => {
-                if (res.status == 200) {               
-                    setShowAlert(true)
-                    setAlertMessage("Estado actualizado")
-                    setOpen(true)                    
-                    getAssetStates()                    
-                }            
-            }).catch ((apiError) => {
-                setErrorUpdateAssetState(apiError)                    
-            })*/
-       // }
+        axios.put(urlAssetState + id, updateData).then((res) => {
+            if (res.status == 200) {               
+                setShowAlert(true)
+                setAlertMessage("Estado actualizado")
+                setOpen(true)                    
+                getAssetStates()                    
+            }            
+        }).catch ((apiError) => {
+            setErrorUpdateAssetState(apiError)                    
+        })
     }
 
     function submitCreate(){
         errorsFromForm = validate(data)
         setFormErrors(errorsFromForm)
         if(!hasFormErrors(errorsFromForm)){
+            console.log(urlAssetState )
             axios.post(urlAssetState, data).then((res) => {
                 if (res.status == 201) {     
                     setShowAlert(true)
@@ -167,7 +149,7 @@ export default function ShowFixedAssets() {
                 checkError()                    
             })
         }else{
-            //console.log(errorsFromForm)
+            console.log(errorsFromForm)
         }
     }
     if (errorAssetStates) return ErrorPage(errorAssetStates)
@@ -220,8 +202,6 @@ export default function ShowFixedAssets() {
         setOpen(false)
     }
     
-    //withEditIcon={false} editAction={editAction} 
-    //let editAction = () => alert("hola")
     assetStatesComponent = <ListGrid items={assetStatesListElements} withImage={false} editable={true} editActionOnSave={handleSave} editActionsOnChange={editActionsOnChange} withDeleteIcon={true} deleteAction={deleteAction}/>
     return (        
         <>        
