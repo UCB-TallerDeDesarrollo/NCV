@@ -10,7 +10,7 @@ import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../../Component
 function LegalReport({kidId, legalReport, legalReportStatusCode}){
     const navigate = useNavigate();
     let urlCreateLegalReport = `/ninos/${kidId}/crear-reporte-legal/`
-    let buttonCreateLegalReport = (<Container>
+    let buttonCreateLegalReport = (<Container sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}}>
         <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
             <AutoAwesomeIcon sx={{marginTop:2}}/>
             <Box sx={{margin:3}}>
@@ -30,7 +30,7 @@ function LegalReport({kidId, legalReport, legalReportStatusCode}){
             "NUREJ" : legalReport.nurej ,
             "Processo legales" : legalReport.legalProcesses
         }
-        legalReportComponent = <SingleItemCard key={1} element={legalReportElement} title={"Reporte Legal"} />
+        legalReportComponent = <SingleItemCard key={1} element={legalReportElement} title={"Reporte Legal"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}}/>
     }
     return legalReportComponent
 }
