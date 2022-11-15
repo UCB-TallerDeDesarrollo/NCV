@@ -1,11 +1,9 @@
-//Es necesario para las pruebas e2e instanciar esta variable debido que si no lo hacen se redirige a la vista por defecto que es el login
-sessionStorage.setItem('Access',"ComplitAcces")
-
 describe('Home Page end to end tests', () => {
-  const email = 'soprteNCV@gmail.com'
-  const password = 'Soporte!23'
 
   beforeEach(() => {
+    const email = 'soprteNCV@gmail.com'
+    const password = 'Soporte!23'
+    
     sessionStorage.setItem('Access','');
     cy.login(email, password)
   });

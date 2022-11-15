@@ -50,7 +50,7 @@ function ListUsers() {
     
         let usersComponents = <ListBasic items={listElements} withImage={false}/>
         let registerUser = "/registrarse-ncv"
-        let listHeaderComponents = <ButtonPrimary label={"Registrar Usuario"} onClick={()=>navigate(registerUser)}/>
+        let listHeaderComponents = <ButtonPrimary id="btn-register-user" label={"Registrar Usuario"} onClick={()=>navigate(registerUser)}/>
         return ( 
             <>
                 <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
