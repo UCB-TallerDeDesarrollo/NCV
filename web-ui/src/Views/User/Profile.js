@@ -9,31 +9,15 @@ import InputText from '../../Components/InputText'
 import Collapse from '@mui/material/Collapse'
 import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
 import Alert from '@mui/material/Alert'
-import { useParams } from 'react-router-dom'
 
 import { Box } from '@mui/system'
-import MenuItem from '@mui/material/MenuItem'
-import TranslateRole from './Translate'
-const roles = [
-    {
-        label: 'Tia',
-        value: 'AuntUser'
-    },
-    {
-        label: 'Administrador',
-        value: 'AdminUser'
-    },
-    {
-        label: 'Super Usuario',
-        value: 'SuperUser'
-    }
-]
 
-export function EditUser() {
+
+export function Profile() {
+    let parseToken=parseJwt(sessionStorage.getItem("jwt") )
     const navigate = useNavigate()
-    //const userId = '4cf62dc7-5e67-46fa-a227-f8dae70cba5a'
-    const { userId } = useParams()
-    var url = 'https://ncv-api.herokuapp.com/api/auth/' + userId
+    const userIdLogin  = parseToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
+    var url = 'https://ncv-api.herokuapp.com/api/auth/' + userIdLogin
     //var url = 'http://localhost:5009/api/auth/' + userId
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)
@@ -138,12 +122,13 @@ export function EditUser() {
                     </Collapse>
 
                     <InputText
-                        required
+                        //required
+                        block
                         id="firstName"
                         name="firstName"
                         type="text"
                         value={user.firstName}
-                        onChange={handleInputChange}
+                        //onChange={handleInputChange}
                     />
                     {formErrors.firstName ? (
                         <Alert sx={{ width: 1, pt: 1 }} severity="error">
@@ -153,12 +138,12 @@ export function EditUser() {
                         <p></p>
                     )}
                     <InputText
-                        required
+                        //required
                         id="lastName"
                         name="lastName"
                         type="text"
                         value={user.lastName}
-                        onChange={handleInputChange}
+                        //onChange={handleInputChange}
                     />
                     {formErrors.lastName ? (
                         <Alert sx={{ width: 1, pt: 1 }} severity="error">
@@ -168,12 +153,12 @@ export function EditUser() {
                         <p></p>
                     )}
                     <InputText
-                        required
+                        //required
                         id="cellPhone"
                         name="cellPhone"
                         type="number"
                         value={user.cellPhone}
-                        onChange={handleInputChange}
+                        //onChange={handleInputChange}
                     />
                     {formErrors.cellPhone ? (
                         <Alert sx={{ width: 1, pt: 1 }} severity="error">
@@ -183,12 +168,12 @@ export function EditUser() {
                         <p></p>
                     )}
                     <InputText
-                        required
+                        //required
                         id="email"
                         name="email"
                         type="email"
                         value={user.email}
-                        onChange={handleInputChange}
+                        //onChange={handleInputChange}
                     />
                     {formErrors.email ? (
                         <Alert sx={{ width: 1, pt: 1 }} severity="error">
@@ -197,25 +182,7 @@ export function EditUser() {
                     ) : (
                         <p></p>
                     )}
-                    <InputText
-                        required
-                        select
-                        id="rol"
-                        name="rol"
-                        label= {TranslateRole(user.role)}
-                        type="text"
-                        value={user.rol}
-                        onChange={handleInputChange}
-                    >
-                        {roles.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </InputText>
-                    {formErrors.rol? <Alert sx={{ width: 1, pt: 1, marginBottom:2 }} severity="error"> 
-                        {formErrors.rol}                          
-                    </Alert>:<p></p> }
+                    
                     <Box sx={{alignItems :'center'}}>
                     <ButtonPrimary
                         label={'Guardar Cambios'}
@@ -235,5 +202,14 @@ export function EditUser() {
         </>
     )
 }
-
-export default EditUser
+function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    //debugger;
+    console.log(jsonPayload);
+    return JSON.parse(jsonPayload);
+};
+export default Profile
