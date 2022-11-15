@@ -17,8 +17,6 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import axios from "axios"
 import FormContainer from '../../../Components/FormContainer'
 import InputText from '../../../Components/InputText'
-import { WindowSharp } from '@mui/icons-material'
-import { EditText, EditTextarea } from 'react-edit-text';
 
 var accesPermiss = sessionStorage.getItem("Access")
 
@@ -27,12 +25,10 @@ export default function ShowFixedAssets() {
     const location = useLocation()    
     const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
     const [alertMessage, setAlertMessage] = useState(location.state ? location.state.alertMessage : null)
-    const urlAssetStates = 'https://ncv-api.herokuapp.com/api/assetStates/'
+    const urlAssetStates = 'https://ncv-api.herokuapp.com/api/assetStates'
     let [urlAssetState, setUrlAssetState] = useState('https://ncv-api.herokuapp.com/api/assetStates/')
     const [assetStates, setAssetStates] = useState(null)
     const [errorAssetStates, setErrorAssetStates] = useState(null)
-    //let { apiData:assetStates, error: errorAssetStates } = getFromApi(urlAssetStates)     
-    //const [assetStates,setAssetStates] = useState(apiData)
     let errorsFromForm = null
     const [assetState, setAssetState] = useState([]) 
     const [open, setOpen] = useState(showAlert)
@@ -40,10 +36,16 @@ export default function ShowFixedAssets() {
     const [openToConfirm, setOpenToConfirm] = useState(false)
     const [errorAssetStateDelete, setErrorAssetStateDelete] = useState(null)
     const [errorCreateAssetState, setErrorCreateAssetState] = useState(null)
+    const [errorUpdateAssetState, setErrorUpdateAssetState] = useState(null)
     
     const [data, setData] = useState({
         state:''//string
     })
+
+    const [editData, setEditData] = useState({
+        state:''//string
+    })
+
     const [formErrors, setFormErrors] = useState({})
     let assetStatesComponent = null   
 
@@ -95,11 +97,55 @@ export default function ShowFixedAssets() {
 
     const validate = (datas) => {      
         const errors = {
-            state: '', // string            
+            state: '' // string            
         }        
         if(!datas.state||datas.state.length==0)
             errors.state= "El Estado es requerido!"
         return errors     
+    }
+
+    const validateUpdate = (datas) => {      
+        const errorsUpdate = {
+            id:'',//int
+            state: '' // string            
+        }        
+        if(!datas.state||datas.state.length==0)
+            errors.state= "El Estado no puede estar vacío!"
+        return errors     
+    }
+
+    const handleSave = ({name,value,previousValue},id) => {
+        if(value==previousValue) {
+            console.log("no change")
+            return
+        }
+        let updateData = {
+            state:value
+        }
+        submitUpdate(id,updateData)
+    };
+   /* const handleSave = ({name, value, previousValue }) => {
+        //console.log(assetStateId)
+        alert(name + ' saved as: ' + value + ' (prev: ' + previousValue )//')), id='+id);
+      };*/
+    function submitUpdate(id,updateData){
+        console.log("submitUpdate")
+        console.log(updateData)
+        //errorsFromForm= validateUpdate(data)
+        //setFormErrors(errorsFromForm)
+        //if(!hasFormErrors(errorsFromForm)){
+        console.log(urlAssetState + id)
+            /*axios.put(urlAssetState + id, updateData).then((res) => {
+                if (res.status == 200) {               
+                    setShowAlert(true)
+                    setAlertMessage("Estado actualizado")
+                    setOpen(true)                    
+                    getAssetStates()                    
+                }            
+            }).catch ((apiError) => {
+                setErrorUpdateAssetState(apiError)                    
+            })*/
+       // }
     }
 
     function submitCreate(){
@@ -121,12 +167,13 @@ export default function ShowFixedAssets() {
                 checkError()                    
             })
         }else{
-            console.log(errorsFromForm)
+            //console.log(errorsFromForm)
         }
     }
     if (errorAssetStates) return ErrorPage(errorAssetStates)
     if (errorAssetStateDelete) return ErrorPage(errorAssetStateDelete)
     if (errorCreateAssetState) return ErrorPage(errorCreateAssetState)
+    if (errorUpdateAssetState) return ErrorPage(errorUpdateAssetState)
     if (!assetStates) return null    
     if (!assetState)return <h1>ERROR: Estado de activo fijo no encontrado en la base de datos</h1>
     const assetStatesListElements = assetStates.map((assetState)=>{
@@ -154,9 +201,10 @@ export default function ShowFixedAssets() {
         handleCloseToConfirm();
         setOpenToConfirm(true);
     }
-    
-    let editActionOnSave = (id) => {
-        alert(id)
+
+    function editActionsOnChange(id){
+        console.log(id)
+        setAssetState(id)
     }
 
     let deleteAction = (id) => {
@@ -171,9 +219,10 @@ export default function ShowFixedAssets() {
         setData(newData)
         setOpen(false)
     }
+    
     //withEditIcon={false} editAction={editAction} 
     //let editAction = () => alert("hola")
-    assetStatesComponent = <ListGrid items={assetStatesListElements} withImage={false} editable={true} editActionOnSave={editActionOnSave} withDeleteIcon={true} deleteAction={deleteAction}/>
+    assetStatesComponent = <ListGrid items={assetStatesListElements} withImage={false} editable={true} editActionOnSave={handleSave} editActionsOnChange={editActionsOnChange} withDeleteIcon={true} deleteAction={deleteAction}/>
     return (        
         <>        
             <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
@@ -218,12 +267,6 @@ export default function ShowFixedAssets() {
             </Alert>:<p></p> }
             <ButtonPrimary label={"Crear estado"} id="submit_button" onClick={submitCreate}/>
             </FormContainer>
-            <EditText
-              onSave={()=>alert("onSave")}
-              defaultValue='I am an editable text with an edit button'
-              //editButtonProps={{ style: { marginLeft: '5px', width: 16 } }}
-              showEditButton
-            />
             </div>            
         </>                
     )
