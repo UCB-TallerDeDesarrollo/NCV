@@ -1,19 +1,20 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NinosConValorAPI.Models
+namespace NinosConValorAPI.Data.Entity
 {
-    public class FoundationReportModel
+    public class FoundationReportEntity
     {
+        [Key]
+        [Required]
         public int Id { get; set; }
+
+        [ForeignKey("Kid")]
         public int KidId { get; set; }
-        [Required]
+        public virtual KidEntity Kid { get; set; }
         public string? AdmissionDate { get; set; }
-        [Required]
         public string? AdmissionReason { get; set; }
-        [Required]
         public string? AdmissionAge { get; set; }
-        [Required]
         public string? TimeInFoundation { get; set; }
-        [Required]
     }
 }

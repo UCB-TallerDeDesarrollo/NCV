@@ -9,6 +9,10 @@ import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../../Component
 
 function HealthReport({kidId, healthReport, healthReportStatusCode}){
     const navigate = useNavigate();
+    const navigateEditHealthReport = () =>{ 
+        let path = `/ninos/${kidId}/editar-reporte-salud`; 
+        navigate(path);
+    }
     let urlCreateHealthReport = `/ninos/${kidId}/crear-reporte/`
     let buttonCreateHealthReport = (<Container>
         <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
@@ -34,7 +38,7 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
         }
         healthReportComponent = <SingleItemCard key={1} element={healthReportElement} title={"Reporte de salud"} />
     }
-    return healthReportComponent
+    return <><>{healthReportComponent}</> <ButtonPrimary label="Editar Health Report" onClick={navigateEditHealthReport}/></>
 }
 
 export default HealthReport;

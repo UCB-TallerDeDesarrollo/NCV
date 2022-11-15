@@ -32,6 +32,7 @@ function ShowOneKidFile() {
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
     const urlBiometrics = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/biometrics'
+    const urlCreateFoundationReport = `/ninos/${kidId}/crear-reporte-estancia/`
     const navigate = useNavigate();
     const navigateEditKid = () =>{ 
         let path = `/ninos/${kidId}/editar-nino`; 
@@ -102,6 +103,15 @@ function ShowOneKidFile() {
         setOpen(false)
     }
 
+    function testFoundationReport(event, reason) {
+        if (reason === 'clickaway') {
+            return
+        }
+        setOpenToConfirm(false)
+    }
+
+    
+
     function handleCloseToConfirm(event, reason) {
         if (reason === 'clickaway') {
             return
@@ -141,6 +151,7 @@ function ShowOneKidFile() {
                     <ButtonDanger label="Eliminar" id="confirm_delete_button" onClick={fetchDeleteKid}></ButtonDanger>
                 </DialogActions>
             </Dialog>
-        </div></>
+        </div>
+        <div><ButtonPrimary key={2} label="Crear reporte de Estancia" onClick={()=>{navigate(urlCreateFoundationReport)}} /></div></>
     )}
 export {ShowOneKidFile}

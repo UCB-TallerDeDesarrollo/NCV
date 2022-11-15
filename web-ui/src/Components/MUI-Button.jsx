@@ -1,6 +1,4 @@
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { Input } from '@mui/material';
 
 export default function ButtonPrimary({label, onClick, id, sx={}}) {
     sx.borderRadius = sx.borderRadius ?? 40
