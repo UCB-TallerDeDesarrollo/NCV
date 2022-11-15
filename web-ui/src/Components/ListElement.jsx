@@ -9,7 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { EditText} from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
 
-export default function ListElement({id=0, title = "default title", description = "default description", imgSrc = "", elementUrl = "", withImage=true, withEditIcon=false, editAction=null, editable=false, editActionOnSave=null, editActionsOnChange=null, withDeleteIcon=false, deleteAction=null}){
+export default function ListElement({id=0, title = "default title", description = "default description", imgSrc = "", elementUrl = "", withImage=true, withEditIcon=false, editAction=null, editable=false, editActionOnSave=null, withDeleteIcon=false, deleteAction=null}){
   const navigate = useNavigate();
   //if(setEditValue!=null)
     //setEditValue(title)
@@ -42,8 +42,7 @@ export default function ListElement({id=0, title = "default title", description 
     elementText =
     <EditText sx={sxListItemText}
       id={id.toString()}
-      onSave={(props)=>editActionOnSave(props,id)}
-      onChange={()=>editActionsOnChange(id)}
+      onSave={(props)=>editActionOnSave(props,id)}      
       defaultValue = {title} 
       editButtonProps={{ style: { marginLeft: '5px', width: 16 } }}      
     />

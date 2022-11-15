@@ -66,7 +66,6 @@ export default function ShowFixedAssets() {
     }, [])
     
     const fetchDeleteAssetState = () => {    
-        console.log(urlAssetState + assetStateId)
         axios.delete(urlAssetState + assetStateId)
         .then(function (response) {
             if (response.status == 200){
@@ -101,7 +100,6 @@ export default function ShowFixedAssets() {
 
     const handleSave = ({name,value,previousValue},id) => {
         if(value==previousValue || value=='') {
-            console.log("no change")
             window.location.reload()
         }      
         else{
@@ -114,9 +112,6 @@ export default function ShowFixedAssets() {
     }
 
     function submitUpdate(id,updateData){
-        console.log("submitUpdate")
-        console.log(updateData)
-        console.log(urlAssetState + id)
         axios.put(urlAssetState + id, updateData).then((res) => {
             if (res.status == 200) {               
                 setShowAlert(true)
@@ -133,7 +128,6 @@ export default function ShowFixedAssets() {
         errorsFromForm = validate(data)
         setFormErrors(errorsFromForm)
         if(!hasFormErrors(errorsFromForm)){
-            console.log(urlAssetState )
             axios.post(urlAssetState, data).then((res) => {
                 if (res.status == 201) {     
                     setShowAlert(true)
@@ -184,11 +178,6 @@ export default function ShowFixedAssets() {
         setOpenToConfirm(true);
     }
 
-    function editActionsOnChange(id){
-        console.log(id)
-        setAssetState(id)
-    }
-
     let deleteAction = (id) => {
         setAssetStateId(id)          
         handleCloseToConfirm()
@@ -202,7 +191,7 @@ export default function ShowFixedAssets() {
         setOpen(false)
     }
     
-    assetStatesComponent = <ListGrid items={assetStatesListElements} withImage={false} editable={true} editActionOnSave={handleSave} editActionsOnChange={editActionsOnChange} withDeleteIcon={true} deleteAction={deleteAction}/>
+    assetStatesComponent = <ListGrid items={assetStatesListElements} withImage={false} editable={true} editActionOnSave={handleSave} withDeleteIcon={true} deleteAction={deleteAction}/>
     return (        
         <>        
             <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
