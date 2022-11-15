@@ -18,6 +18,8 @@ import axios from "axios"
 import FormContainer from '../../../Components/FormContainer'
 import InputText from '../../../Components/InputText'
 import { WindowSharp } from '@mui/icons-material'
+import { EditText, EditTextarea } from 'react-edit-text';
+
 var accesPermiss = sessionStorage.getItem("Access")
 
 export default function ShowFixedAssets() {
@@ -152,8 +154,11 @@ export default function ShowFixedAssets() {
         handleCloseToConfirm();
         setOpenToConfirm(true);
     }
-    let editAction = () => alert("hola")
     
+    let editActionOnSave = (id) => {
+        alert(id)
+    }
+
     let deleteAction = (id) => {
         setAssetStateId(id)          
         handleCloseToConfirm()
@@ -166,7 +171,9 @@ export default function ShowFixedAssets() {
         setData(newData)
         setOpen(false)
     }
-    assetStatesComponent = <ListGrid items={assetStatesListElements} withImage={false}  withEditIcon={true} editAction={editAction} withDeleteIcon={true} deleteAction={deleteAction}/>
+    //withEditIcon={false} editAction={editAction} 
+    //let editAction = () => alert("hola")
+    assetStatesComponent = <ListGrid items={assetStatesListElements} withImage={false} editable={true} editActionOnSave={editActionOnSave} withDeleteIcon={true} deleteAction={deleteAction}/>
     return (        
         <>        
             <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
@@ -211,6 +218,12 @@ export default function ShowFixedAssets() {
             </Alert>:<p></p> }
             <ButtonPrimary label={"Crear estado"} id="submit_button" onClick={submitCreate}/>
             </FormContainer>
+            <EditText
+              onSave={()=>alert("onSave")}
+              defaultValue='I am an editable text with an edit button'
+              //editButtonProps={{ style: { marginLeft: '5px', width: 16 } }}
+              showEditButton
+            />
             </div>            
         </>                
     )
