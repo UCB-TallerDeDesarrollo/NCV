@@ -26,6 +26,7 @@ builder.Services.AddTransient<IAssetCategoryService, AssetCategoryService>();
 builder.Services.AddTransient<IAssetStateService, AssetStateService>();
 builder.Services.AddTransient<INCVRepository, NCVRepository>();
 builder.Services.AddTransient<IEducationReportService, EducationReportService>();
+builder.Services.AddTransient<IFamilyReportService, FamilyReportService>();
 
 
 //entity framework config

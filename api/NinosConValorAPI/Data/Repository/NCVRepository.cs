@@ -103,6 +103,42 @@ namespace NinosConValorAPI.Data.Repository
              throw new NotImplementedException();
         }
 
+         // EDUCATION REPORT
+        public async Task<EducationReportEntity> CreateEducationReportAsync(EducationReportEntity educationReport)
+        {
+            await _dbContext.EducationReports.AddAsync(educationReport);
+            return educationReport;
+        }
+
+        public async Task<EducationReportEntity> GetEducationReportAsync(int kidId)
+        {
+            IQueryable<EducationReportEntity> query = _dbContext.EducationReports;
+            query = query.AsNoTracking();
+            var educationReport = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            return educationReport;
+        }
+
+        // FAMILY REPORT
+        public async Task<FamilyReportEntity> CreateFamilyReportAsync(FamilyReportEntity familyReportEntity)
+        {
+            throw new NotImplementedException();
+            /*
+            await _dbContext.FamilyReports.AddAsync(familyReportEntity);
+            return familyReportEntity;
+            */
+        }
+
+        public async Task<FamilyReportEntity> GetFamilyReportAsync(int kidId)
+        {
+            throw new NotImplementedException();
+            /*
+            IQueryable<FamilyReportEntity> query = _dbContext.FamilyReports;
+            query = query.AsNoTracking();
+            var familyReportEntity = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            return familyReportEntity;
+            */
+        }
+
         // FIXED ASSET
 
         public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int categoryId)
@@ -233,20 +269,6 @@ namespace NinosConValorAPI.Data.Repository
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             var fixedAssetToDelete = await query.FirstOrDefaultAsync(g => (g.Id == fixedAssetId) & (g.Deleted == false));
             fixedAssetToDelete.Deleted = true;
-        }
-        
-        public async Task<EducationReportEntity> CreateEducationReportAsync(EducationReportEntity educationReport)
-        {
-            await _dbContext.EducationReports.AddAsync(educationReport);
-            return educationReport;
-        }
-
-        public async Task<EducationReportEntity> GetEducationReportAsync(int kidId)
-        {
-            IQueryable<EducationReportEntity> query = _dbContext.EducationReports;
-            query = query.AsNoTracking();
-            var educationReport = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
-            return educationReport;
         }
 
         public async Task<AssetStateEntity> CreateAssetState(AssetStateEntity assetState)
