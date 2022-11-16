@@ -1,5 +1,8 @@
 import SingleItemCard from '../../../Components/SingleItemCard'
 
+import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+
 function getAge(birthDate){
     let actualYear = new Date().getFullYear();
     let actualMonth = new Date().getMonth()+1;
@@ -51,6 +54,7 @@ function getAge(birthDate){
 
 
 function BasicData({kid} ){
+    const {kidId} = useParams()
     let birthDate = new Date (kid.birthDate);
     let yeardOld = getAge(birthDate);
     let imageUrl = "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg"
@@ -64,7 +68,13 @@ function BasicData({kid} ){
         "Lugar de Nacimiento ": kid.birthPlace,
     };
 
-    return <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName } itemsPerLine={3}/>
+    const navigate = useNavigate();
+    const navigateEditKid = () =>{ 
+        let path = `/ninos/${kidId}/editar-nino`; 
+        navigate(path);
+    }
+
+    return <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName } itemsPerLine={3} onClick={navigateEditKid}/>
 }
 
 export default BasicData;
