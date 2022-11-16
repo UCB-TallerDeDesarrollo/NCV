@@ -6,23 +6,23 @@ using NinosConValorAPI.Services;
 namespace NinosConValorAPI.Controllers
 {
     [Route("api/kids/{kidId:int}/[controller]")]
-    public class EducationReportsController : Controller
+    public class LegalReportsController : Controller
     {
-        private IEducationReportService _educationReportService;
-        public EducationReportsController(IEducationReportService educationReportService)
+        private ILegalReportService _legalReportService;
+        public LegalReportsController(ILegalReportService legalReportService)
         {
-            _educationReportService = educationReportService;
+            _legalReportService = legalReportService;
         }
 
         [HttpPost]
-        public async Task<ActionResult<EducationReportModel>> CreateEducationReportAsync(int kidId, [FromBody] EducationReportModel kid)
+        public async Task<ActionResult<LegalReportModel>> CreateLegalReportAsync(int kidId, [FromBody] LegalReportModel kid)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
-                var newEducationReport = await _educationReportService.CreateEducationReportAsync(kidId, kid);
-                return Created($"/api/kids/{newEducationReport.KidId}/[controllers]/{newEducationReport.Id}", newEducationReport);
+                var newLegalReport = await _legalReportService.CreateLegalReportAsync(kidId, kid);
+                return Created($"/api/kids/{newLegalReport.KidId}/[controllers]/{newLegalReport.Id}", newLegalReport);
             }
             catch (NotFoundElementException ex)
             {
@@ -33,14 +33,14 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
             }
         }
-        [HttpGet()]
-        public async Task<ActionResult<EducationReportModel>> GetEducationReportAsync(int kidId)
+
+        public async Task<ActionResult<LegalReportModel>> GetLegalReportAsync(int kidId)
         {
-            ActionResult<EducationReportModel> response;
+            ActionResult<LegalReportModel> response;
             try
             {
-                var educationReportModel = await _educationReportService.GetEducationReportAsync(kidId);
-                response = Ok(educationReportModel);
+                var legalReportModel = await _legalReportService.GetLegalReportAsync(kidId);
+                response = Ok(legalReportModel);
             }
             catch (NotFoundElementException ex)
             {
@@ -52,5 +52,6 @@ namespace NinosConValorAPI.Controllers
             }
             return response;
         }
+
     }
 }

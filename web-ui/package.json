@@ -18,6 +18,7 @@
     "popper.js": "^1.16.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-edit-text": "^5.0.2",
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.5",
@@ -71,6 +72,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
+    "@types/react-edit-text": "^5.0.1",
     "cypress": "^10.7.0",
     "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.5.0",

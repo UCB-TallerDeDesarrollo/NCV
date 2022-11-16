@@ -21,6 +21,46 @@ namespace NinosConValorAPI.Data.Repository
             await _dbContext.HealthReports.AddAsync(healthReport);
             return healthReport;
         }
+        public async Task<HealthReportEntity> GetHealthReportAsync(int kidId)
+        {
+            IQueryable<HealthReportEntity> query = _dbContext.HealthReports;
+            query = query.AsNoTracking();
+            var healthReport = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            return healthReport;
+        }
+        public Task DeleteHealthReportAsync(int kidId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<HealthReportEntity> UpdateHealthReportAsync(int kidId, HealthReportEntity healthReport)
+        {
+            throw new NotImplementedException();
+        }
+
+        // LEGAL REPORT
+
+        public async Task<LegalReportEntity> CreateLegalReportAsync(LegalReportEntity legalReport)
+        {
+            await _dbContext.LegalReports.AddAsync(legalReport);
+            return legalReport;
+        }
+        public async Task<LegalReportEntity> GetLegalReportAsync(int kidId)
+        {
+            IQueryable<LegalReportEntity> query = _dbContext.LegalReports;
+            query = query.AsNoTracking();
+            var legalReport = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            return legalReport;
+        }
+        public Task DeleteLegalReportAsync(int kidId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<LegalReportEntity> UpdateLegalReportAsync(int kidId, LegalReportEntity legalReport)
+        {
+            throw new NotImplementedException();
+        }
 
         // FOUNDATION REPORT
 
@@ -220,6 +260,14 @@ namespace NinosConValorAPI.Data.Repository
         public async Task<EducationReportEntity> CreateEducationReportAsync(EducationReportEntity educationReport)
         {
             await _dbContext.EducationReports.AddAsync(educationReport);
+            return educationReport;
+        }
+
+        public async Task<EducationReportEntity> GetEducationReportAsync(int kidId)
+        {
+            IQueryable<EducationReportEntity> query = _dbContext.EducationReports;
+            query = query.AsNoTracking();
+            var educationReport = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
             return educationReport;
         }
 

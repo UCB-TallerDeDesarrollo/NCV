@@ -14,6 +14,7 @@ import CreateFixedAssetForm from './Views/FixedAssets/CreateFixedAssetForm'
 import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
 import { ShowFixedAsset } from './Views/FixedAssets/ShowOneFixedAsset'
 import UpdateFixedAssetForm from './Views/FixedAssets/UpdateFixedAsset'
+import ShowAssetStates from './Views/FixedAssets/AssetStates/ShowAssetStates'
 
 import AddHealthReport from './Views/KidsFiles/HealthReport/AddHealthReport'
 import AddFoundationReport from './Views/KidsFiles/FoundationReport/AddFoundationReport'
@@ -23,6 +24,7 @@ import AddKid from './Views/KidsFiles/BasicDataReport/AddKid'
 import EditKid from './Views/KidsFiles/BasicDataReport/EditKid'
 import EditHealthReport from './Views/KidsFiles/HealthReport/EditHealthReport'
 
+import AddLegalReport from './Views/KidsFiles/LegalReport/AddLegalReport'
 
 import ListUsers from './Views/User/ListUsers'
 
@@ -56,6 +58,10 @@ function App() {
                         element={<UpdateFixedAssetForm />}
                     ></Route>
                     <Route
+                        path="/activos-fijos/estados"
+                        element={<ShowAssetStates />}
+                    ></Route>
+                    <Route
                         path="/vista-usuarios/:userId"
                         element={<EditUser />}
                     ></Route>
@@ -73,6 +79,8 @@ function App() {
                         path="ninos/:kidId/crear-reporte-estancia/"
                         //element={<><NavBar/><AddFoundationReport/></>}
                         element={<AddFoundationReport />}
+                        path="ninos/:kidId/crear-reporte-legal/"
+                        element={<AddLegalReport />}
                     ></Route>
                     <Route
                         path="ninos/:kidId/editar-nino"

@@ -10,8 +10,10 @@ import Collapse from '@mui/material/Collapse'
 import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
 import Alert from '@mui/material/Alert'
 import { useParams } from 'react-router-dom'
-import { Box } from '@mui/system'
 
+import { Box } from '@mui/system'
+import MenuItem from '@mui/material/MenuItem'
+import TranslateRole from './Translate'
 const roles = [
     {
         label: 'Tia',
@@ -31,7 +33,8 @@ export function EditUser() {
     const navigate = useNavigate()
     //const userId = '4cf62dc7-5e67-46fa-a227-f8dae70cba5a'
     const { userId } = useParams()
-    var url = 'https://ncv-api.herokuapp.com/api/auth/' + userId
+    //var url = 'https://ncv-api.herokuapp.com/api/auth/' + userId
+    var url = 'http://localhost:5009/api/auth/' + userId
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)
     const [formErrors, setFormErrors] = useState({})
@@ -91,6 +94,7 @@ export function EditUser() {
 
     function handleFormSubmit() {
         setFormErrors(validate(user));
+        user.role=user.rol
         setIsSubmit(true)
         axios
             .put(url, user)
@@ -193,6 +197,25 @@ export function EditUser() {
                     ) : (
                         <p></p>
                     )}
+                    <InputText
+                        required
+                        select
+                        id="rol"
+                        name="rol"
+                        label= {TranslateRole(user.role)}
+                        type="text"
+                        value={user.rol}
+                        onChange={handleInputChange}
+                    >
+                        {roles.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </InputText>
+                    {formErrors.rol? <Alert sx={{ width: 1, pt: 1, marginBottom:2 }} severity="error"> 
+                        {formErrors.rol}                          
+                    </Alert>:<p></p> }
                     <Box sx={{alignItems :'center'}}>
                     <ButtonPrimary
                         label={'Guardar Cambios'}
