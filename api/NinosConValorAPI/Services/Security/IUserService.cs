@@ -19,6 +19,8 @@ namespace NinosConValorAPI.Services.Security
         Task<UserManagerResponse> DeleteUserAsync(string userId);
 
         //Roles
+        Task<UserManagerResponse> RegisterUserRole(RegisterViewModel model, string role);
+
         Task<UserManagerResponse> RegisterAdminUserAsync(RegisterViewModel model);
         Task<UserManagerResponse> RegisterAuntUserAsync(RegisterViewModel model);
         Task<UserManagerResponse> RegisterSuperUserAsync(RegisterViewModel model);
