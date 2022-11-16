@@ -42,6 +42,11 @@ function Navbar() {
             window.location.href = '/activos-fijos'
         }
     }
+    function handleClickProfile() {
+        
+            window.location.href = '/perfil-ncv'
+        
+    }
 
     function handleClickHome() {
         window.location.href = '/inicio-ncv'
@@ -148,7 +153,13 @@ function Navbar() {
                                     Activos Fijos
                                 </Button>
                             )}
-
+                            <Button
+                                sx={{ marginLeft: 5, textTransform: 'none' }}
+                                color="inherit"
+                                onClick={handleClickProfile}
+                            >
+                                Perfil
+                            </Button>
                             <Button
                                 sx={{ marginLeft: 5, textTransform: 'none' }}
                                 color="inherit"

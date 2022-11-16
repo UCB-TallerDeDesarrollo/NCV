@@ -24,6 +24,7 @@ import EditKid from './Views/KidsFiles/BasicDataReport/EditKid'
 import AddLegalReport from './Views/KidsFiles/LegalReport/AddLegalReport'
 
 import ListUsers from './Views/User/ListUsers'
+import Profile from './Views/User/Profile'
 
 let accesPermiss=sessionStorage.getItem("Access") 
 function App() {
@@ -34,6 +35,7 @@ function App() {
                     <Route exact path="/" element={<LoginForm />}></Route>
                     <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
                     <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
+                    <Route path="/perfil-ncv" element={<Profile />}></Route>
                     <Route path="/vista-usuarios" element={<ListUsers />}></Route>
                     <Route path="/registrar-nino" element={<AddKid />}></Route>
                     <Route
@@ -91,7 +93,7 @@ function App() {
             <Routes>
                 <Route exact path="/" element={<LoginForm />}></Route>
                 <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
-                
+                <Route path="/perfil-ncv" element={<Profile />}></Route>
                 <Route path="/ninos" element={<ShowKidsFiles />}></Route>
                 <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
                 <Route
