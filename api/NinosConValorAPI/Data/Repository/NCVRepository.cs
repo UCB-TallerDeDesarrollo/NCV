@@ -164,25 +164,6 @@ namespace NinosConValorAPI.Data.Repository
             var fixedAssetToUpdate = await _dbContext.FixedAssets.FirstOrDefaultAsync(f => f.Id == fixedAssetId);
             _dbContext.Entry(fixedAssetToUpdate).CurrentValues.SetValues(fixedAsset);
         }
-
-        public async Task<HealthReportEntity> GetHealthReportAsync(int kidId)
-        {
-            IQueryable<HealthReportEntity> query = _dbContext.HealthReports;
-            query = query.AsNoTracking();
-            var healthReport = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
-            return healthReport;
-        }
-
-        public Task DeleteHealthReportAsync(int kidId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<HealthReportEntity> UpdateHealthReportAsync(int kidId, HealthReportEntity healthReport)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<FoundationReportEntity> GetFoundationReportAsync(int kidId)
         {
             IQueryable<FoundationReportEntity> query = _dbContext.FoundationReport;

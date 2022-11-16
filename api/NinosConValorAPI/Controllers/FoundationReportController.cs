@@ -15,13 +15,13 @@ namespace NinosConValorAPI.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult<FoundationReportModel>> CreateFoundationReportAsync(int kidId,[FromBody] FoundationReportModel kid)
+        public async Task<ActionResult<FoundationReportModel>> CreateFoundationReportAsync(int kidId,[FromBody] FoundationReportModel foundationReportModel)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
-                var newFoundationReport = await _foundationReportService.CreateFoundationReportAsync(kidId,kid);
+                var newFoundationReport = await _foundationReportService.CreateFoundationReportAsync(kidId, foundationReportModel);
                 return Created($"/api/kids/{newFoundationReport.KidId}/[controllers]/{newFoundationReport.Id}", newFoundationReport);
             }
             catch (NotFoundElementException ex)

@@ -12,9 +12,7 @@ namespace NinosConValorAPI.Data.Entity
         [ForeignKey("Kid")]
         public int KidId { get; set; }
         public virtual KidEntity Kid { get; set; }
-        public string? AdmissionDate { get; set; }
+        public DateTime? AdmissionDate { get; set; }
         public string? AdmissionReason { get; set; }
-        public string? AdmissionAge { get; set; }
-        public string? TimeInFoundation { get; set; }
     }
 }
