@@ -251,20 +251,6 @@ function CreateFixedAssetForm(props) {
                 {formErrors.Name? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
                     {formErrors.Name}                   
                 </Alert>:<p></p> }
-                <InputText
-                    required
-                    id="Code"
-                    name="Code"
-                    value={data.Code}
-                    label="Código"
-                    type="text"
-                    onChange={(e) => {
-                        handle(e)
-                    }}
-                />
-                {formErrors.Code? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
-                    {formErrors.Code}                   
-                </Alert>:<p></p> }
                 <Dropdown 
                     name={"Categoría"} 
                     id="category-drop" 
@@ -374,7 +360,21 @@ function CreateFixedAssetForm(props) {
                     type="text"
                 />
                  {formErrors.Features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Features} </Alert>:<p></p> }                
+                        {formErrors.Features} </Alert>:<p></p> } 
+                <InputText
+                    required
+                    id="Code"
+                    name="Code"
+                    value={data.Code}
+                    label="Código"
+                    type="text"
+                    onChange={(e) => {
+                        handle(e)
+                    }}
+                />
+                {formErrors.Code? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
+                    {formErrors.Code}                   
+                </Alert>:<p></p> }
                 <ButtonPrimary label={"Crear"} id="submit_button" onClick={submit}/>
                 <Snackbar
                     open={open}
