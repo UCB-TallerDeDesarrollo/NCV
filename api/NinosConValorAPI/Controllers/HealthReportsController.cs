@@ -52,5 +52,32 @@ namespace NinosConValorAPI.Controllers
             }
             return response;
         }
+        [HttpPut]
+        public async Task<IActionResult> UpdateHealthReportAsync(int kidId, [FromBody] HealthReportModel healthReportModel)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    foreach (var pair in ModelState)
+                    {
+                        if (pair.Key == nameof(healthReportModel.BloodType) && pair.Value.Errors.Count > 0)
+                        {
+                            return BadRequest(pair.Value.Errors);
+                        }
+                    }
+                }
+
+                return Ok(await _healthReportService.UpdateHealthReportAsync(kidId,healthReportModel));
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message); ;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happend: {ex.Message}");
+            }
+        }
     }
 }

@@ -1,0 +1,143 @@
+import React from 'react';
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
+import MenuItem from '@mui/material/MenuItem';
+import FormContainer from '../../../Components/FormContainer';
+import InputText from '../../../Components/InputText';
+import ButtonPrimary, { ButtonSecondary } from '../../../Components/MUI-Button';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../../../Components/NavBar';
+import { Box } from '@mui/system';
+
+import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import TextField from '@mui/material/TextField';
+
+const healtReport = {
+    bloodType: '',
+    ciDiscapacidad: '',
+    psychologicalDiagnosis: '',
+    neurologicalDiagnosis: '',
+    specialDiagnosis: '',
+    healthProblems: ''
+}
+
+
+function EditHealthReport() {
+    const navigate = useNavigate();
+    const {kidId} = useParams()
+    var urlHealthReport = "https://ncv-api.herokuapp.com/api/kids/"+ kidId +"/healthreports"
+    const [healthRep, setHealthRep] = useState(healtReport)
+    const [open, setOpen] = useState(false)
+
+    const fetchHealthReportData = () => {
+        var responseReporthealth = axios(urlHealthReport);
+        axios.all([responseReporthealth]).then(
+            axios.spread((...allData) => {
+                var dataBK = allData[0].data
+                setHealthRep(dataBK)
+            })
+    )}
+
+    useEffect(() => {
+        fetchHealthReportData()
+    }, [])
+    console.log("health report json: ",healthRep )
+
+    const handleInputChange = (e)=>{
+        const {name, value}=e.target
+        setOpen(false)
+        setHealthRep({
+            ...healthRep,
+            [name]:value
+        })
+    }
+
+    function handleFormSubmit() {
+        axios.put(urlHealthReport, healthRep)
+          .then(function (response) {
+            if (response.status == 200){
+                navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de salud actualizado correctamente"}});
+            }
+          })
+          .catch(function (error) {
+            if (error.response){
+                if (error.response.status == 400 )
+                    setOpen(true)
+            }
+          });
+    }
+    function handleClose() {
+        navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de Salud sin modificaciones"}});
+    }
+    
+    return (
+        <><Navbar /><div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
+            <FormContainer title="Modificar reporte de salud">
+                <Collapse in={open} sx={{width:1, pt:2}}>
+                    <Alert severity="error">
+                        Todos los campos son requeridos
+                    </Alert>
+                </Collapse>
+                <Box sx={{alignItems :'center'}}>
+                <InputText
+                    id="bloodtype"
+                    name="bloodType"
+                    label="Grupo sanguineo"
+                    type="text"
+                    value={healthRep.bloodType}
+                    onChange={handleInputChange}
+                >
+                </InputText>
+                <InputText
+                    id="ciDiscapacidad"
+                    name="ciDiscapacidad"
+                    label="CI de Discapacidad"
+                    type="text"
+                    value={healthRep.ciDiscapacidad}
+                    onChange={handleInputChange}
+                />
+                <InputText
+                    multiline={true}
+                    id="psychologicalDiagnosis"
+                    name="psychologicalDiagnosis"
+                    label="Diagnostico Fisico"
+                    helperText="Opcional"
+                    value={healthRep.psychologicalDiagnosis}
+                    onChange={handleInputChange}
+                />
+                <InputText
+                    multiline={true}
+                    id="neurologicalDiagnosis"
+                    name="neurologicalDiagnosis"
+                    label="Diagnostico Neurologico"
+                    helperText="Opcional"
+                    value={healthRep.neurologicalDiagnosis}
+                    onChange={handleInputChange}
+                />
+                <InputText
+                    multiline={true}
+                    id="specialDiagnosis"
+                    name="specialDiagnosis"
+                    label="Diagnostico Especial"
+                    helperText="Opcional"
+                    value={healthRep.specialDiagnosis}
+                    onChange={handleInputChange}
+                />
+                <InputText
+                    id="healthProblems"
+                    name="healthProblems"
+                    label="Problemas de Salud"
+                    helperText="Opcional"
+                    value={healthRep.healthProblems}
+                    onChange={handleInputChange}
+                />
+                <ButtonPrimary label={"Guardar Cambios"} onClick={handleFormSubmit} sx={{marginLeft:5}}></ButtonPrimary>
+                <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
+                </Box>
+            </FormContainer>
+        </div></>
+    );
+}
+export default EditHealthReport;

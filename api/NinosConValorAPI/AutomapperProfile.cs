@@ -30,6 +30,8 @@ namespace NinosConValorAPI
                 .ReverseMap();
             this.CreateMap<BiometricsEntity, BiometricsModel>()
                 .ReverseMap();
+            this.CreateMap<FoundationReportEntity, FoundationReportModel>()
+                .ReverseMap();
             this.CreateMap<ProgramHouseEntity, ProgramHouseModel>()
                 .ForMember(mod => mod.ResponsibleId, ent => ent.MapFrom(entSrc => entSrc.ResponsibleUser.Id))
                 .ReverseMap()

@@ -11,6 +11,12 @@ namespace NinosConValorAPI.Data.Repository
         Task DeleteHealthReportAsync(int kidId);
         Task<HealthReportEntity> UpdateHealthReportAsync(int kidId, HealthReportEntity healthReport);
 
+        // FOUNDATION REPORT
+        public Task<FoundationReportEntity> CreateFoundationReportAsync(FoundationReportEntity foundationReport);
+        Task<FoundationReportEntity> GetFoundationReportAsync(int kidId);
+        Task DeleteFoundationReportAsync(int kidId);
+        Task<FoundationReportEntity> UpdateFoundationReportAsync(int kidId, FoundationReportEntity foundationReport);
+
         //KIDS
         public void CreateKid(KidEntity kid);
         Task<KidEntity> GetKidAsync(int kidId);

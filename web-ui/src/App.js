@@ -17,10 +17,13 @@ import UpdateFixedAssetForm from './Views/FixedAssets/UpdateFixedAsset'
 import ShowAssetStates from './Views/FixedAssets/AssetStates/ShowAssetStates'
 
 import AddHealthReport from './Views/KidsFiles/HealthReport/AddHealthReport'
+import AddFoundationReport from './Views/KidsFiles/FoundationReport/AddFoundationReport'
 import { ShowKidsFiles } from './Views/KidsFiles/ShowKidsFiles'
 import { ShowOneKidFile } from './Views/KidsFiles/ShowOneKidFile'
 import AddKid from './Views/KidsFiles/BasicDataReport/AddKid'
 import EditKid from './Views/KidsFiles/BasicDataReport/EditKid'
+import EditHealthReport from './Views/KidsFiles/HealthReport/EditHealthReport'
+
 import AddLegalReport from './Views/KidsFiles/LegalReport/AddLegalReport'
 
 import ListUsers from './Views/User/ListUsers'
@@ -75,12 +78,21 @@ function App() {
                         element={<AddHealthReport />}
                     ></Route>
                     <Route
+                        path="ninos/:kidId/crear-reporte-estancia/"
+                        //element={<><NavBar/><AddFoundationReport/></>}
+                        element={<AddFoundationReport />}
+                    ></Route>
+                    <Route
                         path="ninos/:kidId/crear-reporte-legal/"
                         element={<AddLegalReport />}
                     ></Route>
                     <Route
                         path="ninos/:kidId/editar-nino"
                         element={<EditKid />}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/editar-reporte-salud"
+                        element={<EditHealthReport/>}
                     ></Route>
                     <Route path="*" element={<Navigate replace to="/" />} />
                 </Routes>
@@ -102,8 +114,17 @@ function App() {
                     element={<AddHealthReport/>}
                 ></Route>
                 <Route
+                    path="ninos/:kidId/crear-reporte-estancia/"
+                    //element={<><NavBar/><AddFoundationReport/></>}
+                    element={<AddFoundationReport/>}
+                ></Route>
+                <Route
                     path="ninos/:kidId/editar-nino"
                     element={<EditKid/>}
+                ></Route>
+                <Route
+                    path="ninos/:kidId/editar-reporte-salud"
+                    element={<EditHealthReport/>}
                 ></Route>
                 
                     <Route exact path="/" element={<LoginForm />}></Route>

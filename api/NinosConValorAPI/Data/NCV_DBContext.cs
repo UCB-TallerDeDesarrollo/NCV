@@ -11,6 +11,7 @@ namespace NinosConValorAPI.Data
         public DbSet<KidEntity> Kids => Set<KidEntity>();
         public DbSet<ProgramHouseEntity> ProgramHouses => Set<ProgramHouseEntity>();
         public DbSet<HealthReportEntity> HealthReports { get; set; }
+        public DbSet<FoundationReportEntity> FoundationReport { get; set; }
         public DbSet<LegalReportEntity> LegalReports { get; set; }
         public DbSet<AssetCategoryEntity> AssetCategories => Set<AssetCategoryEntity>();
 
@@ -53,6 +54,10 @@ namespace NinosConValorAPI.Data
             // HealthReport
             modelBuilder.Entity<HealthReportEntity>().ToTable("HealthReports");
             modelBuilder.Entity<HealthReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
+
+            //FoundationReport
+            modelBuilder.Entity<FoundationReportEntity>().ToTable("FoundationReport");
+            modelBuilder.Entity<FoundationReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
             
             // LegalReport
             modelBuilder.Entity<LegalReportEntity>().ToTable("LegalReports");
