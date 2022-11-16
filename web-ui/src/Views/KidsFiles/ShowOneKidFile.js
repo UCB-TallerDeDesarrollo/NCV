@@ -47,7 +47,7 @@ function ShowOneKidFile() {
     const urlBiometrics = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/biometrics'
     const urlCreateFoundationReport = `/ninos/${kidId}/crear-reporte-estancia/`
     const urlLegalKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/legalreports'
-    const urlFoundationReportKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/foundation-report'
+    const urlFoundationReportKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/foundationreport'
 
     const navigate = useNavigate();
     const navigateEditKid = () =>{ 
