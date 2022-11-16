@@ -32,6 +32,8 @@ function CreateFixedAssetForm(props) {
     const [programError, setProgramError] = useState("Seleccione un programa")
     const assetsCodes = []
     getAssetsCodes();
+    let programCode = ''
+    let categoryCode = ''
     const navigate = useNavigate()
     const [data, setData] = useState({
         Name: '', // string
@@ -136,21 +138,52 @@ function CreateFixedAssetForm(props) {
         )
     }
 
+    function getProgramCode(programValue){
+        let programCode = ''
+        programHousesOptions.forEach(function (program){
+            if(programValue == program.value){
+                programCode = program.label
+            }
+        });
+        return programCode
+    }
+
+    function getCategoryCode(categoryValue){
+        let categoryCode = ''
+        switch (categoryValue){
+            case 1:
+                categoryCode = 'HER'
+            case 2:
+                categoryCode = 'MUE'
+            case 3:
+                categoryCode = 'MAQ'
+            case 4:
+                categoryCode = 'VEH'
+            case 6:
+                categoryCode = 'EC' 
+        }
+        return categoryCode
+    }
+
     function submit(e) {
+        programCode = getProgramCode(programHouseSelectedValue)
+        categoryCode = getCategoryCode(categorySelectedValue)
+
+        console.log('catego elegido', categoryCode);
         const errorsFromForm= validate(data)
         setFormErrors(errorsFromForm)
         setIsSubmit(true)
         if(!hasFormErrors(errorsFromForm)){
             Axios.post(url, {
             Name: data.Name,
-            Code: data.Code,
             Description: data.Description==''? null:data.Description, // string
             EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
             Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
             Features: data.Features==''? null:data.Features, // string
             ProgramHouseId : programHouseSelectedValue,
             AssetCategoryId : categorySelectedValue,
-            AssetStateId: stateSelectedValue //string
+            AssetStateId: stateSelectedValue, //string
+            Code: "F-" + programCode + "-" + categoryCode + "-" + data.Code, //string
             }).then((res) => {
                 if (res.status == 201) {               
                     navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo creado exitosamente"}})
