@@ -46,17 +46,15 @@ namespace NinosConValorAPI.Services
 
         public async Task<HealthReportModel> UpdateHealthReportAsync(int kidId, HealthReportModel healthReportModel)
         {
+            await ValidateKidAsync(kidId);
             var healthReportEntity = _mapper.Map<HealthReportEntity>(healthReportModel);
-            await GetHealthReportAsync(kidId);
-            healthReportEntity.Id = kidId;
-            _appRepository.UpdateHealthReportAsync(kidId, healthReportEntity);
+            healthReportEntity = await _appRepository.UpdateHealthReportAsync(kidId, healthReportEntity);
             var saveResult = await _appRepository.SaveChangesAsync();
-
             if (!saveResult)
             {
                 throw new Exception("Database Error");
             }
-            return _mapper.Map<HealthReportModel>(healthReportEntity); ;
+            return _mapper.Map<HealthReportModel>(healthReportEntity);
         }
         private async Task ValidateKidAsync(int kidId)
         {
