@@ -10,6 +10,7 @@ namespace NinosConValorAPI.Data.Repository
     public class NCVRepository:INCVRepository
     {
         private NCV_DBContext _dbContext;
+        
         public NCVRepository(NCV_DBContext NCV_DBContext)
         {
             _dbContext = NCV_DBContext;
@@ -98,6 +99,57 @@ namespace NinosConValorAPI.Data.Repository
             return biometrics;
         }
 
+        // CONTACTS
+
+        public async Task<IEnumerable<ContactEntity>> GetContactsAsync(int kidId)
+        {
+            IQueryable<ContactEntity> query = _dbContext.Contacts;
+            query = query.AsNoTracking();
+            query = query.Where(b => b.KidId == kidId);
+            query = query.OrderBy(b => b.Name); 
+            return await query.ToListAsync();
+        }
+        public async Task<ContactEntity> CreateContactAsync(ContactEntity contacts)
+        {
+            await _dbContext.Contacts.AddAsync(contacts);
+            return contacts;
+        }
+
+         // EDUCATION REPORT
+        public async Task<EducationReportEntity> CreateEducationReportAsync(EducationReportEntity educationReport)
+        {
+            await _dbContext.EducationReports.AddAsync(educationReport);
+            return educationReport;
+        }
+
+        public async Task<EducationReportEntity> GetEducationReportAsync(int kidId)
+        {
+            IQueryable<EducationReportEntity> query = _dbContext.EducationReports;
+            query = query.AsNoTracking();
+            var educationReport = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            return educationReport;
+        }
+
+        // FAMILY REPORT
+        public async Task<FamilyReportEntity> CreateFamilyReportAsync(FamilyReportEntity familyReportEntity)
+        {
+            throw new NotImplementedException();
+            /*
+            await _dbContext.FamilyReports.AddAsync(familyReportEntity);
+            return familyReportEntity;
+            */
+        }
+
+        public async Task<FamilyReportEntity> GetFamilyReportAsync(int kidId)
+        {
+            throw new NotImplementedException();
+            /*
+            IQueryable<FamilyReportEntity> query = _dbContext.FamilyReports;
+            query = query.AsNoTracking();
+            var familyReportEntity = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            return familyReportEntity;
+            */
+        }
 
         // FIXED ASSET
 
@@ -246,20 +298,6 @@ namespace NinosConValorAPI.Data.Repository
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             var fixedAssetToDelete = await query.FirstOrDefaultAsync(g => (g.Id == fixedAssetId) & (g.Deleted == false));
             fixedAssetToDelete.Deleted = true;
-        }
-        
-        public async Task<EducationReportEntity> CreateEducationReportAsync(EducationReportEntity educationReport)
-        {
-            await _dbContext.EducationReports.AddAsync(educationReport);
-            return educationReport;
-        }
-
-        public async Task<EducationReportEntity> GetEducationReportAsync(int kidId)
-        {
-            IQueryable<EducationReportEntity> query = _dbContext.EducationReports;
-            query = query.AsNoTracking();
-            var educationReport = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
-            return educationReport;
         }
 
         public async Task<AssetStateEntity> CreateAssetState(AssetStateEntity assetState)
