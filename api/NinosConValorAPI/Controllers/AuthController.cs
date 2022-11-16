@@ -45,12 +45,12 @@ namespace NinosConValorAPI.Controllers
 
 
 
-        [HttpPost("User")]
-        public async Task<IActionResult> RegisterAsync([FromBody] RegisterViewModel model)
+        [HttpPost("{rol}")]
+        public async Task<IActionResult> RegisterUserAndRolAsync(string rol,[FromBody] RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _userService.RegisterUserAsync(model);
+                var result = await _userService.RegisterUserRole(model, rol);
 
                 if (result.IsSuccess)
                     return Ok(result); // Status Code: 200 
@@ -97,7 +97,7 @@ namespace NinosConValorAPI.Controllers
             return BadRequest("Some properties are not valid");
         }
 
-        //[Authorize(Roles = "Admin")]
+        /*/[Authorize(Roles = "Admin")]
         [HttpPost("AdminUser")]
         public async Task<IActionResult> RegisterAdminAsync([FromBody] RegisterViewModel model)
         {
@@ -148,7 +148,7 @@ namespace NinosConValorAPI.Controllers
             }
 
             return BadRequest("Some properties are not valid"); // Status code: 400
-        }
+        }*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserBasicInformationModel>>> GetUsersAsync()
         {
