@@ -117,6 +117,7 @@ function Navbar() {
                                         marginLeft: 5,
                                         textTransform: 'none'
                                     }}
+                                    className="btn-users"
                                     color="inherit"
                                     onClick={handleClickViewUsers}
                                 >
@@ -162,6 +163,7 @@ function Navbar() {
                             <Button
                                 sx={{ marginLeft: 5, textTransform: 'none' }}
                                 color="inherit"
+                                className="btn-exit"
                                 onClick={handleClickExit}
                             >
                                 Salir

@@ -41,7 +41,8 @@ namespace NinosConValorAPI.Services
         public async Task<AssetStateModel> GetAssetStateAsync(int stateID)
         {
             var state = await _NCVRepository.GetAssetStateAsync(stateID);
-
+            if (state == null)
+                throw new NotFoundElementException($"El estado con Id:{stateID} no existe.");
             return _mapper.Map<AssetStateModel>(state);
         }
         public async Task<AssetStateModel> UpdateAssetStateAsync(int stateId, AssetStateModel stateModel)

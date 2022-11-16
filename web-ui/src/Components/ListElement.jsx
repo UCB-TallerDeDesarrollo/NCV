@@ -6,19 +6,24 @@ import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { EditText} from 'react-edit-text';
+import 'react-edit-text/dist/index.css';
 
-export default function ListElement({id=0, title = "default title", description = "default description", imgSrc = "", elementUrl = "", withImage=true, withEditIcon=false, editAction=null, withDeleteIcon=false, deleteAction=null}){
+export default function ListElement({id=0, title = "default title", description = "default description", imgSrc = "", elementUrl = "", withImage=true, withEditIcon=false, editAction=null, editable=false, editActionOnSave=null, withDeleteIcon=false, deleteAction=null}){
   const navigate = useNavigate();
-  
+  //if(setEditValue!=null)
+    //setEditValue(title)
+  //const [editValue, setEditValue] = useState(title)
   const sxListItemText = {
     '& .MuiListItemText-primary': {
       fontSize: 18,
     }
-  }
+  }  
   
   let img = null;
   let deleteIcon = null
   let editIcon = null
+  let elementText = <ListItemText primary={title} secondary={description} className="ListElement" sx={sxListItemText}/>
   if (withImage)
     img = <ListItemAvatar> <Avatar alt="Remy Sharp" src={imgSrc}/> </ListItemAvatar>;
   if (withDeleteIcon){
@@ -29,13 +34,22 @@ export default function ListElement({id=0, title = "default title", description 
   }
   if (withEditIcon){
     editIcon = 
-    <IconButton aria-label="delete" size="small" className={"delete-assetState-button"} onClick={editAction}>
+    <IconButton aria-label="delete" size="small" className={"delete-assetState-button"} onClick={()=>{editAction(id)}}>
       <EditIcon fontSize="small" />
     </IconButton>
   }
+  if(editable){
+    elementText =
+    <EditText sx={sxListItemText}
+      id={id.toString()}
+      onSave={(props)=>editActionOnSave(props,id)}      
+      defaultValue = {title} 
+      editButtonProps={{ style: { marginLeft: '5px', width: 16 } }}      
+    />
+  }
   return <ListItemButton sx={{borderTop: 1, borderColor:'#CDCDCD', margin:0}} key={id} alignItems="flex-start" onClick={()=>navigate(elementUrl)}>
-      {img}      
-    <ListItemText primary={title} secondary={description} className="ListElement" sx={sxListItemText}/>
+    {img}      
+    {elementText}
     {editIcon}
     {deleteIcon}
   </ListItemButton>;

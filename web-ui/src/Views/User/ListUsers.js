@@ -50,8 +50,8 @@ function ListUsers() {
     
         let usersComponents = <ListBasic items={listElements} withImage={false} withDeleteIcon={true} />
         let registerUser = "/registrarse-ncv"
-        let listHeaderComponents = <ButtonPrimary label={"Registrar Usuario"} onClick={()=>navigate(registerUser)}/>
         let deltOption = <ButtonDanger label="Eliminar" id="confirm_delete_button" ></ButtonDanger>
+        let listHeaderComponents = <ButtonPrimary id="btn-register-user" label={"Registrar Usuario"} onClick={()=>navigate(registerUser)}/>
         return ( 
             <>
                 <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
