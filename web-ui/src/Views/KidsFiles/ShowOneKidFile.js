@@ -19,6 +19,7 @@ import BasicData from '../../Views/KidsFiles/BasicDataReport/ShowBasicDataReport
 import HealthReport from '../../Views/KidsFiles/HealthReport/ShowHealthReport.js'
 import WeightAndHeight from '../../Views/KidsFiles/HealthReport/BiometricsReport.js'
 import LegalReport from '../../Views/KidsFiles/LegalReport/ShowLegalReport.js'
+import FoundationReport from './BasicDataReport/ShowFoundationReport';
 
 import TabsContainer from '../../Components/TabsContainer';
 
@@ -38,11 +39,15 @@ function ShowOneKidFile() {
     const [legalReport, setLegalReport] = useState(null)
     const [legalReportStatusCode, setLegalReportStatusCode] = useState(null)
 
+    const [foundationReport, setFoundationReport] = useState(null)
+    const [foundationReportStatusCode, setFoundationReportStatusCode] = useState(null)
+
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
     const urlBiometrics = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/biometrics'
     const urlCreateFoundationReport = `/ninos/${kidId}/crear-reporte-estancia/`
     const urlLegalKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/legalreports'
+    const urlFoundationReportKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/foundation-report'
 
     const navigate = useNavigate();
     const navigateEditKid = () =>{ 
@@ -106,11 +111,23 @@ function ShowOneKidFile() {
             })
     }
 
+    const fetchFoundationReport = () => {
+        axios.get(urlFoundationReportKid)
+            .then((response) => {
+                setFoundationReportStatusCode(response.status)
+                setFoundationReport(response.data)
+            })
+            .catch((error)=>{
+                setFoundationReportStatusCode(error.response.status);
+            })
+    }
+
     useEffect(() => { 
         fetchBasicData();
         fetchHeltReport();
         fetchBiometrics();
         fetchLegalReport();
+        fetchFoundationReport();
     }, [])
     
     if (!kid){
@@ -146,13 +163,14 @@ function ShowOneKidFile() {
     let healthTabContent = (<HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>);
     let weightAndHeightTabContent = (<WeightAndHeight weightAndHeightData={biometrics} setBiometrics={setBiometrics}/>);
     let legalTabContent = (<LegalReport kidId={kidId} legalReport={legalReport} legalReportStatusCode={legalReportStatusCode}/>);
+    let foundationTabContent = (<FoundationReport kidId={kidId} foundationReport={foundationReport} legalReportStatusCode={foundationReportStatusCode}/>);
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <BasicData kid={kid}/>
             {accesPermiss=="ComplitAcces"&&
                 <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
             }
-            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent]}></TabsContainer>
+            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal", "Fundación"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent, foundationTabContent]}></TabsContainer>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
