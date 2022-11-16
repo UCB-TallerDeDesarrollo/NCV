@@ -28,6 +28,7 @@ import AddLegalReport from './Views/KidsFiles/LegalReport/AddLegalReport'
 
 import ListUsers from './Views/User/ListUsers'
 import Profile from './Views/User/Profile'
+import FoundationReport from './Views/KidsFiles/BasicDataReport/ShowFoundationReport'
 
 let accesPermiss=sessionStorage.getItem("Access") 
 function App() {
