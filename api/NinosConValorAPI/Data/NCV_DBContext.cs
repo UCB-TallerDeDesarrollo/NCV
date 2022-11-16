@@ -17,6 +17,7 @@ namespace NinosConValorAPI.Data
 
         public DbSet<AssetStateEntity> AssetStates => Set<AssetStateEntity>();
         public DbSet<BiometricsEntity> Biometrics { get; set; }
+        public DbSet<ContactEntity> Contacts { get; set; }
         public DbSet<EducationReportEntity> EducationReports { get; set; }
 
         public NCV_DBContext(DbContextOptions<NCV_DBContext> options) : base(options)
@@ -66,6 +67,10 @@ namespace NinosConValorAPI.Data
             //Biometrics
             modelBuilder.Entity<BiometricsEntity>().ToTable("Biometrics");
             modelBuilder.Entity<BiometricsEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
+            
+            //Contact
+            modelBuilder.Entity<ContactEntity>().ToTable("Contact");
+            modelBuilder.Entity<ContactEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
 
             //ProgamHouses
             modelBuilder.Entity<ProgramHouseEntity>().ToTable("ProgramHouse");

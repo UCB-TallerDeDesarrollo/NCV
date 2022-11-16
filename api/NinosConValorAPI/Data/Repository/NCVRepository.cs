@@ -101,24 +101,18 @@ namespace NinosConValorAPI.Data.Repository
 
         // CONTACTS
 
-        public async Task<IEnumerable<ContactsEntity>> GetContactsAsync(int kidId)
+        public async Task<IEnumerable<ContactEntity>> GetContactsAsync(int kidId)
         {
-            /*
-            IQueryable<ContactsEntity> query = _dbContext.Contacts;
+            IQueryable<ContactEntity> query = _dbContext.Contacts;
             query = query.AsNoTracking();
             query = query.Where(b => b.KidId == kidId);
-            // query = query.OrderBy(b => b.Name); // será necesario ordenar ?
+            query = query.OrderBy(b => b.Name); 
             return await query.ToListAsync();
-            */
-             throw new NotImplementedException();
         }
-        public async Task<ContactsEntity> CreateContactsAsync(ContactsEntity contacts)
+        public async Task<ContactEntity> CreateContactAsync(ContactEntity contacts)
         {
-            /*
             await _dbContext.Contacts.AddAsync(contacts);
             return contacts;
-            */
-             throw new NotImplementedException();
         }
 
          // EDUCATION REPORT

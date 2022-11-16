@@ -1,6 +1,6 @@
 namespace NinosConValorAPI.Models
 {
-    public class ContactsModel
+    public class ContactModel
     {
         public string Name { get; set; }
         public string Relationship { get; set; }

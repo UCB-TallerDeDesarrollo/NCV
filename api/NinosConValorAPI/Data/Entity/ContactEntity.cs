@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NinosConValorAPI.Data.Entity
 {
-    public class ContactsEntity
+    public class ContactEntity
     {
         [Key]
         [Required]
@@ -13,8 +13,8 @@ namespace NinosConValorAPI.Data.Entity
         public int KidId { get; set; }
         public virtual KidEntity Kid { get; set; }
         
-        public string Name { get; set; }
-        public string Relationship { get; set; }
+        public string? Name { get; set; }
+        public string? Relationship { get; set; }
         public string? ContactNumber { get; set; }
         public string? Address { get; set; }
     }

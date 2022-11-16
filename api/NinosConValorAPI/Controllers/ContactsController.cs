@@ -8,16 +8,16 @@ namespace NinosConValorAPI.Controllers
     [Route("api/kids/{kidId:int}/[controller]")]
     public class ContactsController : Controller
     {
-        private IContactsService _contactsService;
-        public ContactsController(IContactsService contactsService)
+        private IContactService _contactsService;
+        public ContactsController(IContactService contactsService)
         {
             _contactsService = contactsService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ContactsModel>>> GetContactsAsync(int kidId)
+        public async Task<ActionResult<IEnumerable<ContactModel>>> GetContactsAsync(int kidId)
         {
-            ActionResult<IEnumerable<ContactsModel>> response;
+            ActionResult<IEnumerable<ContactModel>> response;
             try
             {
                 var contactsModel = await _contactsService.GetContactsAsync(kidId);
@@ -35,13 +35,13 @@ namespace NinosConValorAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ContactsModel>> CreateContactsAsync(int kidId, [FromBody] ContactsModel contactsData )
+        public async Task<ActionResult<ContactModel>> CreateContactsAsync(int kidId, [FromBody] ContactModel contactsData )
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
-                var newContactsData = await _contactsService.CreateContactsAsync(kidId,contactsData);
+                var newContactsData = await _contactsService.CreateContactAsync(kidId,contactsData);
                 return Created($"/api/kids/{kidId}/[controllers]/contacts", newContactsData);
             }
             catch (NotFoundElementException ex)
