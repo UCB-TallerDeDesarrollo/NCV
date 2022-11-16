@@ -79,6 +79,8 @@ function App() {
                         path="ninos/:kidId/crear-reporte-estancia/"
                         //element={<><NavBar/><AddFoundationReport/></>}
                         element={<AddFoundationReport />}
+                    ></Route>
+                    <Route
                         path="ninos/:kidId/crear-reporte-legal/"
                         element={<AddLegalReport />}
                     ></Route>
