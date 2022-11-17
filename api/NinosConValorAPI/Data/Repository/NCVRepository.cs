@@ -1,6 +1,7 @@
 
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NinosConValorAPI.Data.Entity;
 using NinosConValorAPI.Models;
 using System.Security.Cryptography;
@@ -218,7 +219,17 @@ namespace NinosConValorAPI.Data.Repository
         public async Task UpdateFixedAssetAsync(int fixedAssetId, FixedAssetEntity fixedAsset)
         {
             var fixedAssetToUpdate = await _dbContext.FixedAssets.FirstOrDefaultAsync(f => f.Id == fixedAssetId);
-            _dbContext.Entry(fixedAssetToUpdate).CurrentValues.SetValues(fixedAsset);
+            //_dbContext.Entry(fixedAssetToUpdate).CurrentValues.SetValues(fixedAsset);
+            fixedAssetToUpdate.Code = fixedAsset.Code ?? fixedAssetToUpdate.Code;
+            fixedAssetToUpdate.Name = fixedAsset.Name ?? fixedAssetToUpdate.Name;
+            fixedAssetToUpdate.Description = fixedAsset.Description ?? fixedAssetToUpdate.Description;
+            fixedAssetToUpdate.EntryDate = fixedAsset.EntryDate ?? fixedAssetToUpdate.EntryDate;
+            fixedAssetToUpdate.Price = fixedAsset.Price ?? fixedAssetToUpdate.Price;
+            fixedAssetToUpdate.Features = fixedAsset.Features ?? fixedAssetToUpdate.Features;
+            fixedAssetToUpdate.ProgramHouse = fixedAsset.ProgramHouse ?? fixedAssetToUpdate.ProgramHouse;
+            fixedAssetToUpdate.AssetCategory = fixedAsset.AssetCategory ?? fixedAssetToUpdate.AssetCategory;
+            fixedAssetToUpdate.AssetState = fixedAsset.AssetState ?? fixedAssetToUpdate.AssetState;
+            fixedAssetToUpdate.State = fixedAsset.State ?? fixedAssetToUpdate.State;
         }
         public async Task<FoundationReportEntity> GetFoundationReportAsync(int kidId)
         {
