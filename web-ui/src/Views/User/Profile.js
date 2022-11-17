@@ -55,37 +55,6 @@ export function Profile() {
     }, [formErrors])
     console.log('user json: ', user)
 
-<<<<<<< HEAD
-=======
-
-    function handleFormSubmit() {
-        setFormErrors(validate(user));
-        user.role=user.rol
-        setIsSubmit(true)
-        axios
-            .put(url, user)
-            .then(function (response) {
-                if (response.status == 200) {
-                    navigate(`/vista-usuarios`, {
-                        state: {
-                            //showAlert: true,
-                            //alertMessage: 'Usuario editado correctamente'
-                        }
-                    })
-                }
-            })
-            .catch(function (error) {
-                if (error.response) {
-                    if (error.response.status >= 400|| error.response.status <= 500) 
-                        setOpen(true)
-                }
-            })
-    }
-
-    function handleClose() {
-        navigate(`/vista-usuarios`);
-    }
->>>>>>> 6a6075d (Se modifico la vista de lista de usuarios)
 
     return (
         <>
@@ -106,11 +75,11 @@ export function Profile() {
                         onClick={navigateEdit}
                         sx={{marginRight:1}}
                     />    
-                <ButtonPrimary
+                {false&&<ButtonPrimary
                         label={'Cambiar Contrasena'}
                         //onClick={handleFormSubmit}
                         sx={{marginUp:1}}
-                    />    
+                    />  }  
                     
                     
                     </Box> 
