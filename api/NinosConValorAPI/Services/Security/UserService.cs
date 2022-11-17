@@ -328,9 +328,15 @@ namespace NinosConValorAPI.Services.Security
                     IsSuccess = false
                 };
             }
-
-            await userManager.RemoveFromRoleAsync(user, actuallyRole[0]);
-            var expected = await userManager.AddToRoleAsync(user, model.Role);
+            if(model.Role != actuallyRole[0])
+            {
+                var roleValidate = await roleManager.FindByNameAsync(model.Role);
+                if (roleValidate != null)
+                {
+                    await userManager.RemoveFromRoleAsync(user, actuallyRole[0]);
+                    await userManager.AddToRoleAsync(user, model.Role);
+                }
+            }
             user.FirstName = model.FirstName ?? user.FirstName;
             user.LastName = model.LastName ?? user.LastName;
             user.PhoneNumber = model.CellPhone ?? user.PhoneNumber;
