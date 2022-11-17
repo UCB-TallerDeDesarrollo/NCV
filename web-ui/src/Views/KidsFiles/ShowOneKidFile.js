@@ -39,11 +39,15 @@ function ShowOneKidFile() {
     const [legalReport, setLegalReport] = useState(null)
     const [legalReportStatusCode, setLegalReportStatusCode] = useState(null)
 
+    const [educationReport, setEducationReport] = useState(null)
+    const [educationReportStatusCode, setEducationReportStatusCode] = useState(null)
+
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
     const urlBiometrics = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/biometrics'
     const urlCreateFoundationReport = `/ninos/${kidId}/crear-reporte-estancia/`
     const urlLegalKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/legalreports'
+    const urlEducationKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/educationreports'
 
     const navigate = useNavigate();
     const navigateEditKid = () =>{ 
@@ -106,12 +110,23 @@ function ShowOneKidFile() {
                 setLegalReportStatusCode(error.response.status);
             })
     }
+    const fetchEducationReport = () => {
+        axios.get(urlEducationKid)
+            .then((response) => {
+                setEducationReportStatusCode(response.status)
+                setEducationReport(response.data)
+            })
+            .catch((error)=>{
+                setEducationReportStatusCode(error.response.status);
+            })
+    }
 
     useEffect(() => { 
         fetchBasicData();
         fetchHeltReport();
         fetchBiometrics();
         fetchLegalReport();
+        fetchEducationReport();
     }, [])
     
     if (!kid){
@@ -147,13 +162,14 @@ function ShowOneKidFile() {
     let healthTabContent = (<HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>);
     let weightAndHeightTabContent = (<WeightAndHeight weightAndHeightData={biometrics} setBiometrics={setBiometrics}/>);
     let legalTabContent = (<LegalReport kidId={kidId} legalReport={legalReport} legalReportStatusCode={legalReportStatusCode}/>);
+    let educationTabContent = (<EducationReport kidId={kidId} educationReport={educationReport} educationReportStatusCode={educationReportStatusCode}/>);
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <BasicData kid={kid}/>
             {accesPermiss=="ComplitAcces"&&
                 <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
             }
-            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent]}></TabsContainer>
+            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal", "Educación"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent,educationTabContent]}></TabsContainer>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}

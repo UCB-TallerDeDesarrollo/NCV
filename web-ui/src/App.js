@@ -25,6 +25,7 @@ import EditKid from './Views/KidsFiles/BasicDataReport/EditKid'
 import EditHealthReport from './Views/KidsFiles/HealthReport/EditHealthReport'
 
 import AddLegalReport from './Views/KidsFiles/LegalReport/AddLegalReport'
+import AddEducationReport from './Views/KidsFiles/EducationReport/AddEducationReport'
 
 import ListUsers from './Views/User/ListUsers'
 import Profile from './Views/User/Profile'
@@ -85,6 +86,10 @@ function App() {
                     <Route
                         path="ninos/:kidId/crear-reporte-legal/"
                         element={<AddLegalReport />}
+                    ></Route>
+                      <Route
+                        path="ninos/:kidId/crear-reporte-education/"
+                        element={<AddEducationReport />}
                     ></Route>
                     <Route
                         path="ninos/:kidId/editar-nino"
