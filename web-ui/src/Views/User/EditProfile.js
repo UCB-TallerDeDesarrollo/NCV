@@ -136,7 +136,7 @@ export function EditProfile() {
                         name="cellPhone"
                         type="number"
                         value={user.cellPhone}
-                        //onChange={handleInputChange}
+                        onChange={handleInputChange}
                     />
                     {formErrors.cellPhone ? (
                         <Alert sx={{ width: 1, pt: 1 }} severity="error">

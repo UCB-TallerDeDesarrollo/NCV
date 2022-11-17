@@ -75,11 +75,11 @@ export function Profile() {
                         onClick={navigateEdit}
                         sx={{marginRight:1}}
                     />    
-                <ButtonPrimary
+                {false&&<ButtonPrimary
                         label={'Cambiar Contrasena'}
                         //onClick={handleFormSubmit}
                         sx={{marginUp:1}}
-                    />    
+                    />  }  
                     
                     
                     </Box> 
