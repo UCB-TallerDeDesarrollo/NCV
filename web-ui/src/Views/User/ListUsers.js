@@ -7,6 +7,7 @@ import ListContainer from "../../Components/ListContainer";
 import Navbar from '../../Components/NavBar';
 import ButtonPrimary from '../../Components/MUI-Button';
 import ListBasic from '../../Components/ListBasic';
+import GutterList from '../../Components/GutterList'
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react'
 import TranslateRole from './Translate'
@@ -48,16 +49,15 @@ function ListUsers() {
             };
         })
     
-        let usersComponents = <ListBasic items={listElements} withImage={false} withDeleteIcon={true} />
+        let usersComponents = <GutterList items={listElements} withImage={false} withDeleteIcon={true} />
         let registerUser = "/registrarse-ncv"
-        let deltOption = <ButtonDanger label="Eliminar" id="confirm_delete_button" ></ButtonDanger>
         let listHeaderComponents = <ButtonPrimary id="btn-register-user" label={"Registrar Usuario"} onClick={()=>navigate(registerUser)}/>
         return ( 
             <>
                 <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
                     <ListContainer title="Lista de usuarios" header={listHeaderComponents}>
                         {usersComponents}
-                        <ButtonDanger label="Eliminar" id="confirm_delete_button" ></ButtonDanger>
+                        
                     </ListContainer>
                 </Box>
                 
