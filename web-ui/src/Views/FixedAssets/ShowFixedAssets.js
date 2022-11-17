@@ -57,7 +57,7 @@ export default function ShowFixedAssets() {
         if (!e.target.value) return posts
         let resultsArray = posts.filter(post => post.name.toLowerCase().includes(e.target.value.toLowerCase()))
         if(acronymsList[programHouseSelectedValue] != null){
-            resultsArray = posts.filter(post => post.programHouseAcronym.includes(acronymsList[programHouseSelectedValue]))
+            resultsArray = resultsArray.filter(post => post.programHouseAcronym.includes(acronymsList[programHouseSelectedValue]))
         }
         return resultsArray;
     }
