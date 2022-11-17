@@ -35,9 +35,12 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
             "Diagnostico especial" : healthReport.specialDiagnosis ,
             "Problemas de salud" : healthReport.healthProblems ,
         }
-        healthReportComponent = <SingleItemCard key={1} element={healthReportElement} title={"Reporte de salud"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}} />
+        healthReportComponent = (<>
+            <SingleItemCard key={1} element={healthReportElement} title={"Reporte de salud"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}} />
+            <ButtonPrimary label="Editar Health Report" onClick={navigateEditHealthReport}/>
+        </>)
     }
-    return <><>{healthReportComponent}</> <ButtonPrimary label="Editar Health Report" onClick={navigateEditHealthReport}/></>
+    return healthReportComponent
 }
 
 export default HealthReport;

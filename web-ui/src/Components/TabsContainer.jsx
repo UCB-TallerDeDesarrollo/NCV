@@ -79,11 +79,11 @@ const TabPanel = styled(TabPanelUnstyled)(
 
 const TabsList = styled(TabsListUnstyled)(
   ({ theme }) => `
-  max-width: 600px;
+  max-width: 800px;
   background-color: #5cd4e2;
   border-radius: 12px 12px 0px 0px;
   display: flex;
-  align-items: center;
+  align-items: bottom;
   justify-content: center;
   align-content: space-between;
   box-shadow: 0px 4px 30px ${theme.palette.mode === 'dark' ? grey[900] : grey[200]};
