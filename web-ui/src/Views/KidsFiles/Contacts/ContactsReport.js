@@ -79,32 +79,32 @@ function AddRowContacts({setContacts}){
                             </TableCell>
                             <TableCell key={1} align={'center'}>
                                 <input
-                                    placeholder="relación..."
+                                    placeholder="parentesco..."
                                     name="relationship"
                                     value={contactsData.relationship }
                                     type="text"
                                     onChange={handleInputChange}
-                                    style={{ width:70, textAlign:'center'}}
+                                    style={{ width:120, textAlign:'center'}}
                                 ></input>
                             </TableCell>
                             <TableCell key={2} align={'center'}>
                                 <input
-                                    placeholder="contactNumber ..."
+                                    placeholder="teléfono..."
                                     name="contactNumber"
                                     value={contactsData.contactNumber }
                                     type="text"
                                     onChange={handleInputChange}
-                                    style={{ width:70, textAlign:'center' }}
+                                    style={{ width:120, textAlign:'center' }}
                                 ></input>
                             </TableCell>
                             <TableCell key={2} align={'center'}>
                                 <input
-                                    placeholder="address  ..."
+                                    placeholder="dirección..."
                                     name="address"
                                     value={contactsData.address  }
                                     type="text"
                                     onChange={handleInputChange}
-                                    style={{ width:70, textAlign:'center' }}
+                                    style={{ width:120, textAlign:'center' }}
                                 ></input>
                             </TableCell>
                         </TableRow>
@@ -119,9 +119,6 @@ function AddRowContacts({setContacts}){
            </div>
 }
 
-function getMaxOfArray(numArray) {
-    return Math.max.apply(null, numArray);
-}
 
 function Contacts({contactsData,setContacts}){
 
@@ -138,7 +135,7 @@ function Contacts({contactsData,setContacts}){
 
 
     let contactsTitle = null;
-    let columnNames = ["name ","relationship ","contactNumber ","address "];
+    let columnNames = ["Nombre","Parentesco","Teléfono","Dirección"];
     let table = <>
         <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
                 <AutoAwesomeIcon sx={{margin:2}}/>

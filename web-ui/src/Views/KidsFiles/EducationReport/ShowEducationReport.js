@@ -25,9 +25,9 @@ function EducationReport({kidId, educationReport, educationReportStatusCode}){
     }
     if (educationReport != null && educationReportStatusCode == 200){
         var educationReportElement = {
-            "Grade" : educationReport.grade,
-            "School" : educationReport.school ,
-            "Rude" : educationReport.rude,
+            "Grado" : educationReport.grade,
+            "Unidad Educativa" : educationReport.school ,
+            "RUDE" : educationReport.rude,
         }
         educationReportComponent = <SingleItemCard key={1} element={educationReportElement} title={"Reporte Educación"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}}/>
     }

@@ -25,10 +25,10 @@ function LegalReport({kidId, legalReport, legalReportStatusCode}){
     }
     if (legalReport != null && legalReportStatusCode == 200){
         var legalReportElement = {
-            "Court Number" : legalReport.courtNumber ,
+            "Nro de Juzgado" : legalReport.courtNumber ,
             "DNA" : legalReport.dna ,
             "NUREJ" : legalReport.nurej ,
-            "Processo legales" : legalReport.legalProcesses
+            "Procesos legales" : legalReport.legalProcesses
         }
         legalReportComponent = <SingleItemCard key={1} element={legalReportElement} title={"Reporte Legal"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}}/>
     }

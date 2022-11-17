@@ -79,7 +79,7 @@ const TabPanel = styled(TabPanelUnstyled)(
 
 const TabsList = styled(TabsListUnstyled)(
   ({ theme }) => `
-  max-width: 800px;
+  max-width: 1000px;
   background-color: #5cd4e2;
   border-radius: 12px 12px 0px 0px;
   display: flex;
@@ -92,7 +92,7 @@ const TabsList = styled(TabsListUnstyled)(
 
 export default function TabsContainer({tabsNames,tabsContent}) {
   return (
-    <Box sx={{width:0.75}}>
+    <Box sx={{width:0.75, mb:2}}>
       <TabsUnstyled defaultValue={0}>
         <TabsList>
         {
