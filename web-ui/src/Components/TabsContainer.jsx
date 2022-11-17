@@ -35,7 +35,6 @@ const grey = {
 };
 
 const Tab = styled(TabUnstyled)`
-  font-family: IBM Plex Sans, sans-serif;
   color: #023859;
   cursor: pointer;
   font-weight: 600;
@@ -70,7 +69,6 @@ const Tab = styled(TabUnstyled)`
 const TabPanel = styled(TabPanelUnstyled)(
   ({ theme }) => `
   width: 100%;
-  font-family: IBM Plex Sans, sans-serif;
   font-size: 0.875rem;
   padding: 20px 12px;
   background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};

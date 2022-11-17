@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
-import ButtonPrimary from '../../../Components/MUI-Button'
+import ButtonPrimary, { ButtonSecondary }  from '../../../Components/MUI-Button'
 import InputText from '../../../Components/InputText'
 import FormContainer from '../../../Components/FormContainer'
 import axios from 'axios'
 import Navbar from '../../../Components/NavBar';
-
+import { Box } from '@mui/system';
 const foundReport = {
     admissionDate: '',
     admissionReason: '',
@@ -46,6 +46,9 @@ function AddFoundationReport() {
             }
           });
     }
+    function handleClose() {
+        navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de Estancia no creado"}});
+    }
 
     return (
         <><Navbar /><div style={{marginTop: '3em', display:'flex', justifyContent:'center'}}>
@@ -76,8 +79,10 @@ function AddFoundationReport() {
                     value={formReport.admissionReason}
                     onChange={handleInputChange}
                 />
-                
-                <ButtonPrimary  label={"Crear reporte"} onClick={handleFormSubmit}/>
+                <Box sx={{display: 'inline'}}>
+                    <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
+                    <ButtonPrimary label={"Crear reporte"} onClick={handleFormSubmit}></ButtonPrimary>
+                </Box>
             </FormContainer>
         </div></>
     )

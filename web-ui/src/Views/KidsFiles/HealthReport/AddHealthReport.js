@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
 import MenuItem from '@mui/material/MenuItem';
-import ButtonPrimary from '../../../Components/MUI-Button'
+import ButtonPrimary , { ButtonSecondary } from '../../../Components/MUI-Button'
 import InputText from '../../../Components/InputText'
 import FormContainer from '../../../Components/FormContainer'
 import axios from 'axios'
 import Navbar from '../../../Components/NavBar';
-
+import { Box } from '@mui/system';
 
 const healtReport = {
     BloodType: '',
@@ -88,6 +88,10 @@ function AddHealthReport() {
           });
     }
 
+    function handleClose() {
+        navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de Salud no creado"}});
+    }
+
     return (
         <><Navbar /><div style={{marginTop: '3em', display:'flex', justifyContent:'center'}}>
             <FormContainer title="Reporte de salud">
@@ -155,7 +159,10 @@ function AddHealthReport() {
                     value={formReport.HealthProblems}
                     onChange={handleInputChange}
                 />
-                <ButtonPrimary  label={"Crear reporte"} onClick={handleFormSubmit}/>
+                <Box sx={{display: 'inline'}}>
+                    <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
+                    <ButtonPrimary label={"Crear reporte"} onClick={handleFormSubmit}></ButtonPrimary>
+                </Box>
             </FormContainer>
         </div></>
     )

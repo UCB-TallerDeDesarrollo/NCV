@@ -3,13 +3,12 @@ import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
-import MenuItem from '@mui/material/MenuItem';
-import ButtonPrimary from '../../../Components/MUI-Button'
+import ButtonPrimary , { ButtonSecondary } from '../../../Components/MUI-Button'
 import InputText from '../../../Components/InputText'
 import FormContainer from '../../../Components/FormContainer'
 import axios from 'axios'
 import Navbar from '../../../Components/NavBar';
-
+import { Box } from '@mui/system';
 const legalReport = {
     courtNumber: '',
     dna: '',
@@ -49,6 +48,9 @@ function AddLegalReport() {
           });
     }
 
+    function handleClose() {
+        navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte Legal no creado"}});
+    }
     return (
         <><Navbar /><div style={{marginTop: '3em', display:'flex', justifyContent:'center'}}>
             <FormContainer title="Reporte Legal">
@@ -90,7 +92,10 @@ function AddLegalReport() {
                     value={formReport.legalProcesses}
                     onChange={handleInputChange}
                 />
-                <ButtonPrimary  label={"Crear reporte legal"} onClick={handleFormSubmit}/>
+                <Box sx={{display: 'inline'}}>
+                    <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
+                    <ButtonPrimary label={"Crear reporte legal"} onClick={handleFormSubmit}></ButtonPrimary>
+                </Box>
             </FormContainer>
         </div></>
     )
