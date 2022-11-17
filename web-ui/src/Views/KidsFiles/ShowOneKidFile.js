@@ -127,7 +127,8 @@ function ShowOneKidFile() {
                 setContacts(response.data)
             })
             .catch((error)=>{
-                setContactsStatusCode(error.response.status);
+                setContactsStatusCode(error.response.status)});
+    }
 
     const fetchFoundationReport = () => {
         axios.get(urlFoundationReportKid)
