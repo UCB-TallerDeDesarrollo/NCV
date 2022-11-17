@@ -41,7 +41,7 @@ export default function GutterlessList({items, withImage=true, withDeleteIcon=fa
                 secondaryAction={
                     <IconButton >
                         <EditIcon fontSize="small" aria-label="edit" onClick={()=>navigate(n.elementUrl)} />
-                        {false &&<DeleteIcon fontSize="small" aria-label="delete" onClick={ToConfirmOpen} color='error'/>}
+                        {true &&<DeleteIcon fontSize="small" aria-label="delete" onClick={ToConfirmOpen} color='error'/>}
 
                         
                     </IconButton>
