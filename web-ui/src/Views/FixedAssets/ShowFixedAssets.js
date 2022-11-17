@@ -56,21 +56,10 @@ export default function ShowFixedAssets() {
     function searchCriteria (e, posts) {
         if (!e.target.value) return posts
         let resultsArray = posts.filter(post => post.name.toLowerCase().includes(e.target.value.toLowerCase()))
-        console.log(resultsArray)
         if(acronymsList[programHouseSelectedValue] != null){
             resultsArray = posts.filter(post => post.programHouseAcronym.includes(acronymsList[programHouseSelectedValue]))
-            console.log(acronymsList[programHouseSelectedValue])
         }
         return resultsArray;
-    }
-
-    function searchByProgram(e){
-        console.log(e.target.value)
-        /*if (e.target.value){
-        console.log(e.target.value)
-        const searchByProgramResult = searchResult.filter(post => post.programHouseAcronym.includes(programHouseSelectedValue))
-        setSearchResults(searchByProgramResult)
-        }*/
     }
     useEffect(()=>{
         getFixedAssets(url).then(
@@ -125,9 +114,6 @@ export default function ShowFixedAssets() {
                 helperText = "Seleccione un programa"
                 setSelectedValue = {setProgramHouseSelectedValue}
                 required
-                onChange={(e) => {
-                    searchByProgram(e)
-                }}
                 >                                        
             </Dropdown> 
         const listElements = searchResult.map((el)=>{

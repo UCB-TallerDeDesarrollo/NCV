@@ -4,7 +4,6 @@ import InputText from '../Components/InputText'
 
 export default function Dropdown({name, id, options, selectedValue, required=false, setSelectedValue, helperText = "Seleccione un valor"}) {
   var handleChange = (event) => {
-    console.log(event.target.value)
     setSelectedValue(event.target.value)
  }
   return (
