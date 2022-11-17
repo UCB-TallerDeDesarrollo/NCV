@@ -1,5 +1,9 @@
 import Button from '@mui/material/Button';
 
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
+import Grid from '@mui/material/Unstable_Grid2';
+
 export default function ButtonPrimary({label, onClick, id, sx={}}) {
     sx.borderRadius = sx.borderRadius ?? 40
     sx.background = sx.background ?? "#5CD4E2"
@@ -50,5 +54,14 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
             }
             }}>{label}
             </Button>
+    );
+  }
+
+
+  export function ButtonPrimaryEditIcon({onClick, sx={}}) {
+    return (
+      <IconButton aria-label="delete" size="small" className={"delete-assetState-button"} onClick={onClick} sx={sx}>
+        <EditIcon fontSize="small" />
+      </IconButton>
     );
   }

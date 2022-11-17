@@ -205,9 +205,6 @@ function ShowOneKidFile() {
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <BasicData kid={kid}/>
-            {accesPermiss=="ComplitAcces"&&
-                <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
-            }
             <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal","Educación","Contactos", "Estancia"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent,educationTabContent,contactsTabContent,foundationTabContent]}></TabsContainer>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">

@@ -49,7 +49,7 @@ function gridItems(elements){
     return gridElements
   }
 
-const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, secondaryField=null, imgWidth=150,imgHeight=150, itemsPerLine=false, sx={}}) => {   
+const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, secondaryField=null, imgWidth=150,imgHeight=150, itemsPerLine=false, button=null, sx={}}) => {   
     const styles = {
         secondaryField:{
             color:"#5BCCD9",
@@ -91,13 +91,17 @@ const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, 
                                 )})}
                         </Box>
                 </Box>)
-    let cardSx = { p: 5 , pt: 4, m:2, width:0.75, borderRadius:3, display:'flex', flexDirection:{sm:'column',md:'row', xs:'column'}, alignItems:'center'}
+    let cardContentSx = {display:'flex', flexDirection:{sm:'column',md:'row', xs:'column'}, alignItems:'center', boxShadow:0}
+    let cardSx = { p: 5 , pt: 4, m:2, width:0.75, borderRadius:3, display:'flex', flexDirection:{sm:'column',md:'column', xs:'column'}, alignItems:'left'}
     Object.keys(sx).forEach(k => {
         cardSx[k] = sx[k];
     });
    return (
             <Card sx={cardSx}>
-                {contentCard.map((oneContent,i)=>oneContent)}
+                <Card sx={cardContentSx}>
+                    {contentCard.map((oneContent,i)=>oneContent)} 
+                </Card>
+                {button}
             </Card>
    )
 }

@@ -28,10 +28,10 @@ describe('Home Page end to end tests', () => {
     cy.url().should('include', 'vista-usuarios');
   });
 
-  it('Confirmar el acceso a la vista de niños', () => {
-    cy.get('.btn-files').click();
-    cy.url().should('include', 'ninos');
-  });
+  // it('Confirmar el acceso a la vista de niños', () => {
+  //   cy.get('.btn-files').click();
+  //   cy.url().should('include', 'ninos');
+  // });
 
   it('Confirmar el acceso a la vista de activos fijos', () => {
     cy.get('.btn-activosFijos').click();
