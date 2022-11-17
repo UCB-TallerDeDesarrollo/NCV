@@ -70,11 +70,11 @@ export function Profile() {
                 imageCirle={false} 
                 imgHeight={300} imgWidth={500} />   
                 <Box sx={{alignItems :'center'}}>
-                <ButtonPrimary
+                {false&&<ButtonPrimary
                         label={'Editar'}
                         onClick={navigateEdit}
                         sx={{marginRight:1}}
-                    />    
+                    />}    
                 {false&&<ButtonPrimary
                         label={'Cambiar Contrasena'}
                         //onClick={handleFormSubmit}
