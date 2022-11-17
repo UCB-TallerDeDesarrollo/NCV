@@ -9,7 +9,7 @@ import InputText from '../../Components/InputText'
 import Collapse from '@mui/material/Collapse'
 import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
 import Alert from '@mui/material/Alert'
-
+import SingleItemCard from '../../Components/SingleItemCard'
 import { Box } from '@mui/system'
 
 
@@ -33,6 +33,18 @@ export function Profile() {
             })
         )
     }
+    const userData = {
+        "NOMBRE": user.firstName,
+        "APELLIDO": user.lastName,
+        "CORREO": user.email,
+        "ROL":user.rol,
+        "CELULAR": user.cellPhone,
+        
+    }
+    let imageUrl =
+        'https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg'
+    
+    const navigateEdit = () => { navigate(`/editar-perfil`); }
 
     useEffect(() => {
         fetchData()
@@ -43,139 +55,35 @@ export function Profile() {
     }, [formErrors])
     console.log('user json: ', user)
 
-   
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target
-        setOpen(false)
-        setUser({
-            ...user,
-            [name]: value
-        })
-    }
-
-    function handleFormSubmit() {
-        setFormErrors(validate(user));
-        user.role=user.rol
-        setIsSubmit(true)
-        axios
-            .put(url, user)
-            .then(function (response) {
-                if (response.status == 200) {
-                    navigate(`/vista-usuarios`, {
-                        state: {
-                            //showAlert: true,
-                            //alertMessage: 'Usuario editado correctamente'
-                        }
-                    })
-                }
-            })
-            .catch(function (error) {
-                if (error.response) {
-                    if (error.response.status >= 400|| error.response.status <= 500) 
-                        setOpen(true)
-                }
-            })
-    }
-
-    function handleClose() {
-        navigate(`/vista-usuarios`);
-    }
 
     return (
         <>
             <Navbar />
             <div
                 style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    marginTop: '3em'
+                    marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' 
                 }}
             >
-                <FormContainer title="Editar usuario">
-                    <Collapse in={open} sx={{ width: 1, pt: 2 }}>
-                        <Alert severity="error">
-                            Todos los campos son requeridos
-                        </Alert>
-                    </Collapse>
-
-                    <InputText
-                        //required
-                        block
-                        id="firstName"
-                        name="firstName"
-                        type="text"
-                        value={user.firstName}
-                        //onChange={handleInputChange}
-                    />
-                    {formErrors.firstName ? (
-                        <Alert sx={{ width: 1, pt: 1 }} severity="error">
-                            {formErrors.firstName}
-                        </Alert>
-                    ) : (
-                        <p></p>
-                    )}
-                    <InputText
-                        //required
-                        id="lastName"
-                        name="lastName"
-                        type="text"
-                        value={user.lastName}
-                        //onChange={handleInputChange}
-                    />
-                    {formErrors.lastName ? (
-                        <Alert sx={{ width: 1, pt: 1 }} severity="error">
-                            {formErrors.lastName}
-                        </Alert>
-                    ) : (
-                        <p></p>
-                    )}
-                    <InputText
-                        //required
-                        id="cellPhone"
-                        name="cellPhone"
-                        type="number"
-                        value={user.cellPhone}
-                        //onChange={handleInputChange}
-                    />
-                    {formErrors.cellPhone ? (
-                        <Alert sx={{ width: 1, pt: 1 }} severity="error">
-                            {formErrors.cellPhone}
-                        </Alert>
-                    ) : (
-                        <p></p>
-                    )}
-                    <InputText
-                        //required
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={user.email}
-                        //onChange={handleInputChange}
-                    />
-                    {formErrors.email ? (
-                        <Alert sx={{ width: 1, pt: 1 }} severity="error">
-                            {formErrors.email}
-                        </Alert>
-                    ) : (
-                        <p></p>
-                    )}
-                    
-                    <Box sx={{alignItems :'center'}}>
-                    <ButtonPrimary
-                        label={'Guardar Cambios'}
-                        onClick={handleFormSubmit}
+                <SingleItemCard 
+                title={user.firstName} 
+                secondaryField={user.lastName} element={userData} imageUrl={imageUrl} 
+                imageCirle={false} 
+                imgHeight={300} imgWidth={500} />   
+                <Box sx={{alignItems :'center'}}>
+                <ButtonPrimary
+                        label={'Editar'}
+                        onClick={navigateEdit}
                         sx={{marginRight:1}}
-                        
-                    />
-                    <ButtonSecondary
-                        label={'Cancelar'}
-                        onClick={handleClose}
-                    />
-                    </Box>
-                   
+                    />    
+                <ButtonPrimary
+                        label={'Cambiar Contrasena'}
+                        //onClick={handleFormSubmit}
+                        sx={{marginUp:1}}
+                    />    
                     
-                </FormContainer>
+                    
+                    </Box> 
+                
             </div>
         </>
     )

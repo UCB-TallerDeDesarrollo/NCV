@@ -76,15 +76,6 @@ function AddFoundationReport() {
                     value={formReport.admissionReason}
                     onChange={handleInputChange}
                 />
-                <InputText
-                    required
-                    id="AdmissionAge"
-                    name="admissionAge"
-                    label="Edad al momento de admision"
-                    type="number"
-                    value={formReport.admissionAge}
-                    onChange={handleInputChange}
-                />
                 
                 <ButtonPrimary  label={"Crear reporte"} onClick={handleFormSubmit}/>
             </FormContainer>
