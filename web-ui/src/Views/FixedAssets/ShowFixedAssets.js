@@ -21,7 +21,7 @@ export default function ShowFixedAssets() {
     const [fixedAssets, setFixedAssets] = useState()
     const [searchResult, setSearchResults] = useState ([])
     const [hasErrorWithFetch, setHasErrorWithFetch] = useState(null)
-    const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null) 
+    const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(0) 
 
     const location = useLocation()
     const navigate = useNavigate();
@@ -34,6 +34,7 @@ export default function ShowFixedAssets() {
     let alertMessage = location.state ? location.state.alertMessage : null
     const { apiData: assetCategories, errors } = getFromApi(urlCategories)
     const { apiData: programHouses, errorProgramHouses } = getFromApi(urlProgramHouses)
+    const {currentProgramHouse, setCurrentProgramHouse } = getFromApi(null)
     const headerIndices = [];
     const getHeaderName = (i) => {
         switch (i) {
@@ -54,8 +55,22 @@ export default function ShowFixedAssets() {
 
     function searchCriteria (e, posts) {
         if (!e.target.value) return posts
-        const resultsArray = posts.filter(post => post.name.toLowerCase().includes(e.target.value.toLowerCase()))
+        let resultsArray = posts.filter(post => post.name.toLowerCase().includes(e.target.value.toLowerCase()))
+        console.log(resultsArray)
+        if(acronymsList[programHouseSelectedValue] != null){
+            resultsArray = posts.filter(post => post.programHouseAcronym.includes(acronymsList[programHouseSelectedValue]))
+            console.log(acronymsList[programHouseSelectedValue])
+        }
         return resultsArray;
+    }
+
+    function searchByProgram(e){
+        console.log(e.target.value)
+        /*if (e.target.value){
+        console.log(e.target.value)
+        const searchByProgramResult = searchResult.filter(post => post.programHouseAcronym.includes(programHouseSelectedValue))
+        setSearchResults(searchByProgramResult)
+        }*/
     }
     useEffect(()=>{
         getFixedAssets(url).then(
@@ -82,9 +97,16 @@ export default function ShowFixedAssets() {
         return ErrorPage(hasErrorWithFetch)
     } 
     if (!fixedAssets || !assetCategories || !programHouses) return null
-    const programHousesList = programHouses.map( programHouse =>  { return{
+    const acronymsList = []
+    programHouses.map( programHouse =>  {
+        acronymsList.push(programHouse.acronym)
+    }) 
+    let idProgram = -1
+    const programHousesList = programHouses.map( programHouse =>  { 
+        idProgram++
+        return{
         label: programHouse.acronym,
-        value: programHouse.id      
+        value: idProgram      
     }}) 
     const searcher = <SearchBar posts={fixedAssets} setSearchResults={setSearchResults} orderCriteria={ordenCriteria} searchCriteria={searchCriteria} />
     if (fixedAssets.length>0 && assetCategories.length>0){
@@ -103,14 +125,17 @@ export default function ShowFixedAssets() {
                 helperText = "Seleccione un programa"
                 setSelectedValue = {setProgramHouseSelectedValue}
                 required
+                onChange={(e) => {
+                    searchByProgram(e)
+                }}
                 >                                        
             </Dropdown> 
         const listElements = searchResult.map((el)=>{
-            //console.log(el);
             return {
                 id:el.id, 
                 title: el.code ? `${el.name} #${el.code}` : `${el.name}`,
-                description:`Programa: ${el.programHouseAcronym!=null&&el.programHouseAcronym!=""&&el.programHouseAcronym!=undefined?el.programHouseAcronym:"*Sin programa*"}`,                 
+                description:`Programa: ${el.programHouseAcronym!=null&&el.programHouseAcronym!=""&&el.programHouseAcronym!=undefined?el.programHouseAcronym:"*Sin programa*"}`,      
+                program: el.program,           
                 elementUrl:`${completeInfoFixedAsset}/${el.id}`,
                 imgSrc:`https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg`,
                 categoryId: el.assetCategoryId
