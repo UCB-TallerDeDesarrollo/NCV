@@ -214,7 +214,7 @@ export default function UpdateFixedAssetForm(props) {
         return errors
     }
     
-
+    debugger;
     if(error){
         //setOpen(true)
         return ErrorPage(error)
