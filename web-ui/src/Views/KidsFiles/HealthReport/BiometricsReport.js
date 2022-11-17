@@ -141,23 +141,48 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
     availableYears = Array.from(availableYears);
     let maxYear = getMaxOfArray(availableYears);
     useEffect(()=>{
-        setYearsSelected([maxYear.toString()]);
+        setYearsSelected([maxYear]);
     },[]);
     
     useEffect(()=>{
         let fb = []
-        let yearGroupIdx = 0;
-        let yearGroup = availableYears[yearGroupIdx]
-        fb.push({'groupTitle':yearGroup,'empty1':'','empty2':''})
-        weightAndHeightData.slice().forEach((b)=>{
-            if(yearGroup != (new Date(b["registerDate"]).getFullYear())){
-                fb.push({'groupTitle':(new Date(b["registerDate"]).getFullYear()), 'empty1':'','empty2':''})
-                yearGroupIdx+=1;
-                yearGroup = availableYears[yearGroupIdx]
-            }
-            fb.push({"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
-        })
-        setFilteredBiometrics(fb);
+        let finalFilteredBiometrics = []
+        if (yearsSelected.length > 0){
+            fb = weightAndHeightData.filter((b)=>{
+                var ans = false;
+                let biometricYear = (new Date(b["registerDate"]).getFullYear())
+                yearsSelected.forEach((y)=>{
+                    ans = ans || y == biometricYear;
+                })
+                return  ans;
+            })
+            let yearGroup = fb.length > 0 ? (new Date(fb[0]["registerDate"]).getFullYear()) : undefined
+            finalFilteredBiometrics.push({'groupTitle':yearGroup, 'empty1':'','empty2':''})
+            fb.forEach((b)=>{
+                if(yearGroup != (new Date(b["registerDate"]).getFullYear())){
+                    finalFilteredBiometrics.push({'groupTitle':(new Date(b["registerDate"]).getFullYear()), 'empty1':'','empty2':''})
+                    yearGroup = (new Date(b["registerDate"]).getFullYear())
+                }
+                finalFilteredBiometrics.push({"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
+            })
+            setFilteredBiometrics(finalFilteredBiometrics)
+        }
+        else{
+            //DUPLICATED CODE: TECH DEBT
+            let yearGroupIdx = 0;
+            let yearGroup = availableYears[yearGroupIdx]
+            fb.push({'groupTitle':yearGroup,'empty1':'','empty2':''})
+            weightAndHeightData.slice().forEach((b)=>{
+                if(yearGroup != (new Date(b["registerDate"]).getFullYear())){
+                    fb.push({'groupTitle':(new Date(b["registerDate"]).getFullYear()), 'empty1':'','empty2':''})
+                    yearGroupIdx+=1;
+                    yearGroup = availableYears[yearGroupIdx]
+                }
+                fb.push({"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
+            })
+            setFilteredBiometrics(fb);
+            //END OF DUPLICATED CODE
+        }
     },[weightAndHeightData]);
 
     const ITEM_HEIGHT = 48;
@@ -172,13 +197,8 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
     };
    
     const handleChange = (event) => {
-      const {
-        target: { value },
-      } = event;
-      setYearsSelected(
-        // On autofill we get a stringified value.
-        typeof value === 'string' ? value.split(',') : value,
-      );
+      const { target: { value } } = event;
+      setYearsSelected(value);
     };
 
     useEffect(()=>{
@@ -258,9 +278,7 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
                 MenuProps={MenuProps}
             >
             {availableYears.map((year) => {
-                console.log(maxYear);
-                console.log(year);
-                let checked = year == maxYear || yearsSelected.indexOf(year) > -1;
+                let checked = yearsSelected.indexOf(year) > -1;
                 return (<MenuItem key={year} value={year}>
                 <Checkbox checked={checked}/>
                 <ListItemText primary={year} />
