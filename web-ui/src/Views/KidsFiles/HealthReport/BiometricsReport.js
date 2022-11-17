@@ -143,7 +143,7 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
     availableYears = Array.from(availableYears);
     let maxYear = getMaxOfArray(availableYears);
     useEffect(()=>{
-        setYearsSelected([maxYear.toString()]);
+        setYearsSelected([maxYear]);
     },[]);
     
     useEffect(()=>{
@@ -174,13 +174,10 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
     };
    
     const handleChange = (event) => {
-      const {
-        target: { value },
-      } = event;
-      setYearsSelected(
-        // On autofill we get a stringified value.
-        typeof value === 'string' ? value.split(',') : value,
-      );
+      const { target: { value } } = event;
+      //['2022','2020']
+      console.log('value: ',value);
+      setYearsSelected(value);
     };
 
     useEffect(()=>{
@@ -247,6 +244,7 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
                 <TableBasic align='center' columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
             </Box>
         </>);
+        console.log(yearsSelected);
         yearComboBox = (<FormControl sx={{ m: 1, minWidth: 100, justifySelf:'right', alignSelf:'end'}}>
             <InputLabel id="demo-multiple-checkbox-label">Año</InputLabel>
             <Select
@@ -260,9 +258,7 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
                 MenuProps={MenuProps}
             >
             {availableYears.map((year) => {
-                console.log(maxYear);
-                console.log(year);
-                let checked = year == maxYear || yearsSelected.indexOf(year) > -1;
+                let checked = yearsSelected.indexOf(year) > -1;
                 return (<MenuItem key={year} value={year}>
                 <Checkbox checked={checked}/>
                 <ListItemText primary={year} />
