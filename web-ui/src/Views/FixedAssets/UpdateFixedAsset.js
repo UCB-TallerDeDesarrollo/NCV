@@ -30,48 +30,15 @@ export default function UpdateFixedAssetForm(props) {
     let categoryCode = ''
     const navigate = useNavigate()
     const [data, setData] = useState([])
-    
     //programHouses
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
     const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)
-    // program Houses Options for DROPDOWN
-    if(errorProgramHouses){
-        return ErrorPage(errorProgramHouses)
-    }
-    if (!programHouses) return null
-    let programHousesList = programHouses.map( programHouse =>  { return {
-        label: programHouse.acronym,
-        value: programHouse.id
-    }}) 
-    const programHousesOptions = programHousesList
-
     //categories
     const [categorySelectedValue, setCategorySelectedValue] = useState(null)
-    const { apiData:categories, error:errorCategory } = getFromApi(urlCategories)
-    // categories options for DROPDOWN
-    if(errorCategory){
-        return ErrorPage(errorCategory)
-    }
-    if (!categories) return null
-    let categoriesList = categories.map( category =>  { return {
-        label: category.category,
-        value: category.id
-    }})
-    const categoriesOptions = categoriesList
-
+    const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
     //states
     const [stateSelectedValue, setStateSelectedValue] = useState(null)
-    const { apiData:states, error:errorStates } = getFromApi(urlStates)
-    //states options for DROPDOWN
-    if(errorStates){
-        return ErrorPage(errorStates)
-    }
-    if (!states) return null
-    let statesList = states.map( state =>  { return {
-        label: state.state,
-        value: state.id
-    }})
-    const stateOptions = statesList
+    const { apiData:states, error:errorStates } = getFromApi(urlStates) 
 
     const fetchBasicData = () => {
         const responseData = axios(url);
@@ -90,13 +57,44 @@ export default function UpdateFixedAssetForm(props) {
         }
     },[formErrors]);
 
+    // program Houses Options for DROPDOWN
+    if(errorProgramHouses){
+        return ErrorPage(errorProgramHouses)
+    }
+    if (!programHouses) return null
+    let programHousesList = programHouses.map( programHouse =>  { return {
+        label: programHouse.acronym,
+        value: programHouse.id
+    }})
+    const programHousesOptions = programHousesList
+    // categories options for DROPDOWN
+    if(errorCategory){
+        return ErrorPage(errorCategory)
+    }
+    if (!categories) return null        
+    let categoriesList = categories.map( category =>  { return {
+        label: category.category,
+        value: category.id
+    }})
+    const categoriesOptions = categoriesList
+    //states options for DROPDOWN
+    if(errorStates){
+        return ErrorPage(errorStates)
+    }
+    if (!states) return null 
+    let statesList = states.map( state =>  { return{
+        label: state.state,
+        value: state.id      
+    }})
+    const stateOptions = statesList 
+    
     function handle(e) {
         const {name, value} = e.target
+        setOpen(false)
         setData({
             ...data,
             [name]:value
         })
-        setOpen(false)
     }
 
     function handleClose(event, reason) {
@@ -115,20 +113,59 @@ export default function UpdateFixedAssetForm(props) {
     function hasFormErrors(errorsFromForm){
         console.log('form errors',errorsFromForm)
         let hasErrors=true
-        if(!errorsFromForm.name && !errorsFromForm.description && !errorsFromForm.price && !errorsFromForm.quantity && !errorsFromForm.programHouseId && !errorsFromForm.assetCategoryId && !errorsFromForm.features){
+        if(!errorsFromForm.name && !errorsFromForm.description && !errorsFromForm.price && !errorsFromForm.quantity && !errorsFromForm.programHouseId && !errorsFromForm.assetCategoryId && !errorsFromForm.features && !errorsFromForm.code && !errorsFromForm.assetStateId){
             hasErrors = false
         }
         return hasErrors
     }
+    function getAssetsCodes(){
+        const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
+        getFixedAssets(url).then(
+            response => {
+                if(response.name != "AxiosError"){
+                    response.data.map((el)=>{
+                        var splitCode = el.code.split("-")
+                        assetsCodes.push(splitCode[splitCode.length-1]);
+                        return response;
+                    })
+                }
+            }
+        )
+    }
+    function getProgramCode(programValue){
+        let programCode = ''
+        programHousesOptions.forEach(function (program){
+            if(programValue == program.value){
+                programCode = program.label
+            }
+        });
+        return programCode
+    }
+    function getCategoryCode(categoryValue){
+        let categoryCode = ''
+        switch (categoryValue){
+            case 1:
+                categoryCode = 'HER'
+            case 2:
+                categoryCode = 'MUE'
+            case 3:
+                categoryCode = 'MAQ'
+            case 4:
+                categoryCode = 'VEH'
+            case 6:
+                categoryCode = 'EC' 
+        }
+        return categoryCode
+    }
     function submit() {
+        programCode = getProgramCode(programHouseSelectedValue)
+        categoryCode = getCategoryCode(categorySelectedValue)
         const errorsFromForm= validate(data);
         setFormErrors(errorsFromForm)
         setIsSubmit(true)
-        //console.log(formErrors)
-        //debugger;
         if(!hasFormErrors(errorsFromForm)){
             axios.put(url, data).then((res) => {
-                if (res.status == 201) {               
+                if (res.status == 200) {               
                     navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo actualizado exitosamente"}})
                 }            
             }).catch ((apiError) => {
@@ -139,28 +176,21 @@ export default function UpdateFixedAssetForm(props) {
     }
 
     const validate = (datas) => {        
-        const errors = {
-            name: '', // string
-            description: '', // string
-            entryDate: '', // dateTime
-            price: '', // decimal
-            features: '', // string
-            quantity: '', // int
-            programHouseId : '', //int
-            assetCategoryId : '' //int
-        }
+        const errors = {}
         const regexNumber = /^[0-9]+([.][0-9]+)?$/;
-        //debugger
         if(!datas.name){
             errors.name="El Nombre del Activo Fijo es requerido!";
         }else if(datas.name.length>60){
             errors.name="El campo Nombre del Activo Fijo debe ser menor o igual a 60 caracteres!";
         }
-    
+        if(!datas.code){
+            errors.code="El Código del Activo Fijo es requerido!";
+        } else if(assetsCodes.includes(datas.code)){
+            errors.code="El Código del Activo Fijo ya existe!";
+        }
         if(datas.description.length>1000){
             errors.description="El campo Descripción del Activo Fijo debe ser menor o igual a 1000 caracteres!";
         }
-    
         if(!datas.price){
             errors.price= "El Precio del Activo Fijo es requerido!";
         }else if(datas.price < 0){
@@ -168,21 +198,17 @@ export default function UpdateFixedAssetForm(props) {
         }else if(!regexNumber.test(datas.price)){
             errors.price= "El Precio del Activo Fijo debe ser ingresado en formato decimal!";
         }
-    
-        if(!datas.quantity){
-            errors.quantity= "La Cantidad del Activo Fijo es requerida!";
-        }
-
         if(!programHouseSelectedValue){
             errors.programHouseId= "El programa del Activo Fijo es requerido!";
         }
-
         if(!categorySelectedValue){
             errors.assetCategoryId= "La categoría del Activo Fijo es requerida!";
         }
-    
         if(datas.features.length>1000){
-            errors.Features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
+            errors.features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
+        }
+        if(!stateSelectedValue){
+            errors.assetStateId= "El Estado del Activo Fijo es requerida!";
         }
         console.log('errs',errors)
         return errors
@@ -263,7 +289,18 @@ export default function UpdateFixedAssetForm(props) {
                 </Dropdown>   
                 {formErrors.programHouseId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.programHouseId}  </Alert>:<p></p> }                 
-                
+                <Dropdown 
+                    name={"Estado"} 
+                    id="estado-drop" 
+                    options={stateOptions}                                         
+                    selectedValue={stateSelectedValue}
+                    setSelectedValue = {setStateSelectedValue}
+                    helperText = "Seleccione un estado"
+                    required                    
+                    >                                        
+                </Dropdown>   
+                {formErrors.assetStateId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.assetStateId}  </Alert>:<p></p> }
                 <InputText
                     onChange={(e) => handle(e)}
                     id="Features"
@@ -273,6 +310,20 @@ export default function UpdateFixedAssetForm(props) {
                 />
                  {formErrors.features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.features} </Alert>:<p></p> }
+                <InputText
+                    required
+                    id="Code"
+                    name="Code"
+                    value={data.code}
+                    label="Código"
+                    type="text"
+                    onChange={(e) => {
+                        handle(e)
+                    }}
+                />
+                {formErrors.code? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
+                    {formErrors.code}                   
+                </Alert>:<p></p> }
                 <ButtonPrimary label={"Guardar cambios"} id="submit_button" onClick={submit}/>
                 <Snackbar
                     open={open}
