@@ -80,7 +80,6 @@ function EditHealthReport() {
                         Todos los campos son requeridos
                     </Alert>
                 </Collapse>
-                <Box sx={{alignItems :'center'}}>
                 <InputText
                     id="bloodtype"
                     name="bloodType"
@@ -133,8 +132,9 @@ function EditHealthReport() {
                     value={healthRep.healthProblems}
                     onChange={handleInputChange}
                 />
-                <ButtonPrimary label={"Guardar Cambios"} onClick={handleFormSubmit} sx={{marginLeft:5}}></ButtonPrimary>
+                <Box sx={{display :'inline'}}>
                 <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
+                <ButtonPrimary label={"Guardar"} onClick={handleFormSubmit}></ButtonPrimary>     
                 </Box>
             </FormContainer>
         </div></>

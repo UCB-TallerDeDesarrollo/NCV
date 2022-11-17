@@ -22,6 +22,7 @@ import LegalReport from '../../Views/KidsFiles/LegalReport/ShowLegalReport.js'
 import Contacts from '../../Views/KidsFiles/Contacts/ContactsReport.js'
 import FoundationReport from '../../Views/KidsFiles/FoundationReport/ShowFoundationReport.js';
 import FamilyReport from '../../Views/KidsFiles/FamilyReport/ShowFamilyReport.js';
+import EducationReport from '../../Views/KidsFiles/EducationReport/ShowEducationReport.js'
 
 import TabsContainer from '../../Components/TabsContainer';
 
@@ -48,8 +49,13 @@ function ShowOneKidFile() {
     const [foundationReport, setFoundationReport] = useState(null)
     const [foundationReportStatusCode, setFoundationReportStatusCode] = useState(null)
 
+
     const [familyReport, setFamilyReport] = useState(null)
     const [familyReportStatusCode, setFamilyReportStatusCode] = useState(null)
+
+    const [educationReport, setEducationReport] = useState(null)
+    const [educationReportStatusCode, setEducationReportStatusCode] = useState(null)
+
 
 
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
@@ -60,6 +66,7 @@ function ShowOneKidFile() {
     const urlContacts = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/contacts'
     const urlFoundationReportKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/foundationreport'
     const urlFamilyReportKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/familyreports'
+    const urlEducationKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/educationreports'
 
     const navigate = useNavigate();
     const navigateEditKid = () =>{ 
@@ -144,6 +151,17 @@ function ShowOneKidFile() {
                 setFoundationReportStatusCode(error.response.status);
             })
     }
+    const fetchEducationReport = () => {
+        axios.get(urlEducationKid)
+            .then((response) => {
+                setEducationReportStatusCode(response.status)
+                setEducationReport(response.data)
+            })
+            .catch((error)=>{
+                setEducationReportStatusCode(error.response.status);
+            })
+    }
+
 
     const fetchFamilyReport = () => {
         axios.get(urlFamilyReportKid)
@@ -164,6 +182,7 @@ function ShowOneKidFile() {
         fetchContacts();
         fetchFoundationReport();
         fetchFamilyReport();
+        fetchEducationReport();
     }, [])
     
     if (!kid){
@@ -193,13 +212,12 @@ function ShowOneKidFile() {
     let contactsTabContent = (<Contacts contactsData={contacts} setContacts={setContacts}/>);
     let foundationTabContent = (<FoundationReport kidId={kidId} foundationReport={foundationReport} foundationReportStatusCode={foundationReportStatusCode}/>);
     let familyTabContent = (<FamilyReport kidId={kidId} familyReport={familyReport} familyReportStatusCode={familyReportStatusCode}/>);
+    let educationTabContent = (<EducationReport kidId={kidId} educationReport={educationReport} educationReportStatusCode={educationReportStatusCode}/>);
+      
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <BasicData kid={kid}/>
-            {accesPermiss=="ComplitAcces"&&
-                <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
-            }
-            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal","Contactos", "Estancia","Familia"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent,contactsTabContent,foundationTabContent,familyTabContent]}></TabsContainer>
+            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal","Educación","Contactos", "Estancia","Familia"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent,educationTabContent,contactsTabContent,foundationTabContent,familyTabContent]}></TabsContainer>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
