@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import {useParams } from 'react-router-dom'
 import axios from "axios";
 import TableBasic from '../../../Components/TableBasic';
-import Container from '../../../Components/Container';
 import Box from '@mui/material/Box';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { Typography } from '@mui/material';
@@ -18,7 +17,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../../Components/MUI-Button';
+import ButtonPrimary from '../../../Components/MUI-Button';
 
 var accesPermiss = sessionStorage.getItem("Access")
 
@@ -39,23 +38,22 @@ const biometricsForm = {
 }
 
 function AddRowWeightAndHeight({setBiometrics}){
-    let actualDate = new Date()
-    biometricsForm.registerDate = actualDate.toJSON().split("T")[0]
     const {kidId} = useParams()
     var url = "https://ncv-api.herokuapp.com/api/kids/" + kidId +"/biometrics"
 
     const [biometricsData, setbiometricsData] = useState(biometricsForm)
     const [open, setOpen] = useState(false)
 
+    let actualDate = new Date()
+    let diffWithUTCTime = actualDate.getTimezoneOffset();
+    actualDate.setMinutes(actualDate.getMinutes()-diffWithUTCTime);
+    biometricsForm.registerDate = actualDate.toJSON().split("T")[0]
+
     function handleFormSubmit() {
-        let diffWithUTCTime = actualDate.getTimezoneOffset();
-        actualDate.setMinutes(actualDate.getMinutes()-diffWithUTCTime);
-        biometricsData.registerDate = actualDate.toJSON()
-        console.log("Datos enviados: ", biometricsData)
+        //console.log("Datos enviados: ", biometricsData)
         axios.post(url, biometricsData)
           .then(function (response) {
             if (response.status == 201){
-                console.log("Datos biometricos agregados¡¡¡")
                 axios.get(url)
                     .then((res) => {
                         setBiometrics(res.data)

@@ -115,7 +115,7 @@ namespace NinosConValorAPI.Data.Repository
             return contacts;
         }
 
-         // EDUCATION REPORT
+        // EDUCATION REPORT
         public async Task<EducationReportEntity> CreateEducationReportAsync(EducationReportEntity educationReport)
         {
             await _dbContext.EducationReports.AddAsync(educationReport);
@@ -133,22 +133,16 @@ namespace NinosConValorAPI.Data.Repository
         // FAMILY REPORT
         public async Task<FamilyReportEntity> CreateFamilyReportAsync(FamilyReportEntity familyReportEntity)
         {
-            throw new NotImplementedException();
-            /*
             await _dbContext.FamilyReports.AddAsync(familyReportEntity);
             return familyReportEntity;
-            */
         }
 
         public async Task<FamilyReportEntity> GetFamilyReportAsync(int kidId)
         {
-            throw new NotImplementedException();
-            /*
             IQueryable<FamilyReportEntity> query = _dbContext.FamilyReports;
             query = query.AsNoTracking();
             var familyReportEntity = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
             return familyReportEntity;
-            */
         }
 
         // FIXED ASSET
