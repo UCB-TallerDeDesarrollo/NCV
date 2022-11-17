@@ -20,24 +20,15 @@ namespace NinosConValorAPI.Services
         
         public async Task<FamilyReportModel> GetFamilyReportAsync(int kidId)
         {
-            /*
             await ValidateKidAsync(kidId);
             var familyReportEntity = await _appRepository.GetFamilyReportAsync(kidId);
             if (familyReportEntity == null)
                 throw new NotFoundElementException($"The kid with id:{kidId} does not have a family report.");
             return _mapper.Map<FamilyReportModel>(familyReportEntity);
-*/
-            return new FamilyReportModel(){
-                SiblingsInFoundation = 5,
-                SiblingsOutside = 10,
-                HasExtendedFamily = true,
-                HasOriginFamily = false
-            };
         }
 
         public async Task<FamilyReportModel> CreateFamilyReportAsync(int kidId, FamilyReportModel familyReport)
         {
-            /*
             var familyReportEntity = _mapper.Map<FamilyReportEntity>(familyReport);
             familyReportEntity.KidId = kidId;
             familyReportEntity = await _appRepository.CreateFamilyReportAsync(familyReportEntity);
@@ -47,13 +38,6 @@ namespace NinosConValorAPI.Services
                 return _mapper.Map<FamilyReportModel>(familyReportEntity);
             }
             throw new Exception("Database Error");
-            */
-            return new FamilyReportModel(){
-                SiblingsInFoundation = 1,
-                SiblingsOutside = 2,
-                HasExtendedFamily = true,
-                HasOriginFamily = false
-            };
         }
 
         private async Task ValidateKidAsync(int kidId)
