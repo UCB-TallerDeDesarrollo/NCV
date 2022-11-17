@@ -18,6 +18,7 @@ import ShowAssetStates from './Views/FixedAssets/AssetStates/ShowAssetStates'
 
 import AddHealthReport from './Views/KidsFiles/HealthReport/AddHealthReport'
 import AddFoundationReport from './Views/KidsFiles/FoundationReport/AddFoundationReport'
+import AddFamilyReport from './Views/KidsFiles/FamilyReport/AddFamilyReport'
 import { ShowKidsFiles } from './Views/KidsFiles/ShowKidsFiles'
 import { ShowOneKidFile } from './Views/KidsFiles/ShowOneKidFile'
 import AddKid from './Views/KidsFiles/BasicDataReport/AddKid'
@@ -83,6 +84,10 @@ function App() {
                         path="ninos/:kidId/crear-reporte-estancia/"
                         //element={<><NavBar/><AddFoundationReport/></>}
                         element={<AddFoundationReport />}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/crear-reporte-familia/"
+                        element={<AddFamilyReport />}
                     ></Route>
                     <Route
                         path="ninos/:kidId/crear-reporte-legal/"

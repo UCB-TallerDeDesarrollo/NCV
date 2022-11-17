@@ -21,6 +21,7 @@ import WeightAndHeight from '../../Views/KidsFiles/HealthReport/BiometricsReport
 import LegalReport from '../../Views/KidsFiles/LegalReport/ShowLegalReport.js'
 import Contacts from '../../Views/KidsFiles/Contacts/ContactsReport.js'
 import FoundationReport from '../../Views/KidsFiles/FoundationReport/ShowFoundationReport.js';
+import FamilyReport from '../../Views/KidsFiles/FamilyReport/ShowFamilyReport.js';
 
 import TabsContainer from '../../Components/TabsContainer';
 
@@ -47,6 +48,9 @@ function ShowOneKidFile() {
     const [foundationReport, setFoundationReport] = useState(null)
     const [foundationReportStatusCode, setFoundationReportStatusCode] = useState(null)
 
+    const [familyReport, setFamilyReport] = useState(null)
+    const [familyReportStatusCode, setFamilyReportStatusCode] = useState(null)
+
 
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
@@ -55,7 +59,7 @@ function ShowOneKidFile() {
     const urlLegalKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/legalreports'
     const urlContacts = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/contacts'
     const urlFoundationReportKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/foundationreport'
-
+    const urlFamilyReportKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/familyreports'
 
     const navigate = useNavigate();
     const navigateEditKid = () =>{ 
@@ -141,6 +145,17 @@ function ShowOneKidFile() {
             })
     }
 
+    const fetchFamilyReport = () => {
+        axios.get(urlFamilyReportKid)
+            .then((response) => {
+                setFamilyReportStatusCode(response.status)
+                setFamilyReport(response.data)
+            })
+            .catch((error)=>{
+                setFamilyReportStatusCode(error.response.status);
+            })
+    }
+
     useEffect(() => { 
         fetchBasicData();
         fetchHeltReport();
@@ -148,6 +163,7 @@ function ShowOneKidFile() {
         fetchLegalReport();
         fetchContacts();
         fetchFoundationReport();
+        fetchFamilyReport();
     }, [])
     
     if (!kid){
@@ -159,13 +175,6 @@ function ShowOneKidFile() {
             return
         }
         setOpen(false)
-    }
-
-    function testFoundationReport(event, reason) {
-        if (reason === 'clickaway') {
-            return
-        }
-        setOpenToConfirm(false)
     }
 
     function handleCloseToConfirm(event, reason) {
@@ -183,13 +192,14 @@ function ShowOneKidFile() {
     let legalTabContent = (<LegalReport kidId={kidId} legalReport={legalReport} legalReportStatusCode={legalReportStatusCode}/>);
     let contactsTabContent = (<Contacts contactsData={contacts} setContacts={setContacts}/>);
     let foundationTabContent = (<FoundationReport kidId={kidId} foundationReport={foundationReport} foundationReportStatusCode={foundationReportStatusCode}/>);
+    let familyTabContent = (<FamilyReport kidId={kidId} familyReport={familyReport} familyReportStatusCode={familyReportStatusCode}/>);
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <BasicData kid={kid}/>
             {accesPermiss=="ComplitAcces"&&
                 <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
             }
-            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal","Contactos", "Estancia"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent,contactsTabContent,foundationTabContent]}></TabsContainer>
+            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal","Contactos", "Estancia","Familia"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent,contactsTabContent,foundationTabContent,familyTabContent]}></TabsContainer>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
