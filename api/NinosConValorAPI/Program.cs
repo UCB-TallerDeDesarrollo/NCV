@@ -18,13 +18,16 @@ builder.Services.AddControllers();
 builder.Services.AddTransient<IFixedAssetService, FixedAssetService>();
 builder.Services.AddTransient<IKidService, KidService>();
 builder.Services.AddTransient<IHealthReportService, HealthReportService>();
+builder.Services.AddTransient<IFoundationReportService, FoundationReportService>();
 builder.Services.AddTransient<ILegalReportService, LegalReportService>();
 builder.Services.AddTransient<IBiometricsService, BiometricsService>();
+builder.Services.AddTransient<IContactService, ContactService>();
 builder.Services.AddTransient<IProgramHouseService, ProgramHouseService>();
 builder.Services.AddTransient<IAssetCategoryService, AssetCategoryService>();
 builder.Services.AddTransient<IAssetStateService, AssetStateService>();
 builder.Services.AddTransient<INCVRepository, NCVRepository>();
 builder.Services.AddTransient<IEducationReportService, EducationReportService>();
+builder.Services.AddTransient<IFamilyReportService, FamilyReportService>();
 
 
 //entity framework config

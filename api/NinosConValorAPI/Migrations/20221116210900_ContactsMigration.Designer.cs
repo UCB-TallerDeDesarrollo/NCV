@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NinosConValorAPI.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NinosConValorAPI.Migrations
 {
     [DbContext(typeof(NCV_DBContext))]
-    partial class NCV_DBContextModelSnapshot : ModelSnapshot
+    [Migration("20221116210900_ContactsMigration")]
+    partial class ContactsMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,37 +275,6 @@ namespace NinosConValorAPI.Migrations
                     b.HasIndex("KidId");
 
                     b.ToTable("EducationReports", (string)null);
-                });
-
-            modelBuilder.Entity("NinosConValorAPI.Data.Entity.FamilyReportEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<bool?>("HasExtendedFamily")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool?>("HasOriginFamily")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("KidId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("SiblingsInFoundation")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("SiblingsOutside")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("KidId")
-                        .IsUnique();
-
-                    b.ToTable("FamilyReports", (string)null);
                 });
 
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.FixedAssetEntity", b =>
@@ -679,17 +650,6 @@ namespace NinosConValorAPI.Migrations
                     b.Navigation("Kid");
                 });
 
-            modelBuilder.Entity("NinosConValorAPI.Data.Entity.FamilyReportEntity", b =>
-                {
-                    b.HasOne("NinosConValorAPI.Data.Entity.KidEntity", "Kid")
-                        .WithOne("FamilyReport")
-                        .HasForeignKey("NinosConValorAPI.Data.Entity.FamilyReportEntity", "KidId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Kid");
-                });
-
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.FixedAssetEntity", b =>
                 {
                     b.HasOne("NinosConValorAPI.Data.Entity.AssetCategoryEntity", "AssetCategory")
@@ -770,8 +730,6 @@ namespace NinosConValorAPI.Migrations
                     b.Navigation("Biometrics");
 
                     b.Navigation("Contacts");
-
-                    b.Navigation("FamilyReport");
 
                     b.Navigation("FoundationReport");
 

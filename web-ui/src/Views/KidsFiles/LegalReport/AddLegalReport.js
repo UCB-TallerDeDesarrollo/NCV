@@ -62,7 +62,6 @@ function AddLegalReport() {
                     id="courtNumber"
                     name="courtNumber"
                     label="Número de Corte"
-                    type="number"
                     value={formReport.courtNumber}
                     onChange={handleInputChange}
                 />
@@ -70,7 +69,6 @@ function AddLegalReport() {
                     id="dna"
                     name="dna"
                     label="DNA"
-                    type="number"
                     helperText="Opcional"
                     value={formReport.dna}
                     onChange={handleInputChange}
@@ -79,7 +77,6 @@ function AddLegalReport() {
                     id="nurej"
                     name="nurej"
                     label="NUREJ"
-                    type="number"
                     helperText="Opcional"
                     value={formReport.nurej}
                     onChange={handleInputChange}
@@ -89,7 +86,6 @@ function AddLegalReport() {
                     id="legalProcesses"
                     name="legalProcesses"
                     label="Procesos legales"
-                    type="number"
                     helperText="Opcional"
                     value={formReport.legalProcesses}
                     onChange={handleInputChange}

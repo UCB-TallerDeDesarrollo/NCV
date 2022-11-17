@@ -17,14 +17,18 @@ import UpdateFixedAssetForm from './Views/FixedAssets/UpdateFixedAsset'
 import ShowAssetStates from './Views/FixedAssets/AssetStates/ShowAssetStates'
 
 import AddHealthReport from './Views/KidsFiles/HealthReport/AddHealthReport'
+import AddFoundationReport from './Views/KidsFiles/FoundationReport/AddFoundationReport'
 import { ShowKidsFiles } from './Views/KidsFiles/ShowKidsFiles'
 import { ShowOneKidFile } from './Views/KidsFiles/ShowOneKidFile'
 import AddKid from './Views/KidsFiles/BasicDataReport/AddKid'
 import EditKid from './Views/KidsFiles/BasicDataReport/EditKid'
+import EditHealthReport from './Views/KidsFiles/HealthReport/EditHealthReport'
+
 import AddLegalReport from './Views/KidsFiles/LegalReport/AddLegalReport'
 
 import ListUsers from './Views/User/ListUsers'
 import Profile from './Views/User/Profile'
+import EditProfile from './Views/User/EditProfile'
 
 let accesPermiss=sessionStorage.getItem("Access") 
 function App() {
@@ -36,6 +40,7 @@ function App() {
                     <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
                     <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
                     <Route path="/perfil-ncv" element={<Profile />}></Route>
+                    <Route path="/editar-perfil" element={<EditProfile />}></Route>
                     <Route path="/vista-usuarios" element={<ListUsers />}></Route>
                     <Route path="/registrar-nino" element={<AddKid />}></Route>
                     <Route
@@ -75,12 +80,21 @@ function App() {
                         element={<AddHealthReport />}
                     ></Route>
                     <Route
+                        path="ninos/:kidId/crear-reporte-estancia/"
+                        //element={<><NavBar/><AddFoundationReport/></>}
+                        element={<AddFoundationReport />}
+                    ></Route>
+                    <Route
                         path="ninos/:kidId/crear-reporte-legal/"
                         element={<AddLegalReport />}
                     ></Route>
                     <Route
                         path="ninos/:kidId/editar-nino"
                         element={<EditKid />}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/editar-reporte-salud"
+                        element={<EditHealthReport/>}
                     ></Route>
                     <Route path="*" element={<Navigate replace to="/" />} />
                 </Routes>
@@ -102,8 +116,17 @@ function App() {
                     element={<AddHealthReport/>}
                 ></Route>
                 <Route
+                    path="ninos/:kidId/crear-reporte-estancia/"
+                    //element={<><NavBar/><AddFoundationReport/></>}
+                    element={<AddFoundationReport/>}
+                ></Route>
+                <Route
                     path="ninos/:kidId/editar-nino"
                     element={<EditKid/>}
+                ></Route>
+                <Route
+                    path="ninos/:kidId/editar-reporte-salud"
+                    element={<EditHealthReport/>}
                 ></Route>
                 
                     <Route exact path="/" element={<LoginForm />}></Route>

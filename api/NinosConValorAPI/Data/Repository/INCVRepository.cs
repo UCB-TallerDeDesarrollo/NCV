@@ -11,6 +11,12 @@ namespace NinosConValorAPI.Data.Repository
         Task DeleteHealthReportAsync(int kidId);
         Task<HealthReportEntity> UpdateHealthReportAsync(int kidId, HealthReportEntity healthReport);
 
+        // FOUNDATION REPORT
+        public Task<FoundationReportEntity> CreateFoundationReportAsync(FoundationReportEntity foundationReport);
+        Task<FoundationReportEntity> GetFoundationReportAsync(int kidId);
+        Task DeleteFoundationReportAsync(int kidId);
+        Task<FoundationReportEntity> UpdateFoundationReportAsync(int kidId, FoundationReportEntity foundationReport);
+
         //KIDS
         public void CreateKid(KidEntity kid);
         Task<KidEntity> GetKidAsync(int kidId);
@@ -28,6 +34,10 @@ namespace NinosConValorAPI.Data.Repository
         // BIOMETRICS
         Task<IEnumerable<BiometricsEntity>> GetBiometricsAsync(int kidId);
         Task<BiometricsEntity> CreateBiometricsAsync(BiometricsEntity biometrics);
+
+        // CONTACTS
+        Task<IEnumerable<ContactEntity>> GetContactsAsync(int kidId);
+        Task<ContactEntity> CreateContactAsync(ContactEntity contact);
 
         //PROGRAM HOUSE
         Task<IEnumerable<ProgramHouseEntity>> GetProgramHousesAsync();
@@ -51,6 +61,10 @@ namespace NinosConValorAPI.Data.Repository
         // EDUCATION REPORT
         public Task<EducationReportEntity> CreateEducationReportAsync(EducationReportEntity educationReport);
         Task<EducationReportEntity> GetEducationReportAsync(int kidId);
+
+        // EDUCATION REPORT
+        public Task<FamilyReportEntity> CreateFamilyReportAsync(FamilyReportEntity familyReport);
+        Task<FamilyReportEntity> GetFamilyReportAsync(int kidId);
 
         // LEGAL REPORT
         public Task<LegalReportEntity> CreateLegalReportAsync(LegalReportEntity legalReport);

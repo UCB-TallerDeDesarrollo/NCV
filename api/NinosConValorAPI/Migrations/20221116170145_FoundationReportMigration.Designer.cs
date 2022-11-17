@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NinosConValorAPI.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NinosConValorAPI.Migrations
 {
     [DbContext(typeof(NCV_DBContext))]
-    partial class NCV_DBContextModelSnapshot : ModelSnapshot
+    [Migration("20221116170145_FoundationReportMigration")]
+    partial class FoundationReportMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,36 +220,6 @@ namespace NinosConValorAPI.Migrations
                     b.ToTable("Biometrics", (string)null);
                 });
 
-            modelBuilder.Entity("NinosConValorAPI.Data.Entity.ContactEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ContactNumber")
-                        .HasColumnType("text");
-
-                    b.Property<int>("KidId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Relationship")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("KidId");
-
-                    b.ToTable("Contact", (string)null);
-                });
-
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.EducationReportEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -273,37 +245,6 @@ namespace NinosConValorAPI.Migrations
                     b.HasIndex("KidId");
 
                     b.ToTable("EducationReports", (string)null);
-                });
-
-            modelBuilder.Entity("NinosConValorAPI.Data.Entity.FamilyReportEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<bool?>("HasExtendedFamily")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool?>("HasOriginFamily")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("KidId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("SiblingsInFoundation")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("SiblingsOutside")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("KidId")
-                        .IsUnique();
-
-                    b.ToTable("FamilyReports", (string)null);
                 });
 
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.FixedAssetEntity", b =>
@@ -657,33 +598,11 @@ namespace NinosConValorAPI.Migrations
                     b.Navigation("Kid");
                 });
 
-            modelBuilder.Entity("NinosConValorAPI.Data.Entity.ContactEntity", b =>
-                {
-                    b.HasOne("NinosConValorAPI.Data.Entity.KidEntity", "Kid")
-                        .WithMany("Contacts")
-                        .HasForeignKey("KidId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Kid");
-                });
-
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.EducationReportEntity", b =>
                 {
                     b.HasOne("NinosConValorAPI.Data.Entity.KidEntity", "Kid")
                         .WithMany()
                         .HasForeignKey("KidId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Kid");
-                });
-
-            modelBuilder.Entity("NinosConValorAPI.Data.Entity.FamilyReportEntity", b =>
-                {
-                    b.HasOne("NinosConValorAPI.Data.Entity.KidEntity", "Kid")
-                        .WithOne("FamilyReport")
-                        .HasForeignKey("NinosConValorAPI.Data.Entity.FamilyReportEntity", "KidId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -768,10 +687,6 @@ namespace NinosConValorAPI.Migrations
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.KidEntity", b =>
                 {
                     b.Navigation("Biometrics");
-
-                    b.Navigation("Contacts");
-
-                    b.Navigation("FamilyReport");
 
                     b.Navigation("FoundationReport");
 

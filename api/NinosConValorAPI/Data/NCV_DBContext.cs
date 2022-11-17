@@ -11,12 +11,15 @@ namespace NinosConValorAPI.Data
         public DbSet<KidEntity> Kids => Set<KidEntity>();
         public DbSet<ProgramHouseEntity> ProgramHouses => Set<ProgramHouseEntity>();
         public DbSet<HealthReportEntity> HealthReports { get; set; }
+        public DbSet<FoundationReportEntity> FoundationReport { get; set; }
         public DbSet<LegalReportEntity> LegalReports { get; set; }
         public DbSet<AssetCategoryEntity> AssetCategories => Set<AssetCategoryEntity>();
 
         public DbSet<AssetStateEntity> AssetStates => Set<AssetStateEntity>();
         public DbSet<BiometricsEntity> Biometrics { get; set; }
+        public DbSet<ContactEntity> Contacts { get; set; }
         public DbSet<EducationReportEntity> EducationReports { get; set; }
+        public DbSet<FamilyReportEntity> FamilyReports { get; set; }
 
         public NCV_DBContext(DbContextOptions<NCV_DBContext> options) : base(options)
         {
@@ -53,14 +56,26 @@ namespace NinosConValorAPI.Data
             // HealthReport
             modelBuilder.Entity<HealthReportEntity>().ToTable("HealthReports");
             modelBuilder.Entity<HealthReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
+
+            //FoundationReport
+            modelBuilder.Entity<FoundationReportEntity>().ToTable("FoundationReport");
+            modelBuilder.Entity<FoundationReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
             
             // LegalReport
             modelBuilder.Entity<LegalReportEntity>().ToTable("LegalReports");
-            modelBuilder.Entity<LegalReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<LegalReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();            
+            
+            // FamilyReport
+            modelBuilder.Entity<FamilyReportEntity>().ToTable("FamilyReports");
+            modelBuilder.Entity<FamilyReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
  
             //Biometrics
             modelBuilder.Entity<BiometricsEntity>().ToTable("Biometrics");
             modelBuilder.Entity<BiometricsEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
+            
+            //Contact
+            modelBuilder.Entity<ContactEntity>().ToTable("Contact");
+            modelBuilder.Entity<ContactEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
 
             //ProgamHouses
             modelBuilder.Entity<ProgramHouseEntity>().ToTable("ProgramHouse");
