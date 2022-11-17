@@ -9,27 +9,27 @@ import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../../Component
 
 function FoundationReport({kidId, foundationReport, foundationReportStatusCode}){
     const navigate = useNavigate();
-    let urlCreateFoundationReport = `/ninos/${kidId}/crear-foundation-report/`
-    let buttonCreateFoundationReport = (<Container sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}}>
+    let urlCreateFoundationReport = `/ninos/${kidId}/crear-reporte-estancia/`
+    let buttonCreateFoundationReport = (
         <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
             <AutoAwesomeIcon sx={{marginTop:2}}/>
             <Box sx={{margin:3}}>
-                <Typography variant="body2">No se registraron datos para el <b>registro de estadia en la fundación</b></Typography>
+                <Typography variant="body2">No se registraron datos de <b>estancia en la Fundación</b></Typography>
             </Box>
-            <ButtonPrimary key={2} label="Crear registro de estadia en Fundación" onClick={()=>{navigate(urlCreateFoundationReport)}} />
-        </Box>
-    </Container>);
+            <ButtonPrimary key={2} label="Crear reporte de Estancia" onClick={()=>{navigate(urlCreateFoundationReport)}} />
+        </Box>);
     let foundationReportComponent = null
     if (foundationReportStatusCode == 404){
         foundationReportComponent = buttonCreateFoundationReport
     }
     if (foundationReport != null && foundationReportStatusCode == 200){
         var foundationReportElement = {
-            "Campo 1": "Hola",
-            "Campo 2": "Como tas"
-            //"Court Number" : legalReport.courtNumber ,
+            "Fecha de Admisión" : foundationReport.admissionDate ,
+            "Razón o motivo de admisión" : foundationReport.admissionReason ,
+            "Edad al momento de admisión" : foundationReport.admissionAge ,
+            "Tiempo total de su estancia" : foundationReport.timeInFoundation,
         }
-        foundationReportComponent = <SingleItemCard key={1} element={foundationReportElement} title={"Estadía en la Fundación"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}}/>
+        foundationReportComponent = <SingleItemCard key={1} element={foundationReportElement} title={"Reporte de Estancia"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}} />
     }
     return foundationReportComponent
 }
