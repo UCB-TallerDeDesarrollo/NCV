@@ -30,7 +30,7 @@ function gridItems(elements){
     for (const prop in elements ){
         var contentOneElement = elements[prop]
         if (elements[prop] == null){
-            contentOneElement =  " ----- "
+            contentOneElement =  " "
         }
         gridElements.push(
             <>

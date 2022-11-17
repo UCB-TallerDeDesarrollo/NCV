@@ -21,6 +21,7 @@ import WeightAndHeight from '../../Views/KidsFiles/HealthReport/BiometricsReport
 import LegalReport from '../../Views/KidsFiles/LegalReport/ShowLegalReport.js'
 import Contacts from '../../Views/KidsFiles/Contacts/ContactsReport.js'
 import FoundationReport from '../../Views/KidsFiles/FoundationReport/ShowFoundationReport.js';
+import FamilyReport from '../../Views/KidsFiles/FamilyReport/ShowFamilyReport.js';
 import EducationReport from '../../Views/KidsFiles/EducationReport/ShowEducationReport.js'
 
 import TabsContainer from '../../Components/TabsContainer';
@@ -48,8 +49,13 @@ function ShowOneKidFile() {
     const [foundationReport, setFoundationReport] = useState(null)
     const [foundationReportStatusCode, setFoundationReportStatusCode] = useState(null)
 
+
+    const [familyReport, setFamilyReport] = useState(null)
+    const [familyReportStatusCode, setFamilyReportStatusCode] = useState(null)
+
     const [educationReport, setEducationReport] = useState(null)
     const [educationReportStatusCode, setEducationReportStatusCode] = useState(null)
+
 
 
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
@@ -59,9 +65,8 @@ function ShowOneKidFile() {
     const urlLegalKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/legalreports'
     const urlContacts = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/contacts'
     const urlFoundationReportKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/foundationreport'
+    const urlFamilyReportKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/familyreports'
     const urlEducationKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/educationreports'
-
-
 
     const navigate = useNavigate();
     const navigateEditKid = () =>{ 
@@ -158,6 +163,17 @@ function ShowOneKidFile() {
     }
 
 
+    const fetchFamilyReport = () => {
+        axios.get(urlFamilyReportKid)
+            .then((response) => {
+                setFamilyReportStatusCode(response.status)
+                setFamilyReport(response.data)
+            })
+            .catch((error)=>{
+                setFamilyReportStatusCode(error.response.status);
+            })
+    }
+
     useEffect(() => { 
         fetchBasicData();
         fetchHeltReport();
@@ -165,6 +181,7 @@ function ShowOneKidFile() {
         fetchLegalReport();
         fetchContacts();
         fetchFoundationReport();
+        fetchFamilyReport();
         fetchEducationReport();
     }, [])
     
@@ -177,13 +194,6 @@ function ShowOneKidFile() {
             return
         }
         setOpen(false)
-    }
-
-    function testFoundationReport(event, reason) {
-        if (reason === 'clickaway') {
-            return
-        }
-        setOpenToConfirm(false)
     }
 
     function handleCloseToConfirm(event, reason) {
@@ -201,11 +211,13 @@ function ShowOneKidFile() {
     let legalTabContent = (<LegalReport kidId={kidId} legalReport={legalReport} legalReportStatusCode={legalReportStatusCode}/>);
     let contactsTabContent = (<Contacts contactsData={contacts} setContacts={setContacts}/>);
     let foundationTabContent = (<FoundationReport kidId={kidId} foundationReport={foundationReport} foundationReportStatusCode={foundationReportStatusCode}/>);
+    let familyTabContent = (<FamilyReport kidId={kidId} familyReport={familyReport} familyReportStatusCode={familyReportStatusCode}/>);
     let educationTabContent = (<EducationReport kidId={kidId} educationReport={educationReport} educationReportStatusCode={educationReportStatusCode}/>);
+      
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <BasicData kid={kid}/>
-            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal","Educación","Contactos", "Estancia"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent,educationTabContent,contactsTabContent,foundationTabContent]}></TabsContainer>
+            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal","Educación","Contactos", "Estancia","Familia"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent,educationTabContent,contactsTabContent,foundationTabContent,familyTabContent]}></TabsContainer>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
