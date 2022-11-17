@@ -19,6 +19,7 @@ namespace NinosConValorAPI.Data
         public DbSet<BiometricsEntity> Biometrics { get; set; }
         public DbSet<ContactEntity> Contacts { get; set; }
         public DbSet<EducationReportEntity> EducationReports { get; set; }
+        public DbSet<FamilyReportEntity> FamilyReports { get; set; }
 
         public NCV_DBContext(DbContextOptions<NCV_DBContext> options) : base(options)
         {
@@ -62,7 +63,11 @@ namespace NinosConValorAPI.Data
             
             // LegalReport
             modelBuilder.Entity<LegalReportEntity>().ToTable("LegalReports");
-            modelBuilder.Entity<LegalReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<LegalReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();            
+            
+            // FamilyReport
+            modelBuilder.Entity<FamilyReportEntity>().ToTable("FamilyReports");
+            modelBuilder.Entity<FamilyReportEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
  
             //Biometrics
             modelBuilder.Entity<BiometricsEntity>().ToTable("Biometrics");

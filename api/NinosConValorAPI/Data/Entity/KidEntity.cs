@@ -19,6 +19,7 @@ namespace NinosConValorAPI.Data.Entity
         public virtual HealthReportEntity? HealthReport { get; set; }
         public virtual FoundationReportEntity? FoundationReport { get; set; }
         public virtual LegalReportEntity? LegalReport { get; set; }
+        public virtual FamilyReportEntity? FamilyReport { get; set; }
         public virtual ICollection<BiometricsEntity> Biometrics { get; set; }
         public virtual ICollection<ContactEntity> Contacts { get; set; }
     }
