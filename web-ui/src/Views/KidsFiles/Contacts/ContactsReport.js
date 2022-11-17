@@ -2,17 +2,9 @@ import { useState, useEffect } from 'react'
 import {useParams } from 'react-router-dom'
 import axios from "axios";
 import TableBasic from '../../../Components/TableBasic';
-import Container from '../../../Components/Container';
 import Box from '@mui/material/Box';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { Typography } from '@mui/material';
-import Select from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemText from '@mui/material/ListItemText';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
 import Table from '@mui/material/Table';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -132,7 +124,6 @@ function getMaxOfArray(numArray) {
 }
 
 function Contacts({contactsData,setContacts}){
-    const [filteredBiometrics, setFilteredBiometrics] = useState([]); 
 
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
@@ -157,11 +148,7 @@ function Contacts({contactsData,setContacts}){
             <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}}></TableBasic>
         </Box>
     </>
-    // let table = <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
-    //     <AutoAwesomeIcon sx={{margin:2}}/>
-    //     <Typography variant="body2" sx={{marginBottom:3}}>No existen registros de <b>peso y talla</b></Typography>
-    // </Box>;
-    
+
     if (contactsData != null && contactsData.length > 0){
         table = (<>
             <Box sx={{display:"flex", flexDirection:"row"}}>
