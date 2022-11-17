@@ -24,7 +24,7 @@ function FoundationReport({kidId, foundationReport, foundationReportStatusCode})
     }
     if (foundationReport != null && foundationReportStatusCode == 200){
         var foundationReportElement = {
-            "Fecha de Admisión" : foundationReport.admissionDate ,
+            "Fecha de Admisión" : foundationReport.admissionDate!=null? foundationReport.admissionDate.split('T')[0]:null,
             "Razón o motivo de admisión" : foundationReport.admissionReason ,
             "Edad al momento de admisión" : foundationReport.admissionAge ,
             "Tiempo total de su estancia" : foundationReport.timeInFoundation,
