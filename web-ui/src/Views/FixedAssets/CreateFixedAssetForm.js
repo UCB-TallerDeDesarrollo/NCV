@@ -24,11 +24,11 @@ function CreateFixedAssetForm(props) {
     const navigate = useNavigate()
     const [data, setData] = useState({
         Name: '', // string
+        Code: '', // string
         Description: '', // string
         EntryDate: '', // dateTime
         Price: '', // decimal
         Features: '', // string
-        Quantity: '', // int
         ProgramHouseId : '', //int
         AssetCategoryId : '', //int
         AssetStateId: '' //string
@@ -104,7 +104,7 @@ function CreateFixedAssetForm(props) {
     function hasFormErrors(errorsFromForm){
         console.log('form errors',errorsFromForm)
         let hasErrors=true
-        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.Quantity && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features){
+        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features && !errorsFromForm.Code && !errorsFromForm.AssetStateId){
             hasErrors = false
         }
         return hasErrors
@@ -116,6 +116,7 @@ function CreateFixedAssetForm(props) {
         if(!hasFormErrors(errorsFromForm)){
             Axios.post(url, {
             Name: data.Name,
+            Code: data.Code,
             Description: data.Description==''? null:data.Description, // string
             EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
             Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
@@ -137,23 +138,26 @@ function CreateFixedAssetForm(props) {
     const validate = (datas) => {        
         const errors = {
             Name: '', // string
+            Code: '',
             Description: '', // string
             EntryDate: '', // dateTime
             Price: '', // decimal
             Features: '', // string
-            Quantity: '', // int
             ProgramHouseId : '', //int
             AssetCategoryId : '', //int
             AssetStateId: '' //string
         }
         const regexNumber = /^[0-9]+([.][0-9]+)?$/;
-        //debugger
         if(!datas.Name){
             errors.Name="El Nombre del Activo Fijo es requerido!";
         }else if(datas.Name.length>60){
             errors.Name="El campo Nombre del Activo Fijo debe ser menor o igual a 60 caracteres!";
         }
     
+        if(!datas.Code){
+            errors.Code="El Código del Activo Fijo es requerido!";
+        }
+
         if(datas.Description.length>1000){
             errors.Description="El campo Descripción del Activo Fijo debe ser menor o igual a 1000 caracteres!";
         }
@@ -164,10 +168,6 @@ function CreateFixedAssetForm(props) {
             errors.Price= "El Precio del Activo Fijo debe ser un número positivo!";
         }else if(!regexNumber.test(datas.Price)){
             errors.Price= "El Precio del Activo Fijo debe ser ingresado en formato decimal!";
-        }
-    
-        if(!datas.Quantity){
-            errors.Quantity= "La Cantidad del Activo Fijo es requerida!";
         }
 
         if(!programHouseSelectedValue){
@@ -219,6 +219,17 @@ function CreateFixedAssetForm(props) {
                     value={data.Code}
                     label="Código"
                     type="text"
+                    onChange={(e) => {
+                        handle(e)
+                        // if(data.Code.length === 0){
+                        //     setNameInputError(true);
+                        //     setNameError("El código del activo no puede estar vacío");
+                        // }
+                        // else{
+                        //     setNameInputError(false);
+                        //     setNameError("");
+                        // } 
+                    }}
                 />
                 {formErrors.Code? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
                     {formErrors.Code}                   
