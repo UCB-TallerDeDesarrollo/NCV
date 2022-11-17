@@ -134,7 +134,6 @@ function CreateFixedAssetForm(props) {
                         return response;
                     })
                 }
-                setHasErrorWithFetch(response)
             }
         )
     }
@@ -170,7 +169,6 @@ function CreateFixedAssetForm(props) {
         programCode = getProgramCode(programHouseSelectedValue)
         categoryCode = getCategoryCode(categorySelectedValue)
 
-        console.log('catego elegido', categoryCode);
         const errorsFromForm= validate(data)
         setFormErrors(errorsFromForm)
         setIsSubmit(true)
