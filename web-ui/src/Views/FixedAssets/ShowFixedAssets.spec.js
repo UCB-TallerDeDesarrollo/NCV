@@ -11,6 +11,7 @@ import ShowFixedAssets from './ShowFixedAssets';
 describe('Show Fixed Asset', () => {
   const fixedAssetUrl ='https://ncv-api.herokuapp.com/api/fixedAssets'  
   const fixedAssetCategoriesUrl ='https://ncv-api.herokuapp.com/api/assetCategories?showAssets=true'
+  const programHousesUrl ='https://ncv-api.herokuapp.com/api/programHouses'
 
   function getResponse(url, jsonData=null, code=200, text=null){
     const response = rest.get(url, (req, res, ctx) => {
@@ -19,6 +20,19 @@ describe('Show Fixed Asset', () => {
     })
     return response
   }
+
+  const programHouses =
+  [
+      {
+          id: 1,
+          acronym:"SDE"
+      },
+      {
+          id: 1,
+          acronym:"CAC"
+      }
+  ]
+
   const assetCategories =
   [
     {
@@ -148,7 +162,8 @@ describe('Show Fixed Asset', () => {
 
 	const fixedAssetResponse = getResponse(fixedAssetUrl, fixedAssets)
   const fixedAssetCategoriesResponse = getResponse(fixedAssetCategoriesUrl, assetCategories)
-  const handlers = [fixedAssetResponse, fixedAssetCategoriesResponse];
+  const programHousesResponse = getResponse(programHousesUrl, programHouses)
+  const handlers = [fixedAssetResponse, fixedAssetCategoriesResponse, programHousesResponse];
 
   const server = new setupServer(...handlers);
 
