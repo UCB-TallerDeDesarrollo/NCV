@@ -22,14 +22,6 @@ function CreateFixedAssetForm(props) {
     const [error, setError] = useState(null)
     const [formErrors,setFormErrors] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
-    const [nameInputError, setNameInputError] = useState(null)
-    const [nameError, setNameError] = useState("")
-    const [categoryInputError, setCategoryInputError] = useState(null)
-    const [categoryError, setCategoryError] = useState("Seleccione una categoría")
-    const [priceInputError, setPriceInputError] = useState(null)
-    const [priceError, setPriceError] = useState("")
-    const [programInputError, setProgramInputError] = useState(null)
-    const [programError, setProgramError] = useState("Seleccione un programa")
     const assetsCodes = []
     getAssetsCodes();
     let programCode = ''
@@ -54,14 +46,13 @@ function CreateFixedAssetForm(props) {
         if (Object.keys(formErrors).length === 0 && isSubmit){
         }
     },[formErrors]);
-
     //categories
     const [categorySelectedValue, setCategorySelectedValue] = useState(null)
     const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
-
+    
     //states
     const [stateSelectedValue, setStateSelectedValue] = useState(null)
-    const { apiData:states, error:errorStates } = getFromApi(urlStates)   
+    const { apiData:states, error:errorStates } = getFromApi(urlStates) 
 
     // program Houses Options for DROPDOWN
     if(errorProgramHouses){
@@ -73,7 +64,7 @@ function CreateFixedAssetForm(props) {
         value: programHouse.id      
     }}) 
     const programHousesOptions = programHousesList 
-
+    
     // categories options for DROPDOWN
     if(errorCategory){
         return ErrorPage(errorCategory)
@@ -116,6 +107,7 @@ function CreateFixedAssetForm(props) {
         }
     }
     function hasFormErrors(errorsFromForm){
+        console.log('form errors',errorsFromForm)
         let hasErrors=true
         if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features && !errorsFromForm.Code && !errorsFromForm.AssetStateId){
             hasErrors = false
@@ -197,14 +189,14 @@ function CreateFixedAssetForm(props) {
     const validate = (datas) => {        
         const errors = {
             Name: '', // string
-            Code: '', // string
+            Code: '',
             Description: '', // string
             EntryDate: '', // dateTime
             Price: '', // decimal
             Features: '', // string
             ProgramHouseId : '', //int
             AssetCategoryId : '', //int
-            AssetStateId: ''//string
+            AssetStateId: '' //string
         }
         const regexNumber = /^[0-9]+([.][0-9]+)?$/;
         if(!datas.Name){
@@ -212,13 +204,13 @@ function CreateFixedAssetForm(props) {
         }else if(datas.Name.length>60){
             errors.Name="El campo Nombre del Activo Fijo debe ser menor o igual a 60 caracteres!";
         }
-
+    
         if(!datas.Code){
             errors.Code="El Código del Activo Fijo es requerido!";
         } else if(assetsCodes.includes(datas.Code)){
             errors.Code="El Código del Activo Fijo ya existe!";
         }
-    
+
         if(datas.Description.length>1000){
             errors.Description="El campo Descripción del Activo Fijo debe ser menor o igual a 1000 caracteres!";
         }
@@ -238,20 +230,22 @@ function CreateFixedAssetForm(props) {
         if(!categorySelectedValue){
             errors.AssetCategoryId= "La categoría del Activo Fijo es requerida!";
         }
-
-        if(!stateSelectedValue){
-            errors.AssetStateId= "El estado del Activo Fijo es requerido!";
-        }
     
         if(datas.Features.length>1000){
             errors.Features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
         }
-    
+
+        if(!stateSelectedValue){
+            errors.AssetStateId= "El Estado del Activo Fijo es requerida!";
+        }
+
+        console.log('errs',errors)
         return errors
     }
     
 
     if(error){
+        //setOpen(true)
         return ErrorPage(error)
     }
     return (
@@ -261,24 +255,12 @@ function CreateFixedAssetForm(props) {
             <FormContainer title="Crear activo fijo">
                 <InputText
                     required
+                    onChange={(e) => handle(e)}
                     id="Name"
                     name="Name"
                     value={data.Name}
                     label="Nombre"
                     type="text"
-                    error={nameInputError}
-                    helperText={nameError}
-                    onChange={(e) => {
-                        handle(e)
-                        if(data.Name.length === 0){
-                            setNameInputError(true);
-                            setNameError("El nombre del activo no puede estar vacío");
-                        }
-                        else{
-                            setNameInputError(false);
-                            setNameError("");
-                        } 
-                    }}
                 />
                 {formErrors.Name? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
                     {formErrors.Name}                   
@@ -287,23 +269,11 @@ function CreateFixedAssetForm(props) {
                     name={"Categoría"} 
                     id="category-drop" 
                     options={categoriesOptions} 
-                    error={categoryInputError}
-                    helperText={categoryError} 
+                    helperText = "Seleccione una categoría" 
                     selectedValue={categorySelectedValue}
                     setSelectedValue = {setCategorySelectedValue}
                     required
-                    onChange={(e) => {
-                        handle(e)
-                        if(data.AssetCategoryId.length === 0){
-                            setCategoryInputError(true);
-                            setCategoryError("La categoría del activo no puede estar vacía");
-                        }
-                        else{
-                            setCategoryInputError(false);
-                            setCategoryError("");
-                        } 
-                    }}
-                    >                                        
+                    >                                       
                 </Dropdown> 
                 {formErrors.AssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.AssetCategoryId}  </Alert>:<p></p> }             
@@ -328,23 +298,11 @@ function CreateFixedAssetForm(props) {
                 />
                 <InputText
                     required
-                    onChange={(e) => {
-                        handle(e)
-                        if(data.Price.length === 0){
-                            setPriceInputError(true);
-                            setPriceError("El precio del activo no puede estar vacío");
-                        }
-                        else{
-                            setPriceInputError(false);
-                            setPriceError("");
-                        } 
-                    }}
+                    onChange={(e) => handle(e)}
                     id="Price"
                     value={data.Price}
                     label="Precio"
                     type="number"
-                    error={priceInputError}
-                    helperText={priceError}
                 />
                 {formErrors.Price? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.Price}  </Alert>:<p></p> }
@@ -352,22 +310,10 @@ function CreateFixedAssetForm(props) {
                     name={"Programa"} 
                     id="programa-drop" 
                     options={programHousesOptions} 
-                    error={programInputError}
-                    helperText={programError}
+                    helperText = "Seleccione un programa" 
                     selectedValue={programHouseSelectedValue}
                     setSelectedValue = {setProgramHouseSelectedValue}
                     required
-                    onChange={(e) => {
-                        handle(e)
-                        if(data.ProgramHouseId.length === 0){
-                            setProgramInputError(true);
-                            setProgramError("El programa del activo no puede estar vacío");
-                        }
-                        else{
-                            setProgramInputError(false);
-                            setProgramError("");
-                        } 
-                    }}
                     >                                        
                 </Dropdown>   
                 {formErrors.ProgramHouseId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
