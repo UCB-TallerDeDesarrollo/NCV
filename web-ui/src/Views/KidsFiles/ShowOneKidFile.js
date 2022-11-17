@@ -170,6 +170,9 @@ function ShowOneKidFile() {
             }
             <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal", "Estancia"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent, foundationTabContent]}></TabsContainer>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    {alertMessage}
+                </Alert>
             </Snackbar>
             {accesPermiss=="ComplitAcces"&&
                 <ButtonDanger key={2} label="Eliminar" id="delete_button" onClick={ToConfirmOpen} />
