@@ -219,7 +219,6 @@ namespace NinosConValorAPI.Data.Repository
         public async Task UpdateFixedAssetAsync(int fixedAssetId, FixedAssetEntity fixedAsset)
         {
             var fixedAssetToUpdate = await _dbContext.FixedAssets.FirstOrDefaultAsync(f => f.Id == fixedAssetId);
-            //_dbContext.Entry(fixedAssetToUpdate).CurrentValues.SetValues(fixedAsset);
             fixedAssetToUpdate.Code = fixedAsset.Code ?? fixedAssetToUpdate.Code;
             fixedAssetToUpdate.Name = fixedAsset.Name ?? fixedAssetToUpdate.Name;
             fixedAssetToUpdate.Description = fixedAsset.Description ?? fixedAssetToUpdate.Description;
@@ -228,8 +227,7 @@ namespace NinosConValorAPI.Data.Repository
             fixedAssetToUpdate.Features = fixedAsset.Features ?? fixedAssetToUpdate.Features;
             fixedAssetToUpdate.ProgramHouse = fixedAsset.ProgramHouse ?? fixedAssetToUpdate.ProgramHouse;
             fixedAssetToUpdate.AssetCategory = fixedAsset.AssetCategory ?? fixedAssetToUpdate.AssetCategory;
-            fixedAssetToUpdate.AssetState = fixedAsset.AssetState ?? fixedAssetToUpdate.AssetState;
-            fixedAssetToUpdate.State = fixedAsset.State ?? fixedAssetToUpdate.State;
+            fixedAssetToUpdate.AssetState = fixedAsset.AssetState ?? fixedAssetToUpdate.AssetState;            
         }
         public async Task<FoundationReportEntity> GetFoundationReportAsync(int kidId)
         {

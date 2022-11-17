@@ -90,18 +90,23 @@ namespace NinosConValorAPI.Services
 
         public async Task<FixedAssetModel> UpdateFixedAssetAsync(int fixedAssetId, FixedAssetModel fixedAsset)
         {
-            await GetFixedAssetAsync(fixedAssetId);
-            var programHouseToUpdate = await GetProgramHouseAsync(fixedAsset.ProgramHouseId);
-            var categoryToUpdate = await GetAssetCategoryAsync(fixedAsset.AssetCategoryId);
-            var assetStateToUpdate = await GetAssetStateAsync(fixedAsset.AssetStateId);
-
+            var fixedAssetToUpdate = await GetFixedAssetAsync(fixedAssetId);
+            ProgramHouseEntity programHouseToUpdate = null;
+            AssetCategoryEntity categoryToUpdate = null;
+            AssetStateEntity assetStateToUpdate = null; 
+            if (fixedAsset.ProgramHouseId!=0)
+                programHouseToUpdate = await GetProgramHouseAsync(fixedAsset.ProgramHouseId);
+            if(fixedAsset.AssetCategoryId!=0)
+                categoryToUpdate = await GetAssetCategoryAsync(fixedAsset.AssetCategoryId);
+            if (fixedAsset.AssetStateId != 0)
+                assetStateToUpdate = await GetAssetStateAsync(fixedAsset.AssetStateId);
             var fixedAssetEntity = _mapper.Map<FixedAssetEntity>(fixedAsset);           
             fixedAssetEntity.Id = fixedAssetId;
-            fixedAssetEntity.ProgramHouse = programHouseToUpdate;
-            fixedAssetEntity.AssetCategory = categoryToUpdate;
-            fixedAssetEntity.AssetState = assetStateToUpdate;
-            await _NCVRepository.UpdateFixedAssetAsync(fixedAssetId, fixedAssetEntity);
+               fixedAssetEntity.ProgramHouse = programHouseToUpdate;
+                fixedAssetEntity.AssetCategory = categoryToUpdate;
+                fixedAssetEntity.AssetState = assetStateToUpdate;
 
+            await _NCVRepository.UpdateFixedAssetAsync(fixedAssetId, fixedAssetEntity);
             var result = await _NCVRepository.SaveChangesAsync();
             if (result)
             {
