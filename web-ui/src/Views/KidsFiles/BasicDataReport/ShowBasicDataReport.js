@@ -1,7 +1,10 @@
 import SingleItemCard from '../../../Components/SingleItemCard'
+import ButtonPrimary, {ButtonPrimaryEditIcon} from '../../../Components/MUI-Button';
 
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
+
+var accesPermiss = sessionStorage.getItem("Access");
 
 function getAge(birthDate){
     let actualYear = new Date().getFullYear();
@@ -73,8 +76,8 @@ function BasicData({kid} ){
         let path = `/ninos/${kidId}/editar-nino`; 
         navigate(path);
     }
-
-    return <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName } itemsPerLine={3} onClick={navigateEditKid}/>
+    let editButton = accesPermiss=="ComplitAcces" ? (<ButtonPrimaryEditIcon onClick={navigateEditKid} sx={{alignSelf:'flex-end'}}/>) : null
+    return <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName } itemsPerLine={3} button={editButton}/>
 }
 
 export default BasicData;

@@ -183,9 +183,11 @@ function ShowOneKidFile() {
     let legalTabContent = (<LegalReport kidId={kidId} legalReport={legalReport} legalReportStatusCode={legalReportStatusCode}/>);
     let contactsTabContent = (<Contacts contactsData={contacts} setContacts={setContacts}/>);
     let foundationTabContent = (<FoundationReport kidId={kidId} foundationReport={foundationReport} foundationReportStatusCode={foundationReportStatusCode}/>);
+    
+
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
-            <BasicData kid={kid}/>
+            <BasicData kid={kid} accesPermiss={accesPermiss}/>
             <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal","Contactos", "Estancia"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent,contactsTabContent,foundationTabContent]}></TabsContainer>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">

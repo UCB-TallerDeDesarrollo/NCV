@@ -5,9 +5,6 @@ import CardMedia from '@mui/material/CardMedia'
 import Grid from '@mui/material/Unstable_Grid2';
 import { Typography } from '@mui/material';
 
-
-import ButtonPrimary, {ButtonPrimaryEditIcon} from '../Components/MUI-Button';
-
 function MyCardImage({imageUrl,imageCirle,width=150,height=150}){
     var borderRadiusValue = 3
     if (imageCirle){
@@ -52,7 +49,7 @@ function gridItems(elements){
     return gridElements
   }
 
-const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, secondaryField=null, imgWidth=150,imgHeight=150, itemsPerLine=false, onClick=null, sx={}}) => {   
+const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, secondaryField=null, imgWidth=150,imgHeight=150, itemsPerLine=false, button=null, sx={}}) => {   
     const styles = {
         secondaryField:{
             color:"#5BCCD9",
@@ -99,18 +96,12 @@ const SingleItemCard = ({title="" , element, imageUrl = null , imageCirle=true, 
     Object.keys(sx).forEach(k => {
         cardSx[k] = sx[k];
     });
-
-    var addBotton = null
-    if (onClick != null){
-        console.log("Entraste")
-        addBotton = (<ButtonPrimaryEditIcon onClick={onClick} sx={{alignSelf:'flex-end'}}></ButtonPrimaryEditIcon>)
-    }
    return (
             <Card sx={cardSx}>
                 <Card sx={cardContentSx}>
                     {contentCard.map((oneContent,i)=>oneContent)} 
                 </Card>
-                {addBotton}
+                {button}
             </Card>
    )
 }
