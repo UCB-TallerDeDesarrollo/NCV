@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import ButtonPrimary from '../../Components/MUI-Button'
 import getFromApi from '../../Components/GetFromApi'
 import Dropdown from '../../Components/Dropdown'
+import {getFixedAssets} from '../../Components/GetFromApi'
 
 function CreateFixedAssetForm(props) {
     const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
@@ -21,6 +22,10 @@ function CreateFixedAssetForm(props) {
     const [error, setError] = useState(null)
     const [formErrors,setFormErrors] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
+    const assetsCodes = []
+    getAssetsCodes();
+    let programCode = ''
+    let categoryCode = ''
     const navigate = useNavigate()
     const [data, setData] = useState({
         Name: '', // string
@@ -109,21 +114,67 @@ function CreateFixedAssetForm(props) {
         }
         return hasErrors
     }
+
+    function getAssetsCodes(){
+        const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
+        getFixedAssets(url).then(
+            response => {
+                if(response.name != "AxiosError"){
+                    response.data.map((el)=>{
+                        var splitCode = el.code.split("-")
+                        assetsCodes.push(splitCode[splitCode.length-1]);
+                        return response;
+                    })
+                }
+            }
+        )
+    }
+
+    function getProgramCode(programValue){
+        let programCode = ''
+        programHousesOptions.forEach(function (program){
+            if(programValue == program.value){
+                programCode = program.label
+            }
+        });
+        return programCode
+    }
+
+    function getCategoryCode(categoryValue){
+        let categoryCode = ''
+        switch (categoryValue){
+            case 1:
+                categoryCode = 'HER'
+            case 2:
+                categoryCode = 'MUE'
+            case 3:
+                categoryCode = 'MAQ'
+            case 4:
+                categoryCode = 'VEH'
+            case 6:
+                categoryCode = 'EC' 
+        }
+        return categoryCode
+    }
+
     function submit(e) {
+        programCode = getProgramCode(programHouseSelectedValue)
+        categoryCode = getCategoryCode(categorySelectedValue)
+
         const errorsFromForm= validate(data)
         setFormErrors(errorsFromForm)
         setIsSubmit(true)
         if(!hasFormErrors(errorsFromForm)){
             Axios.post(url, {
             Name: data.Name,
-            Code: data.Code,
             Description: data.Description==''? null:data.Description, // string
             EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
             Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
             Features: data.Features==''? null:data.Features, // string
             ProgramHouseId : programHouseSelectedValue,
             AssetCategoryId : categorySelectedValue,
-            AssetStateId: stateSelectedValue //string
+            AssetStateId: stateSelectedValue, //string
+            Code: "F-" + programCode + "-" + categoryCode + "-" + data.Code, //string
             }).then((res) => {
                 if (res.status == 201) {               
                     navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo creado exitosamente"}})
@@ -156,6 +207,8 @@ function CreateFixedAssetForm(props) {
     
         if(!datas.Code){
             errors.Code="El Código del Activo Fijo es requerido!";
+        } else if(assetsCodes.includes(datas.Code)){
+            errors.Code="El Código del Activo Fijo ya existe!";
         }
 
         if(datas.Description.length>1000){
@@ -211,28 +264,6 @@ function CreateFixedAssetForm(props) {
                 />
                 {formErrors.Name? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
                     {formErrors.Name}                   
-                </Alert>:<p></p> }
-                <InputText
-                    required
-                    id="Code"
-                    name="Code"
-                    value={data.Code}
-                    label="Código"
-                    type="text"
-                    onChange={(e) => {
-                        handle(e)
-                        // if(data.Code.length === 0){
-                        //     setNameInputError(true);
-                        //     setNameError("El código del activo no puede estar vacío");
-                        // }
-                        // else{
-                        //     setNameInputError(false);
-                        //     setNameError("");
-                        // } 
-                    }}
-                />
-                {formErrors.Code? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
-                    {formErrors.Code}                   
                 </Alert>:<p></p> }
                 <Dropdown 
                     name={"Categoría"} 
@@ -307,7 +338,21 @@ function CreateFixedAssetForm(props) {
                     type="text"
                 />
                  {formErrors.Features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Features} </Alert>:<p></p> }
+                        {formErrors.Features} </Alert>:<p></p> } 
+                <InputText
+                    required
+                    id="Code"
+                    name="Code"
+                    value={data.Code}
+                    label="Código"
+                    type="text"
+                    onChange={(e) => {
+                        handle(e)
+                    }}
+                />
+                {formErrors.Code? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
+                    {formErrors.Code}                   
+                </Alert>:<p></p> }
                 <ButtonPrimary label={"Crear"} id="submit_button" onClick={submit}/>
                 <Snackbar
                     open={open}
