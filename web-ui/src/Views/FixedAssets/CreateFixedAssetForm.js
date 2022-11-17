@@ -129,7 +129,8 @@ function CreateFixedAssetForm(props) {
             response => {
                 if(response.name != "AxiosError"){
                     response.data.map((el)=>{
-                        assetsCodes.push(el.code);
+                        var splitCode = el.code.split("-")
+                        assetsCodes.push(splitCode[splitCode.length-1]);
                         return response;
                     })
                 }
