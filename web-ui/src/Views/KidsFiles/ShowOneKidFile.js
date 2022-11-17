@@ -21,6 +21,7 @@ import WeightAndHeight from '../../Views/KidsFiles/HealthReport/BiometricsReport
 import LegalReport from '../../Views/KidsFiles/LegalReport/ShowLegalReport.js'
 import Contacts from '../../Views/KidsFiles/Contacts/ContactsReport.js'
 import FoundationReport from '../../Views/KidsFiles/FoundationReport/ShowFoundationReport.js';
+import EducationReport from '../../Views/KidsFiles/EducationReport/ShowEducationReport.js'
 
 import TabsContainer from '../../Components/TabsContainer';
 
@@ -47,6 +48,9 @@ function ShowOneKidFile() {
     const [foundationReport, setFoundationReport] = useState(null)
     const [foundationReportStatusCode, setFoundationReportStatusCode] = useState(null)
 
+    const [educationReport, setEducationReport] = useState(null)
+    const [educationReportStatusCode, setEducationReportStatusCode] = useState(null)
+
 
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
@@ -55,6 +59,8 @@ function ShowOneKidFile() {
     const urlLegalKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/legalreports'
     const urlContacts = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/contacts'
     const urlFoundationReportKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/foundationreport'
+    const urlEducationKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/educationreports'
+
 
 
     const navigate = useNavigate();
@@ -140,6 +146,17 @@ function ShowOneKidFile() {
                 setFoundationReportStatusCode(error.response.status);
             })
     }
+    const fetchEducationReport = () => {
+        axios.get(urlEducationKid)
+            .then((response) => {
+                setEducationReportStatusCode(response.status)
+                setEducationReport(response.data)
+            })
+            .catch((error)=>{
+                setEducationReportStatusCode(error.response.status);
+            })
+    }
+
 
     useEffect(() => { 
         fetchBasicData();
@@ -148,6 +165,7 @@ function ShowOneKidFile() {
         fetchLegalReport();
         fetchContacts();
         fetchFoundationReport();
+        fetchEducationReport();
     }, [])
     
     if (!kid){
@@ -183,13 +201,14 @@ function ShowOneKidFile() {
     let legalTabContent = (<LegalReport kidId={kidId} legalReport={legalReport} legalReportStatusCode={legalReportStatusCode}/>);
     let contactsTabContent = (<Contacts contactsData={contacts} setContacts={setContacts}/>);
     let foundationTabContent = (<FoundationReport kidId={kidId} foundationReport={foundationReport} foundationReportStatusCode={foundationReportStatusCode}/>);
+    let educationTabContent = (<EducationReport kidId={kidId} educationReport={educationReport} educationReportStatusCode={educationReportStatusCode}/>);
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <BasicData kid={kid}/>
             {accesPermiss=="ComplitAcces"&&
                 <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
             }
-            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal","Contactos", "Estancia"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent,contactsTabContent,foundationTabContent]}></TabsContainer>
+            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal","Educación","Contactos", "Estancia"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent,educationTabContent,contactsTabContent,foundationTabContent]}></TabsContainer>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
