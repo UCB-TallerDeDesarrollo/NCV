@@ -19,6 +19,7 @@ import BasicData from '../../Views/KidsFiles/BasicDataReport/ShowBasicDataReport
 import HealthReport from '../../Views/KidsFiles/HealthReport/ShowHealthReport.js'
 import WeightAndHeight from '../../Views/KidsFiles/HealthReport/BiometricsReport.js'
 import LegalReport from '../../Views/KidsFiles/LegalReport/ShowLegalReport.js'
+import Contacts from '../../Views/KidsFiles/Contacts/ContactsReport.js'
 import FoundationReport from '../../Views/KidsFiles/FoundationReport/ShowFoundationReport.js';
 
 import TabsContainer from '../../Components/TabsContainer';
@@ -39,15 +40,22 @@ function ShowOneKidFile() {
     const [legalReport, setLegalReport] = useState(null)
     const [legalReportStatusCode, setLegalReportStatusCode] = useState(null)
 
+
+    const [contacts, setContacts] = useState([])
+    const [contactsStatusCode, setContactsStatusCode] = useState(null)
+
     const [foundationReport, setFoundationReport] = useState(null)
     const [foundationReportStatusCode, setFoundationReportStatusCode] = useState(null)
+
 
     const urlKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId
     const urlHealthKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/healthreports'
     const urlBiometrics = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/biometrics'
     const urlCreateFoundationReport = `/ninos/${kidId}/crear-reporte-estancia/`
     const urlLegalKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/legalreports'
+    const urlContacts = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/contacts'
     const urlFoundationReportKid = 'https://ncv-api.herokuapp.com/api/kids/'+ kidId +'/foundationreport'
+
 
     const navigate = useNavigate();
     const navigateEditKid = () =>{ 
@@ -111,6 +119,17 @@ function ShowOneKidFile() {
             })
     }
 
+
+    const fetchContacts = () => {
+        axios.get(urlContacts)
+            .then((response) => {
+                setContactsStatusCode(response.status)
+                setContacts(response.data)
+            })
+            .catch((error)=>{
+                setContactsStatusCode(error.response.status)});
+    }
+
     const fetchFoundationReport = () => {
         axios.get(urlFoundationReportKid)
             .then((response) => {
@@ -127,6 +146,7 @@ function ShowOneKidFile() {
         fetchHeltReport();
         fetchBiometrics();
         fetchLegalReport();
+        fetchContacts();
         fetchFoundationReport();
     }, [])
     
@@ -161,6 +181,7 @@ function ShowOneKidFile() {
     let healthTabContent = (<HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>);
     let weightAndHeightTabContent = (<WeightAndHeight weightAndHeightData={biometrics} setBiometrics={setBiometrics}/>);
     let legalTabContent = (<LegalReport kidId={kidId} legalReport={legalReport} legalReportStatusCode={legalReportStatusCode}/>);
+    let contactsTabContent = (<Contacts contactsData={contacts} setContacts={setContacts}/>);
     let foundationTabContent = (<FoundationReport kidId={kidId} foundationReport={foundationReport} foundationReportStatusCode={foundationReportStatusCode}/>);
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
@@ -168,7 +189,7 @@ function ShowOneKidFile() {
             {accesPermiss=="ComplitAcces"&&
                 <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
             }
-            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal", "Estancia"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent, foundationTabContent]}></TabsContainer>
+            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal","Contactos", "Estancia"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent,contactsTabContent,foundationTabContent]}></TabsContainer>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
