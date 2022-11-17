@@ -19,6 +19,7 @@ import BasicData from '../../Views/KidsFiles/BasicDataReport/ShowBasicDataReport
 import HealthReport from '../../Views/KidsFiles/HealthReport/ShowHealthReport.js'
 import WeightAndHeight from '../../Views/KidsFiles/HealthReport/BiometricsReport.js'
 import LegalReport from '../../Views/KidsFiles/LegalReport/ShowLegalReport.js'
+import EducationReport from '../../Views/KidsFiles/EducationReport/ShowEducationReport.js'
 
 import TabsContainer from '../../Components/TabsContainer';
 
