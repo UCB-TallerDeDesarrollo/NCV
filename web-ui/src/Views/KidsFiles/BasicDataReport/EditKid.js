@@ -80,7 +80,6 @@ function EditKidFile() {
                         Todos los campos son requeridos
                     </Alert>
                 </Collapse>
-                <Box sx={{alignItems :'center'}}>
                 <InputText
                     id="firstName"
                     name="firstName"
@@ -135,9 +134,11 @@ function EditKidFile() {
                     onChange={handleInputChange}
                 >
                 </InputText>
-                <ButtonPrimary label={"Guardar Cambios"} onClick={handleFormSubmit} sx={{marginLeft:5}}></ButtonPrimary>
-                <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
+                <Box sx={{display: 'inline'}}>
+                    <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
+                    <ButtonPrimary label={"Guardar"} onClick={handleFormSubmit}></ButtonPrimary>
                 </Box>
+                
             </FormContainer>
         </div></>
     );
