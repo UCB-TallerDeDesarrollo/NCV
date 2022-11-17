@@ -22,29 +22,29 @@ import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../../Component
 
 var accesPermiss = sessionStorage.getItem("Access")
 
-const biometricsForm = {
+const contactsForm = {
     name :'',
     relationship :'',
     contactNumber :'',
     address : ''
 }
 
-function AddRowContacts({setBiometrics}){
+function AddRowContacts({setContacts}){
     const {kidId} = useParams()
     var url = "https://ncv-api.herokuapp.com/api/kids/" + kidId +"/contacts"
 
-    const [biometricsData, setbiometricsData] = useState(biometricsForm)
+    const [contactsData, setcontactsData] = useState(contactsForm)
     const [open, setOpen] = useState(false)
 
     function handleFormSubmit() {
-        console.log("Datos enviados: ", biometricsData)
-        axios.post(url, biometricsData)
+        console.log("Datos enviados: ", contactsData)
+        axios.post(url, contactsData)
           .then(function (response) {
             if (response.status == 201){
                 console.log("Datos de contacto agregados¡¡¡")
                 axios.get(url)
                     .then((res) => {
-                        setBiometrics(res.data)
+                        setContacts(res.data)
                     })
                     .catch((e)=>{
                     })
@@ -57,16 +57,16 @@ function AddRowContacts({setBiometrics}){
                     setOpen(true)
             }
           });
-          biometricsData.name = ''
-          biometricsData.relationship = ''
-          biometricsData.contactNumber = ''
-          biometricsData.address = ''
+          contactsData.name = ''
+          contactsData.relationship = ''
+          contactsData.contactNumber = ''
+          contactsData.address = ''
     }
     const handleInputChange = (e) => {
         const { name, value } = e.target
         setOpen(false)
-        setbiometricsData({
-            ...biometricsData,
+        setcontactsData({
+            ...contactsData,
             [name]: value
         })
     }
@@ -79,7 +79,7 @@ function AddRowContacts({setBiometrics}){
                                 <input
                                     placeholder="nombre..."
                                     name="name"
-                                    value={biometricsData.name}
+                                    value={contactsData.name}
                                     type="text"
                                     onChange={handleInputChange}
                                     style={{ width:120, textAlign:'center'}}
@@ -88,8 +88,8 @@ function AddRowContacts({setBiometrics}){
                             <TableCell key={1} align={'center'}>
                                 <input
                                     placeholder="relación..."
-                                    name="relationship "
-                                    value={biometricsData.relationship }
+                                    name="relationship"
+                                    value={contactsData.relationship }
                                     type="text"
                                     onChange={handleInputChange}
                                     style={{ width:70, textAlign:'center'}}
@@ -98,8 +98,8 @@ function AddRowContacts({setBiometrics}){
                             <TableCell key={2} align={'center'}>
                                 <input
                                     placeholder="contactNumber ..."
-                                    name="contactNumber "
-                                    value={biometricsData.contactNumber }
+                                    name="contactNumber"
+                                    value={contactsData.contactNumber }
                                     type="text"
                                     onChange={handleInputChange}
                                     style={{ width:70, textAlign:'center' }}
@@ -108,8 +108,8 @@ function AddRowContacts({setBiometrics}){
                             <TableCell key={2} align={'center'}>
                                 <input
                                     placeholder="address  ..."
-                                    name="address  "
-                                    value={biometricsData.address  }
+                                    name="address"
+                                    value={contactsData.address  }
                                     type="text"
                                     onChange={handleInputChange}
                                     style={{ width:70, textAlign:'center' }}
@@ -131,7 +131,7 @@ function getMaxOfArray(numArray) {
     return Math.max.apply(null, numArray);
 }
 
-function Contacts({weightAndHeightData,setBiometrics}){
+function Contacts({contactsData,setContacts}){
     const [filteredBiometrics, setFilteredBiometrics] = useState([]); 
 
     const ITEM_HEIGHT = 48;
@@ -146,7 +146,7 @@ function Contacts({weightAndHeightData,setBiometrics}){
     };
 
 
-    let weightAndHeightTitle = null;
+    let contactsTitle = null;
     let columnNames = ["name ","relationship ","contactNumber ","address "];
     let table = <>
         <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
@@ -154,7 +154,7 @@ function Contacts({weightAndHeightData,setBiometrics}){
                 <Typography variant="body2" sx={{marginBottom:3}}>No existen registros de <b>contactos</b></Typography>
         </Box>
         <Box sx={{display:"flex", flexDirection:"row"}}>
-            <TableBasic align='center' columnHeaders={columnNames} data={weightAndHeightData} sxTableContainer={{width:1}}></TableBasic>
+            <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}}></TableBasic>
         </Box>
     </>
     // let table = <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
@@ -162,20 +162,20 @@ function Contacts({weightAndHeightData,setBiometrics}){
     //     <Typography variant="body2" sx={{marginBottom:3}}>No existen registros de <b>peso y talla</b></Typography>
     // </Box>;
     
-    if (weightAndHeightData != null && weightAndHeightData.length > 0){
+    if (contactsData != null && contactsData.length > 0){
         table = (<>
             <Box sx={{display:"flex", flexDirection:"row"}}>
-                <TableBasic align='center' columnHeaders={columnNames} data={weightAndHeightData} sxTableContainer={{width:1}}></TableBasic>
+                <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}}></TableBasic>
             </Box>
         </>);
-        weightAndHeightTitle = <Typography variant="h3" sx={{marginBottom:1.5}}>contactos</Typography>;
+        contactsTitle = <Typography variant="h3" sx={{marginBottom:1.5}}>contactos</Typography>;
     }
     return (<Box sx={{ display: 'flex', flexDirection:'column' }}>
         <Box sx={{ display: 'flex', flexDirection:'row', alignItems:'center',  justifyContent:'space-between'}}>
-            {weightAndHeightTitle}
+            {contactsTitle}
         </Box>
         {table}
-        <AddRowContacts setBiometrics={setBiometrics}/>
+        <AddRowContacts setContacts={setContacts}/>
     </Box>);
 }
 

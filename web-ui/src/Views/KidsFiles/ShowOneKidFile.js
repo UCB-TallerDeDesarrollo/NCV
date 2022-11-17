@@ -163,7 +163,7 @@ function ShowOneKidFile() {
     let healthTabContent = (<HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>);
     let weightAndHeightTabContent = (<WeightAndHeight weightAndHeightData={biometrics} setBiometrics={setBiometrics}/>);
     let legalTabContent = (<LegalReport kidId={kidId} legalReport={legalReport} legalReportStatusCode={legalReportStatusCode}/>);
-    let contactsTabContent = (<Contacts weightAndHeightData={contacts} setBiometrics={setContacts}/>);
+    let contactsTabContent = (<Contacts contactsData={contacts} setContacts={setContacts}/>);
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <BasicData kid={kid}/>
