@@ -19,7 +19,7 @@ import BasicData from '../../Views/KidsFiles/BasicDataReport/ShowBasicDataReport
 import HealthReport from '../../Views/KidsFiles/HealthReport/ShowHealthReport.js'
 import WeightAndHeight from '../../Views/KidsFiles/HealthReport/BiometricsReport.js'
 import LegalReport from '../../Views/KidsFiles/LegalReport/ShowLegalReport.js'
-import FoundationReport from './BasicDataReport/ShowFoundationReport';
+import FoundationReport from '../../Views/KidsFiles/FoundationReport/ShowFoundationReport.js';
 
 import TabsContainer from '../../Components/TabsContainer';
 
@@ -148,8 +148,6 @@ function ShowOneKidFile() {
         setOpenToConfirm(false)
     }
 
-    
-
     function handleCloseToConfirm(event, reason) {
         if (reason === 'clickaway') {
             return
@@ -163,14 +161,14 @@ function ShowOneKidFile() {
     let healthTabContent = (<HealthReport kidId={kidId} healthReport={healthReport} healthReportStatusCode={healthReportStatusCode}/>);
     let weightAndHeightTabContent = (<WeightAndHeight weightAndHeightData={biometrics} setBiometrics={setBiometrics}/>);
     let legalTabContent = (<LegalReport kidId={kidId} legalReport={legalReport} legalReportStatusCode={legalReportStatusCode}/>);
-    let foundationTabContent = (<FoundationReport kidId={kidId} foundationReport={foundationReport} legalReportStatusCode={foundationReportStatusCode}/>);
+    let foundationTabContent = (<FoundationReport kidId={kidId} foundationReport={foundationReport} foundationReportStatusCode={foundationReportStatusCode}/>);
     return (
         <><Navbar /><div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <BasicData kid={kid}/>
             {accesPermiss=="ComplitAcces"&&
                 <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
             }
-            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal", "Fundación"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent, foundationTabContent]}></TabsContainer>
+            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal", "Estancia"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent, foundationTabContent]}></TabsContainer>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
@@ -192,6 +190,6 @@ function ShowOneKidFile() {
                 </DialogActions>
             </Dialog>
         </div>
-        <div><ButtonPrimary key={2} label="Crear reporte de Estancia" onClick={()=>{navigate(urlCreateFoundationReport)}} /></div></>
+        </>
     )}
 export {ShowOneKidFile}
