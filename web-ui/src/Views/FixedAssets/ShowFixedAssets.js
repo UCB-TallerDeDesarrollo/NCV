@@ -97,10 +97,10 @@ export default function ShowFixedAssets() {
         })
         const programDropdown = 
             <Dropdown 
-                name={"Programa"} 
                 id="programa-drop" 
                 options={programHousesList}
                 selectedValue={programHouseSelectedValue}
+                helperText = "Seleccione un programa"
                 setSelectedValue = {setProgramHouseSelectedValue}
                 required
                 >                                        
@@ -119,16 +119,28 @@ export default function ShowFixedAssets() {
         let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={listElements} withImage={false} />
         let assetStatesView = "/activos-fijos/estados"
         let nexFixedAsset = "/crear-activo-fijo"
-        const listHeaderComponents = 
+        const buttonsList = 
         <Box sx={{display:'flex'}}>
             <ButtonPrimary label={"Gestionar Estados"} onClick={()=>navigate(assetStatesView)}/>
             <ButtonPrimary sx={{marginLeft:1}} label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
         </Box>
         const searchComponents = 
-        <Box sx={{display:'flex'}}>
+        <Box sx={{display:'flex'}} marginTop={1}>
             {searcher}
-            {programDropdown}
+            <Box sx={{display:'flex', flexDirection:'row', alignItems :'center'}}>
+                {programDropdown}
+            </Box>
         </Box>
+        const listHeaderComponents =
+        <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+        >
+            {buttonsList}
+            {searchComponents}
+        </Box>
+
         return (
             <>
                 <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
