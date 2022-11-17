@@ -33,7 +33,29 @@ export function EditProfile() {
             })
         )
     }
+    const validate = (datas) => {
+        const errors = {}
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
+        if (!datas.firstName) {
+            errors.firstName = 'El nombre es requerido!'
+        }
 
+        if (!datas.lastName) {
+            errors.lastName = 'El apellido es requerido!'
+        }
+
+        if (!datas.cellPhone) {
+            errors.cellPhone = 'El celular es requerido!'
+        }
+
+        if (!datas.email) {
+            errors.email = 'El correo es requerido!'
+        } else if (!regex.test(datas.email)) {
+            errors.email = 'Formato de correo incorrecto!'
+        }
+
+        return errors
+    }
     useEffect(() => {
         fetchData()
         console.log(formErrors)
@@ -106,7 +128,7 @@ export function EditProfile() {
                         name="firstName"
                         type="text"
                         value={user.firstName}
-                        //onChange={handleInputChange}
+                        onChange={handleInputChange}
                     />
                     {formErrors.firstName ? (
                         <Alert sx={{ width: 1, pt: 1 }} severity="error">
@@ -121,7 +143,7 @@ export function EditProfile() {
                         name="lastName"
                         type="text"
                         value={user.lastName}
-                        //onChange={handleInputChange}
+                        onChange={handleInputChange}
                     />
                     {formErrors.lastName ? (
                         <Alert sx={{ width: 1, pt: 1 }} severity="error">
@@ -131,7 +153,7 @@ export function EditProfile() {
                         <p></p>
                     )}
                     <InputText
-                        //required
+                        required
                         id="cellPhone"
                         name="cellPhone"
                         type="number"

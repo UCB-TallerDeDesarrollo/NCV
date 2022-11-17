@@ -25,7 +25,7 @@ const roles = [
     },
     {
         label: 'Super Usuario',
-        value: 'SuperUser'
+        value: 'Soporte'
     }
 ]
 
