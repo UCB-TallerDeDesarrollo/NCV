@@ -153,7 +153,7 @@ function ShowOneKidFile() {
             {accesPermiss=="ComplitAcces"&&
                 <ButtonPrimary label="Editar File" onClick={navigateEditKid}/>
             }
-            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent]}></TabsContainer>
+            <TabsContainer tabsNames={["Salud","Pesos y tallas","Legal","Educación"]} tabsContent={[healthTabContent,weightAndHeightTabContent,legalTabContent, educationTabContent]}></TabsContainer>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     {alertMessage}
