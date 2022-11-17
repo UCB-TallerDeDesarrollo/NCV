@@ -29,16 +29,17 @@ export default function UpdateFixedAssetForm(props) {
     let programCode = ''
     let categoryCode = ''
     const navigate = useNavigate()
-    const [data, setData] = useState([])
-    //programHouses
-    const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
-    const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)
-    //categories
-    const [categorySelectedValue, setCategorySelectedValue] = useState(null)
-    const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
-    //states
-    const [stateSelectedValue, setStateSelectedValue] = useState(null)
-    const { apiData:states, error:errorStates } = getFromApi(urlStates) 
+    const [data, setData] = useState({
+        Name: '', // string
+        Code: '', // string
+        Description: '', // string
+        EntryDate: '', // dateTime
+        Price: '', // decimal
+        Features: '', // string
+        ProgramHouseId : '', //int
+        AssetCategoryId : '', //int
+        AssetStateId: '' //string
+    })
 
     const fetchBasicData = () => {
         const responseData = axios(url);
@@ -50,12 +51,21 @@ export default function UpdateFixedAssetForm(props) {
     }
 
     useEffect(()=>{
-        // console.log(formErrors)
         fetchBasicData();
         if (Object.keys(formErrors).length === 0 && isSubmit){
-        //    console.log(data);
+            console.log(data);
         }
     },[formErrors]);
+
+    //programHouses
+    const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
+    const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)
+    //categories
+    const [categorySelectedValue, setCategorySelectedValue] = useState(null)
+    const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
+    //states
+    const [stateSelectedValue, setStateSelectedValue] = useState(null)
+    const { apiData:states, error:errorStates } = getFromApi(urlStates) 
 
     // program Houses Options for DROPDOWN
     if(errorProgramHouses){
@@ -164,7 +174,17 @@ export default function UpdateFixedAssetForm(props) {
         setFormErrors(errorsFromForm)
         setIsSubmit(true)
         if(!hasFormErrors(errorsFromForm)){
-            axios.put(url, data).then((res) => {
+            axios.put(url, {
+                Name: data.Name,
+                Description: data.Description==''? null:data.Description, // string
+                EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
+                Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
+                Features: data.Features==''? null:data.Features, // string
+                ProgramHouseId : programHouseSelectedValue,
+                AssetCategoryId : categorySelectedValue,
+                AssetStateId: stateSelectedValue, //string
+                Code: "F-" + programCode + "-" + categoryCode + "-" + data.Code, //string
+                }).then((res) => {
                 if (res.status == 200) {               
                     navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo actualizado exitosamente"}})
                 }            
