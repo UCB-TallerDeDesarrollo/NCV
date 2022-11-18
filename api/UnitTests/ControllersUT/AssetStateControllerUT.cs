@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NinosConValorAPI;
 using NinosConValorAPI.Controllers;
+using NinosConValorAPI.Exceptions;
 using NinosConValorAPI.Models;
 using NinosConValorAPI.Services;
 using System;
@@ -87,7 +88,7 @@ namespace UnitTests.ControllersUT
             var response = await assetStateController.GetAssetStateAsync(1);
             var result = response.Result as OkObjectResult;
             Assert.Equal(200, result.StatusCode);
-        }
-     
+        }       
+
     }
 }

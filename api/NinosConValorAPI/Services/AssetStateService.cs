@@ -41,7 +41,7 @@ namespace NinosConValorAPI.Services
         public async Task<AssetStateModel> GetAssetStateAsync(int stateID)
         {
             var state = await _NCVRepository.GetAssetStateAsync(stateID);
-            if (state == null)
+            if (state == null || state.Deleted)
                 throw new NotFoundElementException($"El estado con Id:{stateID} no existe.");
             return _mapper.Map<AssetStateModel>(state);
         }
@@ -65,9 +65,32 @@ namespace NinosConValorAPI.Services
             return stateModel;
         }
 
+        private async Task<IEnumerable<FixedAssetModel>> GetFixedAssetsAsync()
+        {
+            var fixedAssetEntityList = await _NCVRepository.GetFixedAssetsAsync();
+
+            if (fixedAssetEntityList == null || !fixedAssetEntityList.Any())
+                throw new NotFoundElementException($"La lista de Activos Fijos no existe o está vacía.");
+
+            var fixedAssetEnumerable = _mapper.Map<IEnumerable<FixedAssetModel>>(fixedAssetEntityList);
+            return fixedAssetEnumerable;
+        }
+
+        private async Task<bool> hasFixedAssetAssociated(int stateID)
+        {
+            var assets = await GetFixedAssetsAsync();
+            assets = assets.Where(a => a.AssetStateId == stateID);
+            return assets.Count() > 0;
+        }
+
         public async Task DeleteAssetStateAsync(int stateID)
         {
             await GetAssetStateAsync(stateID);
+            var cannotBeDeleted = await hasFixedAssetAssociated(stateID);
+            if (cannotBeDeleted)
+            {
+                throw new InvalidElementOperationException("El estado no puede ser eliminado porque existen activos fijos asociados a el.");
+            }
             await _NCVRepository.DeleteAssetStateAsync(stateID);
             var result = await _NCVRepository.SaveChangesAsync();
             if (!result)
