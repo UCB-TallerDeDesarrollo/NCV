@@ -30,8 +30,7 @@ namespace UnitTests.ControllersUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 ProgramHouseId = 2,
-                AssetCategoryId = 1,
-                State = "Obsoleto"
+                AssetCategoryId = 1
             };           
 
             var fixedAssetServiceMock = new Mock<IFixedAssetService>();
@@ -44,8 +43,7 @@ namespace UnitTests.ControllersUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 ProgramHouseId=2,
-                AssetCategoryId=1,
-                State = "Obsoleto"
+                AssetCategoryId=1
             });
 
             var fixedAssetController = new FixedAssetsController(fixedAssetServiceMock.Object);
@@ -68,8 +66,7 @@ namespace UnitTests.ControllersUT
                 Description = "Computadora de escritorio",
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
-                Features = "8Gb de RAM",
-                State = "Obsoleto"
+                Features = "8Gb de RAM"
             };
 
             var fixedAsset2 = new FixedAssetModel()
@@ -79,8 +76,7 @@ namespace UnitTests.ControllersUT
                 Description = "Silla de Madera",
                 EntryDate = new DateTime(2006, 6, 6),
                 Price = 20.32m,
-                Features = "Tachas de oro",
-                State = "Obsoleto"
+                Features = "Tachas de oro"
             };
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
             var mapper = config.CreateMapper();
@@ -107,8 +103,7 @@ namespace UnitTests.ControllersUT
                 Description = "Computadora de escritorio",
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
-                Features = "8Gb de RAM",
-                State = "Obsoleto"
+                Features = "8Gb de RAM"
             };
 
             var fixedAssetServiceMock = new Mock<IFixedAssetService>();

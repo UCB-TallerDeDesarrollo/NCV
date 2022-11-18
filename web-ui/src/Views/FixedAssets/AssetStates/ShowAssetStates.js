@@ -25,8 +25,9 @@ export default function ShowFixedAssets() {
     const location = useLocation()    
     const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
     const [alertMessage, setAlertMessage] = useState(location.state ? location.state.alertMessage : null)
+    const [severity, setSeverity] = useState(location.state ? location.state.severity : "success")
     const urlAssetStates = 'https://ncv-api.herokuapp.com/api/assetStates'
-    let [urlAssetState, setUrlAssetState] = useState('https://ncv-api.herokuapp.com/api/assetStates/')    
+    let [urlAssetState, setUrlAssetState] = useState('https://ncv-api.herokuapp.com/api/assetStates/')   
     const [assetStates, setAssetStates] = useState(null)
     const [errorAssetStates, setErrorAssetStates] = useState(null)
     let errorsFromForm = null
@@ -69,13 +70,15 @@ export default function ShowFixedAssets() {
             if (response.status == 200){
                 setShowAlert(true)
                 setAlertMessage("Registro Eliminado")
+                setSeverity("success")
                 setOpen(true)
                 setOpenToConfirm(false) 
                 getAssetStates()                                          
             }
         })
         .catch(err=> {
-            setErrorAssetStateDelete(err)            
+            setErrorAssetStateDelete(err)     
+            setOpenToConfirm(false)        
         })
     }
 
@@ -114,6 +117,7 @@ export default function ShowFixedAssets() {
             if (res.status == 200) {               
                 setShowAlert(true)
                 setAlertMessage("Estado actualizado")
+                setSeverity("success")
                 setOpen(true)                    
                 getAssetStates()                    
             }            
@@ -130,6 +134,7 @@ export default function ShowFixedAssets() {
                 if (res.status == 201) {     
                     setShowAlert(true)
                     setAlertMessage("Estado creado")
+                    setSeverity("success")
                     setOpen(true)
                     getAssetStates()
                     setData({
@@ -145,7 +150,17 @@ export default function ShowFixedAssets() {
         }
     }
     if (errorAssetStates) return ErrorPage(errorAssetStates)
-    if (errorAssetStateDelete) return ErrorPage(errorAssetStateDelete)
+    if (errorAssetStateDelete){
+        if(errorAssetStateDelete.response.status==400 && errorAssetStateDelete.response.data=="El estado no puede ser eliminado porque existen activos fijos asociados a el."){
+            setShowAlert(true)
+            setAlertMessage(errorAssetStateDelete.response.data)
+            setSeverity("warning")
+            setOpen(true)
+            setErrorAssetStateDelete(null)
+        }
+        else
+            return ErrorPage(errorAssetStateDelete)
+    } 
     if (errorCreateAssetState) return ErrorPage(errorCreateAssetState)
     if (errorUpdateAssetState) return ErrorPage(errorUpdateAssetState)
     if (!assetStates) return null    
@@ -200,7 +215,7 @@ export default function ShowFixedAssets() {
             }   
             </Box>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="success">
+                <Alert onClose={handleClose} severity={severity}>
                     {alertMessage}                    
                 </Alert>
             </Snackbar>

@@ -81,6 +81,26 @@ namespace UnitTests.ServiceUT
         }
 
         [Fact]
+        public async Task GetAssetState_AssetStateDeletedTrue()
+        {
+            var assetState1 = new AssetStateEntity()
+            {
+                Id = 1,
+                State = "Obsoleto",
+                Deleted = true
+            };
+
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
+            var mapper = config.CreateMapper();
+            var assetStateRepositoryMock = new Mock<INCVRepository>();
+            assetStateRepositoryMock.Setup(r => r.GetAssetStateAsync(1)).ReturnsAsync(assetState1);
+
+            var assetStateService = new AssetStateService(assetStateRepositoryMock.Object, mapper);
+            var ex = Assert.ThrowsAsync<NotFoundElementException>(async () => await assetStateService.GetAssetStateAsync(1));
+            Assert.Equal($"El estado con Id:1 no existe.", ex.Result.Message);
+        }
+
+        [Fact]
         public void GetAssetState_ReturnNotFoundIdAssetState()
         {           
             AssetStateEntity assetState = new AssetStateEntity() { State = "Obsoleto" };

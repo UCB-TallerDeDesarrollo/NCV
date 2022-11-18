@@ -102,6 +102,10 @@ namespace NinosConValorAPI.Controllers
             {
                 return NotFound(ex.Message);
             }
+            catch(InvalidElementOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Lo sentimos, algo sucedió: {ex.Message}");

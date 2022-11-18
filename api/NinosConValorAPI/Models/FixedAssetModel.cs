@@ -25,8 +25,6 @@ namespace NinosConValorAPI.Models
         public int AssetStateId { get; set; }
         public string? AssetStateState { get; set; }
 
-        public string? State { get; set; }
-
         public bool Deleted { get; set; }
     }
 }

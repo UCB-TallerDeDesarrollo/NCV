@@ -40,8 +40,7 @@ namespace UnitTests.ServiceUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 AssetCategory = assetCategory,
-                AssetState = assetState,
-                State = "Obsoleto"
+                AssetState = assetState
             };
             var fixedAssetModel = mapper.Map<FixedAssetModel>(fixedAssetEntity);
             var fixedAssetRepositoryMock = new Mock<INCVRepository>();
@@ -73,8 +72,7 @@ namespace UnitTests.ServiceUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                AssetCategory = assetCategory,
-                State = "Obsoleto"
+                AssetCategory = assetCategory
             };
 
             var fixedAsset2 = new FixedAssetEntity()
@@ -115,8 +113,7 @@ namespace UnitTests.ServiceUT
                 EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
                 Features = "8Gb de RAM",
-                AssetCategory = assetCategory,
-                State = "Obsoleto"
+                AssetCategory = assetCategory
             };
 
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
