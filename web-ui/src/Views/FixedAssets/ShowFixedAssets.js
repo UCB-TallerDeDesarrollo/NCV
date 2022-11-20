@@ -38,11 +38,13 @@ export default function ShowFixedAssets() {
     const urlProgramHouses = 'https://ncv-api.azurewebsites.net/api/programHouses'
     const url = 'https://ncv-api.azurewebsites.net/api/fixedAssets/'
     const urlCategories = 'https://ncv-api.azurewebsites.net/api/assetCategories?showAssets=true'
+    const urlStates = 'https://ncv-api.azurewebsites.net/api/assetStates'
    
     let showAlert = location.state ? location.state.showAlert : false
     let alertMessage = location.state ? location.state.alertMessage : null
     const { apiData: assetCategories, errors } = getFromApi(urlCategories)
     const { apiData: programHouses, errorProgramHouses } = getFromApi(urlProgramHouses)
+    const { apiData:states, error:errorStates } = getFromApi(urlStates) 
     const {currentProgramHouse, setCurrentProgramHouse } = getFromApi(null)
     const headerIndices = [];
     const getHeaderName = (i) => {
@@ -172,6 +174,17 @@ export default function ShowFixedAssets() {
                 required
                 >                                        
             </Dropdown> 
+
+        const stateDropdown = 
+            <Dropdown
+            id="estado-drop" 
+            options={stateOptions}                                         
+            selectedValue={stateSelectedValue}
+            setSelectedValue = {setStateSelectedValue}
+            helperText = "Seleccione un estado"
+            required                    
+            >                                        
+            </Dropdown>   
         const listElements = searchResult.map((el)=>{
             return {
                 id:el.id, 
@@ -199,6 +212,9 @@ export default function ShowFixedAssets() {
             {searcher}
             <Box sx={{display:'flex', flexDirection:'row', alignItems :'center'}}>
                 {programDropdown}
+            </Box>
+            <Box sx={{display:'flex', flexDirection:'row', alignItems :'center'}}>
+                {stateDropdown}
             </Box>
         </Box>
         const listHeaderComponents =
