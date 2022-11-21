@@ -38,5 +38,23 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió.");
             }
         }
+
+        [HttpGet("{categoryId:int}")]
+        public async Task<ActionResult<AssetCategoryModel>> GetAssetCategoryAsync(int categoryId)
+        {
+            try
+            {
+                var assetCategory= await _assetCategoriesService.GetAssetCategoryAsync(categoryId);
+                return Ok(assetCategory);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió.");
+            }
+        }
     }
 }
