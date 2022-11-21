@@ -16,6 +16,8 @@ namespace NinosConValorAPI.Data
         public DbSet<AssetCategoryEntity> AssetCategories => Set<AssetCategoryEntity>();
 
         public DbSet<AssetStateEntity> AssetStates => Set<AssetStateEntity>();
+
+        public DbSet<AssetTypeEntity> AssetTypes => Set<AssetTypeEntity>();
         public DbSet<BiometricsEntity> Biometrics { get; set; }
         public DbSet<ContactEntity> Contacts { get; set; }
         public DbSet<EducationReportEntity> EducationReports { get; set; }
@@ -43,7 +45,7 @@ namespace NinosConValorAPI.Data
             modelBuilder.Entity<FixedAssetEntity>().ToTable("FixedAsset");
             modelBuilder.Entity<FixedAssetEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<FixedAssetEntity>().HasOne(d => d.ProgramHouse).WithMany(d=>d.FixedAssets);
-            modelBuilder.Entity<FixedAssetEntity>().HasOne(d => d.AssetCategory).WithMany(d => d.FixedAssets);
+            modelBuilder.Entity<FixedAssetEntity>().HasOne(d => d.AssetType).WithMany(d => d.FixedAssets);
             modelBuilder.Entity<FixedAssetEntity>().HasOne(d => d.AssetState).WithMany(d => d.FixedAssets);
 
 
@@ -86,7 +88,7 @@ namespace NinosConValorAPI.Data
             //AssetCategories
             modelBuilder.Entity<AssetCategoryEntity>().ToTable("AssetCategory");
             modelBuilder.Entity<AssetCategoryEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<AssetCategoryEntity>().HasMany(d => d.FixedAssets).WithOne(d => d.AssetCategory);
+            modelBuilder.Entity<AssetCategoryEntity>().HasMany(d => d.AssetTypes).WithOne(d => d.AssetCategory);
 
             //AssetStates
             modelBuilder.Entity<AssetStateEntity>().ToTable("AssetState");

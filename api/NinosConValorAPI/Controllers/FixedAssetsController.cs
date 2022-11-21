@@ -24,8 +24,8 @@ namespace NinosConValorAPI.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
                 int programHouseId = fixedAsset.ProgramHouseId;
-                int categoryId = fixedAsset.AssetCategoryId;                
-                var newFixedAsset = await _fixedAssetService.CreateFixedAssetAsync(fixedAsset, programHouseId, categoryId);
+                int typeId = fixedAsset.AssetTypeId;                
+                var newFixedAsset = await _fixedAssetService.CreateFixedAssetAsync(fixedAsset, programHouseId, typeId);
                 return Created($"/api/fixedAssets/{newFixedAsset.Id}", newFixedAsset);
             }
             catch (NotFoundElementException ex)
