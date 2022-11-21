@@ -34,21 +34,21 @@ namespace NinosConValorAPI.Services
             var assetTypesList = await _NCVRepository.GetAssetTypesAsync(categoryId);
 
             if (assetTypesList == null || !assetTypesList.Any())
-                throw new NotFoundElementException($"La lista de estados no existe o está vacía.");
+                throw new NotFoundElementException($"La lista de tipos no existe o está vacía.");
 
             return _mapper.Map<IEnumerable<AssetTypeModel>>(assetTypesList);
         }
-        public async Task<AssetTypeModel> GetAssetTypeAsync(int typeId, int categoryId)
+        public async Task<AssetTypeModel> GetAssetTypeAsync(int typeId)
         {
-            var type = await _NCVRepository.GetAssetTypeAsync(typeId, categoryId);
+            var type = await _NCVRepository.GetAssetTypeAsync(typeId);
             if (type == null || type.Deleted)
-                throw new NotFoundElementException($"El estado con Id:{typeId} no existe.");
+                throw new NotFoundElementException($"El tipo con Id:{typeId} no existe.");
             return _mapper.Map<AssetTypeModel>(type);
         }
         public async Task<AssetTypeModel> UpdateAssetTypeAsync(int typeId, AssetTypeModel typeModel, int categoryId)
         {
             var typeEntity = _mapper.Map<AssetTypeEntity>(typeModel);
-            await GetAssetTypeAsync(typeId, categoryId);
+            await GetAssetTypeAsync(typeId);
             typeEntity.Id = typeId;
             var res = await _NCVRepository.UpdateAssetTypeAsync(typeId, typeEntity, categoryId);
             if (!res)
@@ -79,17 +79,17 @@ namespace NinosConValorAPI.Services
         private async Task<bool> hasFixedAssetAssociated(int typeId, int categoryId)
         {
             var assets = await GetFixedAssetsAsync();
-            assets = assets.Where(a => a.AssetTypeId == typeId);
+            assets = assets.Where(a => a.AssetTypeId == typeId && a.AssetTypeAssetCategoryId==categoryId);
             return assets.Count() > 0;
         }
 
         public async Task DeleteAssetTypeAsync(int typeId, int categoryId)
         {
-            await GetAssetTypeAsync(typeId, categoryId);
-            var cannotBeDeleted = await hasFixedAssetAssociated(typeId);
+            await GetAssetTypeAsync(typeId);
+            var cannotBeDeleted = await hasFixedAssetAssociated(typeId, categoryId);
             if (cannotBeDeleted)
             {
-                throw new InvalidElementOperationException("El estado no puede ser eliminado porque existen activos fijos asociados a el.");
+                throw new InvalidElementOperationException("El tipo no puede ser eliminado porque existen activos fijos asociados a el.");
             }
             await _NCVRepository.DeleteAssetTypeAsync(typeId, categoryId);
             var result = await _NCVRepository.SaveChangesAsync();

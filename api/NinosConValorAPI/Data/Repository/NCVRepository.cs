@@ -293,6 +293,7 @@ namespace NinosConValorAPI.Data.Repository
         {
             IQueryable<AssetTypeEntity> query = _dbContext.AssetTypes;
             query = query.AsNoTracking();
+            query = query.Include(f => f.AssetCategory);
             var assetType = await query.FirstOrDefaultAsync(g => (g.Id == typeId));
             return assetType;
         }
@@ -348,6 +349,39 @@ namespace NinosConValorAPI.Data.Repository
             IQueryable<AssetStateEntity> query = _dbContext.AssetStates;
             var assetStateToDelete = await query.FirstOrDefaultAsync(g => (g.Id == assetStateId) & (g.Deleted == false));
             assetStateToDelete.Deleted = true;
+        }
+
+        //ASSET TYPES
+        public async Task<AssetTypeEntity> CreateAssetType(AssetTypeEntity assetType, int categoryId)
+        {
+            _dbContext.Entry(assetType.AssetCategory).State = EntityState.Unchanged;
+            await _dbContext.AssetTypes.AddAsync(assetType);
+            return assetType;
+        }
+
+        public async Task<IEnumerable<AssetTypeEntity>> GetAssetTypesAsync(int categoryId)
+        {
+            IQueryable<AssetTypeEntity> query = _dbContext.AssetTypes;
+            query = query.AsNoTracking();
+            query = query.Include(f => f.AssetCategory);
+            query = query.Where(f => f.Deleted == false && f.AssetCategory.Id == categoryId);
+            var result = await query.ToListAsync();
+            return result;
+        }
+
+        public async Task<bool> UpdateAssetTypeAsync(int assetTypeId, AssetTypeEntity assetType, int categoryId)
+        {
+            var assetTypeToUpdate = _dbContext.AssetTypes.FirstOrDefault(c => c.Id == assetType.Id && c.AssetCategory.Id == categoryId);
+
+            _dbContext.Entry(assetTypeToUpdate).CurrentValues.SetValues(assetType);
+            return true;
+        }
+
+        public async Task DeleteAssetTypeAsync(int assetTypeId, int categoryId)
+        {
+            IQueryable<AssetTypeEntity> query = _dbContext.AssetTypes;
+            var assetTypeToDelete = await query.FirstOrDefaultAsync(g => (g.Id == assetTypeId) & (g.Deleted == false) & (g.AssetCategory.Id==categoryId));
+            assetTypeToDelete.Deleted = true;
         }
     }
 }

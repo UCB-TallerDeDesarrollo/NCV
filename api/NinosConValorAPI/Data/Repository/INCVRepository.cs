@@ -56,7 +56,11 @@ namespace NinosConValorAPI.Data.Repository
         Task DeleteAssetStateAsync(int assetStateId);
 
         //ASSET TYPES
-        Task<AssetTypeEntity> GetAssetTypeAsync(int typeId);        
+        Task<AssetTypeEntity> GetAssetTypeAsync(int typeId);
+        Task<AssetTypeEntity> CreateAssetType(AssetTypeEntity assetType, int categoryId);
+        Task<IEnumerable<AssetTypeEntity>> GetAssetTypesAsync(int categoryId);
+        Task<bool> UpdateAssetTypeAsync(int assetTypeId, AssetTypeEntity assetType, int categoryId);
+        Task DeleteAssetTypeAsync(int assetTypeId, int categoryId);
 
         //TASKS
         Task<bool> SaveChangesAsync();

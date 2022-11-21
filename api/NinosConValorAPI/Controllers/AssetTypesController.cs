@@ -56,11 +56,11 @@ namespace NinosConValorAPI.Controllers
 
 
         [HttpGet("{assetTypeId:int}")]
-        public async Task<ActionResult<AssetTypeModel>> GetAssetTypeAsync(int assetTypeId,int categoryId)
+        public async Task<ActionResult<AssetTypeModel>> GetAssetTypeAsync(int assetTypeId)
         {
             try
             {
-                var assetType = await _assetTypeService.GetAssetTypeAsync(assetTypeId, categoryId);
+                var assetType = await _assetTypeService.GetAssetTypeAsync(assetTypeId);
                 return Ok(assetType);
             }
             catch (NotFoundElementException ex)
