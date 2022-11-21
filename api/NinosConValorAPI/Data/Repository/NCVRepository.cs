@@ -198,6 +198,7 @@ namespace NinosConValorAPI.Data.Repository
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
             query = query.Include(f => f.AssetType);
+            query = query.Include(f => f.AssetType.AssetCategory);
             query = query.Include(f => f.ProgramHouse);
             query = query.Include(f => f.AssetState);
             query = query.Where(f => f.Deleted == false);
