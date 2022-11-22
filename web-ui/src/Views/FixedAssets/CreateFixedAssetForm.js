@@ -12,12 +12,17 @@ import ButtonPrimary from '../../Components/MUI-Button'
 import getFromApi from '../../Components/GetFromApi'
 import Dropdown from '../../Components/Dropdown'
 import {getFixedAssets} from '../../Components/GetFromApi'
+import axios from "axios"
 
 function CreateFixedAssetForm(props) {
-    const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
-    const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
-    const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories'
-    const urlStates = 'https://ncv-api.herokuapp.com/api/assetStates'
+    //const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
+    //const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
+    //const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories'
+    //const urlStates = 'https://ncv-api.herokuapp.com/api/assetStates'
+    const url = 'http://localhost:5009/api/fixedAssets'
+    const urlProgramHouses = 'http://localhost:5009/api/programHouses'
+    const urlCategories = 'http://localhost:5009/api/assetCategories'
+    const urlStates = 'http://localhost:5009/api/assetStates'
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null)
     const [formErrors,setFormErrors] = useState({})
@@ -53,6 +58,10 @@ function CreateFixedAssetForm(props) {
     //states
     const [stateSelectedValue, setStateSelectedValue] = useState(null)
     const { apiData:states, error:errorStates } = getFromApi(urlStates) 
+
+    //types
+    const [typeSelectedValue, setTypeSelectedValue] = useState(null)
+    const [typesOptions, setTypesOptions] = useState([])
 
     // program Houses Options for DROPDOWN
     if(errorProgramHouses){
@@ -115,8 +124,32 @@ function CreateFixedAssetForm(props) {
         return hasErrors
     }
 
-    function getAssetsCodes(){
-        const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
+    function getTypesByCategory(id){
+        //const urlTypesByCategory = `https://ncv-api.herokuapp.com/api/assetCategories/${id}/assetTypes`
+        const urlTypesByCategory = `http://localhost:5009/api/assetCategories/${id}/assetTypes`
+        //const { apiData:types, error:errorTypes } = getFromApi(urlTypesByCategory) 
+        console.log(urlTypesByCategory)
+        let types=null
+        let errorTypes=null
+        axios.get(urlTypesByCategory).then(            
+            (res) => {          
+                types = res.data
+                let typesList = types.map( type =>  { return{
+                    label: type.type,
+                    value: type.id      
+                }}) 
+                setTypesOptions(typesList)
+            }
+        ).catch((e)=>{
+            errorTypes=e
+        })        
+        if(errorTypes) return ErrorPage(errorTypes)
+        if(types==null) return null        
+    }
+
+    function getAssetsCodes(){        
+        //const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
+        const url = 'http://localhost:5009/api/fixedAssets/'
         getFixedAssets(url).then(
             response => {
                 if(response.name != "AxiosError"){
@@ -272,6 +305,19 @@ function CreateFixedAssetForm(props) {
                     helperText = "Seleccione una categoría" 
                     selectedValue={categorySelectedValue}
                     setSelectedValue = {setCategorySelectedValue}
+                    onChangeF = {getTypesByCategory}
+                    required
+                    >                                       
+                </Dropdown> 
+                {formErrors.AssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.AssetCategoryId}  </Alert>:<p></p> }  
+                <Dropdown 
+                    name={"Tipo"} 
+                    id="type-drop" 
+                    options={typesOptions} 
+                    helperText = "Seleccione un tipo" 
+                    selectedValue={typeSelectedValue}
+                    setSelectedValue = {setTypeSelectedValue}
                     required
                     >                                       
                 </Dropdown> 

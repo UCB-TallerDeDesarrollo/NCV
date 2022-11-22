@@ -2,30 +2,51 @@ import TextField from '@mui/material/TextField'
 import MenuItem from '@mui/material/MenuItem'
 import InputText from '../Components/InputText'
 
-export default function Dropdown({name, id, options, selectedValue, required=false, setSelectedValue, helperText = "Seleccione un valor"}) {
-  var handleChange = (event) => {
+export default function Dropdown({name, id, options, selectedValue, required=false, setSelectedValue, helperText = "Seleccione un valor", onChangeF=null}) {
+  var handleChange = (event, onChangeF) => {
     setSelectedValue(event.target.value)
+    if(onChangeF!=null){
+      onChangeF(event.target.value)
+    }
  }
-  return (
-    <>
-    <InputText 
-      required = {required}
-      select
-      id={id}      
-      name={name} 
-      label={name}       
-      type="text"       
-      value={selectedValue}
-      helperText={helperText}            
-      onChange={handleChange}
-      >
+ if(!options) return (
+  <>
+      <InputText 
+        required = {required}
+        select
+        id={id}      
+        name={name} 
+        label={name}       
+        type="text"       
+        value={selectedValue}
+        helperText={helperText}            
+        onChange={(event)=>handleChange(event, onChangeF)}
+        >
+          </InputText>
+        </>
+ )
+ else{
+    return (
+      <>
+      <InputText 
+        required = {required}
+        select
+        id={id}      
+        name={name} 
+        label={name}       
+        type="text"       
+        value={selectedValue}
+        helperText={helperText}            
+        onChange={(event)=>handleChange(event, onChangeF)}
+        >
           {options.map((option) => (
-            <MenuItem  key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem >
-          ))}
-        </InputText>
-      </>
-  );
+              <MenuItem  key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem >
+            ))}
+          </InputText>
+        </>
+    );
+  }
 }
 

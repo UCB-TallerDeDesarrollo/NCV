@@ -8,7 +8,8 @@ import {act} from 'react-dom/test-utils';
 import {MemoryRouter, Route, Routes} from 'react-router-dom'
 
 describe('Show Fixed Asset', () => {
-  const fixedAssetUrl ='https://ncv-api.herokuapp.com/api/fixedAssets/1'  
+  //const fixedAssetUrl ='https://ncv-api.herokuapp.com/api/fixedAssets/1'  
+  const fixedAssetUrl ='http://localhost:5009/api/fixedAssets/1' 
 
   function getResponse(url, jsonData=null, code=200, text=null){
     const response = rest.get(url, (req, res, ctx) => {

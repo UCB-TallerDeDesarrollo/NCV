@@ -25,11 +25,14 @@ export default function ShowFixedAssets() {
 
     const location = useLocation()
     const navigate = useNavigate();
-
+    
     const completeInfoFixedAsset = '/activos-fijos'
-    const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
-    const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
-    const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories?showAssets=true'
+    //const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
+    //const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
+    //const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories?showAssets=true'
+    const urlProgramHouses = 'http://localhost:5009/api/programHouses'
+    const url = 'http://localhost:5009/api/fixedAssets/'
+    const urlCategories = 'http://localhost:5009/api/assetCategories?showAssets=true'
     let showAlert = location.state ? location.state.showAlert : false
     let alertMessage = location.state ? location.state.alertMessage : null
     const { apiData: assetCategories, errors } = getFromApi(urlCategories)
@@ -124,7 +127,7 @@ export default function ShowFixedAssets() {
                 program: el.program,           
                 elementUrl:`${completeInfoFixedAsset}/${el.id}`,
                 imgSrc:`https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg`,
-                categoryId: el.assetCategoryId
+                categoryId: el.assetTypeAssetCategoryId
             }
         })
         let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={listElements} withImage={false} />
