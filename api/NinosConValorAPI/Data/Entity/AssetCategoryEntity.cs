@@ -11,6 +11,7 @@ namespace NinosConValorAPI.Data.Entity
         [Required]
         public string Category { get; set; }
 
-        public ICollection<FixedAssetEntity>? FixedAssets { get; set; }
+        public ICollection<AssetTypeEntity>? AssetTypes { get; set; }
+        
     }
 }

@@ -148,9 +148,9 @@ namespace NinosConValorAPI.Data.Repository
 
         // FIXED ASSET
 
-        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int categoryId)
+        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int typeId)
         {
-            _dbContext.Entry(fixedAsset.AssetCategory).State = EntityState.Unchanged;
+            _dbContext.Entry(fixedAsset.AssetType).State = EntityState.Unchanged;
             _dbContext.Entry(fixedAsset.ProgramHouse).State = EntityState.Unchanged;
             _dbContext.Entry(fixedAsset.AssetState).State = EntityState.Unchanged;
             _dbContext.FixedAssets.Add(fixedAsset);
@@ -197,7 +197,8 @@ namespace NinosConValorAPI.Data.Repository
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
-            query = query.Include(f => f.AssetCategory);
+            query = query.Include(f => f.AssetType);
+            query = query.Include(f => f.AssetType.AssetCategory);
             query = query.Include(f => f.ProgramHouse);
             query = query.Include(f => f.AssetState);
             query = query.Where(f => f.Deleted == false);
@@ -209,7 +210,8 @@ namespace NinosConValorAPI.Data.Repository
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
             query = query.AsNoTracking();
-            query = query.Include(f => f.AssetCategory);
+            query = query.Include(f => f.AssetType);
+            query = query.Include(f => f.AssetType.AssetCategory);
             query = query.Include(f=>f.ProgramHouse);
             query = query.Include(f => f.AssetState);
             var fixedAssetEntity = await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
@@ -226,7 +228,7 @@ namespace NinosConValorAPI.Data.Repository
             fixedAssetToUpdate.Price = fixedAsset.Price ?? fixedAssetToUpdate.Price;
             fixedAssetToUpdate.Features = fixedAsset.Features ?? fixedAssetToUpdate.Features;
             fixedAssetToUpdate.ProgramHouse = fixedAsset.ProgramHouse ?? fixedAssetToUpdate.ProgramHouse;
-            fixedAssetToUpdate.AssetCategory = fixedAsset.AssetCategory ?? fixedAssetToUpdate.AssetCategory;
+            fixedAssetToUpdate.AssetType = fixedAsset.AssetType ?? fixedAssetToUpdate.AssetType;
             fixedAssetToUpdate.AssetState = fixedAsset.AssetState ?? fixedAssetToUpdate.AssetState;            
         }
         public async Task<FoundationReportEntity> GetFoundationReportAsync(int kidId)
@@ -269,7 +271,7 @@ namespace NinosConValorAPI.Data.Repository
             query = query.AsNoTracking();
             if (showAssets)
             {
-                query = query.Include(f => f.FixedAssets);
+                query = query.Include(f => f.AssetTypes);
             }
             var result = await query.ToListAsync();
             return result;
@@ -279,6 +281,7 @@ namespace NinosConValorAPI.Data.Repository
         {
             IQueryable<AssetCategoryEntity> query = _dbContext.AssetCategories;
             query = query.AsNoTracking();
+            query = query.Include(f => f.AssetTypes);
             var assetCategory = await query.FirstOrDefaultAsync(g => (g.Id == categoryId));
             return assetCategory;
         }
@@ -287,7 +290,16 @@ namespace NinosConValorAPI.Data.Repository
         {
             _dbContext.AssetCategories.Add(assetCategory);
         }
-        
+
+        public async Task<AssetTypeEntity> GetAssetTypeAsync(int typeId)
+        {
+            IQueryable<AssetTypeEntity> query = _dbContext.AssetTypes;
+            query = query.AsNoTracking();
+            query = query.Include(f => f.AssetCategory);
+            var assetType = await query.FirstOrDefaultAsync(g => (g.Id == typeId));
+            return assetType;
+        }
+
         public bool UpdateKid(KidEntity kidModel)
         {
             var kidToUpdate = _dbContext.Kids.FirstOrDefault(c => c.Id == kidModel.Id);
@@ -339,6 +351,39 @@ namespace NinosConValorAPI.Data.Repository
             IQueryable<AssetStateEntity> query = _dbContext.AssetStates;
             var assetStateToDelete = await query.FirstOrDefaultAsync(g => (g.Id == assetStateId) & (g.Deleted == false));
             assetStateToDelete.Deleted = true;
+        }
+
+        //ASSET TYPES
+        public async Task<AssetTypeEntity> CreateAssetType(AssetTypeEntity assetType, int categoryId)
+        {
+            _dbContext.Entry(assetType.AssetCategory).State = EntityState.Unchanged;
+            await _dbContext.AssetTypes.AddAsync(assetType);
+            return assetType;
+        }
+
+        public async Task<IEnumerable<AssetTypeEntity>> GetAssetTypesAsync(int categoryId)
+        {
+            IQueryable<AssetTypeEntity> query = _dbContext.AssetTypes;
+            query = query.AsNoTracking();
+            query = query.Include(f => f.AssetCategory);
+            query = query.Where(f => f.Deleted == false && f.AssetCategory.Id == categoryId);
+            var result = await query.ToListAsync();
+            return result;
+        }
+
+        public async Task<bool> UpdateAssetTypeAsync(int assetTypeId, AssetTypeEntity assetType, int categoryId)
+        {
+            var assetTypeToUpdate = _dbContext.AssetTypes.FirstOrDefault(c => c.Id == assetType.Id && c.AssetCategory.Id == categoryId);
+
+            _dbContext.Entry(assetTypeToUpdate).CurrentValues.SetValues(assetType);
+            return true;
+        }
+
+        public async Task DeleteAssetTypeAsync(int assetTypeId, int categoryId)
+        {
+            IQueryable<AssetTypeEntity> query = _dbContext.AssetTypes;
+            var assetTypeToDelete = await query.FirstOrDefaultAsync(g => (g.Id == assetTypeId) & (g.Deleted == false) & (g.AssetCategory.Id==categoryId));
+            assetTypeToDelete.Deleted = true;
         }
     }
 }

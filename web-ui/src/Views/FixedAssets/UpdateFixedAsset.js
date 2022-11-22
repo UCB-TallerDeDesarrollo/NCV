@@ -21,6 +21,7 @@ export default function UpdateFixedAssetForm(props) {
     const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
     const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories'
     const urlStates = 'https://ncv-api.herokuapp.com/api/assetStates'
+
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null)
     const [formErrors,setFormErrors] = useState({})
@@ -128,8 +129,8 @@ export default function UpdateFixedAssetForm(props) {
         }
         return hasErrors
     }
-    function getAssetsCodes(){
-        const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
+    function getAssetsCodes(){        
+        const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'        
         getFixedAssets(url).then(
             response => {
                 if(response.name != "AxiosError"){

@@ -8,7 +8,7 @@
      "features":"8Gb de RAM",
      "quantity":5,
      "programHouseAcronym": "SDE",
-     "assetCategoryId":1
+     "assetTypeAssetCategoryId":1
   },
   {
      "id":11,
@@ -19,7 +19,7 @@
      "features":"8Gb de RAM",
      "quantity":5,
      "programHouseAcronym": "SDE",
-     "assetCategoryId":2
+     "assetTypeAssetCategoryId":2
   },
   {
      "id":13,
@@ -30,7 +30,7 @@
      "features":"8 GB de ram",
      "quantity":1,
      "programHouseAcronym": "SDE",
-     "assetCategoryId":3
+     "assetTypeAssetCategoryId":3
   },
   {
      "id":14,
@@ -41,7 +41,7 @@
      "features":"Tiene un rayon",
      "quantity":1,
      "programHouseAcronym": "SDE",
-     "assetCategoryId":4
+     "assetTypeAssetCategoryId":4
   },
   {
      "id":15,
@@ -52,6 +52,6 @@
      "features":"Tiene RGB",
      "quantity":1,
      "programHouseAcronym": "SDE",
-     "assetCategoryId":1
+     "assetTypeAssetCategoryId":1
   }
 ]

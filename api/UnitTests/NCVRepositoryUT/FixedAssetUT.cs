@@ -33,10 +33,10 @@ namespace UnitTests.NCVRepositoryUT
 
             };
 
-            var assetCategory = new AssetCategoryEntity()
+            var assetType = new AssetTypeEntity()
             {
                 Id = 2,
-                Category = "Teclados",
+                Type = "Teclados",
             };
             var assetState = new AssetStateEntity()
             {
@@ -53,12 +53,12 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 ProgramHouse = programHouse,
-                AssetCategory = assetCategory,
+                AssetType = assetType,
                 AssetState = assetState
             };
 
             ctx.Add(programHouse);
-            ctx.Add(assetCategory);
+            ctx.Add(assetType);
             ctx.SaveChanges();
             repository.CreateFixedAsset(fixedAsset, 2, 2);
             var result = await repository.SaveChangesAsync();
@@ -86,10 +86,10 @@ namespace UnitTests.NCVRepositoryUT
 
             };
 
-            var assetCategory = new AssetCategoryEntity()
+            var assetType = new AssetTypeEntity()
             {
                 Id = 2,
-                Category = "Teclados",
+                Type = "Teclados",
             };
             var assetState = new AssetStateEntity()
             {
@@ -103,12 +103,12 @@ namespace UnitTests.NCVRepositoryUT
                 Name = "Computadora",
                 Price = 100.58m,
                 ProgramHouse = programHouse,
-                AssetCategory = assetCategory,
+                AssetType = assetType,
                 AssetState = assetState
             };
 
             ctx.Add(programHouse);
-            ctx.Add(assetCategory);
+            ctx.Add(assetType);
             ctx.SaveChanges();
             repository.CreateFixedAsset(fixedAsset, 2, 2);
             var result = await repository.SaveChangesAsync();
@@ -143,10 +143,10 @@ namespace UnitTests.NCVRepositoryUT
 
             };
 
-            var assetCategory = new AssetCategoryEntity()
+            var assetType = new AssetTypeEntity()
             {
                 Id = 2,
-                Category = "Teclados",
+                Type = "Teclados",
             };
             var assetState = new AssetStateEntity()
             {
@@ -160,12 +160,12 @@ namespace UnitTests.NCVRepositoryUT
                 Name = "Computadora",
                 Price = 100.58m,
                 ProgramHouse = programHouse,
-                AssetCategory = assetCategory,
+                AssetType = assetType,
                 AssetState = assetState
             };
 
             ctx.Add(programHouse);
-            ctx.Add(assetCategory);
+            ctx.Add(assetType);
             ctx.SaveChanges();
             repository.CreateFixedAsset(fixedAsset, 2, 2);
             var result = await repository.SaveChangesAsync();
@@ -199,10 +199,10 @@ namespace UnitTests.NCVRepositoryUT
                 }
 
             };
-            var assetCategory = new AssetCategoryEntity()
+            var assetType = new AssetTypeEntity()
             {
                 Id = 1,
-                Category = "Teclados",
+                Type = "Teclados",
             };
             var assetState = new AssetStateEntity()
             {
@@ -219,11 +219,11 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 ProgramHouse= programHouse,
-                AssetCategory = assetCategory,
+                AssetType = assetType,
                 AssetState = assetState
             };           
             ctx.Add(programHouse);
-            ctx.Add(assetCategory);
+            ctx.Add(assetType);
             ctx.SaveChanges();
             repository.CreateFixedAsset(fixedAsset,2,1);
             var result = await repository.SaveChangesAsync();
@@ -252,10 +252,10 @@ namespace UnitTests.NCVRepositoryUT
                 }
 
             };
-            var assetCategory = new AssetCategoryEntity()
+            var assetType = new AssetTypeEntity()
             {
                 Id = 1,
-                Category = "Teclados",
+                Type = "Teclados",
             };
             var assetState = new AssetStateEntity()
             {
@@ -272,11 +272,11 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 ProgramHouse = programHouse,
-                AssetCategory = assetCategory,
+                AssetType = assetType,
                 AssetState = assetState
             };
             ctx.Add(programHouse);
-            ctx.Add(assetCategory);
+            ctx.Add(assetType);
             ctx.SaveChanges();
             repository.CreateFixedAsset(fixedAsset, 2, 1);
             var result = await repository.SaveChangesAsync();
@@ -305,10 +305,10 @@ namespace UnitTests.NCVRepositoryUT
                 }
 
             };
-            var assetCategory = new AssetCategoryEntity()
+            var assetType = new AssetTypeEntity()
             {
                 Id = 1,
-                Category = "Teclados",
+                Type = "Teclados",
             };
             var assetState = new AssetStateEntity()
             {
@@ -325,11 +325,11 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 ProgramHouse = programHouse,
-                AssetCategory = assetCategory,
+                AssetType = assetType,
                 AssetState = assetState
             };
             ctx.Add(programHouse);
-            ctx.Add(assetCategory);
+            ctx.Add(assetType);
             ctx.SaveChanges();
             repository.CreateFixedAsset(fixedAsset, 2, 1);
             var result = await repository.SaveChangesAsync();
@@ -358,10 +358,10 @@ namespace UnitTests.NCVRepositoryUT
                 }
 
             };
-            var assetCategory = new AssetCategoryEntity()
+            var assetType = new AssetTypeEntity()
             {
                 Id = 1,
-                Category = "Teclados",
+                Type = "Teclados",
             };
             var assetState = new AssetStateEntity()
             {
@@ -378,11 +378,11 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 ProgramHouse = programHouse,
-                AssetCategory = assetCategory,
+                AssetType = assetType,
                 AssetState = assetState
             };
             ctx.Add(programHouse);
-            ctx.Add(assetCategory);
+            ctx.Add(assetType);
             ctx.SaveChanges();
             repository.CreateFixedAsset(fixedAsset, 2, 1);
             var result = await repository.SaveChangesAsync();

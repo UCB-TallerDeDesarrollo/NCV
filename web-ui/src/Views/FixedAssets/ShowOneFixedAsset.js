@@ -19,7 +19,7 @@ var accesPermiss = sessionStorage.getItem("Access")
 
 export function ShowFixedAsset() {
     const { fixedAssetId } = useParams()
-    const url = `https://ncv-api.herokuapp.com/api/fixedAssets/${fixedAssetId}`    
+    const url = `https://ncv-api.herokuapp.com/api/fixedAssets/${fixedAssetId}`  
     const { apiData:fixedAsset, error } = getFromApi(url)
     let imageUrl = "https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg" 
     const navigate = useNavigate();
@@ -31,7 +31,8 @@ export function ShowFixedAsset() {
     }
     if (!fixedAsset) return null
     const fixedAssetData = {
-        "CATEGORÍA": fixedAsset.assetCategoryCategory,
+        "CATEGORÍA": fixedAsset.assetTypeAssetCategoryCategory,
+        "TIPO": fixedAsset.assetTypeType,
         "DESCRIPCIÓN": fixedAsset.description,
         "CARACTERÍSTICAS": fixedAsset.features,
         "FECHA DE ENTRADA": fixedAsset.entryDate!=null? fixedAsset.entryDate.split('T')[0]:null,

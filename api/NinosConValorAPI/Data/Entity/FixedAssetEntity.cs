@@ -22,11 +22,12 @@ namespace NinosConValorAPI.Data.Entity
         [ForeignKey("ProgramHouseId")]
         public virtual ProgramHouseEntity? ProgramHouse { get; set; }
         
-        [ForeignKey("AssetCategoryId")]
-        public virtual AssetCategoryEntity? AssetCategory { get; set; }
 
         [ForeignKey("AssetStateId")]
         public virtual AssetStateEntity? AssetState { get; set; }
+
+        [ForeignKey("AssetTypeId")]
+        public virtual AssetTypeEntity? AssetType { get; set; }
 
         public bool Deleted { get; set; }
     }
