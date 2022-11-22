@@ -88,8 +88,7 @@ namespace NinosConValorAPI.Services
         public async Task<FixedAssetModel> GetFixedAssetAsync(int fixedAssetId)
         {
             var fixedAsset = await _NCVRepository.GetFixedAssetAsync(fixedAssetId);
-
-            if (fixedAsset == null)
+            if (fixedAsset == null || fixedAsset.Deleted)
                 throw new NotFoundElementException($"El activo fijo con Id:{fixedAssetId} no existe.");
 
             var fixedAssetEnumerable = _mapper.Map<FixedAssetModel>(fixedAsset);
@@ -131,6 +130,10 @@ namespace NinosConValorAPI.Services
             await GetFixedAssetAsync(fixedAssetId);
             await _NCVRepository.DeleteFixedAssetAsync(fixedAssetId);
             var result = await _NCVRepository.SaveChangesAsync();
+            if (!result)
+            {
+                throw new Exception("Error en la base de datos.");
+            }           
         }
     }
 }
