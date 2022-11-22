@@ -205,7 +205,7 @@ function CreateFixedAssetForm(props) {
             Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
             Features: data.Features==''? null:data.Features, // string
             ProgramHouseId : programHouseSelectedValue,
-            AssetCategoryId : categorySelectedValue,
+            AssetTypeId : typeSelectedValue,
             AssetStateId: stateSelectedValue, //string
             Code: "F-" + programCode + "-" + categoryCode + "-" + data.Code, //string
             }).then((res) => {
