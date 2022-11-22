@@ -55,5 +55,5 @@ jobs:
         with:
           app-name: 'ncv-api'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_c263fca3c9db466ebc24b72f6d39ed77 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FD10BD375E5D451EAC42BA243931DA16 }}
           package: .
