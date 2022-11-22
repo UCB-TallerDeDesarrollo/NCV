@@ -6,10 +6,10 @@ import ErrorPage from '../../Components/ErrorPage'
 import FormContainer from '../../Components/FormContainer'
 import InputText from '../../Components/InputText'
 import Navbar from '../../Components/NavBar'
-import Box from '@mui/material/Box'
+import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
-import ButtonPrimary from '../../Components/MUI-Button'
+import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
 import getFromApi from '../../Components/GetFromApi'
 import Dropdown from '../../Components/Dropdown'
 import axios from 'axios';
@@ -51,7 +51,7 @@ export default function UpdateFixedAssetForm() {
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
     const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)
     //categories
-    const [categorySelectedValue, setCategorySelectedValue] = useState(null)
+    const [categorySelectedValue, setCategorySelectedValue] = useState([])
     const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
     //states
     const [stateSelectedValue, setStateSelectedValue] = useState(null)
@@ -161,16 +161,16 @@ export default function UpdateFixedAssetForm() {
         setIsSubmit(true)
         if(!hasFormErrors(errorsFromForm)){
             axios.put(url, {
-                Name: data.Name,
-                Description: data.Description==''? null:data.Description, // string
-                EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
-                Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
-                Features: data.Features==''? null:data.Features, // string
+                Name: data.name,
+                Description: data.description==''? null:data.description, // string
+                EntryDate: data.entryDate==''? null:data.entryDate.split('T')[0], // dateTime
+                Price: data.price==''? null:parseFloat(data.price).toFixed(2), // decimal
+                Features: data.features==''? null:data.features, // string
                 ProgramHouseId : programHouseSelectedValue,
                 AssetCategoryId : categorySelectedValue,
                 AssetStateId: stateSelectedValue, //string
-                Code: "F-" + programCode + "-" + categoryCode + "-" + data.Code, //string
-                }).then((res) => {
+                Code: "F-" + programCode + "-" + categoryCode + "-" + data.code, //string
+            }).then((res) => {
                 if (res.status == 200) {               
                     navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo actualizado exitosamente"}})
                 }            
@@ -225,9 +225,8 @@ export default function UpdateFixedAssetForm() {
         return ErrorPage(error)
     }
     return (
-        <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
-        </Box>
-        <div style={{display:'flex', justifyContent:'center'}}>
+        <><Navbar />
+        <div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
             <FormContainer title="Editar activo fijo">
                 <InputText
                     required
@@ -247,8 +246,9 @@ export default function UpdateFixedAssetForm() {
                     id="category-drop" 
                     options={categoriesOptions} 
                     helperText = "Seleccione una categoría" 
-                    selectedValue={categorySelectedValue}
+                    selectedValue={categorySelectedValue == '' ? data.assetCategoryId : categorySelectedValue}
                     setSelectedValue = {setCategorySelectedValue}
+                    InputLabelProps={{ shrink: true }}
                     required
                     >                                        
                 </Dropdown> 
@@ -267,7 +267,7 @@ export default function UpdateFixedAssetForm() {
                 <InputText
                     onChange={(e) => handle(e)}
                     id="EntryDate"
-                    value={data.entryDate}
+                    value={data.entryDate == null ? data.entryDate : data.entryDate.split('T')[0]}
                     label="Fecha de Entrada"
                     type="date"
                     InputLabelProps={{ shrink: true }}
@@ -288,8 +288,9 @@ export default function UpdateFixedAssetForm() {
                     id="programa-drop" 
                     options={programHousesOptions} 
                     helperText = "Seleccione un programa" 
-                    selectedValue={programHouseSelectedValue}
+                    selectedValue={programHouseSelectedValue == null ? data.programHouseId : programHouseSelectedValue}
                     setSelectedValue = {setProgramHouseSelectedValue}
+                    InputLabelProps={{ shrink: true }}
                     required
                     >                                        
                 </Dropdown>   
@@ -299,9 +300,10 @@ export default function UpdateFixedAssetForm() {
                     name={"Estado"} 
                     id="estado-drop" 
                     options={stateOptions}                                         
-                    selectedValue={stateSelectedValue}
+                    selectedValue={stateSelectedValue == null ? data.assetStateId : stateSelectedValue}
                     setSelectedValue = {setStateSelectedValue}
                     helperText = "Seleccione un estado"
+                    InputLabelProps={{ shrink: true }}
                     required                    
                     >                                        
                 </Dropdown>   
@@ -321,7 +323,7 @@ export default function UpdateFixedAssetForm() {
                     required
                     id="Code"
                     name="Code"
-                    value={data.code}
+                    value={data.code == null ? data.code : data.code.split('-').pop()}
                     label="Código"
                     type="text"
                     onChange={(e) => { handle(e) }}
@@ -330,7 +332,10 @@ export default function UpdateFixedAssetForm() {
                 {formErrors.code? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
                     {formErrors.code}                   
                 </Alert>:<p></p> }
-                <ButtonPrimary label={"Guardar cambios"} id="submit_button" onClick={submit}/>
+                <Box sx={{display: 'inline'}}>
+                    <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
+                    <ButtonPrimary label={"Guardar"} onClick={submit}></ButtonPrimary>
+                </Box>
                 <Snackbar
                     open={open}
                     autoHideDuration={6000}
