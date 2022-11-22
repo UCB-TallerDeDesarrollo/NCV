@@ -15,14 +15,11 @@ import {getFixedAssets} from '../../Components/GetFromApi'
 import axios from "axios"
 
 function CreateFixedAssetForm(props) {
-    //const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
-    //const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
-    //const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories'
-    //const urlStates = 'https://ncv-api.herokuapp.com/api/assetStates'
-    const url = 'http://localhost:5009/api/fixedAssets'
-    const urlProgramHouses = 'http://localhost:5009/api/programHouses'
-    const urlCategories = 'http://localhost:5009/api/assetCategories'
-    const urlStates = 'http://localhost:5009/api/assetStates'
+    const url = 'https://ncv-api.herokuapp.com/api/fixedAssets'
+    const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
+    const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories'
+    const urlStates = 'https://ncv-api.herokuapp.com/api/assetStates'
+
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null)
     const [formErrors,setFormErrors] = useState({})
@@ -125,10 +122,7 @@ function CreateFixedAssetForm(props) {
     }
 
     function getTypesByCategory(id){
-        //const urlTypesByCategory = `https://ncv-api.herokuapp.com/api/assetCategories/${id}/assetTypes`
-        const urlTypesByCategory = `http://localhost:5009/api/assetCategories/${id}/assetTypes`
-        //const { apiData:types, error:errorTypes } = getFromApi(urlTypesByCategory) 
-        console.log(urlTypesByCategory)
+        const urlTypesByCategory = `https://ncv-api.herokuapp.com/api/assetCategories/${id}/assetTypes`
         let types=null
         let errorTypes=null
         axios.get(urlTypesByCategory).then(            
@@ -148,8 +142,7 @@ function CreateFixedAssetForm(props) {
     }
 
     function getAssetsCodes(){        
-        //const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
-        const url = 'http://localhost:5009/api/fixedAssets/'
+        const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
         getFixedAssets(url).then(
             response => {
                 if(response.name != "AxiosError"){

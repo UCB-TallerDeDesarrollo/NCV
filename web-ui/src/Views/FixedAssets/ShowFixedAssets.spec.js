@@ -9,12 +9,9 @@ import {MemoryRouter, Route, Routes} from 'react-router-dom'
 import ShowFixedAssets from './ShowFixedAssets';
 
 describe('Show Fixed Asset', () => {
-  //const fixedAssetUrl ='https://ncv-api.herokuapp.com/api/fixedAssets'  
-  //const fixedAssetCategoriesUrl ='https://ncv-api.herokuapp.com/api/assetCategories?showAssets=true'
-  //const programHousesUrl ='https://ncv-api.herokuapp.com/api/programHouses'
-  const fixedAssetUrl ='http://localhost:5009/api/fixedAssets'  
-  const fixedAssetCategoriesUrl ='http://localhost:5009/api/assetCategories?showAssets=true'
-  const programHousesUrl ='http://localhost:5009/api/programHouses'
+  const fixedAssetUrl ='https://ncv-api.herokuapp.com/api/fixedAssets'  
+  const fixedAssetCategoriesUrl ='https://ncv-api.herokuapp.com/api/assetCategories?showAssets=true'
+  const programHousesUrl ='https://ncv-api.herokuapp.com/api/programHouses'
 
   function getResponse(url, jsonData=null, code=200, text=null){
     const response = rest.get(url, (req, res, ctx) => {

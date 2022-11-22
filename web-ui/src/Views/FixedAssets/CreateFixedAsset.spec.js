@@ -15,12 +15,9 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
       </MemoryRouter>
     )
   }
-  //const programHousesUrl ='https://ncv-api.herokuapp.com/api/programHouses'
-  //const categoriesUrl ='https://ncv-api.herokuapp.com/api/AssetCategories'  
-  //const statesUrl ='https://ncv-api.herokuapp.com/api/AssetStates' 
-  const programHousesUrl ='http://localhost:5009/api/programHouses'
-  const categoriesUrl ='http://localhost:5009/api/AssetCategories'  
-  const statesUrl ='http://localhost:5009/api/AssetStates'  
+  const programHousesUrl ='https://ncv-api.herokuapp.com/api/programHouses'
+  const categoriesUrl ='https://ncv-api.herokuapp.com/api/AssetCategories'  
+  const statesUrl ='https://ncv-api.herokuapp.com/api/AssetStates' 
 
   function getResponse(url, jsonData=null, code=200, text=null){
       const response = rest.get(url, (req, res, ctx) => {

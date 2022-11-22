@@ -2,8 +2,7 @@
 sessionStorage.setItem('Access',"ComplitAcces")
 describe('Show a fixed asset end to end tests', () => {
   it('Verifies the fields from a single fixed asset', () => {
-    //cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/fixedAssets/9',{
-    cy.intercept('GET', 'http://localhost:5009/api/fixedAssets/9',{
+    cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/fixedAssets/9',{    
       fixture: 'fixedAssets/anAsset.json'
     }).as('getAnAsset',);
 

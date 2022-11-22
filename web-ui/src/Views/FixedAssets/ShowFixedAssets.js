@@ -27,12 +27,10 @@ export default function ShowFixedAssets() {
     const navigate = useNavigate();
     
     const completeInfoFixedAsset = '/activos-fijos'
-    //const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
-    //const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
-    //const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories?showAssets=true'
-    const urlProgramHouses = 'http://localhost:5009/api/programHouses'
-    const url = 'http://localhost:5009/api/fixedAssets/'
-    const urlCategories = 'http://localhost:5009/api/assetCategories?showAssets=true'
+    const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
+    const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
+    const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories?showAssets=true'
+   
     let showAlert = location.state ? location.state.showAlert : false
     let alertMessage = location.state ? location.state.alertMessage : null
     const { apiData: assetCategories, errors } = getFromApi(urlCategories)

@@ -3,12 +3,10 @@ sessionStorage.setItem('Access',"ComplitAcces")
 
 describe('Show fixed assets end to end tests', () => {
   it('Shows the list of fixed assets', () => {
-    //cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/assetCategories?showAssets=true',{
-    cy.intercept('GET', 'http://localhost:5009/api/assetCategories?showAssets=true',{
+    cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/assetCategories?showAssets=true',{    
       fixture: 'fixedAssets/assetCategories.json'
     }).as('getAssetCategories',);
-    //cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/fixedAssets',{
-    cy.intercept('GET', 'http://localhost:5009/api/fixedAssets',{
+    cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/fixedAssets',{    
       fixture: 'fixedAssets/listOfAssets.json'
     }).as('listOfAssets',);
 
@@ -30,12 +28,10 @@ describe('Show fixed assets end to end tests', () => {
     .should('have.length', 9)
   });
   it('Verifies the fields from a fixed asset category form the list', () => {
-    //cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/assetCategories?showAssets=true',{
-    cy.intercept('GET', 'http://localhost:5009/api/assetCategories?showAssets=true',{
+    cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/assetCategories?showAssets=true',{    
       fixture: 'fixedAssets/assetCategories.json'
     }).as('getAssetCategories',);
-    //cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/fixedAssets',{
-    cy.intercept('GET', 'http://localhost:5009/api/fixedAssets',{
+    cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/fixedAssets',{    
       fixture: 'fixedAssets/listOfAssets.json'
     }).as('listOfAssets',);
 
