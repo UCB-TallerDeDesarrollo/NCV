@@ -15,7 +15,7 @@ import Dropdown from '../../Components/Dropdown'
 import axios from 'axios';
 import {getFixedAssets} from '../../Components/GetFromApi'
 
-export default function UpdateFixedAssetForm(props) {
+export default function UpdateFixedAssetForm() {
     const { fixedAssetId } = useParams()
     const url = `https://ncv-api.herokuapp.com/api/fixedAssets/${fixedAssetId}`
     const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
@@ -29,17 +29,7 @@ export default function UpdateFixedAssetForm(props) {
     let programCode = ''
     let categoryCode = ''
     const navigate = useNavigate()
-    const [data, setData] = useState({
-        Name: '', // string
-        Code: '', // string
-        Description: '', // string
-        EntryDate: '', // dateTime
-        Price: '', // decimal
-        Features: '', // string
-        ProgramHouseId : '', //int
-        AssetCategoryId : '', //int
-        AssetStateId: '' //string
-    })
+    const [data, setData] = useState([])
 
     const fetchBasicData = () => {
         const responseData = axios(url);
@@ -99,12 +89,8 @@ export default function UpdateFixedAssetForm(props) {
     const stateOptions = statesList 
     
     function handle(e) {
-        const {name, value} = e.target
         setOpen(false)
-        setData({
-            ...data,
-            [name]:value
-        })
+        setData(e.target.value)
     }
 
     function handleClose(event, reason) {
@@ -233,8 +219,7 @@ export default function UpdateFixedAssetForm(props) {
         console.log('errs',errors)
         return errors
     }
-    
-    debugger;
+    //debugger;
     if(error){
         //setOpen(true)
         return ErrorPage(error)
@@ -251,6 +236,7 @@ export default function UpdateFixedAssetForm(props) {
                     value={data.name}
                     label="Nombre"
                     type="text"
+                    InputLabelProps={{ shrink: true }}
                     onChange={(e) => handle(e)}
                 />
                 {formErrors.name? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
@@ -274,6 +260,7 @@ export default function UpdateFixedAssetForm(props) {
                     value={data.description}
                     label="Descripción"
                     type="text"
+                    InputLabelProps={{ shrink: true }}
                 />
                 {formErrors.description? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.description} </Alert>:<p></p> }
@@ -283,9 +270,7 @@ export default function UpdateFixedAssetForm(props) {
                     value={data.entryDate}
                     label="Fecha de Entrada"
                     type="date"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
+                    InputLabelProps={{ shrink: true }}
                 />
                 <InputText
                     required
@@ -293,6 +278,7 @@ export default function UpdateFixedAssetForm(props) {
                     value={data.price}
                     label="Precio"
                     type="number"
+                    InputLabelProps={{ shrink: true }}
                     onChange={(e) => handle(e)}
                 />
                 {formErrors.price? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
@@ -327,6 +313,7 @@ export default function UpdateFixedAssetForm(props) {
                     value={data.features}
                     label="Características"
                     type="text"
+                    InputLabelProps={{ shrink: true }}
                 />
                  {formErrors.features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.features} </Alert>:<p></p> }
@@ -337,9 +324,8 @@ export default function UpdateFixedAssetForm(props) {
                     value={data.code}
                     label="Código"
                     type="text"
-                    onChange={(e) => {
-                        handle(e)
-                    }}
+                    onChange={(e) => { handle(e) }}
+                    InputLabelProps={{ shrink: true }}
                 />
                 {formErrors.code? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
                     {formErrors.code}                   
