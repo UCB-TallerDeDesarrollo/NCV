@@ -12,7 +12,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-
+    defaults:
+      run:
+        working-directory: ./api
     steps:
       - uses: actions/checkout@v2
 
