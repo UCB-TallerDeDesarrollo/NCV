@@ -3,6 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NinosConValorAPI.Data.Entity
 {
+    public enum EntityStatus
+    {
+        Deleted,
+        Active
+    }
     public class KidEntity
     {
         [Key]
@@ -15,6 +20,7 @@ namespace NinosConValorAPI.Data.Entity
         public string? ProgramHouse { get; set; }
         public string? BirthPlace { get; set; }
         public string? Gender { get; set; }
+        public EntityStatus Status { get; set; }  = EntityStatus.Active;
 
         public virtual HealthReportEntity? HealthReport { get; set; }
         public virtual FoundationReportEntity? FoundationReport { get; set; }

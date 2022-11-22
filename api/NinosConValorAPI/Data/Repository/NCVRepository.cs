@@ -153,12 +153,13 @@ namespace NinosConValorAPI.Data.Repository
             IQueryable<KidEntity> query = _dbContext.Kids;
             query = query.AsNoTracking();
 
-            return await query.FirstOrDefaultAsync(c => c.Id == kidId);
+            return await query.FirstOrDefaultAsync(c => (c.Id == kidId) & (c.Status != EntityStatus.Deleted));
         }
         public async Task<IEnumerable<KidEntity>> GetKidsAsync()
         {
             IQueryable<KidEntity> query = _dbContext.Kids;
             query = query.AsNoTracking();
+            query = query.Where( k => k.Status != EntityStatus.Deleted);
             query = query.OrderBy(k => k.FirstName).ThenBy(k => k.LastName);
             return await query.ToListAsync() ;
         }
@@ -178,7 +179,8 @@ namespace NinosConValorAPI.Data.Repository
         public async Task DeleteKidAsync(int kidId)
         {
             var kidToDelete = await _dbContext.Kids.FirstOrDefaultAsync(c => c.Id == kidId);
-            _dbContext.Kids.Remove(kidToDelete);
+            kidToDelete.Status = EntityStatus.Deleted;
+            
         }
 
         public async Task<bool> SaveChangesAsync()
