@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Axios from 'axios'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import ErrorPage from '../../Components/ErrorPage'
@@ -14,6 +13,7 @@ import getFromApi from '../../Components/GetFromApi'
 import Dropdown from '../../Components/Dropdown'
 import axios from 'axios';
 import {getFixedAssets} from '../../Components/GetFromApi'
+import { CommentsDisabledOutlined } from '@mui/icons-material'
 
 export default function UpdateFixedAssetForm() {
     const { fixedAssetId } = useParams()
@@ -31,13 +31,17 @@ export default function UpdateFixedAssetForm() {
     let categoryCode = ''
     const navigate = useNavigate()
     const [data, setData] = useState([])
+    const [categoryId, setCategoryId] = useState([])
 
     const fetchBasicData = () => {
         const responseData = axios(url);
         axios.all([responseData]).then(
             axios.spread((...allData) => {
-                setData(allData[0].data)
-                console.log(allData[0].data)
+                const dataFA = allData[0].data
+                setData(dataFA)
+                setCategoryId(dataFA.assetTypeAssetCategoryId)
+                console.log("json: ", dataFA)
+                console.log("categoryId: ", dataFA.assetTypeAssetCategoryId)
             }))
     }
 
@@ -55,7 +59,16 @@ export default function UpdateFixedAssetForm() {
     const [categorySelectedValue, setCategorySelectedValue] = useState([])
     const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
     //types
+    let urlTypes = ''
+    if (categoryId == '') {
+        urlTypes =  urlCategories + `/${2}/assetTypes`
+    }
+    else {
+        urlTypes = urlCategories + `/${categoryId}/assetTypes`
+    }
     const [typeSelectedValue, setTypeSelectedValue] = useState([])
+    const { apiData:typesByCategory, error:errorTypesByCategory } = getFromApi(urlTypes) 
+    console.log("url types: ", urlTypes)
     const [typesOptions, setTypesOptions] = useState([])
     //states
     const [stateSelectedValue, setStateSelectedValue] = useState(null)
@@ -81,6 +94,17 @@ export default function UpdateFixedAssetForm() {
         value: category.id
     }})
     const categoriesOptions = categoriesList
+    // types options for DROPDOWN
+    if(errorTypesByCategory){
+        return ErrorPage(errorTypesByCategory)
+    }
+    if (!typesByCategory) return null        
+    let typesByCategoryList = typesByCategory.map( types =>  { return {
+        label: types.type,
+        value: types.id
+    }})
+    const typesOptions2 = typesByCategoryList
+    console.log(typesOptions2)
     //states options for DROPDOWN
     if(errorStates){
         return ErrorPage(errorStates)
@@ -287,9 +311,9 @@ export default function UpdateFixedAssetForm() {
                 <Dropdown 
                     name={"Tipo"} 
                     id="type-drop" 
-                    options={typesOptions} 
+                    options={typesOptions2} 
                     helperText = "Seleccione un tipo" 
-                    selectedValue={typeSelectedValue}
+                    selectedValue={typeSelectedValue == '' ? data.assetTypeId : typeSelectedValue}
                     setSelectedValue = {setTypeSelectedValue}
                     required
                     >                                       
