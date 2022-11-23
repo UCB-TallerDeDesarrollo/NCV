@@ -6,16 +6,16 @@ import ErrorPage from '../../Components/ErrorPage'
 import FormContainer from '../../Components/FormContainer'
 import InputText from '../../Components/InputText'
 import Navbar from '../../Components/NavBar'
-import Box from '@mui/material/Box'
+import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
-import ButtonPrimary from '../../Components/MUI-Button'
+import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
 import getFromApi from '../../Components/GetFromApi'
 import Dropdown from '../../Components/Dropdown'
 import axios from 'axios';
 import {getFixedAssets} from '../../Components/GetFromApi'
 
-export default function UpdateFixedAssetForm(props) {
+export default function UpdateFixedAssetForm() {
     const { fixedAssetId } = useParams()
     const url = `https://ncv-api.herokuapp.com/api/fixedAssets/${fixedAssetId}`
     const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
@@ -30,17 +30,7 @@ export default function UpdateFixedAssetForm(props) {
     let programCode = ''
     let categoryCode = ''
     const navigate = useNavigate()
-    const [data, setData] = useState({
-        Name: '', // string
-        Code: '', // string
-        Description: '', // string
-        EntryDate: '', // dateTime
-        Price: '', // decimal
-        Features: '', // string
-        ProgramHouseId : '', //int
-        AssetCategoryId : '', //int
-        AssetStateId: '' //string
-    })
+    const [data, setData] = useState([])
 
     const fetchBasicData = () => {
         const responseData = axios(url);
@@ -62,7 +52,7 @@ export default function UpdateFixedAssetForm(props) {
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
     const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)
     //categories
-    const [categorySelectedValue, setCategorySelectedValue] = useState(null)
+    const [categorySelectedValue, setCategorySelectedValue] = useState([])
     const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
     //states
     const [stateSelectedValue, setStateSelectedValue] = useState(null)
@@ -100,12 +90,8 @@ export default function UpdateFixedAssetForm(props) {
     const stateOptions = statesList 
     
     function handle(e) {
-        const {name, value} = e.target
         setOpen(false)
-        setData({
-            ...data,
-            [name]:value
-        })
+        setData(e.target.value)
     }
 
     function handleClose(event, reason) {
@@ -176,16 +162,16 @@ export default function UpdateFixedAssetForm(props) {
         setIsSubmit(true)
         if(!hasFormErrors(errorsFromForm)){
             axios.put(url, {
-                Name: data.Name,
-                Description: data.Description==''? null:data.Description, // string
-                EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
-                Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
-                Features: data.Features==''? null:data.Features, // string
+                Name: data.name,
+                Description: data.description==''? null:data.description, // string
+                EntryDate: data.entryDate==''? null:data.entryDate.split('T')[0], // dateTime
+                Price: data.price==''? null:parseFloat(data.price).toFixed(2), // decimal
+                Features: data.features==''? null:data.features, // string
                 ProgramHouseId : programHouseSelectedValue,
                 AssetCategoryId : categorySelectedValue,
                 AssetStateId: stateSelectedValue, //string
-                Code: "F-" + programCode + "-" + categoryCode + "-" + data.Code, //string
-                }).then((res) => {
+                Code: "F-" + programCode + "-" + categoryCode + "-" + data.code, //string
+            }).then((res) => {
                 if (res.status == 200) {               
                     navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo actualizado exitosamente"}})
                 }            
@@ -234,16 +220,14 @@ export default function UpdateFixedAssetForm(props) {
         console.log('errs',errors)
         return errors
     }
-    
-    debugger;
+    //debugger;
     if(error){
         //setOpen(true)
         return ErrorPage(error)
     }
     return (
-        <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
-        </Box>
-        <div style={{display:'flex', justifyContent:'center'}}>
+        <><Navbar />
+        <div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
             <FormContainer title="Editar activo fijo">
                 <InputText
                     required
@@ -252,6 +236,7 @@ export default function UpdateFixedAssetForm(props) {
                     value={data.name}
                     label="Nombre"
                     type="text"
+                    InputLabelProps={{ shrink: true }}
                     onChange={(e) => handle(e)}
                 />
                 {formErrors.name? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
@@ -262,8 +247,9 @@ export default function UpdateFixedAssetForm(props) {
                     id="category-drop" 
                     options={categoriesOptions} 
                     helperText = "Seleccione una categoría" 
-                    selectedValue={categorySelectedValue}
+                    selectedValue={categorySelectedValue == '' ? data.assetCategoryId : categorySelectedValue}
                     setSelectedValue = {setCategorySelectedValue}
+                    InputLabelProps={{ shrink: true }}
                     required
                     >                                        
                 </Dropdown> 
@@ -275,18 +261,17 @@ export default function UpdateFixedAssetForm(props) {
                     value={data.description}
                     label="Descripción"
                     type="text"
+                    InputLabelProps={{ shrink: true }}
                 />
                 {formErrors.description? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.description} </Alert>:<p></p> }
                 <InputText
                     onChange={(e) => handle(e)}
                     id="EntryDate"
-                    value={data.entryDate}
+                    value={data.entryDate == null ? data.entryDate : data.entryDate.split('T')[0]}
                     label="Fecha de Entrada"
                     type="date"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
+                    InputLabelProps={{ shrink: true }}
                 />
                 <InputText
                     required
@@ -294,6 +279,7 @@ export default function UpdateFixedAssetForm(props) {
                     value={data.price}
                     label="Precio"
                     type="number"
+                    InputLabelProps={{ shrink: true }}
                     onChange={(e) => handle(e)}
                 />
                 {formErrors.price? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
@@ -303,8 +289,9 @@ export default function UpdateFixedAssetForm(props) {
                     id="programa-drop" 
                     options={programHousesOptions} 
                     helperText = "Seleccione un programa" 
-                    selectedValue={programHouseSelectedValue}
+                    selectedValue={programHouseSelectedValue == null ? data.programHouseId : programHouseSelectedValue}
                     setSelectedValue = {setProgramHouseSelectedValue}
+                    InputLabelProps={{ shrink: true }}
                     required
                     >                                        
                 </Dropdown>   
@@ -314,9 +301,10 @@ export default function UpdateFixedAssetForm(props) {
                     name={"Estado"} 
                     id="estado-drop" 
                     options={stateOptions}                                         
-                    selectedValue={stateSelectedValue}
+                    selectedValue={stateSelectedValue == null ? data.assetStateId : stateSelectedValue}
                     setSelectedValue = {setStateSelectedValue}
                     helperText = "Seleccione un estado"
+                    InputLabelProps={{ shrink: true }}
                     required                    
                     >                                        
                 </Dropdown>   
@@ -328,6 +316,7 @@ export default function UpdateFixedAssetForm(props) {
                     value={data.features}
                     label="Características"
                     type="text"
+                    InputLabelProps={{ shrink: true }}
                 />
                  {formErrors.features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.features} </Alert>:<p></p> }
@@ -335,17 +324,19 @@ export default function UpdateFixedAssetForm(props) {
                     required
                     id="Code"
                     name="Code"
-                    value={data.code}
+                    value={data.code == null ? data.code : data.code.split('-').pop()}
                     label="Código"
                     type="text"
-                    onChange={(e) => {
-                        handle(e)
-                    }}
+                    onChange={(e) => { handle(e) }}
+                    InputLabelProps={{ shrink: true }}
                 />
                 {formErrors.code? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
                     {formErrors.code}                   
                 </Alert>:<p></p> }
-                <ButtonPrimary label={"Guardar cambios"} id="submit_button" onClick={submit}/>
+                <Box sx={{display: 'inline'}}>
+                    <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
+                    <ButtonPrimary label={"Guardar"} onClick={submit}></ButtonPrimary>
+                </Box>
                 <Snackbar
                     open={open}
                     autoHideDuration={6000}
