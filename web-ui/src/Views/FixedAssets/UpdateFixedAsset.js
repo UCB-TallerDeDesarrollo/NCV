@@ -54,6 +54,9 @@ export default function UpdateFixedAssetForm() {
     //categories
     const [categorySelectedValue, setCategorySelectedValue] = useState([])
     const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
+    //types
+    const [typeSelectedValue, setTypeSelectedValue] = useState([])
+    const [typesOptions, setTypesOptions] = useState([])
     //states
     const [stateSelectedValue, setStateSelectedValue] = useState(null)
     const { apiData:states, error:errorStates } = getFromApi(urlStates) 
@@ -110,11 +113,32 @@ export default function UpdateFixedAssetForm() {
     function hasFormErrors(errorsFromForm){
         console.log('form errors',errorsFromForm)
         let hasErrors=true
-        if(!errorsFromForm.name && !errorsFromForm.description && !errorsFromForm.price && !errorsFromForm.quantity && !errorsFromForm.programHouseId && !errorsFromForm.assetCategoryId && !errorsFromForm.features && !errorsFromForm.code && !errorsFromForm.assetStateId){
+        if(!errorsFromForm.name && !errorsFromForm.description && !errorsFromForm.price && !errorsFromForm.quantity && !errorsFromForm.programHouseId && !errorsFromForm.assetTypeAssetCategoryId && !errorsFromForm.features && !errorsFromForm.code && !errorsFromForm.assetStateId){
             hasErrors = false
         }
         return hasErrors
     }
+
+    function getTypesByCategory(id){
+        const urlTypesByCategory = `https://ncv-api.herokuapp.com/api/assetCategories/${id}/assetTypes`
+        let types=null
+        let errorTypes=null
+        axios.get(urlTypesByCategory).then(            
+            (res) => {          
+                types = res.data
+                let typesList = types.map( type =>  { return{
+                    label: type.type,
+                    value: type.id      
+                }}) 
+                setTypesOptions(typesList)
+            }
+        ).catch((e)=>{
+            errorTypes=e
+        })        
+        if(errorTypes) return ErrorPage(errorTypes)
+        if(types==null) return null        
+    }
+
     function getAssetsCodes(){        
         const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'        
         getFixedAssets(url).then(
@@ -162,15 +186,16 @@ export default function UpdateFixedAssetForm() {
         setIsSubmit(true)
         if(!hasFormErrors(errorsFromForm)){
             axios.put(url, {
+                Code: "F-" + programCode + "-" + categoryCode + "-" + data.code, //string
                 Name: data.name,
+                Price: data.price==''? null:parseFloat(data.price).toFixed(2), // decimal
                 Description: data.description==''? null:data.description, // string
                 EntryDate: data.entryDate==''? null:data.entryDate.split('T')[0], // dateTime
-                Price: data.price==''? null:parseFloat(data.price).toFixed(2), // decimal
                 Features: data.features==''? null:data.features, // string
                 ProgramHouseId : programHouseSelectedValue,
-                AssetCategoryId : categorySelectedValue,
-                AssetStateId: stateSelectedValue, //string
-                Code: "F-" + programCode + "-" + categoryCode + "-" + data.code, //string
+                AssetTypeAssetCategoryId : categorySelectedValue,
+                assetTypeId: typeSelectedValue,
+                AssetStateId: stateSelectedValue
             }).then((res) => {
                 if (res.status == 200) {               
                     navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo actualizado exitosamente"}})
@@ -209,7 +234,10 @@ export default function UpdateFixedAssetForm() {
             errors.programHouseId= "El programa del Activo Fijo es requerido!";
         }
         if(!categorySelectedValue){
-            errors.assetCategoryId= "La categoría del Activo Fijo es requerida!";
+            errors.assetTypeAssetCategoryId= "La categoría del Activo Fijo es requerida!";
+        }
+        if(!typeSelectedValue){
+            errors.assetTypeId= "El tipo del Activo Fijo es requerido!";
         }
         if(datas.features.length>1000){
             errors.features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
@@ -247,14 +275,27 @@ export default function UpdateFixedAssetForm() {
                     id="category-drop" 
                     options={categoriesOptions} 
                     helperText = "Seleccione una categoría" 
-                    selectedValue={categorySelectedValue == '' ? data.assetCategoryId : categorySelectedValue}
+                    selectedValue={categorySelectedValue == '' ? data.assetTypeAssetCategoryId : categorySelectedValue}
                     setSelectedValue = {setCategorySelectedValue}
+                    onChangeF = {getTypesByCategory}
                     InputLabelProps={{ shrink: true }}
                     required
                     >                                        
                 </Dropdown> 
-                {formErrors.assetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.assetCategoryId}  </Alert>:<p></p> }             
+                {formErrors.assetTypeAssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.assetTypeAssetCategoryId}  </Alert>:<p></p> }             
+                <Dropdown 
+                    name={"Tipo"} 
+                    id="type-drop" 
+                    options={typesOptions} 
+                    helperText = "Seleccione un tipo" 
+                    selectedValue={typeSelectedValue}
+                    setSelectedValue = {setTypeSelectedValue}
+                    required
+                    >                                       
+                </Dropdown> 
+                {formErrors.assetTypeId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.assetTypeId}  </Alert>:<p></p> }             
                 <InputText
                     onChange={(e) => handle(e)}
                     id="Description"
