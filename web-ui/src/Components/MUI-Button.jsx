@@ -59,6 +59,13 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
 
 
   export function ButtonPrimaryEditIcon({onClick, sx={}}) {
+    sx.background = sx.background ?? "#5CD4E2"
+    sx.color = sx.color ?? "#023859"
+    sx.boxShadow = sx.boxShadow ?? 3
+    sx.marginLeft = sx.marginLeft ?? 0
+    sx["&:hover"] = sx["&:hover"] ?? {
+        background: "#389CFC"
+    }
     return (
       <IconButton aria-label="delete" size="small" className={"delete-assetState-button"} onClick={onClick} sx={sx}>
         <EditIcon fontSize="small" />
