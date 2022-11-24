@@ -58,15 +58,7 @@ namespace NinosConValorAPI.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                {
-                    foreach (var pair in ModelState)
-                    {
-                        if (pair.Key == nameof(legalReportModel.Nurej) && pair.Value.Errors.Count > 0)
-                        {
-                            return BadRequest(pair.Value.Errors);
-                        }
-                    }
-                }
+                    return BadRequest(ModelState);
 
                 return Ok(await _legalReportService.UpdateLegalReportAsync(kidId, legalReportModel));
             }
