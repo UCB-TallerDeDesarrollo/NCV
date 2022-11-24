@@ -18,6 +18,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 
 export default function GutterlessList({items, withImage=true, withDeleteIcon=false}) {
     const [openToConfirmDelete, setOpenToConfirmDelete] = useState(false);
+    const [selectedRow, setSelectedRow] = useState([])
     function fetchDeleteUSer(){
 
     }
@@ -41,19 +42,22 @@ export default function GutterlessList({items, withImage=true, withDeleteIcon=fa
                 secondaryAction={
                     <IconButton >
                         <EditIcon fontSize="small" aria-label="edit" onClick={()=>navigate(n.elementUrl)} />
-                        {true &&<DeleteIcon fontSize="small" aria-label="delete" onClick={ToConfirmOpen} color='error'/>}
-
+                        {true &&<DeleteIcon fontSize="small" aria-label="delete" onClick={ToConfirmOpen} color='error' id={n.id} setSelectedRow={n}/>}
+                        
                         
                     </IconButton>
                 }
                 
             >
             <ListItemText primary={n.title} secondary={n.description} key={n.id ? n.id : i} id={n.id} sx={{borderTop: 1, borderColor:'#CDCDCD', margin:0}}/>
-                <Dialog open={openToConfirmDelete} onClose={handleCloseToConfirm} id="confirmation_popup" sx={{borderRadius:3 }}>
+                
+            </ListItem>
+        ))}
+        <Dialog open={openToConfirmDelete} onClose={handleCloseToConfirm} id="confirmation_popup" sx={{borderRadius:3 }}>
                     <DialogTitle sx={{display:'flex', justifyContent:'center'}}>Eliminar</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            ¿Desea eliminar todos los datos de {n.title}?
+                            ¿Desea eliminar todos los datos de {selectedRow.title}?
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions sx={{display:'flex',flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
@@ -61,8 +65,7 @@ export default function GutterlessList({items, withImage=true, withDeleteIcon=fa
                         <ButtonDanger label="Eliminar" id="confirm_delete_button" onClick={fetchDeleteUSer}></ButtonDanger>
                     </DialogActions>
                 </Dialog>
-            </ListItem>
-        ))}
         </List>
+        
     );
 }
