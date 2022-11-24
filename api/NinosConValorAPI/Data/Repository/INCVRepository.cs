@@ -38,6 +38,7 @@ namespace NinosConValorAPI.Data.Repository
         // CONTACTS
         Task<IEnumerable<ContactEntity>> GetContactsAsync(int kidId);
         Task<ContactEntity> CreateContactAsync(ContactEntity contact);
+        Task<ContactEntity> UpdateContactAsync(int kidId, ContactEntity contact);
 
         //PROGRAM HOUSE
         Task<IEnumerable<ProgramHouseEntity>> GetProgramHousesAsync();
@@ -72,6 +73,7 @@ namespace NinosConValorAPI.Data.Repository
         // EDUCATION REPORT
         public Task<FamilyReportEntity> CreateFamilyReportAsync(FamilyReportEntity familyReport);
         Task<FamilyReportEntity> GetFamilyReportAsync(int kidId);
+        Task<EducationReportEntity> UpdateEducationReportAsync(int kidId, EducationReportEntity educationReport);
 
         // LEGAL REPORT
         public Task<LegalReportEntity> CreateLegalReportAsync(LegalReportEntity legalReport);
