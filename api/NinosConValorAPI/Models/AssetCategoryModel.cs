@@ -4,7 +4,10 @@
     {
         public int Id { get; set; }
         public string Category { get; set; }
-        public IEnumerable<FixedAssetModel> FixedAssets { get; set; }
+
+        public IEnumerable<AssetTypeModel> AssetTypes { get; set; }
+
+        public string Type { get; set; }
 
     }
 }

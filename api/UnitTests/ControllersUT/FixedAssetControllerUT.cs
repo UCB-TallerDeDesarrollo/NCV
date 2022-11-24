@@ -30,7 +30,7 @@ namespace UnitTests.ControllersUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 ProgramHouseId = 2,
-                AssetCategoryId = 1
+                AssetTypeId = 1
             };           
 
             var fixedAssetServiceMock = new Mock<IFixedAssetService>();
@@ -43,7 +43,7 @@ namespace UnitTests.ControllersUT
                 Price = 100.58m,
                 Features = "8Gb de RAM",
                 ProgramHouseId=2,
-                AssetCategoryId=1
+                AssetTypeId=1
             });
 
             var fixedAssetController = new FixedAssetsController(fixedAssetServiceMock.Object);

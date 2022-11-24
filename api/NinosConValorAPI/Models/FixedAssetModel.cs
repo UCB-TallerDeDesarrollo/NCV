@@ -18,12 +18,15 @@ namespace NinosConValorAPI.Models
         public decimal? Price { get; set; }
         public string? Features { get; set; }
         public int ProgramHouseId { get; set; }
-        public int AssetCategoryId { get; set; }
-        public string? AssetCategoryCategory { get; set; }
+        public int AssetTypeAssetCategoryId { get; set; }
+        public string? AssetTypeAssetCategoryCategory { get; set; }
         public string? ProgramHouseName { get; set; }
         public string? ProgramHouseAcronym { get; set; }
         public int AssetStateId { get; set; }
         public string? AssetStateState { get; set; }
+
+        public int AssetTypeId { get; set; }
+        public string? AssetTypeType { get; set; }
 
         public bool Deleted { get; set; }
     }

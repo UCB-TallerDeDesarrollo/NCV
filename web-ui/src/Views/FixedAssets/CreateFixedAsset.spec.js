@@ -17,7 +17,7 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
   }
   const programHousesUrl ='https://ncv-api.herokuapp.com/api/programHouses'
   const categoriesUrl ='https://ncv-api.herokuapp.com/api/AssetCategories'  
-  const statesUrl ='https://ncv-api.herokuapp.com/api/AssetStates'  
+  const statesUrl ='https://ncv-api.herokuapp.com/api/AssetStates' 
 
   function getResponse(url, jsonData=null, code=200, text=null){
       const response = rest.get(url, (req, res, ctx) => {

@@ -35,6 +35,14 @@ namespace NinosConValorAPI.Services
             return assetCategoryEntity;
         }
 
+        private async Task<AssetTypeEntity> GetAssetTypeAsync(int typeId)
+        {
+            var assetTypeEntity = await _NCVRepository.GetAssetTypeAsync(typeId);
+            if (assetTypeEntity == null)
+                throw new NotFoundElementException($"El tipo con Id:{typeId} no existe.");
+            return assetTypeEntity;
+        }
+
         private async Task<AssetStateEntity> GetAssetStateAsync(int stateId)
         {
             var assetStateEntity = await _NCVRepository.GetAssetStateAsync(stateId);
@@ -50,7 +58,7 @@ namespace NinosConValorAPI.Services
             await GetAssetCategoryAsync(categoryId);
             await GetAssetStateAsync(fixedAsset.AssetStateId);
             fixedAsset.ProgramHouseId = programHouseId;
-            fixedAsset.AssetCategoryId = categoryId;
+            fixedAsset.AssetTypeId = categoryId;
             var fixedAssetEntity = _mapper.Map<FixedAssetEntity>(fixedAsset);
             _NCVRepository.CreateFixedAsset(fixedAssetEntity, programHouseId, categoryId);
             var result = await _NCVRepository.SaveChangesAsync();
@@ -80,8 +88,7 @@ namespace NinosConValorAPI.Services
         public async Task<FixedAssetModel> GetFixedAssetAsync(int fixedAssetId)
         {
             var fixedAsset = await _NCVRepository.GetFixedAssetAsync(fixedAssetId);
-
-            if (fixedAsset == null)
+            if (fixedAsset == null || fixedAsset.Deleted)
                 throw new NotFoundElementException($"El activo fijo con Id:{fixedAssetId} no existe.");
 
             var fixedAssetEnumerable = _mapper.Map<FixedAssetModel>(fixedAsset);
@@ -90,20 +97,21 @@ namespace NinosConValorAPI.Services
 
         public async Task<FixedAssetModel> UpdateFixedAssetAsync(int fixedAssetId, FixedAssetModel fixedAsset)
         {
+            //ESTA PUEDE SER LA SOLUCIÓN!!!!!!!!!!!!!!
             var fixedAssetToUpdate = await GetFixedAssetAsync(fixedAssetId);
             ProgramHouseEntity programHouseToUpdate = null;
-            AssetCategoryEntity categoryToUpdate = null;
+            AssetTypeEntity typeToUpdate = null;
             AssetStateEntity assetStateToUpdate = null; 
             if (fixedAsset.ProgramHouseId!=0)
                 programHouseToUpdate = await GetProgramHouseAsync(fixedAsset.ProgramHouseId);
-            if(fixedAsset.AssetCategoryId!=0)
-                categoryToUpdate = await GetAssetCategoryAsync(fixedAsset.AssetCategoryId);
+            if(fixedAsset.AssetTypeId!=0)
+                typeToUpdate = await GetAssetTypeAsync(fixedAsset.AssetTypeId);
             if (fixedAsset.AssetStateId != 0)
                 assetStateToUpdate = await GetAssetStateAsync(fixedAsset.AssetStateId);
             var fixedAssetEntity = _mapper.Map<FixedAssetEntity>(fixedAsset);           
             fixedAssetEntity.Id = fixedAssetId;
                fixedAssetEntity.ProgramHouse = programHouseToUpdate;
-                fixedAssetEntity.AssetCategory = categoryToUpdate;
+                fixedAssetEntity.AssetType = typeToUpdate;
                 fixedAssetEntity.AssetState = assetStateToUpdate;
 
             await _NCVRepository.UpdateFixedAssetAsync(fixedAssetId, fixedAssetEntity);
@@ -122,6 +130,10 @@ namespace NinosConValorAPI.Services
             await GetFixedAssetAsync(fixedAssetId);
             await _NCVRepository.DeleteFixedAssetAsync(fixedAssetId);
             var result = await _NCVRepository.SaveChangesAsync();
+            if (!result)
+            {
+                throw new Exception("Error en la base de datos.");
+            }           
         }
     }
 }
