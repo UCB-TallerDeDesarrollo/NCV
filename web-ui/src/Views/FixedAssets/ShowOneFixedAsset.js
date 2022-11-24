@@ -35,7 +35,7 @@ export function ShowFixedAsset() {
         "Tipo": fixedAsset.assetTypeType,
         "Descripción": fixedAsset.description,
         "Características": fixedAsset.features,
-        "Fecha de Entrada": fixedAsset.entryDate!=null? fixedAsset.entryDate.split('T')[0]:null,
+        "Fecha de Entrada": fixedAsset.entryDate!=null? new Date(fixedAsset.entryDate.split('T')[0]).toLocaleDateString():null,
         "Precio": fixedAsset.price,
         "Estado": fixedAsset.assetStateState
     }
