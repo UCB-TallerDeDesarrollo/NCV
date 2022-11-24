@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-
+import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -69,6 +69,22 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
     return (
       <IconButton aria-label="delete" size="small" className={"delete-assetState-button"} onClick={onClick} sx={sx}>
         <EditIcon fontSize="small" />
+      </IconButton>
+    );
+  }
+
+  
+  export function ButtonPrimaryDeleteIcon({onClick, sx={}}) {
+    sx.background = sx.background ?? "#E0544C"
+    sx.color = sx.color ?? "white"
+    sx.boxShadow = sx.boxShadow ?? 3
+    sx.marginLeft = sx.marginLeft ?? 0
+    sx["&:hover"] = sx["&:hover"] ?? {
+        background: "#C82C2C"
+    }
+    return (
+      <IconButton aria-label="delete" size="small" className={"delete-button"} onClick={onClick} sx={sx}>
+        <DeleteIcon fontSize="small" />
       </IconButton>
     );
   }

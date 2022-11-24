@@ -6,7 +6,7 @@ import ErrorPage from '../../Components/ErrorPage'
 import Navbar from '../../Components/NavBar'
 import SingleItemCard from '../../Components/SingleItemCard'
 import BoxWithButton from '../../Components/BoxWithButton'
-import ButtonPrimary, { ButtonDanger, ButtonSecondary, ButtonPrimaryEditIcon } from '../../Components/MUI-Button';
+import ButtonPrimary, { ButtonDanger, ButtonSecondary, ButtonPrimaryEditIcon, ButtonPrimaryDeleteIcon } from '../../Components/MUI-Button';
 import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 import Dialog from '@mui/material/Dialog';

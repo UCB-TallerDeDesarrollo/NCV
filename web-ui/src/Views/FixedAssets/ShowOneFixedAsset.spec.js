@@ -67,7 +67,7 @@ describe('Show Fixed Asset', () => {
     await waitFor(() => {
         expect(screen.getByText('Teclado')).toBeVisible
         expect(screen.getByText('Es un teclado razer')).toBeVisible
-        expect(screen.getByText('2022-09-30')).toBeVisible
+        expect(screen.getByText('29/9/2022')).toBeVisible
         expect(screen.getByText('200')).toBeVisible
         expect(screen.getByText('Color negro a medio uso')).toBeVisible
         expect(screen.getByText('Obsoleto')).toBeVisible
