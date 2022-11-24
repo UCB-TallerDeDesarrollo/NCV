@@ -148,14 +148,6 @@ namespace NinosConValorAPI.Data.Repository
 
         // KID FILE
 
-        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int typeId)
-        {
-            _dbContext.Entry(fixedAsset.AssetType).State = EntityState.Unchanged;
-            _dbContext.Entry(fixedAsset.ProgramHouse).State = EntityState.Unchanged;
-            _dbContext.Entry(fixedAsset.AssetState).State = EntityState.Unchanged;
-            _dbContext.FixedAssets.Add(fixedAsset);
-        }
-
         public async Task<KidEntity> GetKidAsync(int kidId)
         {
             IQueryable<KidEntity> query = _dbContext.Kids;
@@ -324,14 +316,6 @@ namespace NinosConValorAPI.Data.Repository
             query = query.Include(f => f.AssetCategory);
             var assetType = await query.FirstOrDefaultAsync(g => (g.Id == typeId));
             return assetType;
-        }
-
-        public bool UpdateKid(KidEntity kidModel)
-        {
-            var kidToUpdate = _dbContext.Kids.FirstOrDefault(c => c.Id == kidModel.Id);
-
-            _dbContext.Entry(kidToUpdate).CurrentValues.SetValues(kidModel);
-            return true;
         }
         
         public async Task DeleteFixedAssetAsync(int fixedAssetId)
