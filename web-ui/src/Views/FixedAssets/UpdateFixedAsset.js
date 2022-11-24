@@ -17,10 +17,10 @@ import { CommentsDisabledOutlined } from '@mui/icons-material'
 
 export default function UpdateFixedAssetForm() {
     const { fixedAssetId } = useParams()
-    const url = `https://ncv-api.herokuapp.com/api/fixedAssets/${fixedAssetId}`
-    const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
-    const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories'
-    const urlStates = 'https://ncv-api.herokuapp.com/api/assetStates'
+    const url = `https://ncv-api.azurewebsites.net/api/fixedAssets/${fixedAssetId}`
+    const urlProgramHouses = 'https://ncv-api.azurewebsites.net/api/programHouses'
+    const urlCategories = 'https://ncv-api.azurewebsites.net/api/assetCategories'
+    const urlStates = 'https://ncv-api.azurewebsites.net/api/assetStates'
 
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null)
@@ -144,7 +144,7 @@ export default function UpdateFixedAssetForm() {
     }
 
     function getTypesByCategory(id){
-        const urlTypesByCategory = `https://ncv-api.herokuapp.com/api/assetCategories/${id}/assetTypes`
+        const urlTypesByCategory = `https://ncv-api.azurewebsites.net/api/assetCategories/${id}/assetTypes`
         let types=null
         let errorTypes=null
         axios.get(urlTypesByCategory).then(            
@@ -164,7 +164,7 @@ export default function UpdateFixedAssetForm() {
     }
 
     function getAssetsCodes(){        
-        const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'        
+        const url = 'https://ncv-api.azurewebsites.net/api/fixedAssets/'        
         getFixedAssets(url).then(
             response => {
                 if(response.name != "AxiosError"){
