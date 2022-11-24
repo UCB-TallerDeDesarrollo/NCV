@@ -4,7 +4,7 @@ describe('Home Page end to end tests', () => {
     const email = 'soprteNCV@gmail.com'
     const password = 'Soporte!23'
 
-    sessionStorage.setItem('Access','');
+    sessionStorage.setItem('Access','CompleteAccess');
     cy.login(email, password);
 
     cy.get('.btn-users').click();
