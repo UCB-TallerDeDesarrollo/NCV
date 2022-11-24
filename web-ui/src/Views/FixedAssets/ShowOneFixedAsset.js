@@ -31,14 +31,13 @@ export function ShowFixedAsset() {
     }
     if (!fixedAsset) return null
     const fixedAssetData = {
-        "CATEGORÍA": fixedAsset.assetTypeAssetCategoryCategory,
-        "TIPO": fixedAsset.assetTypeType,
-        "DESCRIPCIÓN": fixedAsset.description,
-        "CARACTERÍSTICAS": fixedAsset.features,
-        "FECHA DE ENTRADA": fixedAsset.entryDate!=null? fixedAsset.entryDate.split('T')[0]:null,
-        "CANTIDAD": fixedAsset.quantity,
-        "PRECIO": fixedAsset.price,
-        "ESTADO": fixedAsset.assetStateState
+        "Categoría": fixedAsset.assetTypeAssetCategoryCategory,
+        "Tipo": fixedAsset.assetTypeType,
+        "Descripción": fixedAsset.description,
+        "Características": fixedAsset.features,
+        "Fecha de Entrada": fixedAsset.entryDate!=null? fixedAsset.entryDate.split('T')[0]:null,
+        "Precio": fixedAsset.price,
+        "Estado": fixedAsset.assetStateState
     }
 
     const fetchDeleteFixedAsset = () => {
