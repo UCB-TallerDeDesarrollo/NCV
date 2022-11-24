@@ -27,9 +27,9 @@ export default function ShowFixedAssets() {
     const navigate = useNavigate();
     
     const completeInfoFixedAsset = '/activos-fijos'
-    const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
-    const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'
-    const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories?showAssets=true'
+    const urlProgramHouses = 'https://ncv-api.azurewebsites.net/api/programHouses'
+    const url = 'https://ncv-api.azurewebsites.net/api/fixedAssets/'
+    const urlCategories = 'https://ncv-api.azurewebsites.net/api/assetCategories?showAssets=true'
    
     let showAlert = location.state ? location.state.showAlert : false
     let alertMessage = location.state ? location.state.alertMessage : null

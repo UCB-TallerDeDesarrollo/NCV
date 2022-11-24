@@ -7,8 +7,8 @@ import {act} from 'react-dom/test-utils'
 
 import {MemoryRouter, Route, Routes} from 'react-router-dom'
 
-const getAssetStatesUrl ='https://ncv-api.herokuapp.com/api/assetStates'  
-const oneAssetStatesUrl ='https://ncv-api.herokuapp.com/api/assetStates/1'   
+const getAssetStatesUrl ='https://ncv-api.azurewebsites.net/api/assetStates'  
+const oneAssetStatesUrl ='https://ncv-api.azurewebsites.net/api/assetStates/1'   
 
 const assetStates =
   [

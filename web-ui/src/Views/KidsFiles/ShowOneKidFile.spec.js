@@ -8,8 +8,8 @@ import {act} from 'react-dom/test-utils';
 import {MemoryRouter, Route, Routes, BrowserRouter} from 'react-router-dom'
 
 describe('Show One Kid File', () => {
-  const fileKidUrl ='https://ncv-api.herokuapp.com/api/kids/1';
-  const HealthReportUrl = 'https://ncv-api.herokuapp.com/api/kids/1/healthreports'
+  const fileKidUrl ='https://ncv-api.azurewebsites.net/api/kids/1';
+  const HealthReportUrl = 'https://ncv-api.azurewebsites.net/api/kids/1/healthreports'
 
   const fileKidResponse = rest.get(fileKidUrl, (req, res, ctx) => {
     return res(

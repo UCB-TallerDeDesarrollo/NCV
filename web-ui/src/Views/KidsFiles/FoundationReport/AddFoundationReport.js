@@ -18,7 +18,7 @@ const foundReport = {
 function AddFoundationReport() {
     const navigate = useNavigate();
     const {kidId} = useParams();
-    var url = "https://ncv-api.herokuapp.com/api/kids/" + kidId +"/foundationreport";
+    var url = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/foundationreport";
 
     const [formReport, setformReport] = useState(foundReport);
     const [open, setOpen] = useState(false);

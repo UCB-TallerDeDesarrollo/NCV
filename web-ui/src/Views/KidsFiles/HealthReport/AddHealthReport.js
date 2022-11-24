@@ -59,7 +59,7 @@ const bloodtypes = [
 function AddHealthReport() {
     const navigate = useNavigate();
     const {kidId} = useParams()
-    var url = "https://ncv-api.herokuapp.com/api/kids/" + kidId +"/healthreports"
+    var url = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/healthreports"
 
     const [formReport, setformReport] = useState(healtReport)
     const [open, setOpen] = useState(false)

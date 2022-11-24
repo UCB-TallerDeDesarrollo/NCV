@@ -14,7 +14,7 @@ import TranslateRole from './Translate'
 import  { ButtonDanger } from '../../Components/MUI-Button';
 
 function ListUsers() {
-    const url="https://ncv-api.herokuapp.com/api/auth";
+    const url="https://ncv-api.azurewebsites.net/api/auth";
     const { apiData:users, error } = getFromApi(url)
 
     const location = useLocation()

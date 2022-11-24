@@ -2,7 +2,7 @@ sessionStorage.setItem('Access',"ComplitAcces")
 
 describe('Show kids end to end tests', () => {
   it('Shows the list of kids', () => {
-    cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/kids',{
+    cy.intercept('GET', 'https://ncv-api.azurewebsites.net/api/kids',{
       fixture: 'Kids/listOfKids.json'
     }).as('listOfKids',);
 
