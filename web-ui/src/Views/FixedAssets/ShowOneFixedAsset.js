@@ -70,7 +70,12 @@ export function ShowFixedAsset() {
         <>
             <Navbar />
             <div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
-            <SingleItemCard title={fixedAsset.code ? `${fixedAsset.name} #${fixedAsset.code}` : `${fixedAsset.name}`} secondaryField={fixedAsset.programHouseName} element={fixedAssetData} itemsPerLine={3} imageUrl={imageUrl} imageCirle={false} imgHeight={300} imgWidth={500} button={buttonsList} />        
+                <SingleItemCard title={fixedAsset.code ? `${fixedAsset.name} #${fixedAsset.code}` : `${fixedAsset.name}`} secondaryField={fixedAsset.programHouseName} element={fixedAssetData} imageUrl={imageUrl} imageCirle={false} imgHeight={300} imgWidth={500} />        
+                <ButtonPrimary label="Editar Activo Fijo" onClick={navigateUpdateFixedAsset}/>
+                <br></br>
+                {accesPermiss=="CompleteAccess"&&
+                <ButtonDanger key={2} label="Eliminar" id="delete_button" onClick={ToConfirmOpen} />
+            }
             <Dialog open={openToConfirm} onClose={handleCloseToConfirm} id="confirmation_popup" sx={{borderRadius:3 }}>
                 <DialogTitle sx={{display:'flex', justifyContent:'center'}}>Eliminar</DialogTitle>
                 <DialogContent>

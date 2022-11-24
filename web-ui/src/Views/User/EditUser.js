@@ -21,11 +21,16 @@ const roles = [
     },
     {
         label: 'Administrador',
-        value: 'AdminUser'
+        value: 'ADMINISTRADOR'
     },
     {
-        label: 'Super Usuario',
+        label: 'Soporte',
         value: 'Soporte'
+    }
+    ,
+    {
+        label: 'Equipo Tecnico',
+        value: 'Equipo Tecnico'
     }
 ]
 
