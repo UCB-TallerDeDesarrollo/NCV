@@ -9,9 +9,9 @@ import {MemoryRouter, Route, Routes} from 'react-router-dom'
 import ShowFixedAssets from './ShowFixedAssets';
 
 describe('Show Fixed Asset', () => {
-  const fixedAssetUrl ='https://ncv-api.herokuapp.com/api/fixedAssets'  
-  const fixedAssetCategoriesUrl ='https://ncv-api.herokuapp.com/api/assetCategories?showAssets=true'
-  const programHousesUrl ='https://ncv-api.herokuapp.com/api/programHouses'
+  const fixedAssetUrl ='https://ncv-api.azurewebsites.net/api/fixedAssets'  
+  const fixedAssetCategoriesUrl ='https://ncv-api.azurewebsites.net/api/assetCategories?showAssets=true'
+  const programHousesUrl ='https://ncv-api.azurewebsites.net/api/programHouses'
 
   function getResponse(url, jsonData=null, code=200, text=null){
     const response = rest.get(url, (req, res, ctx) => {

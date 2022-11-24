@@ -26,8 +26,8 @@ export default function ShowFixedAssets() {
     const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
     const [alertMessage, setAlertMessage] = useState(location.state ? location.state.alertMessage : null)
     const [severity, setSeverity] = useState(location.state ? location.state.severity : "success")
-    const urlAssetStates = 'https://ncv-api.herokuapp.com/api/assetStates'
-    let [urlAssetState, setUrlAssetState] = useState('https://ncv-api.herokuapp.com/api/assetStates/')   
+    const urlAssetStates = 'https://ncv-api.azurewebsites.net/api/assetStates'
+    let [urlAssetState, setUrlAssetState] = useState('https://ncv-api.azurewebsites.net/api/assetStates/')   
     const [assetStates, setAssetStates] = useState(null)
     const [errorAssetStates, setErrorAssetStates] = useState(null)
     let errorsFromForm = null

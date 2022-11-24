@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Axios from 'axios'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import ErrorPage from '../../Components/ErrorPage'
@@ -14,13 +13,14 @@ import getFromApi from '../../Components/GetFromApi'
 import Dropdown from '../../Components/Dropdown'
 import axios from 'axios';
 import {getFixedAssets} from '../../Components/GetFromApi'
+import { CommentsDisabledOutlined } from '@mui/icons-material'
 
 export default function UpdateFixedAssetForm() {
     const { fixedAssetId } = useParams()
-    const url = `https://ncv-api.herokuapp.com/api/fixedAssets/${fixedAssetId}`
-    const urlProgramHouses = 'https://ncv-api.herokuapp.com/api/programHouses'
-    const urlCategories = 'https://ncv-api.herokuapp.com/api/assetCategories'
-    const urlStates = 'https://ncv-api.herokuapp.com/api/assetStates'
+    const url = `https://ncv-api.azurewebsites.net/api/fixedAssets/${fixedAssetId}`
+    const urlProgramHouses = 'https://ncv-api.azurewebsites.net/api/programHouses'
+    const urlCategories = 'https://ncv-api.azurewebsites.net/api/assetCategories'
+    const urlStates = 'https://ncv-api.azurewebsites.net/api/assetStates'
 
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null)
@@ -31,13 +31,17 @@ export default function UpdateFixedAssetForm() {
     let categoryCode = ''
     const navigate = useNavigate()
     const [data, setData] = useState([])
+    const [categoryId, setCategoryId] = useState([])
 
     const fetchBasicData = () => {
         const responseData = axios(url);
         axios.all([responseData]).then(
             axios.spread((...allData) => {
-                setData(allData[0].data)
-                console.log(allData[0].data)
+                const dataFA = allData[0].data
+                setData(dataFA)
+                setCategoryId(dataFA.assetTypeAssetCategoryId)
+                console.log("json: ", dataFA)
+                console.log("categoryId: ", dataFA.assetTypeAssetCategoryId)
             }))
     }
 
@@ -54,6 +58,18 @@ export default function UpdateFixedAssetForm() {
     //categories
     const [categorySelectedValue, setCategorySelectedValue] = useState([])
     const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
+    //types
+    let urlTypes = ''
+    if (categoryId == '') {
+        urlTypes =  urlCategories + `/${2}/assetTypes`
+    }
+    else {
+        urlTypes = urlCategories + `/${categoryId}/assetTypes`
+    }
+    const [typeSelectedValue, setTypeSelectedValue] = useState([])
+    const { apiData:typesByCategory, error:errorTypesByCategory } = getFromApi(urlTypes) 
+    console.log("url types: ", urlTypes)
+    const [typesOptions, setTypesOptions] = useState([])
     //states
     const [stateSelectedValue, setStateSelectedValue] = useState(null)
     const { apiData:states, error:errorStates } = getFromApi(urlStates) 
@@ -78,6 +94,17 @@ export default function UpdateFixedAssetForm() {
         value: category.id
     }})
     const categoriesOptions = categoriesList
+    // types options for DROPDOWN
+    if(errorTypesByCategory){
+        return ErrorPage(errorTypesByCategory)
+    }
+    if (!typesByCategory) return null        
+    let typesByCategoryList = typesByCategory.map( types =>  { return {
+        label: types.type,
+        value: types.id
+    }})
+    const typesOptions2 = typesByCategoryList
+    console.log(typesOptions2)
     //states options for DROPDOWN
     if(errorStates){
         return ErrorPage(errorStates)
@@ -110,13 +137,34 @@ export default function UpdateFixedAssetForm() {
     function hasFormErrors(errorsFromForm){
         console.log('form errors',errorsFromForm)
         let hasErrors=true
-        if(!errorsFromForm.name && !errorsFromForm.description && !errorsFromForm.price && !errorsFromForm.quantity && !errorsFromForm.programHouseId && !errorsFromForm.assetCategoryId && !errorsFromForm.features && !errorsFromForm.code && !errorsFromForm.assetStateId){
+        if(!errorsFromForm.name && !errorsFromForm.description && !errorsFromForm.price && !errorsFromForm.quantity && !errorsFromForm.programHouseId && !errorsFromForm.assetTypeAssetCategoryId && !errorsFromForm.features && !errorsFromForm.code && !errorsFromForm.assetStateId){
             hasErrors = false
         }
         return hasErrors
     }
+
+    function getTypesByCategory(id){
+        const urlTypesByCategory = `https://ncv-api.azurewebsites.net/api/assetCategories/${id}/assetTypes`
+        let types=null
+        let errorTypes=null
+        axios.get(urlTypesByCategory).then(            
+            (res) => {          
+                types = res.data
+                let typesList = types.map( type =>  { return{
+                    label: type.type,
+                    value: type.id      
+                }}) 
+                setTypesOptions(typesList)
+            }
+        ).catch((e)=>{
+            errorTypes=e
+        })        
+        if(errorTypes) return ErrorPage(errorTypes)
+        if(types==null) return null        
+    }
+
     function getAssetsCodes(){        
-        const url = 'https://ncv-api.herokuapp.com/api/fixedAssets/'        
+        const url = 'https://ncv-api.azurewebsites.net/api/fixedAssets/'        
         getFixedAssets(url).then(
             response => {
                 if(response.name != "AxiosError"){
@@ -162,15 +210,16 @@ export default function UpdateFixedAssetForm() {
         setIsSubmit(true)
         if(!hasFormErrors(errorsFromForm)){
             axios.put(url, {
+                Code: "F-" + programCode + "-" + categoryCode + "-" + data.code, //string
                 Name: data.name,
+                Price: data.price==''? null:parseFloat(data.price).toFixed(2), // decimal
                 Description: data.description==''? null:data.description, // string
                 EntryDate: data.entryDate==''? null:data.entryDate.split('T')[0], // dateTime
-                Price: data.price==''? null:parseFloat(data.price).toFixed(2), // decimal
                 Features: data.features==''? null:data.features, // string
                 ProgramHouseId : programHouseSelectedValue,
-                AssetCategoryId : categorySelectedValue,
-                AssetStateId: stateSelectedValue, //string
-                Code: "F-" + programCode + "-" + categoryCode + "-" + data.code, //string
+                AssetTypeAssetCategoryId : categorySelectedValue,
+                assetTypeId: typeSelectedValue,
+                AssetStateId: stateSelectedValue
             }).then((res) => {
                 if (res.status == 200) {               
                     navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo actualizado exitosamente"}})
@@ -209,7 +258,10 @@ export default function UpdateFixedAssetForm() {
             errors.programHouseId= "El programa del Activo Fijo es requerido!";
         }
         if(!categorySelectedValue){
-            errors.assetCategoryId= "La categoría del Activo Fijo es requerida!";
+            errors.assetTypeAssetCategoryId= "La categoría del Activo Fijo es requerida!";
+        }
+        if(!typeSelectedValue){
+            errors.assetTypeId= "El tipo del Activo Fijo es requerido!";
         }
         if(datas.features.length>1000){
             errors.features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
@@ -247,14 +299,27 @@ export default function UpdateFixedAssetForm() {
                     id="category-drop" 
                     options={categoriesOptions} 
                     helperText = "Seleccione una categoría" 
-                    selectedValue={categorySelectedValue == '' ? data.assetCategoryId : categorySelectedValue}
+                    selectedValue={categorySelectedValue == '' ? data.assetTypeAssetCategoryId : categorySelectedValue}
                     setSelectedValue = {setCategorySelectedValue}
+                    onChangeF = {getTypesByCategory}
                     InputLabelProps={{ shrink: true }}
                     required
                     >                                        
                 </Dropdown> 
-                {formErrors.assetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.assetCategoryId}  </Alert>:<p></p> }             
+                {formErrors.assetTypeAssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.assetTypeAssetCategoryId}  </Alert>:<p></p> }             
+                <Dropdown 
+                    name={"Tipo"} 
+                    id="type-drop" 
+                    options={typesOptions2} 
+                    helperText = "Seleccione un tipo" 
+                    selectedValue={typeSelectedValue == '' ? data.assetTypeId : typeSelectedValue}
+                    setSelectedValue = {setTypeSelectedValue}
+                    required
+                    >                                       
+                </Dropdown> 
+                {formErrors.assetTypeId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.assetTypeId}  </Alert>:<p></p> }             
                 <InputText
                     onChange={(e) => handle(e)}
                     id="Description"

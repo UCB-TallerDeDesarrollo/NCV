@@ -15,9 +15,9 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
       </MemoryRouter>
     )
   }
-  const programHousesUrl ='https://ncv-api.herokuapp.com/api/programHouses'
-  const categoriesUrl ='https://ncv-api.herokuapp.com/api/AssetCategories'  
-  const statesUrl ='https://ncv-api.herokuapp.com/api/AssetStates' 
+  const programHousesUrl ='https://ncv-api.azurewebsites.net/api/programHouses'
+  const categoriesUrl ='https://ncv-api.azurewebsites.net/api/AssetCategories'  
+  const statesUrl ='https://ncv-api.azurewebsites.net/api/AssetStates' 
 
   function getResponse(url, jsonData=null, code=200, text=null){
       const response = rest.get(url, (req, res, ctx) => {
