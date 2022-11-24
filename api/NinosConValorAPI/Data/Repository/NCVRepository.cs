@@ -71,7 +71,13 @@ namespace NinosConValorAPI.Data.Repository
 
         public async Task<LegalReportEntity> UpdateLegalReportAsync(int kidId, LegalReportEntity legalReport)
         {
-            throw new NotImplementedException();
+            IQueryable<LegalReportEntity> query = _dbContext.LegalReports;
+            var legalReportToUpdate = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            legalReportToUpdate.CourtNumber = legalReport.CourtNumber ?? legalReportToUpdate.CourtNumber;
+            legalReportToUpdate.Dna = legalReport.Dna ?? legalReportToUpdate.Dna;
+            legalReportToUpdate.Nurej = legalReport.Nurej ?? legalReportToUpdate.Nurej;
+            legalReportToUpdate.LegalProcesses = legalReport.LegalProcesses ?? legalReportToUpdate.LegalProcesses;
+            return legalReportToUpdate;
         }
 
         // FOUNDATION REPORT
