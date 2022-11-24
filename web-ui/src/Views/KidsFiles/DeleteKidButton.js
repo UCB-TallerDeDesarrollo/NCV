@@ -66,7 +66,7 @@ function DeleteKidButton() {
                     {alertMessage}
                 </Alert>
             </Snackbar>
-            {accesPermiss=="ComplitAcces"&&
+            {accesPermiss=="CompleteAccess"&&
                 <ButtonDanger key={2} label="Eliminar" id="delete_button" onClick={ToConfirmOpen} />
             }
             <Dialog open={openToConfirm} onClose={handleCloseToConfirm} id="confirmation_popup" sx={{borderRadius:3 }}>

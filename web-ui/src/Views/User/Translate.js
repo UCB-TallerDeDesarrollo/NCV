@@ -13,7 +13,7 @@ function TranslateRole(nameRole){
             answer="Soporte"
             break;
         default:
-            answer="Rol No definido"
+            answer=nameRole
             //answer="----"
             break;
     }
