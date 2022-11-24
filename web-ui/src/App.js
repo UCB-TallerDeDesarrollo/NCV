@@ -34,7 +34,7 @@ import EditProfile from './Views/User/EditProfile'
 
 let accesPermiss=sessionStorage.getItem("Access") 
 function App() {
-    if(accesPermiss== "ComplitAcces"){
+    if(accesPermiss== "CompleteAccess"){
         return (
             <Router>
                 <Routes>
@@ -111,7 +111,7 @@ function App() {
             </Router>
         )
     }
-    else if(accesPermiss== "RestrinccionAcces"){
+    else if(accesPermiss== "RestriccionAccess"){
         return(
         <Router>
             <Routes>
