@@ -52,6 +52,33 @@ namespace NinosConValorAPI.Controllers
             }
             return response;
         }
+        [HttpPut]
+        public async Task<IActionResult> UpdateLegalReportAsync(int kidId, [FromBody] LegalReportModel legalReportModel)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    foreach (var pair in ModelState)
+                    {
+                        if (pair.Key == nameof(legalReportModel.Nurej) && pair.Value.Errors.Count > 0)
+                        {
+                            return BadRequest(pair.Value.Errors);
+                        }
+                    }
+                }
+
+                return Ok(await _legalReportService.UpdateLegalReportAsync(kidId, legalReportModel));
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message); ;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happend: {ex.Message}");
+            }
+        }
 
     }
 }
