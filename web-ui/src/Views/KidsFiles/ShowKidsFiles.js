@@ -71,7 +71,7 @@ function ShowKidsFiles() {
     const navigate = useNavigate();
     const listHeaderComponents = <Box sx={{display: 'flex'}}>
         {searcher}
-        {accesPermiss=="ComplitAcces"&&
+        {accesPermiss=="CompleteAccess"&&
             <ButtonPrimary label={"Registrar niño"} onClick={()=>navigate(newKidUrl)} sx={{alignSelf:'center'}}/>
         }
     </Box>

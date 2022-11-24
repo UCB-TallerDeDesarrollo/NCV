@@ -208,7 +208,7 @@ export default function ShowFixedAssets() {
     return (        
         <>        
             <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
-            {accesPermiss=="ComplitAcces"&&
+            {accesPermiss=="CompleteAccess"&&
                 <ListContainer title="Lista de Estados de Activos Fijos">
                     {assetStatesComponent}
                 </ListContainer>
