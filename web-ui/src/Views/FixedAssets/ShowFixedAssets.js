@@ -65,7 +65,7 @@ export default function ShowFixedAssets() {
     }
 
     function searchCriteria () {
-        setOpenList(true)
+        setOpenList(!openList)
         let resultsArray = fixedAssets
         if (searchBYNameValue != ""){
             resultsArray = fixedAssets.filter(post => post.name.toLowerCase().includes(searchBYNameValue.toLowerCase()))

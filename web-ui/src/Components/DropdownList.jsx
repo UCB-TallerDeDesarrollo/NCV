@@ -16,13 +16,24 @@ export default function DropdownList({itemsHeader, itemsSubheader, isOpened = fa
       fontWeight: 'bold'
     }
   }
+
+  /*var asd = [];
+
+  itemsHeader.map((el)=>{
+    const keyValue = el.title
+    asd.push({
+      keyValue: true
+    })
+  })
+  console.log(...asd)*/
+
   const visibleItems = {
     'Herramientas': true, 
     'Muebles y Enseres': true, 
     'Maquinaria y Equipos': true, 
     'Vehículos': true, 
     'Equipos de Computación': true,}
-  
+    
   if(isOpened != didChange.current){
     setIsVisible({...visibleItems})
     didChange.current = isOpened
