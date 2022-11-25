@@ -2,7 +2,7 @@ import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
 import { ListItemButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
@@ -33,7 +33,12 @@ export default function DropdownList({itemsHeader, itemsSubheader, isOpened = fa
     'Maquinaria y Equipos': true, 
     'Vehículos': true, 
     'Equipos de Computación': true,}
-    
+
+  function returnArrow(opened){
+    if(!opened) return <ArrowDropDownIcon />
+    return <ArrowDropUpIcon />
+  }
+
   if(isOpened != didChange.current){
     setIsVisible({...visibleItems})
     didChange.current = isOpened
