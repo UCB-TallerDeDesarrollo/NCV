@@ -6,15 +6,28 @@ import { useState } from "react";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
-export default function DropdownList({itemsHeader, itemsSubheader}) {
+export default function DropdownList({itemsHeader, itemsSubheader, isOpened = false}) {
   const [isVisible, setIsVisible] = useState({});
   const navigate = useNavigate();
+  const didChange = useRef(false);
   const sxListItemText = {
     '& .MuiListItemText-primary': {
       fontSize: 18,
       fontWeight: 'bold'
     }
   }
+  const visibleItems = {
+    'Herramientas': true, 
+    'Muebles y Enseres': true, 
+    'Maquinaria y Equipos': true, 
+    'Vehículos': true, 
+    'Equipos de Computación': true,}
+  
+  if(isOpened != didChange.current){
+    setIsVisible({...visibleItems})
+    didChange.current = isOpened
+  }
+
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper', alignItems :"flex-start" }}>
       {itemsHeader.map((h,i)=>{

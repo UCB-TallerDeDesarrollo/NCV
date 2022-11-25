@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef  } from 'react'
 import Box from '@mui/material/Box'
 import ErrorPage from '../../Components/ErrorPage'
 import {getFixedAssets} from '../../Components/GetFromApi'
@@ -24,6 +24,8 @@ export default function ShowFixedAssets() {
     const [hasErrorWithFetch, setHasErrorWithFetch] = useState(null)
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(0) 
     const [searchBYNameValue, setSearchBYNameValue] = useState("")  
+    const didMountRef = useRef(false);
+    const [openList, setOpenList] = useState(false);
 
     const location = useLocation()
     const navigate = useNavigate();
@@ -63,14 +65,13 @@ export default function ShowFixedAssets() {
     }
 
     function searchCriteria () {
+        setOpenList(true)
         let resultsArray = fixedAssets
         if (searchBYNameValue != ""){
             resultsArray = fixedAssets.filter(post => post.name.toLowerCase().includes(searchBYNameValue.toLowerCase()))
         }
-        if(acronymsList.length>0){
-            if(acronymsList[programHouseSelectedValue] != "TODOS"){
-                resultsArray = resultsArray.filter(post => post.programHouseAcronym.includes(acronymsList[programHouseSelectedValue]))
-            }
+        if(acronymsList[programHouseSelectedValue] != "TODOS"){
+            resultsArray = resultsArray.filter(post => post.programHouseAcronym.includes(acronymsList[programHouseSelectedValue]))
         }
         setSearchResults(resultsArray)
         return resultsArray;
@@ -91,7 +92,10 @@ export default function ShowFixedAssets() {
     },[])
 
     useEffect(()=>{
-        searchCriteria()
+        if(didMountRef.current){
+            searchCriteria()
+        }
+        didMountRef.current = true
     },[programHouseSelectedValue, searchBYNameValue])
 
     function handleClose(event, reason) {
@@ -152,7 +156,7 @@ export default function ShowFixedAssets() {
                 categoryId: el.assetTypeAssetCategoryId
             }
         })
-        let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={listElements} withImage={false} />
+        let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={listElements} isOpened={openList} />
         let assetStatesView = "/activos-fijos/estados"
         let nexFixedAsset = "/crear-activo-fijo"
         const buttonsList = 
