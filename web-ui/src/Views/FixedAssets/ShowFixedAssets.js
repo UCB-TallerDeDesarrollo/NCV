@@ -15,6 +15,7 @@ import Alert from '@mui/material/Alert'
 import SearchBar from '../../Components/SearchBar';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { display } from '@mui/system'
+import { ConstructionOutlined } from '@mui/icons-material'
 
 export default function ShowFixedAssets() {
     const [open, setOpen] = useState(null);
@@ -22,9 +23,11 @@ export default function ShowFixedAssets() {
     const [searchResult, setSearchResults] = useState ([])
     const [hasErrorWithFetch, setHasErrorWithFetch] = useState(null)
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(0) 
+    const [searchBYNameValue, setSearchBYNameValue] = useState("")  
 
     const location = useLocation()
     const navigate = useNavigate();
+    const acronymsList = []
     
     const completeInfoFixedAsset = '/activos-fijos'
     const urlProgramHouses = 'https://ncv-api.azurewebsites.net/api/programHouses'
@@ -54,14 +57,25 @@ export default function ShowFixedAssets() {
         return posts;
     }
 
-    function searchCriteria (e, posts) {
-        if (!e.target.value) return posts
-        let resultsArray = posts.filter(post => post.name.toLowerCase().includes(e.target.value.toLowerCase()))
-        if(acronymsList[programHouseSelectedValue] != null){
-            resultsArray = resultsArray.filter(post => post.programHouseAcronym.includes(acronymsList[programHouseSelectedValue]))
+    function searchByName(e, posts){
+        setSearchBYNameValue(e.target.value)
+        return searchCriteria()
+    }
+
+    function searchCriteria () {
+        let resultsArray = fixedAssets
+        if (searchBYNameValue != ""){
+            resultsArray = fixedAssets.filter(post => post.name.toLowerCase().includes(searchBYNameValue.toLowerCase()))
         }
+        if(acronymsList.length>0){
+            if(acronymsList[programHouseSelectedValue] != "TODOS"){
+                resultsArray = resultsArray.filter(post => post.programHouseAcronym.includes(acronymsList[programHouseSelectedValue]))
+            }
+        }
+        setSearchResults(resultsArray)
         return resultsArray;
     }
+
     useEffect(()=>{
         getFixedAssets(url).then(
             response => {
@@ -76,6 +90,10 @@ export default function ShowFixedAssets() {
         setOpen(showAlert)
     },[])
 
+    useEffect(()=>{
+        searchCriteria()
+    },[programHouseSelectedValue, searchBYNameValue])
+
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
             return
@@ -87,18 +105,23 @@ export default function ShowFixedAssets() {
         return ErrorPage(hasErrorWithFetch)
     } 
     if (!fixedAssets || !assetCategories || !programHouses) return null
-    const acronymsList = []
+
     programHouses.map( programHouse =>  {
         acronymsList.push(programHouse.acronym)
     }) 
+    acronymsList.push("TODOS")
+
     let idProgram = -1
-    const programHousesList = programHouses.map( programHouse =>  { 
+    let programHousesList = programHouses.map( programHouse =>  { 
         idProgram++
         return{
         label: programHouse.acronym,
         value: idProgram      
     }}) 
-    const searcher = <SearchBar posts={fixedAssets} setSearchResults={setSearchResults} orderCriteria={ordenCriteria} searchCriteria={searchCriteria} />
+    programHousesList[idProgram+1] = {label: "TODOS",
+                                    value: idProgram+1}
+                                    
+    const searcher = <SearchBar posts={fixedAssets} setSearchResults={setSearchResults} orderCriteria={ordenCriteria} searchCriteria={searchByName} />
     if (fixedAssets.length>0 && assetCategories.length>0){
         const listCategories = assetCategories.map((el)=>{
             return {
@@ -114,6 +137,7 @@ export default function ShowFixedAssets() {
                 selectedValue={programHouseSelectedValue}
                 helperText = "Seleccione un programa"
                 setSelectedValue = {setProgramHouseSelectedValue}
+                onChangeF = {() => searchCriteria()}
                 required
                 >                                        
             </Dropdown> 
