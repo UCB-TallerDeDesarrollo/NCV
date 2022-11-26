@@ -62,8 +62,8 @@ export function ShowFixedAsset() {
     };
     const buttonsList = accesPermiss == "ComplitAcces" ? (
         <Box sx={{alignSelf:'flex-end', display:'flex-end'}}>
-            <ButtonPrimaryEditIcon id="edit_button" onClick={navigateUpdateFixedAsset} sx={{alignSelf:'flex-end'}}/>
-            <ButtonPrimaryDeleteIcon id="delete_button" onClick={ToConfirmOpen} sx={{alignSelf:'flex-end'}}/>
+            <ButtonPrimaryEditIcon id="edit_button" onClick={navigateUpdateFixedAsset} sx={{marginLeft:1, alignSelf:'flex-end'}}/>
+            <ButtonPrimaryDeleteIcon id="delete_button" onClick={ToConfirmOpen} sx={{marginLeft:1, alignSelf:'flex-end'}}/>
         </Box>) : null
     
     return (
