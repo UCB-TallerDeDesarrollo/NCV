@@ -19,3 +19,11 @@ const ExportExcel = ({ excelData, fileName }) => {
 }
 
 export default ExportExcel;
+
+export function compareSort (low, high, detail) {
+    return low[detail].localeCompare(high[detail])
+}
+
+export function capitalizeFirstLowerCase(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
