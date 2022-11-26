@@ -15,6 +15,8 @@ import Alert from '@mui/material/Alert'
 import SearchBar from '../../Components/SearchBar';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { display } from '@mui/system'
+import axios from 'axios';
+import ExportExcel from '../../Components/ExportExcel'
 
 export default function ShowFixedAssets() {
     const [open, setOpen] = useState(null);
@@ -22,6 +24,7 @@ export default function ShowFixedAssets() {
     const [searchResult, setSearchResults] = useState ([])
     const [hasErrorWithFetch, setHasErrorWithFetch] = useState(null)
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(0) 
+    const [fixedAssetsData, setFixedAssetsData] = useState([])
 
     const location = useLocation()
     const navigate = useNavigate();
@@ -62,7 +65,18 @@ export default function ShowFixedAssets() {
         }
         return resultsArray;
     }
+    const fetchBasicData = () => {
+        var responseAllData = axios(url);
+        axios.all([responseAllData]).then(
+            axios.spread((...allData) => {
+                var dataFA = allData[0].data
+                setFixedAssetsData(dataFA)
+                console.log(dataFA)
+            })
+    )}
+
     useEffect(()=>{
+        fetchBasicData()
         getFixedAssets(url).then(
             response => {
                 if(response.name != "AxiosError"){
@@ -135,7 +149,7 @@ export default function ShowFixedAssets() {
         <Box sx={{display:'flex'}}>
             <ButtonPrimary label={"Gestionar Estados"} onClick={()=>navigate(assetStatesView)}/>
             <ButtonPrimary sx={{marginLeft:1}} label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
-            <ButtonPrimary sx={{marginLeft:1, background:'#28A464', color:'white', "&:hover": { background: "#107C41" }}} label={"Guardar en Excel"} onClick={()=>navigate(nexFixedAsset)}/>
+            <ExportExcel excelData={fixedAssetsData} fileName={"Lista de Activos Fijos"}/>
         </Box>
         const searchComponents = 
         <Box sx={{display:'flex'}} marginTop={1}>
