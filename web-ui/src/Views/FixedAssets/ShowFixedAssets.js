@@ -70,8 +70,22 @@ export default function ShowFixedAssets() {
         axios.all([responseAllData]).then(
             axios.spread((...allData) => {
                 var dataFA = allData[0].data
-                setFixedAssetsData(dataFA)
-                console.log(dataFA)
+                var newDataFA = dataFA.map((data) => {
+                    return {
+                        'DETALLE': data.name,
+                        'CÓDIGO': data.code,
+                        'TIPO DE AF': data.assetTypeAssetCategoryCategory,
+                        'TIPO': data.assetTypeType,
+                        'ESTADO': data.assetStateState,
+                        'FECHA DE ENTRADA': data.entryDate!=null? new Date(data.entryDate).toLocaleDateString():null,
+                        'DESCRIPCIÓN': data.description,
+                        'CARACTERÍSTICAS': data.features,
+                        'VALOR': data.price,
+                        'PROGRAMA': data.programHouseName
+                    }
+                })
+                setFixedAssetsData(newDataFA)
+                console.log(newDataFA)
             })
     )}
 
@@ -149,7 +163,7 @@ export default function ShowFixedAssets() {
         <Box sx={{display:'flex'}}>
             <ButtonPrimary label={"Gestionar Estados"} onClick={()=>navigate(assetStatesView)}/>
             <ButtonPrimary sx={{marginLeft:1}} label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
-            <ExportExcel excelData={fixedAssetsData} fileName={"Lista de Activos Fijos"}/>
+            <ExportExcel excelData={fixedAssetsData} fileName={`Lista de Activos Fijos ${new Date().toLocaleString()}`}/>
         </Box>
         const searchComponents = 
         <Box sx={{display:'flex'}} marginTop={1}>
