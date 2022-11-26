@@ -7,6 +7,7 @@ import Navbar from '../../Components/NavBar'
 import SingleItemCard from '../../Components/SingleItemCard'
 import BoxWithButton from '../../Components/BoxWithButton'
 import ButtonPrimary, { ButtonDanger, ButtonSecondary, ButtonPrimaryEditIcon, ButtonPrimaryDeleteIcon } from '../../Components/MUI-Button';
+import Box from '@mui/material/Box'
 import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
@@ -25,7 +26,6 @@ export function ShowFixedAsset() {
     const navigate = useNavigate();
     const navigateUpdateFixedAsset = () => { navigate(`/activos-fijos/${fixedAssetId}/editar-activo-fijo`); }
     const [openToConfirm, setOpenToConfirm] = useState(false);
-    let editButton = accesPermiss == "ComplitAcces" ? (<ButtonPrimaryEditIcon onClick={navigateUpdateFixedAsset} sx={{alignSelf:'flex-end'}}/>) : null
     if(error){
         return ErrorPage(error)
     }
@@ -60,15 +60,17 @@ export function ShowFixedAsset() {
         handleCloseToConfirm();
         setOpenToConfirm(true);
     };
-
+    const buttonsList = accesPermiss == "ComplitAcces" ? (
+        <Box sx={{alignSelf:'flex-end', display:'flex-end'}}>
+            <ButtonPrimaryEditIcon id="edit_button" onClick={navigateUpdateFixedAsset} sx={{alignSelf:'flex-end'}}/>
+            <ButtonPrimaryDeleteIcon id="delete_button" onClick={ToConfirmOpen} sx={{alignSelf:'flex-end'}}/>
+        </Box>) : null
+    
     return (
         <>
             <Navbar />
             <div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
-                <SingleItemCard title={fixedAsset.code ? `${fixedAsset.name} #${fixedAsset.code}` : `${fixedAsset.name}`} secondaryField={fixedAsset.programHouseName} element={fixedAssetData} imageUrl={imageUrl} imageCirle={false} imgHeight={300} imgWidth={500} button={editButton} />        
-                {accesPermiss=="ComplitAcces"&&
-                <ButtonDanger key={2} label="Eliminar" id="delete_button" onClick={ToConfirmOpen} />
-            }
+            <SingleItemCard title={fixedAsset.code ? `${fixedAsset.name} #${fixedAsset.code}` : `${fixedAsset.name}`} secondaryField={fixedAsset.programHouseName} element={fixedAssetData} itemsPerLine={3} imageUrl={imageUrl} imageCirle={false} imgHeight={300} imgWidth={500} button={buttonsList} />        
             <Dialog open={openToConfirm} onClose={handleCloseToConfirm} id="confirmation_popup" sx={{borderRadius:3 }}>
                 <DialogTitle sx={{display:'flex', justifyContent:'center'}}>Eliminar</DialogTitle>
                 <DialogContent>

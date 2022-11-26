@@ -63,6 +63,7 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
     sx.color = sx.color ?? "#023859"
     sx.boxShadow = sx.boxShadow ?? 3
     sx.marginLeft = sx.marginLeft ?? 0
+    sx.margin = sx.margin ?? 0.5
     sx["&:hover"] = sx["&:hover"] ?? {
         background: "#389CFC"
     }
@@ -79,6 +80,7 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
     sx.color = sx.color ?? "white"
     sx.boxShadow = sx.boxShadow ?? 3
     sx.marginLeft = sx.marginLeft ?? 0
+    sx.margin = sx.margin ?? 0.5
     sx["&:hover"] = sx["&:hover"] ?? {
         background: "#C82C2C"
     }
