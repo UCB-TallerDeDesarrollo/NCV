@@ -199,7 +199,7 @@ function UpdateFixedAssetForm(props) {
         setFormErrors(errorsFromForm)
 
         if(!hasFormErrors(errorsFromForm)){
-            Axios.put(urlFixedAsset, {
+            axios.put(urlFixedAsset, {
             Name: name,
             Description: description==''? null:description, // string
             EntryDate: entryDate==''? null:entryDate.split('T')[0], // dateTime
