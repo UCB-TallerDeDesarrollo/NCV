@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
-import Grid from '@mui/material/Unstable_Grid2';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 export default function ButtonPrimary({label, onClick, id, sx={}}) {
     sx.borderRadius = sx.borderRadius ?? 40
@@ -35,6 +35,27 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
             }
             }}>{label}
             </Button>
+    );
+  }
+
+  export function ButtonLoading(props) {
+    const {label, loading, id, loadingLable, ...rest} = props;
+
+    const sx = {
+        borderRadius: 40, 
+        background: "#5CD4E2",
+        color: "#023859", 
+        boxShadow: 3,
+        marginRight: 2,
+        marginLeft: 2,
+        fontWeight: 'bold',
+        textTransform: 'none',
+    }
+
+    return (
+      <LoadingButton loading={loading} variant="contained" id={id} sx={sx} loadingIndicator={loadingLable} {...rest}>
+        {label}
+      </LoadingButton>
     );
   }
 
