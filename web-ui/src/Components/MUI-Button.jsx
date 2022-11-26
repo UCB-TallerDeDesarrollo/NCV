@@ -51,9 +51,8 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
     }
     return (
       <Button variant="contained" type="input" label={label} onClick={onClick} id={id} sx={sx}> {label} </Button>
-  );
+    );
   }
-
   export function ButtonLoading(props) {
     const {label, loading, id, loadingLable, ...rest} = props;
 
