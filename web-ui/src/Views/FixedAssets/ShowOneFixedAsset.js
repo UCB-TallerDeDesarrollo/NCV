@@ -79,8 +79,8 @@ export function ShowFixedAsset() {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions sx={{display:'flex',flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-                    <ButtonSecondary label="Cancelar" onClick={handleCloseToConfirm}></ButtonSecondary>
-                    <ButtonDanger label="Eliminar" id="confirm_delete_fixed_asset_button" onClick={fetchDeleteFixedAsset}></ButtonDanger>
+                    <ButtonSecondary label="Cancelar" onClick={handleCloseToConfirm} sx={{alignSelf:'flex-end'}}></ButtonSecondary>
+                    <ButtonDanger label="Eliminar" id="confirm_delete_fixed_asset_button" onClick={fetchDeleteFixedAsset} sx={{alignSelf:'flex-end'}}></ButtonDanger>
                 </DialogActions>
             </Dialog>
             </div>
