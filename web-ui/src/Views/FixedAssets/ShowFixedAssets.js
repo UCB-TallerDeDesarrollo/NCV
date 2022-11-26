@@ -15,6 +15,8 @@ import Alert from '@mui/material/Alert'
 import SearchBar from '../../Components/SearchBar';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { display } from '@mui/system'
+import axios from 'axios';
+import ExportExcel from '../../Components/ExportExcel'
 import { ConstructionOutlined } from '@mui/icons-material'
 
 export default function ShowFixedAssets() {
@@ -23,6 +25,7 @@ export default function ShowFixedAssets() {
     const [searchResult, setSearchResults] = useState ([])
     const [hasErrorWithFetch, setHasErrorWithFetch] = useState(null)
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(0) 
+    const [fixedAssetsData, setFixedAssetsData] = useState([])
     const [searchBYNameValue, setSearchBYNameValue] = useState("")  
     const didMountRef = useRef(false);
     const [openList, setOpenList] = useState(false);
@@ -76,8 +79,32 @@ export default function ShowFixedAssets() {
         setSearchResults(resultsArray)
         return resultsArray;
     }
+    const fetchBasicData = () => {
+        var responseAllData = axios(url);
+        axios.all([responseAllData]).then(
+            axios.spread((...allData) => {
+                var dataFA = allData[0].data
+                var newDataFA = dataFA.map((data) => {
+                    return {
+                        'DETALLE': data.name,
+                        'CÓDIGO': data.code,
+                        'TIPO DE AF': data.assetTypeAssetCategoryCategory,
+                        'TIPO': data.assetTypeType,
+                        'ESTADO': data.assetStateState,
+                        'FECHA DE ENTRADA': data.entryDate!=null? new Date(data.entryDate).toLocaleDateString():null,
+                        'DESCRIPCIÓN': data.description,
+                        'CARACTERÍSTICAS': data.features,
+                        'VALOR': data.price,
+                        'PROGRAMA': data.programHouseName
+                    }
+                })
+                setFixedAssetsData(newDataFA)
+                console.log(newDataFA)
+            })
+    )}
 
     useEffect(()=>{
+        fetchBasicData()
         getFixedAssets(url).then(
             response => {
                 if(response.name != "AxiosError"){
@@ -163,7 +190,7 @@ export default function ShowFixedAssets() {
         <Box sx={{display:'flex'}}>
             <ButtonPrimary label={"Gestionar Estados"} onClick={()=>navigate(assetStatesView)}/>
             <ButtonPrimary sx={{marginLeft:1}} label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
-            <ButtonPrimary sx={{marginLeft:1, background:'#28A464', color:'white'}} label={"Guardar en Excel"} onClick={()=>navigate(nexFixedAsset)}/>
+            <ExportExcel excelData={fixedAssetsData} fileName={`Lista de Activos Fijos ${new Date().toLocaleString()}`}/>
         </Box>
         const searchComponents = 
         <Box sx={{display:'flex'}} marginTop={1}>
