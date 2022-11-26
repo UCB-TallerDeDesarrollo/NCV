@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 
 import Alert from '@mui/material/Alert'
+import LoadingButton from '@mui/lab/LoadingButton';
 
-import InputText from '../../Components/InputText'
-import ButtonPrimary from '../../Components/MUI-Button';
+import InputText, {InputPassword} from '../../Components/InputText'
+import { ButtonLoading } from '../../Components/MUI-Button';
 import FormContainer from '../../Components/FormContainer'
 import './LoginForm.css'
 import issLoggin from '../../security';
+import { IconButton, InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 function LoginForm() {
     const [email, setEmail] = useState('')
@@ -14,6 +17,8 @@ function LoginForm() {
 
     const [hasAnError, sethasAnError] = useState(false);
     const [error, setErrors] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     function handleEmailChange(event) {
         setEmail(event.target.value)
@@ -24,6 +29,7 @@ function LoginForm() {
     }
 
     function handleLoginForm(event) {
+        setIsLoading(true);
         event.preventDefault()
         const user = {
             email,
@@ -65,6 +71,7 @@ function LoginForm() {
             alert(error);
         })
         .finally(() => {
+            setIsLoading(false);
             setPassword("");
         });
     } 
@@ -95,21 +102,33 @@ function LoginForm() {
                             />
                         </div>
                         <div className="form-outline mb-4">
-                            <InputText
-                                type="password"
+                            <InputPassword
+                                type={showPassword ? "text" : "password"}
                                 id="input-text-password"
                                 label="Contraseña"
                                 onChange={handlePasswordChange}
                                 value={password}
                                 required
                                 error={hasAnError}
+                                endAdornment={
+                                    <InputAdornment position='end'>
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            onMouseDown={(event) => event.preventDefault()}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
                             />
                         </div>
                         <div>
                             {hasAnError && <Alert id="alert-bad-user" sx={{ width: 1, pt: 1 }} severity="error">Usuario y/o contraseña no validos</Alert>}
                         </div>
                         <div className="pt-1 mb-4">
-                            <ButtonPrimary id="input-button-login" label="Iniciar Sesion" type="submit"/>
+                            <ButtonLoading id="input-button-login" label="Iniciar Sesion" loading={isLoading} type="submit" />  
                         </div>
                     </div>
                 </form>
