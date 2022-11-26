@@ -7,17 +7,16 @@ import InputText from '../../Components/InputText'
 import Navbar from '../../Components/NavBar'
 import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom'
-import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
+import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button'
 import getFromApi from '../../Components/GetFromApi'
 import Dropdown from '../../Components/Dropdown'
-import axios from 'axios';
 import {getFixedAssets} from '../../Components/GetFromApi'
-import { CommentsDisabledOutlined } from '@mui/icons-material'
-
-export default function UpdateFixedAssetForm() {
-    const { fixedAssetId } = useParams()
-    const url = `https://ncv-api.azurewebsites.net/api/fixedAssets/${fixedAssetId}`
+import axios from "axios"
+import { useParams } from 'react-router-dom'
+function UpdateFixedAssetForm(props) {
+    const {fixedAssetId} = useParams()
+    var urlFixedAsset = `https://ncv-api.azurewebsites.net/api/fixedAssets/${fixedAssetId}`
+    const url = 'https://ncv-api.azurewebsites.net/api/fixedAssets'
     const urlProgramHouses = 'https://ncv-api.azurewebsites.net/api/programHouses'
     const urlCategories = 'https://ncv-api.azurewebsites.net/api/assetCategories'
     const urlStates = 'https://ncv-api.azurewebsites.net/api/assetStates'
@@ -26,85 +25,83 @@ export default function UpdateFixedAssetForm() {
     const [error, setError] = useState(null)
     const [formErrors,setFormErrors] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
+
+    //data
+    const [name, setName] = useState(null)
+    const [description, setDescription] = useState(null)
+    const [entryDate, setEntryDate] = useState(null)
+    const [price, setPrice] = useState(null)
+    const [features, setFeatures] = useState(null)
+    const [code, setCode] = useState(null)
+
     const assetsCodes = []
+    getAssetsCodes();
     let programCode = ''
     let categoryCode = ''
     const navigate = useNavigate()
-    const [data, setData] = useState([])
-    const [categoryId, setCategoryId] = useState([])
 
     const fetchBasicData = () => {
-        const responseData = axios(url);
-        axios.all([responseData]).then(
+        var responseFA = axios(urlFixedAsset);
+        axios.all([responseFA]).then(
             axios.spread((...allData) => {
-                const dataFA = allData[0].data
-                setData(dataFA)
-                setCategoryId(dataFA.assetTypeAssetCategoryId)
-                console.log("json: ", dataFA)
-                console.log("categoryId: ", dataFA.assetTypeAssetCategoryId)
-            }))
-    }
-
-    useEffect(()=>{
-        fetchBasicData();
-        if (Object.keys(formErrors).length === 0 && isSubmit){
-            console.log(data);
-        }
-    },[formErrors]);
+                var dataFA = allData[0].data
+                setName(dataFA.name)
+                setDescription(dataFA.description)
+                setPrice(dataFA.price)
+                setFeatures(dataFA.features)
+                setEntryDate(dataFA.entryDate)
+                setCode(dataFA.code)
+                getTypesByCategory(dataFA.assetTypeAssetCategoryId)
+                setCategorySelectedValue(dataFA.assetTypeAssetCategoryId)
+                setProgramHouseSelectedValue(dataFA.programHouseId)
+                setTypeSelectedValue(dataFA.assetTypeId)
+                setStateSelectedValue(dataFA.assetStateId)
+            })
+    )}
 
     //programHouses
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
-    const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)
+    const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)    
+
+    useEffect(()=>{
+        if(!Object.keys(formErrors).length) fetchBasicData()
+        if (Object.keys(formErrors).length === 0 && isSubmit){
+        }
+    },[formErrors]);
     //categories
-    const [categorySelectedValue, setCategorySelectedValue] = useState([])
+    const [categorySelectedValue, setCategorySelectedValue] = useState(null)
     const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
-    //types
-    let urlTypes = ''
-    if (categoryId == '') {
-        urlTypes =  urlCategories + `/${2}/assetTypes`
-    }
-    else {
-        urlTypes = urlCategories + `/${categoryId}/assetTypes`
-    }
-    const [typeSelectedValue, setTypeSelectedValue] = useState([])
-    const { apiData:typesByCategory, error:errorTypesByCategory } = getFromApi(urlTypes) 
-    console.log("url types: ", urlTypes)
-    const [typesOptions, setTypesOptions] = useState([])
+    
     //states
     const [stateSelectedValue, setStateSelectedValue] = useState(null)
     const { apiData:states, error:errorStates } = getFromApi(urlStates) 
+
+    //types
+    const [typeSelectedValue, setTypeSelectedValue] = useState(null)
+    const [typesOptions, setTypesOptions] = useState([])
 
     // program Houses Options for DROPDOWN
     if(errorProgramHouses){
         return ErrorPage(errorProgramHouses)
     }
-    if (!programHouses) return null
-    let programHousesList = programHouses.map( programHouse =>  { return {
+    if (!programHouses) return null 
+    let programHousesList = programHouses.map( programHouse =>  { return{
         label: programHouse.acronym,
-        value: programHouse.id
-    }})
-    const programHousesOptions = programHousesList
+        value: programHouse.id      
+    }}) 
+    const programHousesOptions = programHousesList 
+    
     // categories options for DROPDOWN
     if(errorCategory){
         return ErrorPage(errorCategory)
     }
     if (!categories) return null        
-    let categoriesList = categories.map( category =>  { return {
+    let categoriesList = categories.map( category =>  { return{
         label: category.category,
-        value: category.id
-    }})
-    const categoriesOptions = categoriesList
-    // types options for DROPDOWN
-    if(errorTypesByCategory){
-        return ErrorPage(errorTypesByCategory)
-    }
-    if (!typesByCategory) return null        
-    let typesByCategoryList = typesByCategory.map( types =>  { return {
-        label: types.type,
-        value: types.id
-    }})
-    const typesOptions2 = typesByCategoryList
-    console.log(typesOptions2)
+        value: category.id      
+    }}) 
+    const categoriesOptions = categoriesList  
+
     //states options for DROPDOWN
     if(errorStates){
         return ErrorPage(errorStates)
@@ -113,31 +110,21 @@ export default function UpdateFixedAssetForm() {
     let statesList = states.map( state =>  { return{
         label: state.state,
         value: state.id      
-    }})
+    }}) 
     const stateOptions = statesList 
-    
-    function handle(e) {
-        setOpen(false)
-        setData(e.target.value)
-    }
 
     function handleClose(event, reason) {
-        if (reason === 'clickaway') {
-            return
-        }
-        setOpen(false)
+        navigate(`/activos-fijos/${fixedAssetId}`,{state:{showAlert:true,alertMessage:"Información sin modificaciones"}});
     }
     
     function checkError(){
         if(error){
-            //setOpen(true)
             return ErrorPage(error)
         }
     }
-    function hasFormErrors(errorsFromForm){
-        console.log('form errors',errorsFromForm)
+    function hasFormErrors(errorsFromForm){        
         let hasErrors=true
-        if(!errorsFromForm.name && !errorsFromForm.description && !errorsFromForm.price && !errorsFromForm.quantity && !errorsFromForm.programHouseId && !errorsFromForm.assetTypeAssetCategoryId && !errorsFromForm.features && !errorsFromForm.code && !errorsFromForm.assetStateId){
+        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features && !errorsFromForm.Code && !errorsFromForm.AssetStateId){
             hasErrors = false
         }
         return hasErrors
@@ -164,7 +151,7 @@ export default function UpdateFixedAssetForm() {
     }
 
     function getAssetsCodes(){        
-        const url = 'https://ncv-api.azurewebsites.net/api/fixedAssets/'        
+        const url = 'https://ncv-api.azurewebsites.net/api/fixedAssets/'
         getFixedAssets(url).then(
             response => {
                 if(response.name != "AxiosError"){
@@ -177,6 +164,7 @@ export default function UpdateFixedAssetForm() {
             }
         )
     }
+
     function getProgramCode(programValue){
         let programCode = ''
         programHousesOptions.forEach(function (program){
@@ -186,6 +174,7 @@ export default function UpdateFixedAssetForm() {
         });
         return programCode
     }
+
     function getCategoryCode(categoryValue){
         let categoryCode = ''
         switch (categoryValue){
@@ -202,27 +191,27 @@ export default function UpdateFixedAssetForm() {
         }
         return categoryCode
     }
-    function submit() {
+
+    function handleFormSubmit(e) {
         programCode = getProgramCode(programHouseSelectedValue)
         categoryCode = getCategoryCode(categorySelectedValue)
-        const errorsFromForm= validate(data);
+        const errorsFromForm= validate()
         setFormErrors(errorsFromForm)
-        setIsSubmit(true)
+
         if(!hasFormErrors(errorsFromForm)){
-            axios.put(url, {
-                Code: "F-" + programCode + "-" + categoryCode + "-" + data.code, //string
-                Name: data.name,
-                Price: data.price==''? null:parseFloat(data.price).toFixed(2), // decimal
-                Description: data.description==''? null:data.description, // string
-                EntryDate: data.entryDate==''? null:data.entryDate.split('T')[0], // dateTime
-                Features: data.features==''? null:data.features, // string
-                ProgramHouseId : programHouseSelectedValue,
-                AssetTypeAssetCategoryId : categorySelectedValue,
-                assetTypeId: typeSelectedValue,
-                AssetStateId: stateSelectedValue
+            axios.put(urlFixedAsset, {
+            Name: name,
+            Description: description==''? null:description, // string
+            EntryDate: entryDate==''? null:entryDate.split('T')[0], // dateTime
+            Price: price==''? null:parseFloat(price).toFixed(2), // decimal
+            Features: features==''? null:features, // string
+            ProgramHouseId : programHouseSelectedValue,
+            AssetTypeId : typeSelectedValue,
+            AssetStateId: stateSelectedValue, //string
+            Code: code, //string
             }).then((res) => {
                 if (res.status == 200) {               
-                    navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo actualizado exitosamente"}})
+                    navigate(`/activos-fijos/${fixedAssetId}`,{state:{showAlert:true,alertMessage:"Activo Fijo actualizado exitosamente"}})
                 }            
             }).catch ((apiError) => {
                 setError(apiError) 
@@ -231,176 +220,191 @@ export default function UpdateFixedAssetForm() {
         }
     }
 
-    const validate = (datas) => {        
-        const errors = {}
+    function validate (){      
+        const errors = {
+            Name: '', // string
+            Code: '',
+            Description: '', // string
+            EntryDate: '', // dateTime
+            Price: '', // decimal
+            Features: '', // string
+            ProgramHouseId : '', //int
+            AssetCategoryId : '', //int
+            AssetStateId: '' //string
+        }
         const regexNumber = /^[0-9]+([.][0-9]+)?$/;
-        if(!datas.name){
-            errors.name="El Nombre del Activo Fijo es requerido!";
-        }else if(datas.name.length>60){
-            errors.name="El campo Nombre del Activo Fijo debe ser menor o igual a 60 caracteres!";
+        if(!name){
+            errors.Name="El Nombre del Activo Fijo es requerido!";
+        }else if(name.length>60){
+            errors.Name="El campo Nombre del Activo Fijo debe ser menor o igual a 60 caracteres!";
         }
-        if(!datas.code){
-            errors.code="El Código del Activo Fijo es requerido!";
-        } else if(assetsCodes.includes(datas.code)){
-            errors.code="El Código del Activo Fijo ya existe!";
+    
+        if(!code){
+            errors.Code="El Código del Activo Fijo es requerido!";
+        } else if(assetsCodes.includes(code)){
+            errors.Code="El Código del Activo Fijo ya existe!";
         }
-        if(datas.description.length>1000){
-            errors.description="El campo Descripción del Activo Fijo debe ser menor o igual a 1000 caracteres!";
+
+        if(description && description.length>1000){
+            errors.Description="El campo Descripción del Activo Fijo debe ser menor o igual a 1000 caracteres!";
         }
-        if(!datas.price){
-            errors.price= "El Precio del Activo Fijo es requerido!";
-        }else if(datas.price < 0){
-            errors.price= "El Precio del Activo Fijo debe ser un número positivo!";
-        }else if(!regexNumber.test(datas.price)){
-            errors.price= "El Precio del Activo Fijo debe ser ingresado en formato decimal!";
+    
+        if(price==null){
+            errors.Price= "El Precio del Activo Fijo es requerido!";
+        }else if(price < 0){
+            errors.Price= "El Precio del Activo Fijo debe ser un número positivo!";
+        }else if(!regexNumber.test(price)){
+            errors.Price= "El Precio del Activo Fijo debe ser ingresado en formato decimal!";
         }
+
         if(!programHouseSelectedValue){
-            errors.programHouseId= "El programa del Activo Fijo es requerido!";
+            errors.ProgramHouseId= "El programa del Activo Fijo es requerido!";
         }
+
         if(!categorySelectedValue){
-            errors.assetTypeAssetCategoryId= "La categoría del Activo Fijo es requerida!";
+            errors.AssetCategoryId= "La categoría del Activo Fijo es requerida!";
         }
-        if(!typeSelectedValue){
-            errors.assetTypeId= "El tipo del Activo Fijo es requerido!";
+    
+        if(features&&features.length>1000){
+            errors.Features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
         }
-        if(datas.features.length>1000){
-            errors.features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
-        }
+
         if(!stateSelectedValue){
-            errors.assetStateId= "El Estado del Activo Fijo es requerida!";
+            errors.AssetStateId= "El Estado del Activo Fijo es requerida!";
         }
-        console.log('errs',errors)
         return errors
     }
-    //debugger;
+    
+
     if(error){
-        //setOpen(true)
         return ErrorPage(error)
     }
+    
     return (
         <><Navbar />
         <div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
-            <FormContainer title="Editar activo fijo">
+            <FormContainer title="Modificar datos de activo fijo">
                 <InputText
                     required
+                    onChange={(e) => setName(e.target.value)}
                     id="Name"
-                    name="Name"
-                    value={data.name}
+                    name="Name"                    
+                    value={name}
                     label="Nombre"
                     type="text"
                     InputLabelProps={{ shrink: true }}
-                    onChange={(e) => handle(e)}
                 />
-                {formErrors.name? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
-                    {formErrors.name}                   
+                {formErrors.Name? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
+                    {formErrors.Name}                   
                 </Alert>:<p></p> }
                 <Dropdown 
                     name={"Categoría"} 
                     id="category-drop" 
                     options={categoriesOptions} 
                     helperText = "Seleccione una categoría" 
-                    selectedValue={categorySelectedValue == '' ? data.assetTypeAssetCategoryId : categorySelectedValue}
+                    selectedValue={categorySelectedValue}
                     setSelectedValue = {setCategorySelectedValue}
                     onChangeF = {getTypesByCategory}
                     InputLabelProps={{ shrink: true }}
                     required
-                    >                                        
+                    >                                       
                 </Dropdown> 
-                {formErrors.assetTypeAssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.assetTypeAssetCategoryId}  </Alert>:<p></p> }             
+                {formErrors.AssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.AssetCategoryId}  </Alert>:<p></p> }  
                 <Dropdown 
                     name={"Tipo"} 
                     id="type-drop" 
-                    options={typesOptions2} 
+                    options={typesOptions} 
                     helperText = "Seleccione un tipo" 
-                    selectedValue={typeSelectedValue == '' ? data.assetTypeId : typeSelectedValue}
+                    selectedValue={typeSelectedValue}
                     setSelectedValue = {setTypeSelectedValue}
+                    InputLabelProps={{ shrink: true }}
                     required
                     >                                       
                 </Dropdown> 
-                {formErrors.assetTypeId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.assetTypeId}  </Alert>:<p></p> }             
+                {formErrors.AssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.AssetCategoryId}  </Alert>:<p></p> }             
                 <InputText
-                    onChange={(e) => handle(e)}
+                    onChange={(e) => setDescription(e.target.value)}
                     id="Description"
-                    value={data.description}
+                    value={description}
                     label="Descripción"
                     type="text"
                     InputLabelProps={{ shrink: true }}
                 />
-                {formErrors.description? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.description} </Alert>:<p></p> }
+                {formErrors.Description? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.Description} </Alert>:<p></p> }
                 <InputText
-                    onChange={(e) => handle(e)}
+                    onChange={(e) => setEntryDate(e.target.value)}
                     id="EntryDate"
-                    value={data.entryDate == null ? data.entryDate : data.entryDate.split('T')[0]}
+                    value={entryDate == null ? entryDate : entryDate.split('T')[0]}
                     label="Fecha de Entrada"
                     type="date"
                     InputLabelProps={{ shrink: true }}
                 />
                 <InputText
                     required
+                    onChange={(e) => setPrice(e.target.value)}
                     id="Price"
-                    value={data.price}
+                    value={price}
                     label="Precio"
                     type="number"
                     InputLabelProps={{ shrink: true }}
-                    onChange={(e) => handle(e)}
                 />
-                {formErrors.price? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.price}  </Alert>:<p></p> }
+                {formErrors.Price? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.Price}  </Alert>:<p></p> }
                 <Dropdown 
                     name={"Programa"} 
                     id="programa-drop" 
                     options={programHousesOptions} 
                     helperText = "Seleccione un programa" 
-                    selectedValue={programHouseSelectedValue == null ? data.programHouseId : programHouseSelectedValue}
+                    selectedValue={programHouseSelectedValue}
                     setSelectedValue = {setProgramHouseSelectedValue}
                     InputLabelProps={{ shrink: true }}
                     required
                     >                                        
                 </Dropdown>   
-                {formErrors.programHouseId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.programHouseId}  </Alert>:<p></p> }                 
-                <Dropdown 
+                {formErrors.ProgramHouseId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.ProgramHouseId}  </Alert>:<p></p> }                 
+                        <Dropdown 
                     name={"Estado"} 
                     id="estado-drop" 
                     options={stateOptions}                                         
-                    selectedValue={stateSelectedValue == null ? data.assetStateId : stateSelectedValue}
+                    selectedValue={stateSelectedValue}
                     setSelectedValue = {setStateSelectedValue}
                     helperText = "Seleccione un estado"
                     InputLabelProps={{ shrink: true }}
                     required                    
                     >                                        
                 </Dropdown>   
-                {formErrors.assetStateId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.assetStateId}  </Alert>:<p></p> }
+                {formErrors.AssetStateId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.AssetStateId}  </Alert>:<p></p> }
                 <InputText
-                    onChange={(e) => handle(e)}
+                    onChange={(e) => setFeatures(e.target.value)}
                     id="Features"
-                    value={data.features}
+                    value={features}
                     label="Características"
                     type="text"
                     InputLabelProps={{ shrink: true }}
                 />
-                 {formErrors.features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.features} </Alert>:<p></p> }
+                 {formErrors.Features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.Features} </Alert>:<p></p> } 
                 <InputText
                     required
                     id="Code"
                     name="Code"
-                    value={data.code == null ? data.code : data.code.split('-').pop()}
+                    value={code.split('-').pop()}
                     label="Código"
                     type="text"
-                    onChange={(e) => { handle(e) }}
+                    onChange={(e) => setCode(e.target.value)}
                     InputLabelProps={{ shrink: true }}
                 />
-                {formErrors.code? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
-                    {formErrors.code}                   
+                {formErrors.Code? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
+                    {formErrors.Code}                   
                 </Alert>:<p></p> }
                 <Box sx={{display: 'inline'}}>
                     <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
-                    <ButtonPrimary label={"Guardar"} onClick={submit}></ButtonPrimary>
+                    <ButtonPrimary label={"Guardar"} onClick={handleFormSubmit}></ButtonPrimary>
                 </Box>
                 <Snackbar
                     open={open}
@@ -413,3 +417,5 @@ export default function UpdateFixedAssetForm() {
         </>
     )
 }
+
+export default UpdateFixedAssetForm
