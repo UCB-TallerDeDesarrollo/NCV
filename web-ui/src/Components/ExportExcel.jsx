@@ -15,9 +15,7 @@ const ExportExcel = ({ excelData, fileName }) => {
         FileSaver.saveAs(data, fileName + fileExtension)
     }
 
-    return (<>
-            <ButtonPrimary sx={{marginLeft:1, background:'#28A464', color:'white', "&:hover": { background: "#107C41" }}} label={"Guardar en Excel"} onClick={()=>exportToExcel(fileName)}/>
-            </>)
+    return (<ButtonPrimary sx={{marginLeft:1, background:'#28A464', color:'white', "&:hover": { background: "#107C41" }}} label={"Guardar en Excel"} onClick={()=>exportToExcel(fileName)}/>)
 }
 
 export default ExportExcel;
