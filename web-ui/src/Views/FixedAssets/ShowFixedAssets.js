@@ -135,7 +135,7 @@ export default function ShowFixedAssets() {
         <Box sx={{display:'flex'}}>
             <ButtonPrimary label={"Gestionar Estados"} onClick={()=>navigate(assetStatesView)}/>
             <ButtonPrimary sx={{marginLeft:1}} label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
-            <ButtonPrimary sx={{marginLeft:1, background:'#28A464', color:'white'}} label={"Guardar en Excel"} onClick={()=>navigate(nexFixedAsset)}/>
+            <ButtonPrimary sx={{marginLeft:1, background:'#28A464', color:'white', "&:hover": { background: "#107C41" }}} label={"Guardar en Excel"} onClick={()=>navigate(nexFixedAsset)}/>
         </Box>
         const searchComponents = 
         <Box sx={{display:'flex'}} marginTop={1}>

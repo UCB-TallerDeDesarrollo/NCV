@@ -11,8 +11,13 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
     sx.boxShadow = sx.boxShadow ?? 3
     sx.fontWeight = sx.fontWeight ?? 'bold'
     sx.textTransform = sx.textTransform ?? 'none'
-    sx.px = sx.px ?? 4
-    sx.marginLeft = sx.marginLeft ?? 0
+    sx.px = sx.px ?? 3
+    sx.marginRight = sx.marginRight ?? 1
+    sx.marginLeft = sx.marginLeft ?? 1
+    sx.marginBottom = sx.marginBottom ?? 2
+    sx["&:hover"] = sx["&:hover"] ?? {
+      background: "#389CFC"
+    }
     return (
         <Button variant="contained" type="input" label={label} onClick={onClick} id={id} sx={sx}>{label}
             </Button>
@@ -23,8 +28,9 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
     sx.background = sx.background ?? "#E0E0E0"
     sx.color = sx.color ?? "#023859"
     sx.boxShadow = sx.boxShadow ?? 3
-    sx.marginRight = sx.marginRight ?? 2
-    sx.marginLeft = sx.marginLeft ?? 2
+    sx.px = sx.px ?? 3
+    sx.marginRight = sx.marginRight ?? 1
+    sx.marginLeft = sx.marginLeft ?? 1
     sx.marginBottom = sx.marginBottom ?? 2
     sx.fontWeight = sx.fontWeight ?? "bold"
     sx.textTransform = sx.textTransform ?? "none"
@@ -41,8 +47,9 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
     sx.background = sx.background ?? "#DB524B"
     sx.color = sx.color ?? "#FFFFFF"
     sx.boxShadow = sx.boxShadow ?? 3
-    sx.marginRight = sx.marginRight ?? 2
-    sx.marginLeft = sx.marginLeft ?? 2
+    sx.px = sx.px ?? 3
+    sx.marginRight = sx.marginRight ?? 1
+    sx.marginLeft = sx.marginLeft ?? 1
     sx.marginBottom = sx.marginBottom ?? 2
     sx.fontWeight = sx.fontWeight ?? "bold"
     sx.textTransform = sx.textTransform ?? "none"
