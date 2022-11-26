@@ -3,6 +3,8 @@ import ListItemText from '@mui/material/ListItemText';
 import { ListItemButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 export default function DropdownList({itemsHeader, itemsSubheader}) {
   const [isVisible, setIsVisible] = useState({});
@@ -24,6 +26,7 @@ export default function DropdownList({itemsHeader, itemsSubheader}) {
               })}
             >
             <ListItemText primary={h.title} secondary={h.description} className="ListElement" sx={sxListItemText}/>
+            {!isVisible?.[h.title] ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}
             </ListItemButton>
                 {!isVisible?.[h.title] ? null : itemsSubheader.map((s,i)=>{
                         if (h.id == s.categoryId) {
