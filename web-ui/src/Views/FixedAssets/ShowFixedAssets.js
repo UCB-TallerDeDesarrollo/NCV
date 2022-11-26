@@ -9,7 +9,7 @@ import ListContainer from "../../Components/ListContainer"
 import ListBasic from '../../Components/ListBasic'
 import DropdownList from '../../Components/DropdownList'
 import Dropdown from '../../Components/Dropdown'
-import ButtonPrimary from '../../Components/MUI-Button';    
+import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import SearchBar from '../../Components/SearchBar';
@@ -135,6 +135,7 @@ export default function ShowFixedAssets() {
         <Box sx={{display:'flex'}}>
             <ButtonPrimary label={"Gestionar Estados"} onClick={()=>navigate(assetStatesView)}/>
             <ButtonPrimary sx={{marginLeft:1}} label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
+            <ButtonPrimary sx={{marginLeft:1, background:'#28A464', color:'white'}} label={"Guardar en Excel"} onClick={()=>navigate(nexFixedAsset)}/>
         </Box>
         const searchComponents = 
         <Box sx={{display:'flex'}} marginTop={1}>
