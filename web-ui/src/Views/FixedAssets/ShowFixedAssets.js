@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef  } from 'react'
 import Box from '@mui/material/Box'
 import ErrorPage from '../../Components/ErrorPage'
 import {getFixedAssets} from '../../Components/GetFromApi'
@@ -17,6 +17,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { display } from '@mui/system'
 import axios from 'axios';
 import ExportExcel from '../../Components/ExportExcel'
+import { ConstructionOutlined } from '@mui/icons-material'
 
 export default function ShowFixedAssets() {
     const [open, setOpen] = useState(null);
@@ -25,9 +26,13 @@ export default function ShowFixedAssets() {
     const [hasErrorWithFetch, setHasErrorWithFetch] = useState(null)
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(0) 
     const [fixedAssetsData, setFixedAssetsData] = useState([])
+    const [searchBYNameValue, setSearchBYNameValue] = useState("")  
+    const didMountRef = useRef(false);
+    const [openList, setOpenList] = useState(false);
 
     const location = useLocation()
     const navigate = useNavigate();
+    const acronymsList = []
     
     const completeInfoFixedAsset = '/activos-fijos'
     const urlProgramHouses = 'https://ncv-api.azurewebsites.net/api/programHouses'
@@ -57,12 +62,21 @@ export default function ShowFixedAssets() {
         return posts;
     }
 
-    function searchCriteria (e, posts) {
-        if (!e.target.value) return posts
-        let resultsArray = posts.filter(post => post.name.toLowerCase().includes(e.target.value.toLowerCase()))
-        if(acronymsList[programHouseSelectedValue] != null){
+    function searchByName(e, posts){
+        setSearchBYNameValue(e.target.value)
+        return searchCriteria()
+    }
+
+    function searchCriteria () {
+        setOpenList(!openList)
+        let resultsArray = fixedAssets
+        if (searchBYNameValue != ""){
+            resultsArray = fixedAssets.filter(post => post.name.toLowerCase().includes(searchBYNameValue.toLowerCase()))
+        }
+        if(acronymsList[programHouseSelectedValue] != "TODOS"){
             resultsArray = resultsArray.filter(post => post.programHouseAcronym.includes(acronymsList[programHouseSelectedValue]))
         }
+        setSearchResults(resultsArray)
         return resultsArray;
     }
     const fetchBasicData = () => {
@@ -104,6 +118,13 @@ export default function ShowFixedAssets() {
         setOpen(showAlert)
     },[])
 
+    useEffect(()=>{
+        if(didMountRef.current){
+            searchCriteria()
+        }
+        didMountRef.current = true
+    },[programHouseSelectedValue, searchBYNameValue])
+
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
             return
@@ -115,18 +136,23 @@ export default function ShowFixedAssets() {
         return ErrorPage(hasErrorWithFetch)
     } 
     if (!fixedAssets || !assetCategories || !programHouses) return null
-    const acronymsList = []
+
     programHouses.map( programHouse =>  {
         acronymsList.push(programHouse.acronym)
     }) 
+    acronymsList.push("TODOS")
+
     let idProgram = -1
-    const programHousesList = programHouses.map( programHouse =>  { 
+    let programHousesList = programHouses.map( programHouse =>  { 
         idProgram++
         return{
         label: programHouse.acronym,
         value: idProgram      
     }}) 
-    const searcher = <SearchBar posts={fixedAssets} setSearchResults={setSearchResults} orderCriteria={ordenCriteria} searchCriteria={searchCriteria} />
+    programHousesList[idProgram+1] = {label: "TODOS",
+                                    value: idProgram+1}
+                                    
+    const searcher = <SearchBar posts={fixedAssets} setSearchResults={setSearchResults} orderCriteria={ordenCriteria} searchCriteria={searchByName} />
     if (fixedAssets.length>0 && assetCategories.length>0){
         const listCategories = assetCategories.map((el)=>{
             return {
@@ -142,6 +168,7 @@ export default function ShowFixedAssets() {
                 selectedValue={programHouseSelectedValue}
                 helperText = "Seleccione un programa"
                 setSelectedValue = {setProgramHouseSelectedValue}
+                onChangeF = {() => searchCriteria()}
                 required
                 >                                        
             </Dropdown> 
@@ -156,7 +183,7 @@ export default function ShowFixedAssets() {
                 categoryId: el.assetTypeAssetCategoryId
             }
         })
-        let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={listElements} withImage={false} />
+        let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={listElements} isOpened={openList} />
         let assetStatesView = "/activos-fijos/estados"
         let nexFixedAsset = "/crear-activo-fijo"
         const buttonsList = 
