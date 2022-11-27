@@ -197,7 +197,6 @@ function UpdateFixedAssetForm(props) {
         categoryCode = getCategoryCode(categorySelectedValue)
         const errorsFromForm= validate()
         setFormErrors(errorsFromForm)
-        console.log('date: ', entryDate)
         if(!hasFormErrors(errorsFromForm)){
             axios.put(urlFixedAsset, {
             Name: name,
@@ -208,7 +207,7 @@ function UpdateFixedAssetForm(props) {
             ProgramHouseId : programHouseSelectedValue,
             AssetTypeId : typeSelectedValue,
             AssetStateId: stateSelectedValue, //string
-            Code: "F-" + programCode + "-" + categoryCode + "-" + code, //string
+            Code: "F-" + programCode + "-" + categoryCode + "-" + code.split('-').pop(), //string
             }).then((res) => {
                 if (res.status == 200) {               
                     navigate(`/activos-fijos/${fixedAssetId}`,{state:{showAlert:true,alertMessage:"Activo Fijo actualizado exitosamente"}})
