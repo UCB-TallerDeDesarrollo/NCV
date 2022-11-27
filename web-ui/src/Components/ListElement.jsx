@@ -3,17 +3,13 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import { ListItemButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import { EditText} from 'react-edit-text';
+import { ButtonPrimaryEditIcon, ButtonPrimaryDeleteIcon } from './MUI-Button';
+import Box from '@mui/material/Box'
 import 'react-edit-text/dist/index.css';
 
 export default function ListElement({id=0, title = "default title", description = "default description", imgSrc = "", elementUrl = "", withImage=true, withEditIcon=false, editAction=null, editable=false, editActionOnSave=null, withDeleteIcon=false, deleteAction=null}){
   const navigate = useNavigate();
-  //if(setEditValue!=null)
-    //setEditValue(title)
-  //const [editValue, setEditValue] = useState(title)
   const sxListItemText = {
     '& .MuiListItemText-primary': {
       fontSize: 18,
@@ -28,15 +24,11 @@ export default function ListElement({id=0, title = "default title", description 
     img = <ListItemAvatar> <Avatar alt="Remy Sharp" src={imgSrc}/> </ListItemAvatar>;
   if (withDeleteIcon){
     deleteIcon = 
-    <IconButton aria-label="delete" size="small" className={"delete-assetState-button"} onClick={()=>{deleteAction(id)}}>
-      <DeleteIcon fontSize="small" />
-    </IconButton>
+    <ButtonPrimaryDeleteIcon id="delete_button" onClick={()=>{deleteAction(id)}} sx={{marginLeft:1, alignSelf:'center'}}/>
   }
   if (withEditIcon){
     editIcon = 
-    <IconButton aria-label="delete" size="small" className={"delete-assetState-button"} onClick={()=>{editAction(id)}}>
-      <EditIcon fontSize="small" />
-    </IconButton>
+    <ButtonPrimaryEditIcon id="edit_button" onClick={()=>{editAction(id)}} sx={{marginLeft:1, alignSelf:'center'}}/>
   }
   if(editable){
     elementText =
@@ -51,6 +43,6 @@ export default function ListElement({id=0, title = "default title", description 
     {img}      
     {elementText}
     {editIcon}
-    {deleteIcon}
+    {deleteIcon}  
   </ListItemButton>;
 }
