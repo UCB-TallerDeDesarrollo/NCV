@@ -23,22 +23,22 @@ function Navbar() {
     const isMatch = useMediaQuery(theme.breakpoints.down('md'))
 
     function handleClickViewUsers() {
-        if (accesPermiss == 'ComplitAcces') {
+        if (accesPermiss == 'CompleteAccess') {
             window.location.href = '/vista-usuarios'
         }
     }
 
     function handleClickFiles() {
         if (
-            accesPermiss == 'ComplitAcces' ||
-            accesPermiss == 'RestrinccionAcces'
+            accesPermiss == 'CompleteAccess' ||
+            accesPermiss == 'RestriccionAccess'
         ) {
             window.location.href = '/ninos'
         }
     }
 
     function handleClickAssets() {
-        if (accesPermiss == 'ComplitAcces') {
+        if (accesPermiss == 'CompleteAccess') {
             window.location.href = '/activos-fijos'
         }
     }
@@ -111,7 +111,7 @@ function Navbar() {
                                 display: { xs: 'none', sm: 'block' }
                             }}
                         >
-                            {accesPermiss == 'ComplitAcces' && (
+                            {accesPermiss == 'CompleteAccess' && (
                                 <Button
                                     sx={{
                                         marginLeft: 5,
@@ -125,8 +125,8 @@ function Navbar() {
                                 </Button>
                             )}
 
-                            {(accesPermiss == 'ComplitAcces' ||
-                                accesPermiss == 'RestrinccionAcces') && (
+                            {(accesPermiss == 'CompleteAccess' ||
+                                accesPermiss == 'RestriccionAccess') && (
                                 <Button
                                     sx={{
                                         marginLeft: 5,
@@ -140,7 +140,7 @@ function Navbar() {
                                 </Button>
                             )}
 
-                            {accesPermiss == 'ComplitAcces' && (
+                            {accesPermiss == 'CompleteAccess' && (
                                 <Button
                                     sx={{
                                         marginLeft: 5,

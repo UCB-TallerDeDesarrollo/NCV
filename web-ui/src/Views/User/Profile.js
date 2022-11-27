@@ -4,11 +4,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../../Components/NavBar'
-import FormContainer from '../../Components/FormContainer'
-import InputText from '../../Components/InputText'
-import Collapse from '@mui/material/Collapse'
 import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
-import Alert from '@mui/material/Alert'
 import SingleItemCard from '../../Components/SingleItemCard'
 import { Box } from '@mui/system'
 
@@ -17,7 +13,7 @@ export function Profile() {
     let parseToken=parseJwt(sessionStorage.getItem("jwt") )
     const navigate = useNavigate()
     const userIdLogin  = parseToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
-    var url = 'https://ncv-api.herokuapp.com/api/auth/' + userIdLogin
+    var url = 'https://ncv-api.azurewebsites.net/api/auth/' + userIdLogin
     //var url = 'http://localhost:5009/api/auth/' + userIdLogin
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)

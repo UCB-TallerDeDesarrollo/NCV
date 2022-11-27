@@ -5,16 +5,16 @@ function issLoggin(obtainRole){
 
         switch (obtainRole) {
             case "Soporte":
-                permiss="ComplitAcces"
+                permiss="CompleteAccess"
                 break;
-            case "AdminUser":
-                permiss="ComplitAcces"
+            case "Administrador":
+                permiss="CompleteAccess"
                 break;
             case "AuntUser":
-                permiss="RestrinccionAcces"
+                permiss="RestriccionAccess"
                 break;
-            case "Cordinator":
-                permiss="ComplitAcces"
+            case "Equipo Tecnico":
+                permiss="MediumAccess"
                 break;        
             default:
                 break;
