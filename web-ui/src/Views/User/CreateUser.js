@@ -41,7 +41,37 @@ const roles = [
     }
 ]
 
+const generatePassword=()=>{
+    const caracteres = {
+		number: '0 1 2 3 4 5 6 7 8 9',
+		specialCharacter: '! @ # $ % ^ & * ( ) _ - + = { [ } ] ; : < , > . ? /',
+		letterUpperLower: 'A B C D E F G H I J K L M N O P Q R S T U V W X Y Z',
+		letterToLower: 'a b c d e f g h i j k l m n o p q r s t u v w x y z'
+	}
+    let password=''
+    let arrayCharacterNumber = caracteres.number.split(' ')
+    let arrayCharacterSpecial = caracteres.specialCharacter.split(' ')
+    let arrayCharacterUpper = caracteres.letterUpperLower.split(' ')
+    let arrayCharacterLower = caracteres.letterToLower.split(' ')
+    
+    
+    for(let i=0;i<2; i++){
+        password+= arrayCharacterNumber[Math.floor(Math.random()* arrayCharacterNumber.length)]
+        password+= arrayCharacterSpecial[Math.floor(Math.random()* arrayCharacterNumber.length)]
+        password+= arrayCharacterUpper[Math.floor(Math.random()* arrayCharacterNumber.length)]
+        password+= arrayCharacterLower[Math.floor(Math.random()* arrayCharacterNumber.length)]
+    }
+    /*let arrayCharacter = caracteres.number+' '+caracteres.specialCharacter+' '+ caracteres.letterUpperLower+' '+ caracteres.letterToLower
+    arrayCharacter =arrayCharacter.split(' ')
+    
+    for(let i=0;i<10; i++){
+        password+= arrayCharacter[Math.floor(Math.random()* arrayCharacter.length)]
+    }*/
+    console.log(password)
+    return password;
+}
 function CreateUser() {
+    const  [passwordGenerate, generatePasswordChange]=useState('')
     var url = 'https://ncv-api.azurewebsites.net/api/auth'
     //var url = 'http://localhost:5009/api/auth' 
     const navigate = useNavigate()
@@ -49,7 +79,7 @@ function CreateUser() {
     const [data, setData] = useState(user)
     const [formErrors,setFormErrors] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
-
+    
     const handleInputChange = (e) => {
         const { name, value } = e.target
         setOpen(false)
@@ -89,10 +119,14 @@ function CreateUser() {
             })
     };
 
-
+    if(window.onload==true){
+        generatePasswordChange(generatePassword())
+    }
     useEffect(()=>{
+        
         console.log(formErrors)
         if (Object.keys(formErrors).length === 0 && isSubmit){
+            //pass=generatePassword()
            console.log(data);
         }
     },[formErrors]);
@@ -149,7 +183,10 @@ function CreateUser() {
         return errors;
 
     }
-
+    let pass=generatePassword()
+    data.password=pass
+    data.confirmPassword=pass
+    console.log(pass)
     return (
         <>
             <Navbar />
@@ -222,7 +259,7 @@ function CreateUser() {
                         name="password"
                         label="Contraseña"
                         type="password"
-                        value={data.password}
+                        value={pass}
                         onChange={handleInputChange}
                     />
                     {formErrors.password? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
@@ -235,7 +272,8 @@ function CreateUser() {
                         name="confirmPassword"
                         label="Confirmar contraseña"
                         type="password"
-                        value={data.confirmPassword}
+                        
+                        value={pass}
                         onChange={handleInputChange}
                     />
                     {formErrors.confirmPassword? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
