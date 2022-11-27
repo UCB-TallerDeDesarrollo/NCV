@@ -8,7 +8,8 @@ import { ButtonLoading } from '../../Components/MUI-Button';
 import FormContainer from '../../Components/FormContainer'
 import './LoginForm.css'
 import issLoggin from '../../security';
-import { IconButton, InputAdornment } from '@mui/material';
+
+import { IconButton, InputAdornment, Link } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 function LoginForm() {
@@ -126,6 +127,9 @@ function LoginForm() {
                         </div>
                         <div>
                             {hasAnError && <Alert id="alert-bad-user" sx={{ width: 1, pt: 1 }} severity="error">Usuario y/o contraseña no validos</Alert>}
+                        </div>
+                        <div>
+                            <Link href='/recuperar-contrasena' underline="hover" color="black">¿Olvidaste tu contraseña?</Link >
                         </div>
                         <div className="pt-1 mb-4">
                             <ButtonLoading id="input-button-login" label="Iniciar Sesion" loading={isLoading} type="submit" />  

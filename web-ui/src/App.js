@@ -9,6 +9,7 @@ import HomePageForm from './Views/HomePage/HomePageForm'
 import LoginForm from './Views/Login/LoginForm'
 import CreateUser from './Views/User/CreateUser'
 import { EditUser } from './Views/User/EditUser'
+import RecoverPassword from './Views/RecoverPassword/RecoverPassword'
 
 import CreateFixedAssetForm from './Views/FixedAssets/CreateFixedAssetForm'
 import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
@@ -39,6 +40,7 @@ function App() {
             <Router>
                 <Routes>
                     <Route exact path="/" element={<LoginForm />}></Route>
+                    <Route path="/recuperar-contrasena" element={<RecoverPassword />}></Route>
                     <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
                     <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
                     <Route path="/perfil-ncv" element={<Profile />}></Route>
@@ -116,6 +118,7 @@ function App() {
         <Router>
             <Routes>
                 <Route exact path="/" element={<LoginForm />}></Route>
+                <Route path="/recuperar-contrasena" element={<RecoverPassword />}></Route>
                 <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
                 <Route path="/perfil-ncv" element={<Profile />}></Route>
                 <Route path="/ninos" element={<ShowKidsFiles />}></Route>
@@ -149,6 +152,7 @@ function App() {
         <Router>
                 <Routes>
                     <Route exact path="/" element={<LoginForm />}></Route>
+                    <Route path="/recuperar-contrasena" element={<RecoverPassword />}></Route>
                     <Route path="*" element={<Navigate replace to="/" />} />
                 </Routes>
             </Router>
