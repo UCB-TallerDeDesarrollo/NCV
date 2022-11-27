@@ -4,7 +4,7 @@ describe('Login', () => {
 
   beforeEach(() => {
     cy.visit('/');
-    sessionStorage.setItem('Access','CompleteAccess')
+    sessionStorage.setItem('Access','')
   });
 
   it('muestra la pagina de LogIn', () => {
