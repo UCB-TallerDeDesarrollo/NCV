@@ -17,7 +17,7 @@ export function EditProfile() {
     let parseToken=parseJwt(sessionStorage.getItem("jwt") )
     const navigate = useNavigate()
     const userIdLogin  = parseToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
-    var url = 'https://ncv-api.herokuapp.com/api/auth/' + userIdLogin
+    var url = 'https://ncv-api.azurewebsites.net/api/auth' + userIdLogin
     //var url = 'http://localhost:5009/api/auth/' + userIdLogin
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)

@@ -37,7 +37,7 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
         }
         healthReportComponent = (<>
             <SingleItemCard key={1} element={healthReportElement} title={"Reporte de salud"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}} />
-            {accesPermiss=="ComplitAcces"&&<ButtonPrimary label="Editar Health Report" onClick={navigateEditHealthReport}/>}
+            {accesPermiss=="CompleteAccess"&&<ButtonPrimary label="Editar Health Report" onClick={navigateEditHealthReport}/>}
         </>)
     }
     return healthReportComponent

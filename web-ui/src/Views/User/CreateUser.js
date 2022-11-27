@@ -28,17 +28,22 @@ const roles = [
     },
     {
         label: 'Administrador',
-        value: 'AdminUser'
+        value: 'ADMINISTRADOR'
     },
     {
-        label: 'Super Usuario',
+        label: 'Soporte',
         value: 'Soporte'
+    }
+    ,
+    {
+        label: 'Equipo Tecnico',
+        value: 'Equipo Tecnico'
     }
 ]
 
 function CreateUser() {
-    //var url = 'https://ncv-api.herokuapp.com/api/auth'
-    var url = 'http://localhost:5009/api/auth' 
+    var url = 'https://ncv-api.azurewebsites.net/api/auth'
+    //var url = 'http://localhost:5009/api/auth' 
     const navigate = useNavigate()
     const [open, setOpen] = useState(false)
     const [data, setData] = useState(user)

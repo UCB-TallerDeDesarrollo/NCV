@@ -6,15 +6,14 @@ import Box from '@mui/material/Box';
 import ListContainer from "../../Components/ListContainer";
 import Navbar from '../../Components/NavBar';
 import ButtonPrimary from '../../Components/MUI-Button';
-import ListBasic from '../../Components/ListBasic';
 import GutterList from '../../Components/GutterList'
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react'
 import TranslateRole from './Translate'
-import  { ButtonDanger } from '../../Components/MUI-Button';
 
 function ListUsers() {
-    const url="https://ncv-api.herokuapp.com/api/auth";
+    const url="https://ncv-api.azurewebsites.net/api/auth";
+    //const url="http://localhost:5009/api/auth";
     const { apiData:users, error } = getFromApi(url)
 
     const location = useLocation()

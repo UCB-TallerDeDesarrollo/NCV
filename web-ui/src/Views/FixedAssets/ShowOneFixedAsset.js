@@ -60,7 +60,7 @@ export function ShowFixedAsset() {
         handleCloseToConfirm();
         setOpenToConfirm(true);
     };
-    const buttonsList = accesPermiss == "ComplitAcces" ? (
+    const buttonsList = accesPermiss == "CompleteAccess" ? (
         <Box sx={{alignSelf:'flex-end', display:'flex-end'}}>
             <ButtonPrimaryEditIcon id="edit_button" onClick={navigateUpdateFixedAsset} sx={{marginLeft:1, alignSelf:'flex-end'}}/>
             <ButtonPrimaryDeleteIcon id="delete_button" onClick={ToConfirmOpen} sx={{marginLeft:1, alignSelf:'flex-end'}}/>
