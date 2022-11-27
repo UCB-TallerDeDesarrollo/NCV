@@ -7,7 +7,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
-import ButtonPrimary, { ButtonDanger, ButtonSecondary } from './MUI-Button';
+import Box from '@mui/material/Box'
+import ButtonPrimary, { ButtonDanger, ButtonSecondary, ButtonPrimaryEditIcon, ButtonPrimaryDeleteIcon } from './MUI-Button';
 import Alert from '@mui/material/Alert';
 import { ListItemIcon, Snackbar } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
@@ -40,14 +41,10 @@ export default function GutterlessList({items, withImage=true, withDeleteIcon=fa
                 key={n.id ? n.id : i} id={n.id}  description={n.description} elementUrl={n.elementUrl} 
                 
                 secondaryAction={
-                    <ListItemIcon>
-                        <IconButton title="Editar">
-                            <EditIcon fontSize="small" aria-label="Editar" onClick={()=>navigate(n.elementUrl)}  />                      
-                        </IconButton>
-                        <IconButton title="Eliminar">
-                            {true &&<DeleteIcon fontSize="small" aria-label="Eliminar" onClick={ToConfirmOpen} color='error' id={"Eliminar"} setSelectedRow={n}/>}
-                        </IconButton>
-                    </ListItemIcon>
+                    <Box sx={{alignSelf:'flex-end', display:'flex-end'}}>
+                        <ButtonPrimaryEditIcon id="edit_button" onClick={() => navigate(n.elementUrl)} sx={{color:'primary', marginLeft:1, alignSelf:'flex-end'}}/>
+                        {true && <ButtonPrimaryDeleteIcon id="delete_button" onClick={ToConfirmOpen} sx={{marginLeft:1, alignSelf:'flex-end'}}/>}
+                    </Box>
                 }
                 
                 
