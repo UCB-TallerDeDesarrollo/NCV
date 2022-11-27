@@ -15,12 +15,22 @@ namespace NinosConValorAPI.Services
             _NCVRepository = nCVRepository;
             _mapper = mapper;
         }
+        public async Task<AssetCategoryModel> GetAssetCategoryAsync(int categoryId)
+        {
+            var assetCategoryEntity = await _NCVRepository.GetAssetCategoryAsync(categoryId);
 
+            if (assetCategoryEntity == null)
+                throw new NotFoundElementException($"La categoría con id:{categoryId} no existe.");
+
+            return _mapper.Map<AssetCategoryModel>(assetCategoryEntity);
+        }
         public async Task<AssetTypeModel> CreateAssetTypeAsync(AssetTypeModel assetType, int categoryId)
         {
+            var category = await GetAssetCategoryAsync(categoryId);
             var assetTypeEntity = _mapper.Map<AssetTypeEntity>(assetType);
             assetTypeEntity.Deleted = false;
-            _NCVRepository.CreateAssetType(assetTypeEntity, categoryId);
+            assetTypeEntity.AssetCategory = _mapper.Map<AssetCategoryEntity>(category);
+            await _NCVRepository.CreateAssetType(assetTypeEntity, categoryId);
             var result = await _NCVRepository.SaveChangesAsync();
             if (result)
             {
@@ -31,6 +41,7 @@ namespace NinosConValorAPI.Services
 
         public async Task<IEnumerable<AssetTypeModel>> GetAssetTypesAsync(int categoryId)
         {
+            await GetAssetCategoryAsync(categoryId);
             var assetTypesList = await _NCVRepository.GetAssetTypesAsync(categoryId);
 
             if (assetTypesList == null || !assetTypesList.Any())
@@ -45,11 +56,16 @@ namespace NinosConValorAPI.Services
                 throw new NotFoundElementException($"El tipo con Id:{typeId} no existe.");
             return _mapper.Map<AssetTypeModel>(type);
         }
+
         public async Task<AssetTypeModel> UpdateAssetTypeAsync(int typeId, AssetTypeModel typeModel, int categoryId)
         {
+            await GetAssetCategoryAsync(categoryId);
             var typeEntity = _mapper.Map<AssetTypeEntity>(typeModel);
             await GetAssetTypeAsync(typeId);
             typeEntity.Id = typeId;
+            var assets = await GetFixedAssetsAsync();
+            assets = assets.Where(a => a.AssetTypeId == typeId && a.AssetTypeAssetCategoryId == categoryId).ToList();
+            typeEntity.FixedAssets = _mapper.Map<List<FixedAssetEntity>>(assets);
             var res = await _NCVRepository.UpdateAssetTypeAsync(typeId, typeEntity, categoryId);
             if (!res)
             {
@@ -85,6 +101,7 @@ namespace NinosConValorAPI.Services
 
         public async Task DeleteAssetTypeAsync(int typeId, int categoryId)
         {
+            await GetAssetCategoryAsync(categoryId);
             await GetAssetTypeAsync(typeId);
             var cannotBeDeleted = await hasFixedAssetAssociated(typeId, categoryId);
             if (cannotBeDeleted)

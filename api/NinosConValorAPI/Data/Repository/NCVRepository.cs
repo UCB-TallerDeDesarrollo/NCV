@@ -198,7 +198,7 @@ namespace NinosConValorAPI.Data.Repository
         
         // FIXED ASSET
 
-        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int categoryId)
+        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId)
         {
             _dbContext.Entry(fixedAsset.AssetType).State = EntityState.Unchanged;
             _dbContext.Entry(fixedAsset.ProgramHouse).State = EntityState.Unchanged;

@@ -51,16 +51,16 @@ namespace NinosConValorAPI.Services
             return assetStateEntity;
         }
 
-        public async Task<FixedAssetModel> CreateFixedAssetAsync(FixedAssetModel fixedAsset, int programHouseId, int categoryId)
+        public async Task<FixedAssetModel> CreateFixedAssetAsync(FixedAssetModel fixedAsset, int programHouseId, int typeId)
         {
 
             await GetProgramHouseAsync(programHouseId);
-            await GetAssetCategoryAsync(categoryId);
+            await GetAssetTypeAsync(typeId);
             await GetAssetStateAsync(fixedAsset.AssetStateId);
             fixedAsset.ProgramHouseId = programHouseId;
-            fixedAsset.AssetTypeId = categoryId;
+            fixedAsset.AssetTypeId = typeId;
             var fixedAssetEntity = _mapper.Map<FixedAssetEntity>(fixedAsset);
-            _NCVRepository.CreateFixedAsset(fixedAssetEntity, programHouseId, categoryId);
+            _NCVRepository.CreateFixedAsset(fixedAssetEntity, programHouseId);
             var result = await _NCVRepository.SaveChangesAsync();
             
             if (result)
