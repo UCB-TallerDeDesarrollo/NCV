@@ -16,7 +16,7 @@ import SearchBar from '../../Components/SearchBar';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { display } from '@mui/system'
 import axios from 'axios';
-import ExportExcel from '../../Components/ExportExcel'
+import ExportExcel, {compareSort, capitalizeFirstLowerCase} from '../../Components/ExportExcel'
 import { ConstructionOutlined } from '@mui/icons-material'
 
 export default function ShowFixedAssets() {
@@ -86,9 +86,9 @@ export default function ShowFixedAssets() {
                 var dataFA = allData[0].data
                 var newDataFA = dataFA.map((data) => {
                     return {
-                        'DETALLE': data.name,
+                        'DETALLE': capitalizeFirstLowerCase(data.name),
                         'CÓDIGO': data.code,
-                        'TIPO DE AF': data.assetTypeAssetCategoryCategory,
+                        'TIPO DE ACTIVO FIJO': data.assetTypeAssetCategoryCategory,
                         'TIPO': data.assetTypeType,
                         'ESTADO': data.assetStateState,
                         'FECHA DE ENTRADA': data.entryDate!=null? new Date(data.entryDate).toLocaleDateString():null,
@@ -98,8 +98,8 @@ export default function ShowFixedAssets() {
                         'PROGRAMA': data.programHouseName
                     }
                 })
+                .sort((lowName, highName) => { return compareSort(lowName, highName, 'DETALLE')})
                 setFixedAssetsData(newDataFA)
-                console.log(newDataFA)
             })
     )}
 
