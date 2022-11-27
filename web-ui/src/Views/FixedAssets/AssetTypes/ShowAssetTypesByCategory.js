@@ -224,8 +224,7 @@ export default function ShowAssetTypesByCategory() {
             description:``
         }
     })
-    let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={assetTypesListElements} isOpened={true} />
-    //assetTypesComponent = <ListGrid items={assetTypesListElements} withImage={false} editable={true} editActionOnSave={handleSave} withDeleteIcon={true} deleteAction={deleteAction}/>
+    let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={assetTypesListElements} isOpened={true} editable={true} withDeleteIcon={true} deleteAction={deleteAction} />
     return (        
         <>        
             <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
