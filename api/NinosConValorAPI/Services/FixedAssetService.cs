@@ -97,7 +97,6 @@ namespace NinosConValorAPI.Services
 
         public async Task<FixedAssetModel> UpdateFixedAssetAsync(int fixedAssetId, FixedAssetModel fixedAsset)
         {
-            //ESTA PUEDE SER LA SOLUCIÓN!!!!!!!!!!!!!!
             var fixedAssetToUpdate = await GetFixedAssetAsync(fixedAssetId);
             ProgramHouseEntity programHouseToUpdate = null;
             AssetTypeEntity typeToUpdate = null;

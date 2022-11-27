@@ -54,7 +54,7 @@ namespace UnitTests.ServiceUT
             fixedAssetRepositoryMock.Setup(r => r.GetProgramHouseAsync(2)).ReturnsAsync(new ProgramHouseEntity());
             fixedAssetRepositoryMock.Setup(r => r.GetAssetStateAsync(1)).ReturnsAsync(new AssetStateEntity());
 
-            fixedAssetRepositoryMock.Setup(r => r.CreateFixedAsset(fixedAssetEntity,2,1));
+            fixedAssetRepositoryMock.Setup(r => r.CreateFixedAsset(fixedAssetEntity,2));
             fixedAssetRepositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(true);
 
             var fixedAssetService = new FixedAssetService(fixedAssetRepositoryMock.Object, mapper);
@@ -196,7 +196,7 @@ namespace UnitTests.ServiceUT
             fixedAssetRepositoryMock.Setup(r => r.GetAssetCategoryAsync(1)).ReturnsAsync(assetCategory);
             fixedAssetRepositoryMock.Setup(r => r.GetProgramHouseAsync(2)).ReturnsAsync(new ProgramHouseEntity());
             fixedAssetRepositoryMock.Setup(r => r.GetAssetStateAsync(1)).ReturnsAsync(new AssetStateEntity());
-            fixedAssetRepositoryMock.Setup(r => r.CreateFixedAsset(fixedAssetEntity,2,1));
+            fixedAssetRepositoryMock.Setup(r => r.CreateFixedAsset(fixedAssetEntity,2));
             fixedAssetRepositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(false);
 
             var fixedAssetService = new FixedAssetService(fixedAssetRepositoryMock.Object, mapper);
@@ -226,7 +226,7 @@ namespace UnitTests.ServiceUT
             fixedAssetRepositoryMock.Setup(r => r.GetAssetCategoryAsync(1)).ReturnsAsync(assetCategory);
             fixedAssetRepositoryMock.Setup(r => r.GetProgramHouseAsync(2)).ReturnsAsync(new ProgramHouseEntity());
             fixedAssetRepositoryMock.Setup(r => r.GetAssetStateAsync(1)).ReturnsAsync(new AssetStateEntity());
-            fixedAssetRepositoryMock.Setup(r => r.CreateFixedAsset(fixedAssetEntity,2,1));
+            fixedAssetRepositoryMock.Setup(r => r.CreateFixedAsset(fixedAssetEntity,2));
             fixedAssetRepositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(true);
 
             var fixedAssetService = new FixedAssetService(fixedAssetRepositoryMock.Object, mapper);
