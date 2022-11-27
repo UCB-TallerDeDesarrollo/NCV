@@ -98,9 +98,7 @@ export default function ShowFixedAssets() {
                         'PROGRAMA': data.programHouseName
                     }
                 })
-                .sort((low, high) => { return compareSort(low, high, 'DETALLE')})
-                .sort((low, high) => { return compareSort(low, high, 'TIPO DE ACTIVO FIJO')});
-                
+                .sort((lowName, highName) => { return compareSort(lowName, highName, 'DETALLE')})
                 setFixedAssetsData(newDataFA)
             })
     )}
