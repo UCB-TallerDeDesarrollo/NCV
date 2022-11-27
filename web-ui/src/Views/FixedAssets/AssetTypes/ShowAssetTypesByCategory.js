@@ -18,6 +18,7 @@ import axios from "axios"
 import FormContainer from '../../../Components/FormContainer'
 import InputText from '../../../Components/InputText'
 import DropdownList from '../../../Components/DropdownList'
+import Dropdown from '../../../Components/Dropdown'
 
 var accesPermiss = sessionStorage.getItem("Access")
 
@@ -42,6 +43,7 @@ export default function ShowAssetTypesByCategory() {
     const [errorAssetTypeDelete, setErrorAssetTypeDelete] = useState(null)
     const [errorCreateAssetType, setErrorCreateAssetType] = useState(null)
     const [errorUpdateAssetType, setErrorUpdateAssetType] = useState(null)
+    const [categorySelectedValue, setCategorySelectedValue] = useState(null)
     
     const [data, setData] = useState({
         type:''//string
@@ -94,8 +96,9 @@ export default function ShowAssetTypesByCategory() {
     }
 
     function hasFormErrors(errorsFromForm){
+        console.log("for errors=", errorsFromForm)
         let hasErrors=true
-        if(!errorsFromForm.state){
+        if(!errorsFromForm.type && !errorsFromForm.AssetCategoryId){
             hasErrors = false
         }
         return hasErrors
@@ -103,8 +106,12 @@ export default function ShowAssetTypesByCategory() {
 
     const validate = (datas) => {      
         const errors = {
-            type: '' // string            
-        }        
+            type: '', // string    
+            AssetCategoryId : '' //int
+        }      
+        if(!categorySelectedValue){
+            errors.AssetCategoryId= "La categoría del Activo Fijo es requerida!";
+        }  
         if(!datas.type||datas.type.length==0)
             errors.type= "El tipo es requerido!"
         return errors     
@@ -119,11 +126,11 @@ export default function ShowAssetTypesByCategory() {
                 type:value
             }
             submitUpdate(id,updateData)
-        }  
-        
+        }          
     }
 
     function submitUpdate(id,updateData){
+        //categoriesList.whe
         axios.put(`${urlAssetCategories}${assetCategoryId}/assetTypes/${id}`, updateData).then((res) => {
             if (res.status == 200) {               
                 setShowAlert(true)
@@ -141,7 +148,9 @@ export default function ShowAssetTypesByCategory() {
         errorsFromForm = validate(data)
         setFormErrors(errorsFromForm)
         if(!hasFormErrors(errorsFromForm)){
-            axios.post(`${urlAssetCategories}${assetCategoryId}/assetTypes/`, data).then((res) => {
+            console.log(`URL = ${urlAssetCategories}${categorySelectedValue}/assetTypes/`)
+            console.log("data= ", data)
+            axios.post(`${urlAssetCategories}${categorySelectedValue}/assetTypes/`, data).then((res) => {
                 if (res.status == 201) {     
                     setShowAlert(true)
                     setAlertMessage("Tipo creado")
@@ -153,39 +162,12 @@ export default function ShowAssetTypesByCategory() {
                     })
                 }            
             }).catch ((apiError) => {
-                setErrorCreateAssetType(apiError) 
-                checkError()                    
+                setErrorCreateAssetType(apiError)                               
             })
         }else{
             console.log(errorsFromForm)
         }
     }
-    if (errorAssetTypes) return ErrorPage(errorAssetTypes)
-    if (errorAssetTypeDelete){
-        if(errorAssetTypeDelete.response.status==400 && errorAssetTypeDelete.response.data=="El tipo no puede ser eliminado porque existen activos fijos asociados a el."){
-            setShowAlert(true)
-            setAlertMessage(errorAssetTypeDelete.response.data)
-            setSeverity("warning")
-            setOpen(true)
-            setErrorAssetTypeDelete(null)
-        }
-        else
-            return ErrorPage(errorAssetTypeDelete)
-    } 
-    if (errorCreateAssetType) return ErrorPage(errorCreateAssetType)
-    if (errorUpdateAssetType) return ErrorPage(errorUpdateAssetType)
-    if (!assetTypes) return null    
-    if (!assetType)return <h1>ERROR: Tipo de activo fijo no encontrado en la base de datos</h1>
-    
-    const assetTypesListElements = assetTypes.map((assetType)=>{
-        return {
-            id:assetType.id, 
-            title: assetType.type,     
-            description: '',
-            categoryId: assetType.assetCategoryId    
-        }
-    })
-    console.log("assetTypesListElements = ", assetTypesListElements)
 
     function handleClose(event, reason) {
         if (reason === 'clickaway') {            
@@ -217,6 +199,36 @@ export default function ShowAssetTypesByCategory() {
         setData(newData)
         setOpen(false)
     }
+    if (errorAssetTypes) return ErrorPage(errorAssetTypes)
+    if (errorAssetTypeDelete){
+        if(errorAssetTypeDelete.response.status==400 && errorAssetTypeDelete.response.data=="El tipo no puede ser eliminado porque existen activos fijos asociados a el."){
+            setShowAlert(true)
+            setAlertMessage(errorAssetTypeDelete.response.data)
+            setSeverity("warning")
+            setOpen(true)
+            setErrorAssetTypeDelete(null)
+        }
+        else
+            return ErrorPage(errorAssetTypeDelete)
+    } 
+    if (errorCreateAssetType) return ErrorPage(errorCreateAssetType)
+    if (errorUpdateAssetType) return ErrorPage(errorUpdateAssetType)
+    if (!assetTypes) return null    
+    if(!assetCategories) return null
+    if (!assetType)return <h1>ERROR: Tipo de activo fijo no encontrado en la base de datos</h1>
+    let categoriesList = assetCategories.map( category =>  { return{
+        label: category.category,
+        value: category.id      
+    }}) 
+    const categoriesOptions = categoriesList  
+    const assetTypesListElements = assetTypes.map((assetType)=>{
+        return {
+            id:assetType.id, 
+            title: assetType.type,     
+            description: '',
+            categoryId: assetType.assetCategoryId    
+        }
+    })
     const listCategories = assetCategories.map((el)=>{
         return {
             id:el.id, 
@@ -224,7 +236,7 @@ export default function ShowAssetTypesByCategory() {
             description:``
         }
     })
-    let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={assetTypesListElements} isOpened={true} editable={true} withDeleteIcon={true} deleteAction={deleteAction} />
+    let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={assetTypesListElements} isOpened={true} editable={true} editActionOnSave={handleSave} withDeleteIcon={true} deleteAction={deleteAction} />
     return (        
         <>        
             <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
@@ -253,6 +265,18 @@ export default function ShowAssetTypesByCategory() {
             </Dialog>
             <div style={{display:'flex', justifyContent:'center'}}>
         <FormContainer title="Crear tipo">
+            <Dropdown 
+                    name={"Categoría"} 
+                    id="category-drop" 
+                    options={categoriesOptions} 
+                    helperText = "Seleccione una categoría" 
+                    selectedValue={categorySelectedValue}
+                    setSelectedValue = {setCategorySelectedValue}
+                    required
+                    >                                       
+                </Dropdown> 
+                {formErrors.AssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.AssetCategoryId}  </Alert>:<p></p> }  
             <InputText
                 required
                 id="type"
