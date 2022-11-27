@@ -41,7 +41,7 @@ export default function GutterlessList({items, withImage=true, withDeleteIcon=fa
                 
                 secondaryAction={
                     <ListItemIcon>
-                        <IconButton title="Editar">
+                        <IconButton title="Editar" color="primary">
                             <EditIcon fontSize="small" aria-label="Editar" onClick={()=>navigate(n.elementUrl)}  />                      
                         </IconButton>
                         <IconButton title="Eliminar">
