@@ -7,8 +7,27 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {ButtonPrimaryDeleteIcon} from './MUI-Button';
+import { EditText} from 'react-edit-text';
 
-export default function TableBasic({columnHeaders=null, data=null, align="center",sxTableContainer={}, withDeleteIcon = null}) {
+const sxListItemText = {
+  '& .MuiListItemText-primary': {
+    fontSize: 18,
+  }
+}
+
+function TextCell( { value, editable}){
+  if(editable){
+    return (  <EditText sx={sxListItemText}
+      onSave={(props)=>editActionOnSave(props,id)}      
+      defaultValue = {value} 
+      editButtonProps={{ style: { marginLeft: '5px', width: 16 } }}      
+    /> )
+  }
+  return value
+}
+
+
+export default function TableBasic({columnHeaders=null, data=null, align="center",sxTableContainer={}, withDeleteIcon = null, editable=false}) {
   let tableHead = null
   let tableBody = null
 
@@ -38,7 +57,9 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
             let backgroundColor = null
             if (rk.includes('empty'))
               backgroundColor = '#f2f2f2'
-            let cell = (<TableCell key={i} align={align} sx={{backgroundColor:backgroundColor}}>{row[rk]}</TableCell>)
+            let cell = (<TableCell key={i} align={align} sx={{backgroundColor:backgroundColor}}>
+                                  <TextCell value = {row[rk]} editable={editable}/>
+                          </TableCell>)
             if (rk=='groupTitle')
               cell = (<TableCell key={i} align={align} sx={{fontWeight:'bold',paddingTop:3, fontSize:20, backgroundColor:'#f2f2f2'}}>{row[rk]}</TableCell>)
             return cell
