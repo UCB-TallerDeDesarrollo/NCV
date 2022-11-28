@@ -9,6 +9,9 @@ describe('Show fixed assets end to end tests', () => {
     cy.intercept('GET', 'https://ncv-api.azurewebsites.net/api/fixedAssets',{    
       fixture: 'fixedAssets/listOfAssets.json'
     }).as('listOfAssets',);
+    cy.intercept('GET', 'https://ncv-api.azurewebsites.net/api/programHouses',{    
+      fixture: 'programHouses/listOfProgramHouses.json'
+    }).as('listOfProgramHouses',);
 
     cy.visit('/activos-fijos');
     cy.get('.ListElement').contains('Herramientas').click()
@@ -34,6 +37,9 @@ describe('Show fixed assets end to end tests', () => {
     cy.intercept('GET', 'https://ncv-api.azurewebsites.net/api/fixedAssets',{    
       fixture: 'fixedAssets/listOfAssets.json'
     }).as('listOfAssets',);
+    cy.intercept('GET', 'https://ncv-api.azurewebsites.net/api/programHouses',{    
+      fixture: 'programHouses/listOfProgramHouses.json'
+    }).as('listOfProgramHouses',);
 
     cy.visit('/activos-fijos');
 

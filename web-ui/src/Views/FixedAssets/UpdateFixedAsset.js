@@ -51,7 +51,7 @@ function UpdateFixedAssetForm(props) {
                 setFeatures(dataFA.features)
                 setEntryDate(dataFA.entryDate)
                 setCode(dataFA.code)
-                getTypesByCategory(dataFA.assetTypeAssetCategoryId)
+                getTypesByCategory(dataFA.assetTypeAssetCategoryId,false)
                 setCategorySelectedValue(dataFA.assetTypeAssetCategoryId)
                 setProgramHouseSelectedValue(dataFA.programHouseId)
                 setTypeSelectedValue(dataFA.assetTypeId)
@@ -124,13 +124,13 @@ function UpdateFixedAssetForm(props) {
     }
     function hasFormErrors(errorsFromForm){        
         let hasErrors=true
-        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features && !errorsFromForm.Code && !errorsFromForm.AssetStateId){
+        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features && !errorsFromForm.Code && !errorsFromForm.AssetStateId &&!errorsFromForm.AssetTypeId){
             hasErrors = false
         }
         return hasErrors
     }
 
-    function getTypesByCategory(id){
+    function getTypesByCategory(id, setTypeNull=true){
         const urlTypesByCategory = `https://ncv-api.azurewebsites.net/api/assetCategories/${id}/assetTypes`
         let types=null
         let errorTypes=null
@@ -142,6 +142,8 @@ function UpdateFixedAssetForm(props) {
                     value: type.id      
                 }}) 
                 setTypesOptions(typesList)
+                console.log("setTypeNull",setTypeNull)
+                if(setTypeNull) setTypeSelectedValue(null)
             }
         ).catch((e)=>{
             errorTypes=e
@@ -197,6 +199,7 @@ function UpdateFixedAssetForm(props) {
         categoryCode = getCategoryCode(categorySelectedValue)
         const errorsFromForm= validate()
         setFormErrors(errorsFromForm)
+
         if(!hasFormErrors(errorsFromForm)){
             axios.put(urlFixedAsset, {
             Name: name,
@@ -229,7 +232,8 @@ function UpdateFixedAssetForm(props) {
             Features: '', // string
             ProgramHouseId : '', //int
             AssetCategoryId : '', //int
-            AssetStateId: '' //string
+            AssetStateId: '', //string
+            AssetTypeId : '', //int
         }
         const regexNumber = /^[0-9]+([.][0-9]+)?$/;
         if(!name){
@@ -262,6 +266,14 @@ function UpdateFixedAssetForm(props) {
 
         if(!categorySelectedValue){
             errors.AssetCategoryId= "La categoría del Activo Fijo es requerida!";
+        }
+        console.log("typeSelectedValue",typeSelectedValue)
+        if(!typeSelectedValue){
+            errors.AssetTypeId= "El tipo del Activo Fijo es requerido!";            
+        }
+
+        if(typesOptions.length==0){
+            errors.AssetTypeId = `Seleccione una categoría para ver los tipos`
         }
     
         if(features&&features.length>1000){
@@ -321,8 +333,8 @@ function UpdateFixedAssetForm(props) {
                     required
                     >                                       
                 </Dropdown> 
-                {formErrors.AssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.AssetCategoryId}  </Alert>:<p></p> }             
+                {formErrors.AssetTypeId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.AssetTypeId}  </Alert>:<p></p> }            
                 <InputText
                     onChange={(e) => setDescription(e.target.value)}
                     id="Description"

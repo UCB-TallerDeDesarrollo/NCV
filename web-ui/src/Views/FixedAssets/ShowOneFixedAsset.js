@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
+import {useLocation} from 'react-router-dom'
 import getFromApi, { deleteFixedAssets } from '../../Components/GetFromApi'
 import ErrorPage from '../../Components/ErrorPage'
 import Navbar from '../../Components/NavBar'
@@ -20,6 +21,10 @@ var accesPermiss = sessionStorage.getItem("Access")
 
 export function ShowFixedAsset() {
     const { fixedAssetId } = useParams()
+    const location = useLocation()
+    let showAlert = location.state ? location.state.showAlert : false 
+    let alertMessage = location.state ? location.state.alertMessage : null 
+    const [open, setOpen] = useState(showAlert);
     const url = `https://ncv-api.azurewebsites.net/api/fixedAssets/${fixedAssetId}`  
     const { apiData:fixedAsset, error } = getFromApi(url)
     let imageUrl = "https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg" 
@@ -56,6 +61,14 @@ export function ShowFixedAsset() {
         }
         setOpenToConfirm(false)
     }
+
+    function handleClose(event, reason) {
+        if (reason === 'clickaway') {
+            return
+        }
+        setOpen(false)
+    }
+    
     const ToConfirmOpen = () => {
         handleCloseToConfirm();
         setOpenToConfirm(true);
@@ -71,6 +84,11 @@ export function ShowFixedAsset() {
             <Navbar />
             <div style={{ marginTop: '11vh', display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center' }}>
             <SingleItemCard title={fixedAsset.code ? `${fixedAsset.name} #${fixedAsset.code}` : `${fixedAsset.name}`} secondaryField={fixedAsset.programHouseName} element={fixedAssetData} itemsPerLine={3} imageUrl={imageUrl} imageCirle={false} imgHeight={300} imgWidth={500} button={buttonsList} />        
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    {alertMessage}
+                </Alert>
+            </Snackbar>
             <Dialog open={openToConfirm} onClose={handleCloseToConfirm} id="confirmation_popup" sx={{borderRadius:3 }}>
                 <DialogTitle sx={{display:'flex', justifyContent:'center'}}>Eliminar</DialogTitle>
                 <DialogContent>
