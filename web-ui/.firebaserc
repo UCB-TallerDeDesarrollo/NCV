@@ -1,5 +1,18 @@
 {
   "projects": {
-    "default": "ncv-application"
-  }
+    "default": "ncv-stagging"
+  },
+  "targets": {
+    "ncv-application": {
+      "hosting": {
+        "prod": [
+          "ncv-application"
+        ],
+        "dev": [
+          "ncv-stagging"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
