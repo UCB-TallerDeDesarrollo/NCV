@@ -109,7 +109,7 @@ namespace NinosConValorAPI.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Simething happend.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
             }
         }
     }

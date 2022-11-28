@@ -146,26 +146,20 @@ namespace NinosConValorAPI.Data.Repository
             return familyReportEntity;
         }
 
-        // FIXED ASSET
+        // KID FILE
 
-        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int typeId)
-        {
-            _dbContext.Entry(fixedAsset.AssetType).State = EntityState.Unchanged;
-            _dbContext.Entry(fixedAsset.ProgramHouse).State = EntityState.Unchanged;
-            _dbContext.Entry(fixedAsset.AssetState).State = EntityState.Unchanged;
-            _dbContext.FixedAssets.Add(fixedAsset);
-        }
         public async Task<KidEntity> GetKidAsync(int kidId)
         {
             IQueryable<KidEntity> query = _dbContext.Kids;
             query = query.AsNoTracking();
 
-            return await query.FirstOrDefaultAsync(c => c.Id == kidId);
+            return await query.FirstOrDefaultAsync(c => (c.Id == kidId) & (c.Status != EntityStatus.Deleted));
         }
         public async Task<IEnumerable<KidEntity>> GetKidsAsync()
         {
             IQueryable<KidEntity> query = _dbContext.Kids;
             query = query.AsNoTracking();
+            query = query.Where( k => k.Status != EntityStatus.Deleted);
             query = query.OrderBy(k => k.FirstName).ThenBy(k => k.LastName);
             return await query.ToListAsync() ;
         }
@@ -174,10 +168,19 @@ namespace NinosConValorAPI.Data.Repository
             _dbContext.Kids.Add(kid);
         }
 
+        public bool UpdateKid(KidEntity kidModel)
+        {
+            var kidToUpdate = _dbContext.Kids.FirstOrDefault(c => c.Id == kidModel.Id);
+
+            _dbContext.Entry(kidToUpdate).CurrentValues.SetValues(kidModel);
+            return true;
+        }
+
         public async Task DeleteKidAsync(int kidId)
         {
             var kidToDelete = await _dbContext.Kids.FirstOrDefaultAsync(c => c.Id == kidId);
-            _dbContext.Kids.Remove(kidToDelete);
+            kidToDelete.Status = EntityStatus.Deleted;
+            
         }
 
         public async Task<bool> SaveChangesAsync()
@@ -191,6 +194,16 @@ namespace NinosConValorAPI.Data.Repository
             {
                 throw ex;
             }
+        }
+        
+        // FIXED ASSET
+
+        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int categoryId)
+        {
+            _dbContext.Entry(fixedAsset.AssetType).State = EntityState.Unchanged;
+            _dbContext.Entry(fixedAsset.ProgramHouse).State = EntityState.Unchanged;
+            _dbContext.Entry(fixedAsset.AssetState).State = EntityState.Unchanged;
+            _dbContext.FixedAssets.Add(fixedAsset);
         }
 
         public async Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync()
@@ -231,6 +244,8 @@ namespace NinosConValorAPI.Data.Repository
             fixedAssetToUpdate.AssetType = fixedAsset.AssetType ?? fixedAssetToUpdate.AssetType;
             fixedAssetToUpdate.AssetState = fixedAsset.AssetState ?? fixedAssetToUpdate.AssetState;            
         }
+
+        // FOUNDATION REPORT
         public async Task<FoundationReportEntity> GetFoundationReportAsync(int kidId)
         {
             IQueryable<FoundationReportEntity> query = _dbContext.FoundationReport;
@@ -249,6 +264,7 @@ namespace NinosConValorAPI.Data.Repository
             throw new NotImplementedException();
         }
 
+        // PROGRAM
         public async Task<IEnumerable<ProgramHouseEntity>> GetProgramHousesAsync()
         {
             IQueryable<ProgramHouseEntity> query = _dbContext.ProgramHouses;
@@ -264,6 +280,8 @@ namespace NinosConValorAPI.Data.Repository
             var programHouse = await query.FirstOrDefaultAsync(rep => (rep.Id == programHouseId));
             return programHouse;
         }
+
+        // ASSETS
 
         public async Task<IEnumerable<AssetCategoryEntity>> GetAssetCategoriesAsync(bool showAssets = false)
         {
@@ -298,14 +316,6 @@ namespace NinosConValorAPI.Data.Repository
             query = query.Include(f => f.AssetCategory);
             var assetType = await query.FirstOrDefaultAsync(g => (g.Id == typeId));
             return assetType;
-        }
-
-        public bool UpdateKid(KidEntity kidModel)
-        {
-            var kidToUpdate = _dbContext.Kids.FirstOrDefault(c => c.Id == kidModel.Id);
-
-            _dbContext.Entry(kidToUpdate).CurrentValues.SetValues(kidModel);
-            return true;
         }
         
         public async Task DeleteFixedAssetAsync(int fixedAssetId)
