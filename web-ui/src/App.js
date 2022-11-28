@@ -31,6 +31,7 @@ import AddEducationReport from './Views/KidsFiles/EducationReport/AddEducationRe
 import ListUsers from './Views/User/ListUsers'
 import Profile from './Views/User/Profile'
 import EditProfile from './Views/User/EditProfile'
+import ShowAssetTypesByCategory from './Views/FixedAssets/AssetTypes/ShowAssetTypesByCategory'
 
 let accesPermiss=sessionStorage.getItem("Access") 
 function App() {
@@ -66,6 +67,10 @@ function App() {
                     <Route
                         path="/activos-fijos/estados"
                         element={<ShowAssetStates />}
+                    ></Route>
+                    <Route
+                        path="/activos-fijos/tipos-por-categoría"
+                        element={<ShowAssetTypesByCategory />}
                     ></Route>
                     <Route
                         path="/vista-usuarios/:userId"

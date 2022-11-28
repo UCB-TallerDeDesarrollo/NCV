@@ -287,10 +287,7 @@ namespace NinosConValorAPI.Data.Repository
         {
             IQueryable<AssetCategoryEntity> query = _dbContext.AssetCategories;
             query = query.AsNoTracking();
-            if (showAssets)
-            {
-                query = query.Include(f => f.AssetTypes);
-            }
+            query = query.Include(f => f.AssetTypes);
             var result = await query.ToListAsync();
             return result;
         }

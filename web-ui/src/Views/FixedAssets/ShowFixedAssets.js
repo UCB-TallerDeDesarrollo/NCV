@@ -185,10 +185,12 @@ export default function ShowFixedAssets() {
         })
         let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={listElements} isOpened={openList} />
         let assetStatesView = "/activos-fijos/estados"
+        let assetTypesByCategoryView = "/activos-fijos/tipos-por-categoría"
         let nexFixedAsset = "/crear-activo-fijo"
         const buttonsList = 
         <Box sx={{display:'flex'}}>
             <ButtonPrimary label={"Gestionar Estados"} onClick={()=>navigate(assetStatesView)}/>
+            <ButtonPrimary label={"Gestionar Tipos"} onClick={()=>navigate(assetTypesByCategoryView)}/>
             <ButtonPrimary sx={{marginLeft:1}} label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
             <ExportExcel excelData={fixedAssetsData} fileName={`Lista de Activos Fijos ${new Date().toLocaleString()}`}/>
         </Box>

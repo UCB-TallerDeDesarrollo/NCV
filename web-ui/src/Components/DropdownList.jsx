@@ -5,8 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useRef } from "react";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { ButtonPrimaryEditIcon, ButtonPrimaryDeleteIcon } from './MUI-Button';
+import { EditText} from 'react-edit-text';
+import ListElement from './ListElement';
 
-export default function DropdownList({itemsHeader, itemsSubheader, isOpened = false}) {
+export default function DropdownList({itemsHeader, itemsSubheader, isOpened = false, editable=false, withDeleteIcon=false, deleteAction=null}) {
   const [isVisible, setIsVisible] = useState({});
   const navigate = useNavigate();
   const didChange = useRef(false);
@@ -28,7 +31,6 @@ export default function DropdownList({itemsHeader, itemsSubheader, isOpened = fa
     setIsVisible({...visibleItems})
     didChange.current = isOpened
   }
-
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper', alignItems :"flex-start" }}>
       {itemsHeader.map((h,i)=>{
@@ -44,10 +46,8 @@ export default function DropdownList({itemsHeader, itemsSubheader, isOpened = fa
             </ListItemButton>
                 {!isVisible?.[h.title] ? null : itemsSubheader.map((s,i)=>{
                         if (h.id == s.categoryId) {
-                            return (
-                              <ListItemButton sx={{borderTop: 1, borderColor:'#CDCDCD', m:0, pl: 3, pr: 3}} key={s.id} alignItems="flex-start" onClick={()=>navigate(s.elementUrl)}>
-                                <ListItemText primary={s.title} secondary={s.description} className="ListElement" sx={{'& .MuiListItemText-primary': {fontSize: 18, color: 'gray'}}}/>
-                              </ListItemButton>
+                            return (                              
+                                 <ListElement  key={s.id ? s.id : i} id={s.id} title={s.title} description={s.description} elementUrl={s.elementUrl} withImage={false} editable={editable} withDeleteIcon={withDeleteIcon} deleteAction={deleteAction}/>                             
                             )
                         }
                 })}
