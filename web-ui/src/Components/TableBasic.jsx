@@ -6,15 +6,26 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import {ButtonPrimaryDeleteIcon} from './MUI-Button';
 
-export default function TableBasic({columnHeaders=null, data=null, align="center",sxTableContainer={}}) {
+export default function TableBasic({columnHeaders=null, data=null, align="center",sxTableContainer={}, withDeleteIcon = null}) {
   let tableHead = null
   let tableBody = null
 
   sxTableContainer.borderRadius = sxTableContainer.borderRadius ?? 2;
   sxTableContainer.boxShadow = sxTableContainer.boxShadow ?? 0;
 
+  var insertDeleteIcon = null
+  var emptyHeader = null
+  if( withDeleteIcon != null){
+    insertDeleteIcon = <TableCell key="Deletebutton" align={align}>
+                        <ButtonPrimaryDeleteIcon></ButtonPrimaryDeleteIcon>
+                      </TableCell>
+    emptyHeader = <TableCell sx={{backgroundColor:'#CEECF2',fontWeight: 'fontWeightBold' }} key="emptyHeader" align={align}></TableCell>
+  }
+
   if (data != null){
+    console.log("data: ",data)
     tableBody = (<TableBody>
       {data.map((row, rowIdx) => {
         let rowKeys = Object.keys(row);
@@ -32,7 +43,9 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
               cell = (<TableCell key={i} align={align} sx={{fontWeight:'bold',paddingTop:3, fontSize:20, backgroundColor:'#f2f2f2'}}>{row[rk]}</TableCell>)
             return cell
           })
+              
         }
+        {insertDeleteIcon}
         </TableRow>
       )}
       )}
@@ -46,6 +59,7 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
             return (<TableCell sx={{backgroundColor:'#CEECF2',fontWeight: 'fontWeightBold' }} key={k} align={align}>{colHeader}</TableCell>)
           })
         }
+        {emptyHeader}
       </TableRow>
     </TableHead>)
   }

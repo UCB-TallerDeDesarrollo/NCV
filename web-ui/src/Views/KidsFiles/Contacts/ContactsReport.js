@@ -149,7 +149,7 @@ function Contacts({contactsData,setContacts}){
     if (contactsData != null && contactsData.length > 0){
         table = (<>
             <Box sx={{display:"flex", flexDirection:"row"}}>
-                <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}}></TableBasic>
+                <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}} withDeleteIcon={"use here navigate"}></TableBasic>
             </Box>
         </>);
         contactsTitle = <Typography variant="h3" sx={{marginBottom:1.5}}>contactos</Typography>;
