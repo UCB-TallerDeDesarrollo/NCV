@@ -11,12 +11,12 @@ import { EditText} from 'react-edit-text';
 
 const sxListItemText = {
   '& .MuiListItemText-primary': {
-    fontSize: 18,
+    fontSize: 10,
   }
 }
 
-function TextCell( { value, editable}){
-  if(editable){
+function TextCell( { value, editableAction}){
+  if(editableAction != null){
     return (  <EditText sx={sxListItemText}
       onSave={(props)=>editActionOnSave(props,id)}      
       defaultValue = {value} 
@@ -27,7 +27,7 @@ function TextCell( { value, editable}){
 }
 
 
-export default function TableBasic({columnHeaders=null, data=null, align="center",sxTableContainer={}, withDeleteIcon = null, editable=false}) {
+export default function TableBasic({columnHeaders=null, data=null, align="center",sxTableContainer={}, deleteAction = null, editableAction=null}) {
   let tableHead = null
   let tableBody = null
 
@@ -36,7 +36,7 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
 
   var insertDeleteIcon = null
   var emptyHeader = null
-  if( withDeleteIcon != null){
+  if( deleteAction != null){
     insertDeleteIcon = <TableCell key="Deletebutton" align={align}>
                         <ButtonPrimaryDeleteIcon></ButtonPrimaryDeleteIcon>
                       </TableCell>
@@ -58,7 +58,7 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
             if (rk.includes('empty'))
               backgroundColor = '#f2f2f2'
             let cell = (<TableCell key={i} align={align} sx={{backgroundColor:backgroundColor}}>
-                                  <TextCell value = {row[rk]} editable={editable}/>
+                                  <TextCell value = {row[rk]} editableAction={editableAction}/>
                           </TableCell>)
             if (rk=='groupTitle')
               cell = (<TableCell key={i} align={align} sx={{fontWeight:'bold',paddingTop:3, fontSize:20, backgroundColor:'#f2f2f2'}}>{row[rk]}</TableCell>)

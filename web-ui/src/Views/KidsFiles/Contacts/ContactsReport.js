@@ -121,6 +121,7 @@ function AddRowContacts({setContacts}){
 
 
 function Contacts({contactsData,setContacts}){
+    var urlUpdateContact = ""
 
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
@@ -146,10 +147,38 @@ function Contacts({contactsData,setContacts}){
         </Box>
     </>
 
+    const handleSave = ({name,value,previousValue},id) => {
+        if(value==previousValue || value=='') {
+            window.location.reload() //review this part , test with HOCKS ¡¡
+        }      
+        else{
+            let updateData = {
+                state:value
+            }
+            submitUpdate(id,updateData)
+        } 
+    }
+    function submitUpdate(id,updateData){
+        axios.put(urlUpdateContact + id, updateData).then((res) => {
+            if (res.status == 200) {    
+                /*           
+                setShowAlert(true)
+                setAlertMessage("Estado actualizado")
+                setSeverity("success")
+                setOpen(true)                    
+                getAssetStates()
+                */
+               // show alert and reload in this case                    
+            }            
+        }).catch ((apiError) => {
+            setErrorUpdateAssetState(apiError)                    
+        })
+    }
+
     if (contactsData != null && contactsData.length > 0){
         table = (<>
             <Box sx={{display:"flex", flexDirection:"row"}}>
-                <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}} withDeleteIcon={"use here navigate"} editable={true} ></TableBasic>
+                <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}} deleteAction={"use here action"} editableAction={handleSave} ></TableBasic>
             </Box>
         </>);
         contactsTitle = <Typography variant="h3" sx={{marginBottom:1.5}}>contactos</Typography>;
