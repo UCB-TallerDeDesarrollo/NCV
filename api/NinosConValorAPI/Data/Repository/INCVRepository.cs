@@ -69,11 +69,12 @@ namespace NinosConValorAPI.Data.Repository
         // EDUCATION REPORT
         public Task<EducationReportEntity> CreateEducationReportAsync(EducationReportEntity educationReport);
         Task<EducationReportEntity> GetEducationReportAsync(int kidId);
+        Task<EducationReportEntity> UpdateEducationReportAsync(int kidId, EducationReportEntity educationReport);
 
-        // EDUCATION REPORT
+        // FAMILY REPORT
         public Task<FamilyReportEntity> CreateFamilyReportAsync(FamilyReportEntity familyReport);
         Task<FamilyReportEntity> GetFamilyReportAsync(int kidId);
-        Task<EducationReportEntity> UpdateEducationReportAsync(int kidId, EducationReportEntity educationReport);
+        Task<FamilyReportEntity> UpdateFamilyReportAsync(int kidId, FamilyReportEntity familyReport);
 
         // LEGAL REPORT
         public Task<LegalReportEntity> CreateLegalReportAsync(LegalReportEntity legalReport);
