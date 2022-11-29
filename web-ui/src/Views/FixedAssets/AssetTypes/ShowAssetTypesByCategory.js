@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import ErrorPage from '../../../Components/ErrorPage'
-import getFromApi from '../../../Components/GetFromApi'
 import Navbar from '../../../Components/NavBar'
 import ListContainer from '../../../Components/ListContainer'
 import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../../Components/MUI-Button'
@@ -12,8 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogContentText from '@mui/material/DialogContentText'
 import Alert from '@mui/material/Alert'
 import { Snackbar } from '@mui/material'
-import ListGrid from '../../../Components/ListGrid'
-import { useNavigate, useLocation } from 'react-router-dom'
+import {useNavigate, useLocation } from 'react-router-dom'
 import axios from "axios"
 import FormContainer from '../../../Components/FormContainer'
 import InputText from '../../../Components/InputText'
@@ -23,14 +21,12 @@ import Dropdown from '../../../Components/Dropdown'
 var accesPermiss = sessionStorage.getItem("Access")
 
 export default function ShowAssetTypesByCategory() {
-    console.log("in")
     const navigate = useNavigate();
     const location = useLocation()    
     const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
     const [alertMessage, setAlertMessage] = useState(location.state ? location.state.alertMessage : null)
     const [severity, setSeverity] = useState(location.state ? location.state.severity : "success")
-    //const urlAssetCategories = 'https://ncv-api.azurewebsites.net/api/assetCategories'
-    const urlAssetCategories = 'http://localhost:5009/api/AssetCategories/'
+    const urlAssetCategories = 'https://ncv-api.azurewebsites.net/api/assetCategories'   
     const [assetTypes, setAssetTypes] = useState(null)
     const [assetCategories, setAssetCategories] = useState(null)
     const [assetCategoryId, setAssetcategoryId] = useState(null)
@@ -51,17 +47,14 @@ export default function ShowAssetTypesByCategory() {
 
     const [formErrors, setFormErrors] = useState({})
 
-    function listAssetTypes(assetTypesByCategory){
-        console.log("assetTypesByCategory= ",assetTypesByCategory)
+    function listAssetTypes(assetTypesByCategory){        
         let assetTypesByCats = assetTypesByCategory.map(actypes => 
             actypes.assetTypes
             )
-        setAssetTypes(assetTypesByCats.flat())
-        console.log("assetTypesByCats",assetTypesByCats.flat())       
+        setAssetTypes(assetTypesByCats.flat())      
     }
 
     function getAssetTypesByCategory(){
-        console.log("url: ",urlAssetCategories)
         axios.get(urlAssetCategories).then(            
             (res) => {
                 listAssetTypes(res.data)
@@ -73,12 +66,11 @@ export default function ShowAssetTypesByCategory() {
     }
 
     useEffect(() => {
-        console.log("use Effect")
         getAssetTypesByCategory()
     }, [])
     
-    const fetchDeleteAssetType = () => {    
-        axios.delete(`${urlAssetCategories}${assetCategoryId}/assetTypes/${assetTypeId}`)
+    const fetchDeleteAssetType = () => {  
+        axios.delete(`${urlAssetCategories}/${assetCategoryId}/assetTypes/${assetTypeId}`)
         .then(function (response) {
             if (response.status == 200){
                 setShowAlert(true)
@@ -96,7 +88,6 @@ export default function ShowAssetTypesByCategory() {
     }
 
     function hasFormErrors(errorsFromForm){
-        console.log("for errors=", errorsFromForm)
         let hasErrors=true
         if(!errorsFromForm.type && !errorsFromForm.AssetCategoryId){
             hasErrors = false
@@ -117,7 +108,7 @@ export default function ShowAssetTypesByCategory() {
         return errors     
     }
 
-    const handleSave = ({name,value,previousValue},id) => {
+    const handleSave = ({name,value,previousValue},id, categoryId) => {
         if(value==previousValue || value=='') {
             window.location.reload()
         }      
@@ -125,13 +116,14 @@ export default function ShowAssetTypesByCategory() {
             let updateData = {
                 type:value
             }
-            submitUpdate(id,updateData)
+            setAssetcategoryId(categoryId)       
+            setAssetTypeId(id)
+            submitUpdate(id,categoryId,updateData)
         }          
     }
 
-    function submitUpdate(id,updateData){
-        //categoriesList.whe
-        axios.put(`${urlAssetCategories}${assetCategoryId}/assetTypes/${id}`, updateData).then((res) => {
+    function submitUpdate(id,categoryId,updateData){
+        axios.put(`${urlAssetCategories}/${categoryId}/assetTypes/${id}`, updateData).then((res) => {
             if (res.status == 200) {               
                 setShowAlert(true)
                 setAlertMessage("Tipo actualizado")
@@ -147,10 +139,8 @@ export default function ShowAssetTypesByCategory() {
     function submitCreate(){
         errorsFromForm = validate(data)
         setFormErrors(errorsFromForm)
-        if(!hasFormErrors(errorsFromForm)){
-            console.log(`URL = ${urlAssetCategories}${categorySelectedValue}/assetTypes/`)
-            console.log("data= ", data)
-            axios.post(`${urlAssetCategories}${categorySelectedValue}/assetTypes/`, data).then((res) => {
+        if(!hasFormErrors(errorsFromForm)){                    
+            axios.post(`${urlAssetCategories}/${categorySelectedValue}/assetTypes/`, data).then((res) => {
                 if (res.status == 201) {     
                     setShowAlert(true)
                     setAlertMessage("Tipo creado")
@@ -187,8 +177,9 @@ export default function ShowAssetTypesByCategory() {
         setOpenToConfirm(true);
     }
 
-    let deleteAction = (id) => {
-        setAssetTypeId(id)          
+    let deleteAction = (id, categoryId) => {
+        setAssetTypeId(id) 
+        setAssetcategoryId(categoryId)         
         handleCloseToConfirm()
         ToConfirmOpen()
     }         
@@ -236,7 +227,7 @@ export default function ShowAssetTypesByCategory() {
             description:``
         }
     })
-    let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={assetTypesListElements} isOpened={true} editable={true} editActionOnSave={handleSave} withDeleteIcon={true} deleteAction={deleteAction} />
+    let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={assetTypesListElements} isOpened={true} editableWithHeader={true} editActionOnSave={handleSave} withDeleteIcon={true} deleteActionHeader={deleteAction} />
     return (        
         <>        
             <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>

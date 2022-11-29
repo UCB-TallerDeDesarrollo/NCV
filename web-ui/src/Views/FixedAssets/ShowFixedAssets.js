@@ -185,7 +185,7 @@ export default function ShowFixedAssets() {
         })
         let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={listElements} isOpened={openList} />
         let assetStatesView = "/activos-fijos/estados"
-        let assetTypesByCategoryView = "/activos-fijos/tipos-por-categoría"
+        let assetTypesByCategoryView = "/activos-fijos/tipos-por-categoria"
         let nexFixedAsset = "/crear-activo-fijo"
         const buttonsList = 
         <Box sx={{display:'flex'}}>
