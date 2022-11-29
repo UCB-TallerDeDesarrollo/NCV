@@ -63,7 +63,7 @@ jobs:
       - name: Deployment on Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting:prod
+          args: deploy --only hosting:dev
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           PROJECT_PATH: ./web-ui
