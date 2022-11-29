@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../../Components/NavBar'
-import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
+import ButtonPrimary from '../../Components/MUI-Button';
 import SingleItemCard from '../../Components/SingleItemCard'
 import { Box } from '@mui/system'
 
@@ -16,9 +16,8 @@ export function Profile() {
     var url = 'https://ncv-api.azurewebsites.net/api/auth/' + userIdLogin
     //var url = 'http://localhost:5009/api/auth/' + userIdLogin
     const [user, setUser] = useState([])
-    const [open, setOpen] = useState(false)
-    const [formErrors, setFormErrors] = useState({})
-    const [isSubmit, setIsSubmit] = useState(false)
+    const [formErrors] = useState({})
+    const [isSubmit] = useState(false)
 
     const fetchData = () => {
         var responseUser = axios(url)
