@@ -31,7 +31,7 @@ function AddFamilyReport() {
 
     const navigate = useNavigate();
     const {kidId} = useParams();
-    var url = "https://ncv-api.herokuapp.com/api/kids/" + kidId +"/familyreports";
+    var url = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/familyreports";
 
     const [formReport, setformReport] = useState(familyReport);
     const [open, setOpen] = useState(false);

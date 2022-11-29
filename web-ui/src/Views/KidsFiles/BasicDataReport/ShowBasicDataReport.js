@@ -76,7 +76,7 @@ function BasicData({kid} ){
         let path = `/ninos/${kidId}/editar-nino`; 
         navigate(path);
     }
-    let editButton = accesPermiss=="CompleteAccess" ? (<ButtonPrimaryEditIcon onClick={navigateEditKid} sx={{alignSelf:'flex-end'}}/>) : null
+    let editButton = accesPermiss=="CompleteAccess" ? (<ButtonPrimaryEditIcon onClick={navigateEditKid} sx={{alignSelf:'flex-end', background: '#5BCCD9', borderRadius: '50%', width: '50px', height: '50px'}}/>) : null
     return <SingleItemCard key={0} element={MyKidDetails} imageUrl={imageUrl} title={kid.firstName + " " + kid.lastName } itemsPerLine={3} button={editButton}/>
 }
 

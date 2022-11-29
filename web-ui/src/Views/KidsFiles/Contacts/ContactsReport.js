@@ -23,7 +23,7 @@ const contactsForm = {
 
 function AddRowContacts({setContacts}){
     const {kidId} = useParams()
-    var url = "https://ncv-api.herokuapp.com/api/kids/" + kidId +"/contacts"
+    var url = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/contacts"
 
     const [contactsData, setcontactsData] = useState(contactsForm)
     const [open, setOpen] = useState(false)

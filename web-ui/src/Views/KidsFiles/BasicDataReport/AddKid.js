@@ -20,6 +20,26 @@ const kidFile = {
   gender: ''
 }
 
+var listCheck = {
+    checkFirstName: true,
+    checkLastName: true,
+    checkCI: true,
+    checkBirthDate: true,
+    checkProgramHouse: true,
+    checkBirthPlace: true,
+    checkGender: true
+};
+
+var listAlerts = {
+    alertFirstName: "El Nombre no debe contener numeros ni debe contener simbolos.",
+    alertLastName: "El Apellido no debe contener numeros ni debe contener simbolos.",
+    alertCI: "El CI debe ser valido!",
+    alertBirthDate: "La fecha de nacimiento debe ser una fecha valida!",
+    alertProgramHouse: "La Casa debe ser valida!",
+    alertBirthPlace: "El lugar de nacimiento debe ser un lugar valido!",
+    alertGender: "Debe seleccionar un genero!"
+};
+
 const genders = [
     {
       value: 'M',
@@ -32,10 +52,14 @@ const genders = [
   ];
 
 function CreateFile() {
-    var url = "https://ncv-api.herokuapp.com/api/kids"
+    var url = "https://ncv-api.azurewebsites.net/api/kids"
     const navigate = useNavigate()
     const [data, setData] = useState(kidFile)
     const [open, setOpen] = useState(false)
+    const [firstNameValidation, setFirstNameValidation] = useState(false)
+    const [lastNameValidation, setLastNameValidation] = useState(false)
+    const [birthDateValidation, setBirthDateValidation] = useState(false)
+
     
     const handleInputChange = (e)=>{
         const {name, value}=e.target
@@ -47,19 +71,82 @@ function CreateFile() {
 
     }
 
+    function resetChecks(){
+        listCheck.checkBirthDate = true;
+        listCheck.checkBirthPlace = true;
+        listCheck.checkCI = true;
+        listCheck.checkFirstName = true;
+        listCheck.checkGender = true;
+        listCheck.checkLastName = true;
+        listCheck.checkProgramHouse = true;
+    }
+
+    function checkData(dataToCheck){
+        var check = true;
+        var checkNumbers = /[0-9]/;
+        if(dataToCheck.firstName.match(checkNumbers) != null){
+            listCheck.checkFirstName = false;
+            check = false;
+        }
+
+        if(dataToCheck.lastName.match(checkNumbers) != null){
+            listCheck.checkLastName = false;
+            check = false;
+        }
+
+        let actualDate = new Date();
+        var selectedYear = dataToCheck.birthDate[0] + dataToCheck.birthDate[1] + dataToCheck.birthDate[2] + dataToCheck.birthDate[3];
+        var selectedMonth = dataToCheck.birthDate[5] + dataToCheck.birthDate[6];
+        var selectedDay = dataToCheck.birthDate[8] + dataToCheck.birthDate[9];
+
+        if( selectedYear > actualDate.getFullYear()) {
+            console.log("Seleccion de año posterior.");
+            listCheck.checkBirthDate = false;
+            check = false;
+        }else{
+            if( selectedYear == actualDate.getFullYear() && selectedMonth > (actualDate.getMonth()+1)) {
+                console.log("Seleccion de mes posterior.");
+                listCheck.checkBirthDate = false;
+                check = false;
+            }else{
+                if( selectedYear == actualDate.getFullYear() && selectedMonth == (actualDate.getMonth()+1) && selectedDay > actualDate.getDate()) {
+                    console.log("Seleccion de dia posterior.");
+                    listCheck.checkBirthDate = false;
+                    check = false;
+                }
+            }
+        }
+        return check;
+    }
+
     function handleFormSubmit() {
-        axios.post(url, data)
-        .then(function (response) {
-            if (response.status == 201){
-                navigate(`/ninos`,{state:{showAlert:true,alertMessage:"Archivo de niño creado exitosamente"}})
-            }
-        })
-        .catch(function (error) {
-            if (error.response){
-                if (error.response.status == 400 )
-                    setOpen(true)
-            }
-        });
+        resetChecks();
+        setFirstNameValidation(false);
+        setLastNameValidation(false);
+        setBirthDateValidation(false);
+        if(checkData(data) > 0){
+            console.log("Form buenardo");
+            axios.post(url, data)
+            .then(function (response) {
+                if (response.status == 201){
+                    navigate(`/ninos`,{state:{showAlert:true,alertMessage:"Archivo de niño creado exitosamente"}})
+                }
+            })
+            .catch(function (error) {
+                if (error.response){
+                    if (error.response.status == 400 )
+                        setOpen(true)
+                }
+            });
+        }else{
+            console.log("Form terrible, oremos");
+            console.log(listCheck);
+            if(listCheck.checkFirstName == false) setFirstNameValidation(true);
+            if(listCheck.checkLastName == false) setLastNameValidation(true);
+            if(listCheck.checkBirthDate == false) setBirthDateValidation(true);
+        }
+
+        
     }
 
     //const todayDate = ()=>{
@@ -84,6 +171,11 @@ function CreateFile() {
                     value={data.firstName}
                     onChange={handleInputChange}
                 />
+                <Collapse in={firstNameValidation} sx={{width:1, pt:2}}>
+                    <Alert severity="error">
+                        {listAlerts.alertFirstName}
+                    </Alert>
+                </Collapse>
                 <InputText
                     required
                     id="lastName"
@@ -93,6 +185,11 @@ function CreateFile() {
                     value={data.lastName}
                     onChange={handleInputChange}
                 />
+                <Collapse in={lastNameValidation} sx={{width:1, pt:2}}>
+                    <Alert severity="error">
+                        {listAlerts.alertLastName}
+                    </Alert>
+                </Collapse>
                 <InputText
                     required
                     id="ci"
@@ -115,6 +212,11 @@ function CreateFile() {
                     }}
                     onChange={handleInputChange}
                 />
+                <Collapse in={birthDateValidation} sx={{width:1, pt:2}}>
+                    <Alert severity="error">
+                        {listAlerts.alertBirthDate}
+                    </Alert>
+                </Collapse>
                 <InputText
                     required
                     id="programHouse"
