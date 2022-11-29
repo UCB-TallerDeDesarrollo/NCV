@@ -9,7 +9,7 @@ import { ButtonPrimaryEditIcon, ButtonPrimaryDeleteIcon } from './MUI-Button';
 import { EditText} from 'react-edit-text';
 import ListElement from './ListElement';
 
-export default function DropdownList({itemsHeader, itemsSubheader, isOpened = false, editable=false, withDeleteIcon=false, deleteAction=null, editableWithHeader=false, headerId=null}) {
+export default function DropdownList({itemsHeader, itemsSubheader, isOpened = false, editable=false, withDeleteIcon=false, deleteAction=null,editActionOnSave=null, deleteActionHeader=null,editableWithHeader=false}) {
   const [isVisible, setIsVisible] = useState({});
   const navigate = useNavigate();
   const didChange = useRef(false);
@@ -47,7 +47,7 @@ export default function DropdownList({itemsHeader, itemsSubheader, isOpened = fa
                 {!isVisible?.[h.title] ? null : itemsSubheader.map((s,i)=>{
                         if (h.id == s.categoryId) {
                             return (                              
-                                 <ListElement  key={s.id ? s.id : i} id={s.id} title={s.title} description={s.description} elementUrl={s.elementUrl} withImage={false} editable={editable} withDeleteIcon={withDeleteIcon} deleteAction={deleteAction} editableWithHeader={editableWithHeader} headerId={headerId}/>                             
+                                 <ListElement  key={s.id ? s.id : i} id={s.id} title={s.title} description={s.description} elementUrl={s.elementUrl} withImage={false} editable={editable} withDeleteIcon={withDeleteIcon} deleteAction={deleteAction} deleteActionHeader={deleteActionHeader} editableWithHeader={editableWithHeader} headerId={s.categoryId} editActionOnSave={editActionOnSave}/>                             
                             )
                         }
                 })}

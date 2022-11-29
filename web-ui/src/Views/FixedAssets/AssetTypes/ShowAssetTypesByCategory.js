@@ -68,8 +68,8 @@ export default function ShowAssetTypesByCategory() {
         getAssetTypesByCategory()
     }, [])
     
-    const fetchDeleteAssetType = () => {    
-        axios.delete(`${urlAssetCategories}${assetCategoryId}/assetTypes/${assetTypeId}`)
+    const fetchDeleteAssetType = () => {  
+        axios.delete(`${urlAssetCategories}/${assetCategoryId}/assetTypes/${assetTypeId}`)
         .then(function (response) {
             if (response.status == 200){
                 setShowAlert(true)
@@ -107,7 +107,7 @@ export default function ShowAssetTypesByCategory() {
         return errors     
     }
 
-    const handleSave = ({name,value,previousValue},id) => {
+    const handleSave = ({name,value,previousValue},id, categoryId) => {
         if(value==previousValue || value=='') {
             window.location.reload()
         }      
@@ -115,13 +115,14 @@ export default function ShowAssetTypesByCategory() {
             let updateData = {
                 type:value
             }
-            submitUpdate(id,updateData)
+            setAssetcategoryId(categoryId)       
+            setAssetTypeId(id)
+            submitUpdate(id,categoryId,updateData)
         }          
     }
 
-    function submitUpdate(id,updateData){
-        //categoriesList.whe
-        axios.put(`${urlAssetCategories}${assetCategoryId}/assetTypes/${id}`, updateData).then((res) => {
+    function submitUpdate(id,categoryId,updateData){
+        axios.put(`${urlAssetCategories}/${categoryId}/assetTypes/${id}`, updateData).then((res) => {
             if (res.status == 200) {               
                 setShowAlert(true)
                 setAlertMessage("Tipo actualizado")
@@ -137,8 +138,8 @@ export default function ShowAssetTypesByCategory() {
     function submitCreate(){
         errorsFromForm = validate(data)
         setFormErrors(errorsFromForm)
-        if(!hasFormErrors(errorsFromForm)){
-            axios.post(`${urlAssetCategories}${categorySelectedValue}/assetTypes/`, data).then((res) => {
+        if(!hasFormErrors(errorsFromForm)){                    
+            axios.post(`${urlAssetCategories}/${categorySelectedValue}/assetTypes/`, data).then((res) => {
                 if (res.status == 201) {     
                     setShowAlert(true)
                     setAlertMessage("Tipo creado")
@@ -175,8 +176,9 @@ export default function ShowAssetTypesByCategory() {
         setOpenToConfirm(true);
     }
 
-    let deleteAction = (id) => {
-        setAssetTypeId(id)          
+    let deleteAction = (id, categoryId) => {
+        setAssetTypeId(id) 
+        setAssetcategoryId(categoryId)         
         handleCloseToConfirm()
         ToConfirmOpen()
     }         
@@ -224,7 +226,7 @@ export default function ShowAssetTypesByCategory() {
             description:``
         }
     })
-    let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={assetTypesListElements} isOpened={true} editable={true} editActionOnSave={handleSave} withDeleteIcon={true} deleteAction={deleteAction} />
+    let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={assetTypesListElements} isOpened={true} editableWithHeader={true} editActionOnSave={handleSave} withDeleteIcon={true} deleteActionHeader={deleteAction} />
     return (        
         <>        
             <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
