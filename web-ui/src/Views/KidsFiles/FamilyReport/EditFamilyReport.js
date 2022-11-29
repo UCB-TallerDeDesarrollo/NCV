@@ -14,18 +14,19 @@ import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 
-const educationReport = {
-    grade: '',
-    school: '',
-    rude: ''
+const familyReport = {
+    siblingsInFoundation: '',
+    siblingsOutside: '',
+    hasExtendedFamily: '',
+    hasOriginFamily: ''
 }
 
 
-function EditEducationReport() {
+function EditFamilyReport() {
     const navigate = useNavigate();
     const {kidId} = useParams()
-    var urlEducationReport = "https://ncv-api.herokuapp.com/api/kids/"+ kidId +"/educationreports"
-    const [educationRep, setEducationRep] = useState(educationReport)
+    var urlEducationReport = "https://ncv-api.herokuapp.com/api/kids/"+ kidId +"/familyreports"
+    const [educationRep, setHealthRep] = useState(educationReport)
     const [open, setOpen] = useState(false)
 
     const fetchEducationReportData = () => {
