@@ -52,9 +52,17 @@ namespace NinosConValorAPI.Services
             return foundationReportModel;
         }
 
-        public Task<FoundationReportModel> UpdateFoundationReportAsync(int kidId, FoundationReportModel qr)
+        public async Task<FoundationReportModel> UpdateFoundationReportAsync(int kidId, FoundationReportModel foundationReportModel)
         {
-            throw new NotImplementedException();
+            await ValidateKidAsync(kidId);
+            var foundationReportEntity = _mapper.Map<FoundationReportEntity>(foundationReportModel);
+            foundationReportEntity = await _appRepository.UpdateFoundationReportAsync(kidId, foundationReportEntity);
+            var saveResult = await _appRepository.SaveChangesAsync();
+            if (!saveResult)
+            {
+                throw new Exception("Database Error");
+            }
+            return _mapper.Map<FoundationReportModel>(foundationReportEntity);
         }
         private async Task ValidateKidAsync(int kidId)
         {
