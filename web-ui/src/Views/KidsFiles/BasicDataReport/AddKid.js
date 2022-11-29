@@ -94,26 +94,28 @@ function CreateFile() {
             check = false;
         }
 
-        var hoy = new Date();
-        console.log("Hoy: " + hoy.getFullYear() +" "+ hoy.getMonth() +" "+ hoy.getDate() )
+        let actualDate = new Date();
+        //console.log(actualDate.setUTCDate(11));
+        console.log(actualDate);
+        console.log("Hoy: " + actualDate.getFullYear() +" "+ (actualDate.getMonth()+1) +" "+ actualDate.getDate() )
         var selectedYear = dataToCheck.birthDate[0] + dataToCheck.birthDate[1] + dataToCheck.birthDate[2] + dataToCheck.birthDate[3];
         var selectedMonth = dataToCheck.birthDate[5] + dataToCheck.birthDate[6];
         var selectedDay = dataToCheck.birthDate[8] + dataToCheck.birthDate[9];
 
-        if( selectedYear > hoy.getFullYear()) {
+        if( selectedYear > actualDate.getFullYear()) {
             console.log("Seleccion de año posterior.");
             listCheck.checkBirthDate = false;
             check = false;
         }else{
-            if( selectedYear == hoy.getFullYear() && selectedMonth > hoy.getMonth()) {
+            if( selectedYear == actualDate.getFullYear() && selectedMonth > (actualDate.getMonth()+1)) {
                 console.log("Seleccion de mes posterior.");
                 console.log(selectedMonth);
-                console.log(hoy.getMonth());
-                console.log(selectedMonth > hoy.getMonth());
+                console.log(actualDate.getMonth());
+                console.log(selectedMonth > actualDate.getMonth());
                 listCheck.checkBirthDate = false;
                 check = false;
             }else{
-                if( selectedYear == hoy.getFullYear() && selectedMonth == hoy.getMonth() && selectedDay > hoy.getDate()) {
+                if( selectedYear == actualDate.getFullYear() && selectedMonth == (actualDate.getMonth()+1) && selectedDay > actualDate.getDate()) {
                     console.log("Seleccion de dia posterior.");
                     listCheck.checkBirthDate = false;
                     check = false;
