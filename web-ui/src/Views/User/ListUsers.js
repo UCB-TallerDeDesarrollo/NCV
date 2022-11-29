@@ -41,6 +41,7 @@ function ListUsers() {
         return posts
     }
 
+
     function searchCriteria(e, posts) {
         if (!e.target.value) return posts
         const resultsArray = posts.filter(
@@ -50,12 +51,13 @@ function ListUsers() {
                     ' ' +
                     post.lastName.toLowerCase()
                 ).includes(e.target.value.toLowerCase()) ||
-                post.nameRole
+                TranslateRole(post.nameRole)
                     .toLowerCase()
-                    .includes(e.target.value.toLowerCase())
+                    .includes(e.target.value.toLowerCase()) 
         )
         return resultsArray
     }
+   
 
     useEffect(() => {
         getListUsers()
