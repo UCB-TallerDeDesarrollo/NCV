@@ -329,9 +329,24 @@ namespace NinosConValorAPI.Data.Repository
             return assetState;
         }
 
+        public async Task<AssetResponsibleEntity> CreateAssetResponsible(AssetResponsibleEntity assetResponsible)
+        {
+            await _dbContext.AssetResponsibles.AddAsync(assetResponsible);
+            return assetResponsible;
+        }
+
         public async Task<IEnumerable<AssetStateEntity>> GetAssetStatesAsync()
         {
             IQueryable<AssetStateEntity> query = _dbContext.AssetStates;
+            query = query.AsNoTracking();
+            query = query.Where(f => f.Deleted == false);
+            var result = await query.ToListAsync();
+            return result;
+        }
+
+        public async Task<IEnumerable<AssetResponsibleEntity>> GetAssetResponsiblesAsync()
+        {
+            IQueryable<AssetResponsibleEntity> query = _dbContext.AssetResponsibles;
             query = query.AsNoTracking();
             query = query.Where(f => f.Deleted == false);
             var result = await query.ToListAsync();
@@ -346,6 +361,14 @@ namespace NinosConValorAPI.Data.Repository
             return assetState;
         }
 
+        public async Task<AssetResponsibleEntity> GetAssetResponsibleAsync(int assetResponsibleId)
+        {
+            IQueryable<AssetResponsibleEntity> query = _dbContext.AssetResponsibles;
+            query = query.AsNoTracking();
+            var assetResponsible = await query.FirstOrDefaultAsync(g => (g.Id == assetResponsibleId));
+            return assetResponsible;
+        }
+
         public async Task<bool> UpdateAssetStateAsync(int assetStateId, AssetStateEntity assetState)
         {
             var assetStateToUpdate = _dbContext.AssetStates.FirstOrDefault(c => c.Id == assetState.Id);
@@ -354,11 +377,26 @@ namespace NinosConValorAPI.Data.Repository
             return true;
         }
 
+        public async Task<bool> UpdateAssetResponsibleAsync(int assetResponsibleId, AssetResponsibleEntity assetResponsible)
+        {
+            var assetResponsibleToUpdate = _dbContext.AssetResponsibles.FirstOrDefault(c => c.Id == assetResponsible.Id);
+
+            _dbContext.Entry(assetResponsibleToUpdate).CurrentValues.SetValues(assetResponsible);
+            return true;
+        }
+
         public async Task DeleteAssetStateAsync(int assetStateId)
         {
             IQueryable<AssetStateEntity> query = _dbContext.AssetStates;
             var assetStateToDelete = await query.FirstOrDefaultAsync(g => (g.Id == assetStateId) & (g.Deleted == false));
             assetStateToDelete.Deleted = true;
+        }
+
+        public async Task DeleteAssetResponsibleAsync(int assetResponsibleId)
+        {
+            IQueryable<AssetResponsibleEntity> query = _dbContext.AssetResponsibles;
+            var assetResponsibleToDelete = await query.FirstOrDefaultAsync(g => (g.Id == assetResponsibleId) & (g.Deleted == false));
+            assetResponsibleToDelete.Deleted = true;
         }
 
         //ASSET TYPES
