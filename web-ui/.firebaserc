@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "ncv-stagging"
+    "default": "ncv-application"
   },
   "targets": {
     "ncv-application": {
