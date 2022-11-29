@@ -11,7 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogContentText from '@mui/material/DialogContentText'
 import Alert from '@mui/material/Alert'
 import { Snackbar } from '@mui/material'
-import { useLocation } from 'react-router-dom'
+import {useNavigate, useLocation } from 'react-router-dom'
 import axios from "axios"
 import FormContainer from '../../../Components/FormContainer'
 import InputText from '../../../Components/InputText'
@@ -21,6 +21,7 @@ import Dropdown from '../../../Components/Dropdown'
 var accesPermiss = sessionStorage.getItem("Access")
 
 export default function ShowAssetTypesByCategory() {
+    const navigate = useNavigate();
     const location = useLocation()    
     const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
     const [alertMessage, setAlertMessage] = useState(location.state ? location.state.alertMessage : null)

@@ -15,6 +15,7 @@ import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
 import { ShowFixedAsset } from './Views/FixedAssets/ShowOneFixedAsset'
 import UpdateFixedAssetForm from './Views/FixedAssets/UpdateFixedAsset'
 import ShowAssetStates from './Views/FixedAssets/AssetStates/ShowAssetStates'
+import ShowAssetTypesByCategory from './Views/FixedAssets/AssetTypes/ShowAssetTypesByCategory'
 
 import AddHealthReport from './Views/KidsFiles/HealthReport/AddHealthReport'
 import AddFoundationReport from './Views/KidsFiles/FoundationReport/AddFoundationReport'
@@ -31,7 +32,6 @@ import AddEducationReport from './Views/KidsFiles/EducationReport/AddEducationRe
 import ListUsers from './Views/User/ListUsers'
 import Profile from './Views/User/Profile'
 import EditProfile from './Views/User/EditProfile'
-import ShowAssetTypesByCategory from './Views/FixedAssets/AssetTypes/ShowAssetTypesByCategory'
 
 let accesPermiss=sessionStorage.getItem("Access") 
 function App() {
@@ -69,7 +69,7 @@ function App() {
                         element={<ShowAssetStates />}
                     ></Route>
                     <Route
-                        path="/activos-fijos/tipos-por-categoría"
+                        path="/activos-fijos/tipos-por-categoria"
                         element={<ShowAssetTypesByCategory />}
                     ></Route>
                     <Route
