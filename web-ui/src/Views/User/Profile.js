@@ -30,11 +30,11 @@ export function Profile() {
         )
     }
     const userData = {
-        "NOMBRE": user.firstName,
-        "APELLIDO": user.lastName,
-        "CORREO": user.email,
-        "ROL":user.rol,
-        "CELULAR": user.cellPhone,
+        "Nombre": user.firstName,
+        "Apellido": user.lastName,
+        "Correo": user.email,
+        "Rol":user.rol,
+        "Celular": user.cellPhone,
         
     }
     let imageUrl =
