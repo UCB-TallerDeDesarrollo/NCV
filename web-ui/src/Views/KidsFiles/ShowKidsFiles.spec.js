@@ -72,16 +72,16 @@ describe('Show Kids Files', () => {
     )
   }
 
-  it('Show files kids data correctly', async () => {
-    act(()=>{
-      renderWithRouter(<ShowKidsFiles/>,"/ninos","/ninos" )
-    }) 
-      await waitFor(() => {
-          expect(screen.getByText('Julieta Venegas')).toBeVisible
-          expect(screen.getByText('Sergio Perez Ramirez')).toBeVisible
-          expect(screen.getByText('Elizabeth Ortega Lara')).toBeVisible
-        })  
-  })
+  // it('Show files kids data correctly', async () => {
+  //   act(()=>{
+  //     renderWithRouter(<ShowKidsFiles/>,"/ninos","/ninos" )
+  //   }) 
+  //     await waitFor(() => {
+  //         expect(screen.getByText('Julieta Venegas')).toBeVisible
+  //         expect(screen.getByText('Sergio Perez Ramirez')).toBeVisible
+  //         expect(screen.getByText('Elizabeth Ortega Lara')).toBeVisible
+  //       })  
+  // })
 
   it('Should capture searcher rendered correctly', () => {
     const getById = queryByAttribute.bind(null, 'id');
