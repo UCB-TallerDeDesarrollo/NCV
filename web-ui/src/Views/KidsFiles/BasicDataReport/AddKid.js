@@ -95,9 +95,6 @@ function CreateFile() {
         }
 
         let actualDate = new Date();
-        //console.log(actualDate.setUTCDate(11));
-        console.log(actualDate);
-        console.log("Hoy: " + actualDate.getFullYear() +" "+ (actualDate.getMonth()+1) +" "+ actualDate.getDate() )
         var selectedYear = dataToCheck.birthDate[0] + dataToCheck.birthDate[1] + dataToCheck.birthDate[2] + dataToCheck.birthDate[3];
         var selectedMonth = dataToCheck.birthDate[5] + dataToCheck.birthDate[6];
         var selectedDay = dataToCheck.birthDate[8] + dataToCheck.birthDate[9];
@@ -109,9 +106,6 @@ function CreateFile() {
         }else{
             if( selectedYear == actualDate.getFullYear() && selectedMonth > (actualDate.getMonth()+1)) {
                 console.log("Seleccion de mes posterior.");
-                console.log(selectedMonth);
-                console.log(actualDate.getMonth());
-                console.log(selectedMonth > actualDate.getMonth());
                 listCheck.checkBirthDate = false;
                 check = false;
             }else{
@@ -122,12 +116,6 @@ function CreateFile() {
                 }
             }
         }
-        // console.log(actualYear + " " + hoy.getFullYear());
-        // console.log(actualYear > hoy.getFullYear());
-        // console.log(actualMonth + " " + hoy.getMonth());
-        // console.log(actualMonth > hoy.getMonth());
-        // console.log(actualDay + " " + hoy.getDate());
-        // console.log(actualDay > hoy.getDate());
         return check;
     }
 
