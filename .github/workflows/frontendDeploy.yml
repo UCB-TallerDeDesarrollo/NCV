@@ -68,7 +68,7 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           PROJECT_PATH: ./web-ui
 
-  deploy to production:
+  deploy-production:
     name: Deploy to production
     environment:
       name: Production
