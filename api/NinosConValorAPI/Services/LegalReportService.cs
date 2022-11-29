@@ -43,9 +43,17 @@ namespace NinosConValorAPI.Services
             return _mapper.Map<LegalReportModel>(legalReportEntity);
         }
 
-        public Task<LegalReportModel> UpdateLegalReportAsync(int kidId, LegalReportModel qr)
+        public async Task<LegalReportModel> UpdateLegalReportAsync(int kidId, LegalReportModel legalReportModel)
         {
-            throw new NotImplementedException();
+            await ValidateKidAsync(kidId);
+            var legalReportEntity = _mapper.Map<LegalReportEntity>(legalReportModel);
+            legalReportEntity = await _appRepository.UpdateLegalReportAsync(kidId, legalReportEntity);
+            var saveResult = await _appRepository.SaveChangesAsync();
+            if (!saveResult)
+            {
+                throw new Exception("Database Error");
+            }
+            return _mapper.Map<LegalReportModel>(legalReportEntity);
         }
         private async Task ValidateKidAsync(int kidId)
         {
