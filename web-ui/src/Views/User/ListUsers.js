@@ -53,7 +53,10 @@ function ListUsers() {
                 ).includes(e.target.value.toLowerCase()) ||
                 TranslateRole(post.nameRole)
                     .toLowerCase()
-                    .includes(e.target.value.toLowerCase()) 
+                    .includes(e.target.value.toLowerCase()) ||
+                TranslateRole(post.email)
+                    .toLowerCase()
+                    .includes(e.target.value.toLowerCase())
         )
         return resultsArray
     }
