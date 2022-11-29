@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NinosConValorAPI.Data.Entity;
+using NinosConValorAPI.Migrations;
 using NinosConValorAPI.Models;
 using System.Security.Cryptography;
 
@@ -121,6 +122,16 @@ namespace NinosConValorAPI.Data.Repository
             await _dbContext.Contacts.AddAsync(contacts);
             return contacts;
         }
+        public async Task<ContactEntity> UpdateContactAsync(int kidId, ContactEntity contact)
+        {
+            IQueryable<ContactEntity> query = _dbContext.Contacts;
+            var contactToUpdate = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            contactToUpdate.Name = contact.Name ?? contactToUpdate.Name;
+            contactToUpdate.Relationship = contact.Relationship ?? contactToUpdate.Relationship;
+            contactToUpdate.ContactNumber = contact.ContactNumber ?? contactToUpdate.ContactNumber;
+            contactToUpdate.Address = contact.Address ?? contactToUpdate.Address;
+            return contactToUpdate;
+        }
 
         // EDUCATION REPORT
         public async Task<EducationReportEntity> CreateEducationReportAsync(EducationReportEntity educationReport)
@@ -136,6 +147,15 @@ namespace NinosConValorAPI.Data.Repository
             var educationReport = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
             return educationReport;
         }
+        public async Task<EducationReportEntity> UpdateEducationReportAsync(int kidId, EducationReportEntity educationReport)
+        {
+            IQueryable<EducationReportEntity> query = _dbContext.EducationReports;
+            var educationReportToUpdate = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            educationReportToUpdate.Rude = educationReport.Rude ?? educationReportToUpdate.Rude;
+            educationReportToUpdate.School = educationReport.School ?? educationReportToUpdate.School;
+            educationReportToUpdate.Grade = educationReport.Grade ?? educationReportToUpdate.Grade;
+            return educationReportToUpdate;
+        }
 
         // FAMILY REPORT
         public async Task<FamilyReportEntity> CreateFamilyReportAsync(FamilyReportEntity familyReportEntity)
@@ -150,6 +170,17 @@ namespace NinosConValorAPI.Data.Repository
             query = query.AsNoTracking();
             var familyReportEntity = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
             return familyReportEntity;
+        }
+
+        public async Task<FamilyReportEntity> UpdateFamilyReportAsync(int kidId, FamilyReportEntity familyReport)
+        {
+            IQueryable<FamilyReportEntity> query = _dbContext.FamilyReports;
+            var familyReportToUpdate = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            familyReportToUpdate.SiblingsInFoundation = familyReport.SiblingsInFoundation ?? familyReportToUpdate.SiblingsInFoundation;
+            familyReportToUpdate.SiblingsOutside = familyReport.SiblingsOutside ?? familyReportToUpdate.SiblingsOutside;
+            familyReportToUpdate.HasExtendedFamily = familyReport.HasExtendedFamily ?? familyReportToUpdate.HasExtendedFamily;
+            familyReportToUpdate.HasOriginFamily = familyReport.HasOriginFamily ?? familyReportToUpdate.HasOriginFamily;
+            return familyReportToUpdate;
         }
 
         // KID FILE
@@ -267,9 +298,13 @@ namespace NinosConValorAPI.Data.Repository
             throw new NotImplementedException();
         }
 
-        public Task<FoundationReportEntity> UpdateFoundationReportAsync(int kidId, FoundationReportEntity foundationReport)
+        public async Task<FoundationReportEntity> UpdateFoundationReportAsync(int kidId, FoundationReportEntity foundationReport)
         {
-            throw new NotImplementedException();
+            IQueryable<FoundationReportEntity> query = _dbContext.FoundationReport;
+            var foundationReportToUpdate = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            foundationReportToUpdate.AdmissionDate = foundationReport.AdmissionDate ?? foundationReportToUpdate.AdmissionDate;
+            foundationReportToUpdate.AdmissionReason = foundationReport.AdmissionReason ?? foundationReportToUpdate.AdmissionReason;
+            return foundationReportToUpdate;
         }
 
         // PROGRAM
