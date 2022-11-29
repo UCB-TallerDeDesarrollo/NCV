@@ -1,5 +1,5 @@
 //Es necesario para las pruebas e2e instanciar esta variable debido que si no lo hacen se redirige a la vista por defecto que es el login
-sessionStorage.setItem('Access',"ComplitAcces")
+sessionStorage.setItem('Access',"CompleteAccess")
 
 describe('Show a file kid end to end tests', () => {
     it('Verifies the fields from a single kid file', () => {

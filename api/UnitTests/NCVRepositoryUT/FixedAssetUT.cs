@@ -60,7 +60,7 @@ namespace UnitTests.NCVRepositoryUT
             ctx.Add(programHouse);
             ctx.Add(assetType);
             ctx.SaveChanges();
-            repository.CreateFixedAsset(fixedAsset, 2, 2);
+            repository.CreateFixedAsset(fixedAsset, 2);
             var result = await repository.SaveChangesAsync();
 
             // ASSERT
@@ -110,7 +110,7 @@ namespace UnitTests.NCVRepositoryUT
             ctx.Add(programHouse);
             ctx.Add(assetType);
             ctx.SaveChanges();
-            repository.CreateFixedAsset(fixedAsset, 2, 2);
+            repository.CreateFixedAsset(fixedAsset, 2);
             var result = await repository.SaveChangesAsync();
 
             // ASSERT
@@ -167,7 +167,7 @@ namespace UnitTests.NCVRepositoryUT
             ctx.Add(programHouse);
             ctx.Add(assetType);
             ctx.SaveChanges();
-            repository.CreateFixedAsset(fixedAsset, 2, 2);
+            repository.CreateFixedAsset(fixedAsset, 2);
             var result = await repository.SaveChangesAsync();
 
             // ASSERT
@@ -225,7 +225,7 @@ namespace UnitTests.NCVRepositoryUT
             ctx.Add(programHouse);
             ctx.Add(assetType);
             ctx.SaveChanges();
-            repository.CreateFixedAsset(fixedAsset,2,1);
+            repository.CreateFixedAsset(fixedAsset,2);
             var result = await repository.SaveChangesAsync();
 
             // NUMBER OF FIXED ASSETS
@@ -278,7 +278,7 @@ namespace UnitTests.NCVRepositoryUT
             ctx.Add(programHouse);
             ctx.Add(assetType);
             ctx.SaveChanges();
-            repository.CreateFixedAsset(fixedAsset, 2, 1);
+            repository.CreateFixedAsset(fixedAsset, 2);
             var result = await repository.SaveChangesAsync();
 
             // NUMBER OF FIXED ASSETS
@@ -331,7 +331,7 @@ namespace UnitTests.NCVRepositoryUT
             ctx.Add(programHouse);
             ctx.Add(assetType);
             ctx.SaveChanges();
-            repository.CreateFixedAsset(fixedAsset, 2, 1);
+            repository.CreateFixedAsset(fixedAsset, 2);
             var result = await repository.SaveChangesAsync();
 
             // RETURN THE FIRST FIXED ASSET
@@ -384,7 +384,7 @@ namespace UnitTests.NCVRepositoryUT
             ctx.Add(programHouse);
             ctx.Add(assetType);
             ctx.SaveChanges();
-            repository.CreateFixedAsset(fixedAsset, 2, 1);
+            repository.CreateFixedAsset(fixedAsset, 2);
             var result = await repository.SaveChangesAsync();
 
             // RETURN THE FIRST FIXED ASSET

@@ -1,5 +1,5 @@
 //Es necesario para las pruebas e2e instanciar esta variable debido que si no lo hacen se redirige a la vista por defecto que es el login
-sessionStorage.setItem('Access',"ComplitAcces")
+sessionStorage.setItem('Access',"CompleteAccess")
 
 describe('Show fixed assets end to end tests', () => {
   it('Shows the list of fixed assets', () => {
@@ -9,6 +9,9 @@ describe('Show fixed assets end to end tests', () => {
     cy.intercept('GET', 'https://ncv-api.azurewebsites.net/api/fixedAssets',{    
       fixture: 'fixedAssets/listOfAssets.json'
     }).as('listOfAssets',);
+    cy.intercept('GET', 'https://ncv-api.azurewebsites.net/api/programHouses',{    
+      fixture: 'programHouses/listOfProgramHouses.json'
+    }).as('listOfProgramHouses',);
 
     cy.visit('/activos-fijos');
     cy.get('.ListElement').contains('Herramientas').click()
@@ -34,6 +37,9 @@ describe('Show fixed assets end to end tests', () => {
     cy.intercept('GET', 'https://ncv-api.azurewebsites.net/api/fixedAssets',{    
       fixture: 'fixedAssets/listOfAssets.json'
     }).as('listOfAssets',);
+    cy.intercept('GET', 'https://ncv-api.azurewebsites.net/api/programHouses',{    
+      fixture: 'programHouses/listOfProgramHouses.json'
+    }).as('listOfProgramHouses',);
 
     cy.visit('/activos-fijos');
 

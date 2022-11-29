@@ -2,16 +2,34 @@ import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
 import { ListItemButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useState } from "react";
+import { useState, useRef } from "react";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { ButtonPrimaryEditIcon, ButtonPrimaryDeleteIcon } from './MUI-Button';
+import { EditText} from 'react-edit-text';
+import ListElement from './ListElement';
 
-export default function DropdownList({itemsHeader, itemsSubheader}) {
+export default function DropdownList({itemsHeader, itemsSubheader, isOpened = false, editable=false, withDeleteIcon=false, deleteAction=null,editActionOnSave=null, deleteActionHeader=null,editableWithHeader=false}) {
   const [isVisible, setIsVisible] = useState({});
   const navigate = useNavigate();
+  const didChange = useRef(false);
   const sxListItemText = {
     '& .MuiListItemText-primary': {
       fontSize: 18,
       fontWeight: 'bold'
     }
+  }
+
+  const visibleItems = {
+    'Herramientas': true, 
+    'Muebles y Enseres': true, 
+    'Maquinaria y Equipos': true, 
+    'Vehículos': true, 
+    'Equipos de Computación': true,}
+
+  if(isOpened != didChange.current){
+    setIsVisible({...visibleItems})
+    didChange.current = isOpened
   }
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper', alignItems :"flex-start" }}>
@@ -24,13 +42,12 @@ export default function DropdownList({itemsHeader, itemsSubheader}) {
               })}
             >
             <ListItemText primary={h.title} secondary={h.description} className="ListElement" sx={sxListItemText}/>
+            {!isVisible?.[h.title] ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}
             </ListItemButton>
                 {!isVisible?.[h.title] ? null : itemsSubheader.map((s,i)=>{
                         if (h.id == s.categoryId) {
-                            return (
-                              <ListItemButton sx={{borderTop: 1, borderColor:'#CDCDCD', m:0, pl: 3, pr: 3}} key={s.id} alignItems="flex-start" onClick={()=>navigate(s.elementUrl)}>
-                                <ListItemText primary={s.title} secondary={s.description} className="ListElement" sx={{'& .MuiListItemText-primary': {fontSize: 18, color: 'gray'}}}/>
-                              </ListItemButton>
+                            return (                              
+                                 <ListElement  key={s.id ? s.id : i} id={s.id} title={s.title} description={s.description} elementUrl={s.elementUrl} withImage={false} editable={editable} withDeleteIcon={withDeleteIcon} deleteAction={deleteAction} deleteActionHeader={deleteActionHeader} editableWithHeader={editableWithHeader} headerId={s.categoryId} editActionOnSave={editActionOnSave}/>                             
                             )
                         }
                 })}

@@ -1,4 +1,4 @@
-/*sessionStorage.setItem('Access',"ComplitAcces")
+/*sessionStorage.setItem('Access',"CompleteAccess")
 
 describe('Add a fixed asset end to end tests', () => {
     it('Creates a fixed asset', () => {

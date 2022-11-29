@@ -25,6 +25,7 @@ builder.Services.AddTransient<IContactService, ContactService>();
 builder.Services.AddTransient<IProgramHouseService, ProgramHouseService>();
 builder.Services.AddTransient<IAssetCategoryService, AssetCategoryService>();
 builder.Services.AddTransient<IAssetStateService, AssetStateService>();
+builder.Services.AddTransient<IAssetResponsibleService, AssetResponsibleService>();
 builder.Services.AddTransient<INCVRepository, NCVRepository>();
 builder.Services.AddTransient<IEducationReportService, EducationReportService>();
 builder.Services.AddTransient<IFamilyReportService, FamilyReportService>();

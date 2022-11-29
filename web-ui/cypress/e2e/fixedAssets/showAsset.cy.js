@@ -1,5 +1,5 @@
 //Es necesario para las pruebas e2e instanciar esta variable debido que si no lo hacen se redirige a la vista por defecto que es el login
-sessionStorage.setItem('Access',"ComplitAcces")
+sessionStorage.setItem('Access',"CompleteAccess")
 describe('Show a fixed asset end to end tests', () => {
   it('Verifies the fields from a single fixed asset', () => {
     cy.intercept('GET', 'https://ncv-api.azurewebsites.net/api/fixedAssets/9',{    
@@ -13,7 +13,6 @@ describe('Show a fixed asset end to end tests', () => {
     cy.contains('Computadora de escritorio')
     cy.contains(2424.24)
     cy.contains('16 GB de Ram con targeta grafica NVIDIA')
-    cy.contains(3)
     cy.contains('Obsoleto')
   });
 });

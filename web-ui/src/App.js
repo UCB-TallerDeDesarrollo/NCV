@@ -15,6 +15,7 @@ import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
 import { ShowFixedAsset } from './Views/FixedAssets/ShowOneFixedAsset'
 import UpdateFixedAssetForm from './Views/FixedAssets/UpdateFixedAsset'
 import ShowAssetStates from './Views/FixedAssets/AssetStates/ShowAssetStates'
+import ShowAssetTypesByCategory from './Views/FixedAssets/AssetTypes/ShowAssetTypesByCategory'
 
 import AddHealthReport from './Views/KidsFiles/HealthReport/AddHealthReport'
 import AddFoundationReport from './Views/KidsFiles/FoundationReport/AddFoundationReport'
@@ -34,7 +35,7 @@ import EditProfile from './Views/User/EditProfile'
 
 let accesPermiss=sessionStorage.getItem("Access") 
 function App() {
-    if(accesPermiss== "ComplitAcces"){
+    if(accesPermiss== "CompleteAccess"){
         return (
             <Router>
                 <Routes>
@@ -66,6 +67,10 @@ function App() {
                     <Route
                         path="/activos-fijos/estados"
                         element={<ShowAssetStates />}
+                    ></Route>
+                    <Route
+                        path="/activos-fijos/tipos-por-categoria"
+                        element={<ShowAssetTypesByCategory />}
                     ></Route>
                     <Route
                         path="/vista-usuarios/:userId"
@@ -111,7 +116,7 @@ function App() {
             </Router>
         )
     }
-    else if(accesPermiss== "RestrinccionAcces"){
+    else if(accesPermiss== "RestriccionAccess"){
         return(
         <Router>
             <Routes>

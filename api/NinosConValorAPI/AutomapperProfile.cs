@@ -21,6 +21,10 @@ namespace NinosConValorAPI
                 .ForMember(mod => mod.AssetStateId, ent => ent.MapFrom(entSrc => entSrc.AssetState.Id))
                 .ReverseMap()
                 .ForMember(ent => ent.AssetState, mod => mod.MapFrom(modSrc => new AssetStateEntity() { Id = modSrc.AssetStateId }))
+                .ReverseMap()
+                .ForMember(mod => mod.AssetResponsibleId, ent => ent.MapFrom(entSrc => entSrc.AssetResponsible.Id))
+                .ReverseMap()
+                .ForMember(ent => ent.AssetResponsible, mod => mod.MapFrom(modSrc => new AssetResponsibleEntity() { Id = modSrc.AssetResponsibleId }))
                 .ReverseMap();
             this.CreateMap<KidEntity, KidModel>()
                 .ReverseMap();
@@ -46,6 +50,8 @@ namespace NinosConValorAPI
                 .ForMember(mod => mod.AssetCategoryId, ent => ent.MapFrom(entSrc => entSrc.AssetCategory.Id))
                 .ReverseMap();
             this.CreateMap<AssetStateEntity, AssetStateModel>()
+                .ReverseMap();
+            this.CreateMap<AssetResponsibleEntity, AssetResponsibleModel>()
                 .ReverseMap();
             this.CreateMap<EducationReportEntity, EducationReportModel>()
                 .ReverseMap();

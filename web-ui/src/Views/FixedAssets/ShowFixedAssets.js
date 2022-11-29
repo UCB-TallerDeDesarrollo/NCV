@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef  } from 'react'
 import Box from '@mui/material/Box'
 import ErrorPage from '../../Components/ErrorPage'
 import {getFixedAssets} from '../../Components/GetFromApi'
@@ -9,12 +9,15 @@ import ListContainer from "../../Components/ListContainer"
 import ListBasic from '../../Components/ListBasic'
 import DropdownList from '../../Components/DropdownList'
 import Dropdown from '../../Components/Dropdown'
-import ButtonPrimary from '../../Components/MUI-Button';    
+import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import SearchBar from '../../Components/SearchBar';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { display } from '@mui/system'
+import axios from 'axios';
+import ExportExcel, {compareSort, capitalizeFirstLowerCase} from '../../Components/ExportExcel'
+import { ConstructionOutlined } from '@mui/icons-material'
 
 export default function ShowFixedAssets() {
     const [open, setOpen] = useState(null);
@@ -22,9 +25,14 @@ export default function ShowFixedAssets() {
     const [searchResult, setSearchResults] = useState ([])
     const [hasErrorWithFetch, setHasErrorWithFetch] = useState(null)
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(0) 
+    const [fixedAssetsData, setFixedAssetsData] = useState([])
+    const [searchBYNameValue, setSearchBYNameValue] = useState("")  
+    const didMountRef = useRef(false);
+    const [openList, setOpenList] = useState(false);
 
     const location = useLocation()
     const navigate = useNavigate();
+    const acronymsList = []
     
     const completeInfoFixedAsset = '/activos-fijos'
     const urlProgramHouses = 'https://ncv-api.azurewebsites.net/api/programHouses'
@@ -54,15 +62,49 @@ export default function ShowFixedAssets() {
         return posts;
     }
 
-    function searchCriteria (e, posts) {
-        if (!e.target.value) return posts
-        let resultsArray = posts.filter(post => post.name.toLowerCase().includes(e.target.value.toLowerCase()))
-        if(acronymsList[programHouseSelectedValue] != null){
+    function searchByName(e, posts){
+        setSearchBYNameValue(e.target.value)
+        return searchCriteria()
+    }
+
+    function searchCriteria () {
+        setOpenList(!openList)
+        let resultsArray = fixedAssets
+        if (searchBYNameValue != ""){
+            resultsArray = fixedAssets.filter(post => post.name.toLowerCase().includes(searchBYNameValue.toLowerCase()))
+        }
+        if(acronymsList[programHouseSelectedValue] != "TODOS"){
             resultsArray = resultsArray.filter(post => post.programHouseAcronym.includes(acronymsList[programHouseSelectedValue]))
         }
+        setSearchResults(resultsArray)
         return resultsArray;
     }
+    const fetchBasicData = () => {
+        var responseAllData = axios(url);
+        axios.all([responseAllData]).then(
+            axios.spread((...allData) => {
+                var dataFA = allData[0].data
+                var newDataFA = dataFA.map((data) => {
+                    return {
+                        'DETALLE': capitalizeFirstLowerCase(data.name),
+                        'CÓDIGO': data.code,
+                        'TIPO DE ACTIVO FIJO': data.assetTypeAssetCategoryCategory,
+                        'TIPO': data.assetTypeType,
+                        'ESTADO': data.assetStateState,
+                        'FECHA DE ENTRADA': data.entryDate!=null? new Date(data.entryDate).toLocaleDateString():null,
+                        'DESCRIPCIÓN': data.description,
+                        'CARACTERÍSTICAS': data.features,
+                        'VALOR': data.price,
+                        'PROGRAMA': data.programHouseName
+                    }
+                })
+                .sort((lowName, highName) => { return compareSort(lowName, highName, 'DETALLE')})
+                setFixedAssetsData(newDataFA)
+            })
+    )}
+
     useEffect(()=>{
+        fetchBasicData()
         getFixedAssets(url).then(
             response => {
                 if(response.name != "AxiosError"){
@@ -76,6 +118,13 @@ export default function ShowFixedAssets() {
         setOpen(showAlert)
     },[])
 
+    useEffect(()=>{
+        if(didMountRef.current){
+            searchCriteria()
+        }
+        didMountRef.current = true
+    },[programHouseSelectedValue, searchBYNameValue])
+
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
             return
@@ -87,18 +136,23 @@ export default function ShowFixedAssets() {
         return ErrorPage(hasErrorWithFetch)
     } 
     if (!fixedAssets || !assetCategories || !programHouses) return null
-    const acronymsList = []
+
     programHouses.map( programHouse =>  {
         acronymsList.push(programHouse.acronym)
     }) 
+    acronymsList.push("TODOS")
+
     let idProgram = -1
-    const programHousesList = programHouses.map( programHouse =>  { 
+    let programHousesList = programHouses.map( programHouse =>  { 
         idProgram++
         return{
         label: programHouse.acronym,
         value: idProgram      
     }}) 
-    const searcher = <SearchBar posts={fixedAssets} setSearchResults={setSearchResults} orderCriteria={ordenCriteria} searchCriteria={searchCriteria} />
+    programHousesList[idProgram+1] = {label: "TODOS",
+                                    value: idProgram+1}
+                                    
+    const searcher = <SearchBar posts={fixedAssets} setSearchResults={setSearchResults} orderCriteria={ordenCriteria} searchCriteria={searchByName} />
     if (fixedAssets.length>0 && assetCategories.length>0){
         const listCategories = assetCategories.map((el)=>{
             return {
@@ -114,6 +168,7 @@ export default function ShowFixedAssets() {
                 selectedValue={programHouseSelectedValue}
                 helperText = "Seleccione un programa"
                 setSelectedValue = {setProgramHouseSelectedValue}
+                onChangeF = {() => searchCriteria()}
                 required
                 >                                        
             </Dropdown> 
@@ -128,13 +183,16 @@ export default function ShowFixedAssets() {
                 categoryId: el.assetTypeAssetCategoryId
             }
         })
-        let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={listElements} withImage={false} />
+        let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={listElements} isOpened={openList} />
         let assetStatesView = "/activos-fijos/estados"
+        let assetTypesByCategoryView = "/activos-fijos/tipos-por-categoria"
         let nexFixedAsset = "/crear-activo-fijo"
         const buttonsList = 
         <Box sx={{display:'flex'}}>
             <ButtonPrimary label={"Gestionar Estados"} onClick={()=>navigate(assetStatesView)}/>
+            <ButtonPrimary label={"Gestionar Tipos"} onClick={()=>navigate(assetTypesByCategoryView)}/>
             <ButtonPrimary sx={{marginLeft:1}} label={"Crear activo fijo"} onClick={()=>navigate(nexFixedAsset)}/>
+            <ExportExcel excelData={fixedAssetsData} fileName={`Lista de Activos Fijos ${new Date().toLocaleString()}`}/>
         </Box>
         const searchComponents = 
         <Box sx={{display:'flex'}} marginTop={1}>

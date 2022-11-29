@@ -1,5 +1,6 @@
 import React from 'react'
-import { TextField } from '@mui/material'
+import { TextField, Input, InputLabel, FormControl } from '@mui/material'
+import { width } from '@mui/system';
 
 function InputText(props) {
     let sx = props.sx ? props.sx : {}
@@ -12,3 +13,17 @@ function InputText(props) {
 }
 
 export default InputText
+
+function InputPassword(props){
+    const { label, id, ...rest } = props
+
+    return (
+        <FormControl>
+            <InputLabel htmlFor={id} sx={{marginLeft: 2}}>{label}</InputLabel>
+            <Input  id={id} variant="standard" {...rest} sx={{marginLeft: 4, width: 244}}/>
+        </FormControl>
+        
+    );
+}
+
+export {InputPassword}

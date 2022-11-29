@@ -37,7 +37,7 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
         }
         healthReportComponent = (<>
             <SingleItemCard key={1} element={healthReportElement} title={"Reporte de salud"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}} />
-            {accesPermiss=="ComplitAcces"&&<ButtonPrimaryEditIcon onClick={navigateEditHealthReport} sx={{alignSelf:'flex-end', left: '90%', background: '#5BCCD9', borderRadius: '50%', width: '50px', height: '50px'}}/>}
+            {accesPermiss=="CompleteAccess"&&<ButtonPrimaryEditIcon onClick={navigateEditHealthReport} sx={{alignSelf:'flex-end', left: '90%', background: '#5BCCD9', borderRadius: '50%', width: '50px', height: '50px'}}/>}
         </>)
     }
     return healthReportComponent

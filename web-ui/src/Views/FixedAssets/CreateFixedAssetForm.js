@@ -113,9 +113,8 @@ function CreateFixedAssetForm(props) {
         }
     }
     function hasFormErrors(errorsFromForm){
-        console.log('form errors',errorsFromForm)
         let hasErrors=true
-        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features && !errorsFromForm.Code && !errorsFromForm.AssetStateId){
+        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features && !errorsFromForm.Code && !errorsFromForm.AssetStateId &&!errorsFromForm.AssetTypeId){
             hasErrors = false
         }
         return hasErrors
@@ -222,7 +221,8 @@ function CreateFixedAssetForm(props) {
             Features: '', // string
             ProgramHouseId : '', //int
             AssetCategoryId : '', //int
-            AssetStateId: '' //string
+            AssetStateId: '', //string
+            AssetTypeId : '', //int
         }
         const regexNumber = /^[0-9]+([.][0-9]+)?$/;
         if(!datas.Name){
@@ -255,6 +255,14 @@ function CreateFixedAssetForm(props) {
 
         if(!categorySelectedValue){
             errors.AssetCategoryId= "La categoría del Activo Fijo es requerida!";
+        }
+
+        if(!typeSelectedValue){
+            errors.AssetTypeId= "El tipo del Activo Fijo es requerido!";            
+        }
+
+        if(typesOptions.length==0){
+            errors.AssetTypeId = `Seleccione una categoría para ver los tipos`
         }
     
         if(datas.Features.length>1000){
@@ -314,8 +322,8 @@ function CreateFixedAssetForm(props) {
                     required
                     >                                       
                 </Dropdown> 
-                {formErrors.AssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.AssetCategoryId}  </Alert>:<p></p> }             
+                {formErrors.AssetTypeId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.AssetTypeId}  </Alert>:<p></p> }                              
                 <InputText
                     onChange={(e) => handle(e)}
                     id="Description"

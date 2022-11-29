@@ -4,11 +4,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../../Components/NavBar'
-import FormContainer from '../../Components/FormContainer'
-import InputText from '../../Components/InputText'
-import Collapse from '@mui/material/Collapse'
 import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
-import Alert from '@mui/material/Alert'
 import SingleItemCard from '../../Components/SingleItemCard'
 import { Box } from '@mui/system'
 
@@ -34,11 +30,11 @@ export function Profile() {
         )
     }
     const userData = {
-        "NOMBRE": user.firstName,
-        "APELLIDO": user.lastName,
-        "CORREO": user.email,
-        "ROL":user.rol,
-        "CELULAR": user.cellPhone,
+        "Nombre": user.firstName,
+        "Apellido": user.lastName,
+        "Correo": user.email,
+        "Rol":user.rol,
+        "Celular": user.cellPhone,
         
     }
     let imageUrl =

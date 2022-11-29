@@ -25,7 +25,7 @@ namespace NinosConValorAPI.Data.Repository
         Task DeleteKidAsync(int kidId);
 
         //FIXED ASSETS
-        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId, int categoryId);
+        public void CreateFixedAsset(FixedAssetEntity fixedAsset, int programHouseId);
         Task<IEnumerable<FixedAssetEntity>> GetFixedAssetsAsync();
         Task<FixedAssetEntity> GetFixedAssetAsync(int fixedAssetId);
         Task UpdateFixedAssetAsync(int fixedAssetId, FixedAssetEntity fixedAsset);
@@ -54,6 +54,13 @@ namespace NinosConValorAPI.Data.Repository
         Task<AssetStateEntity> GetAssetStateAsync(int assetStateId);
         Task<bool> UpdateAssetStateAsync(int assetStateId, AssetStateEntity assetState);
         Task DeleteAssetStateAsync(int assetStateId);
+
+        //ASSET RESPONSIBLES
+        Task<AssetResponsibleEntity> CreateAssetResponsible(AssetResponsibleEntity assetResponsible);
+        Task<IEnumerable<AssetResponsibleEntity>> GetAssetResponsiblesAsync();
+        Task<AssetResponsibleEntity> GetAssetResponsibleAsync(int assetResponsibleId);
+        Task<bool> UpdateAssetResponsibleAsync(int assetResponsibleId, AssetResponsibleEntity assetResponsible);
+        Task DeleteAssetResponsibleAsync(int assetResponsibleId);
 
         //ASSET TYPES
         Task<AssetTypeEntity> GetAssetTypeAsync(int typeId);
