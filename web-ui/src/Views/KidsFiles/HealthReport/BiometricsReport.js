@@ -18,6 +18,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ButtonPrimary from '../../../Components/MUI-Button';
+import GridGraph from '../../../Components/GridGraph';
 
 var accesPermiss = sessionStorage.getItem("Access")
 
@@ -288,13 +289,27 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
         </FormControl>);
         weightAndHeightTitle = <Typography variant="h3" sx={{marginBottom:1.5}}>Peso y talla</Typography>;
     }
+    const data1 = [
+        { x: '2020-01-01', y: 80 },
+        { x: '2020-01-02', y: 5 },
+        { x: '2020-01-03', y: 20 },
+    ];
+    let graph = (<GridGraph data={data1} dataLabel={"Lolazo"}></GridGraph>);
     return (<Box sx={{ display: 'flex', flexDirection:'column' }}>
         <Box sx={{ display: 'flex', flexDirection:'row', alignItems:'center',  justifyContent:'space-between'}}>
             {weightAndHeightTitle}
             {yearComboBox}
         </Box>
-        {table}
-        <AddRowWeightAndHeight setBiometrics={setBiometrics}/>
+        <Box sx={{ display: 'flex', flexDirection:'row', width:1}}>
+            <Box sx={{width:0.5, height:1}}>
+                {graph}
+                {graph}
+            </Box>
+            <Box sx={{width:0.5}}>
+                {table}
+                <AddRowWeightAndHeight setBiometrics={setBiometrics}/>
+            </Box>
+        </Box>
     </Box>);
 }
 
