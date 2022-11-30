@@ -17,19 +17,19 @@ describe('Login', () => {
     cy.contains('Ingresa con tu cuenta');
   })
 
-  it('Se intenta logear con la una contraseña erronea', () => {
-    // cy.pause();
-    cy.get('#input-text-email').type(email);
-    cy.get('#input-text-password').type("1234");
+  // it('Se intenta logear con la una contraseña erronea', () => {
+  //   // cy.pause();
+  //   cy.get('#input-text-email').type(email);
+  //   cy.get('#input-text-password').type("1234");
 
-    cy.get('#input-button-login').click();
+  //   cy.get('#input-button-login').click();
 
-    cy.clock();
+  //   cy.clock();
 
-    cy.get('#alert-bad-user').children()
-      .should('contain', 'Usuario y/o contraseña no validos')
-      .and('be.visible')
-  })
+  //   cy.get('#alert-bad-user').children()
+  //     .should('contain', 'Usuario y/o contraseña no validos')
+  //     .and('be.visible')
+  // })
 
   it('Se intenta logear con la un email erroneo', () => {
     // cy.pause();
@@ -45,15 +45,15 @@ describe('Login', () => {
       .and('be.visible')
   })
 
-  it('Se intenta logear con la cuenta principal de soporte', () => {
+//   it('Se intenta logear con la cuenta principal de soporte', () => {
     
-    cy.get('#input-text-email').type(email);
-    cy.get('#input-text-password').type(password);
+//     cy.get('#input-text-email').type(email);
+//     cy.get('#input-text-password').type(password);
 
-    cy.get('#input-button-login').click();
+//     cy.get('#input-button-login').click();
 
-    cy.clock();
+//     cy.clock();
 
-    cy.url().should('include', 'inicio-ncv');
-  });
-});
+//     cy.url().should('include', 'inicio-ncv');
+//   });
+// });
