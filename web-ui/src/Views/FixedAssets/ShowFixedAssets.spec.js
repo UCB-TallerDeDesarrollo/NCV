@@ -12,6 +12,7 @@ describe('Show Fixed Asset', () => {
   const fixedAssetUrl ='https://ncv-api.azurewebsites.net/api/fixedAssets'  
   const fixedAssetCategoriesUrl ='https://ncv-api.azurewebsites.net/api/assetCategories?showAssets=true'
   const programHousesUrl ='https://ncv-api.azurewebsites.net/api/programHouses'
+  const statesUrl = 'https://ncv-api.azurewebsites.net/api/assetStates'
 
   function getResponse(url, jsonData=null, code=200, text=null){
     const response = rest.get(url, (req, res, ctx) => {
@@ -31,6 +32,22 @@ describe('Show Fixed Asset', () => {
           id: 1,
           acronym:"CAC"
       }
+  ]
+
+  const states =
+  [
+      {
+          id: 1,
+          acronym:"Bueno"
+      },
+      {
+          id: 2,
+          acronym:"Malo"
+      },
+      {
+        id: 3,
+        acronym:"Verificar"
+    }
   ]
 
   const assetCategories =
@@ -163,7 +180,8 @@ describe('Show Fixed Asset', () => {
 	const fixedAssetResponse = getResponse(fixedAssetUrl, fixedAssets)
   const fixedAssetCategoriesResponse = getResponse(fixedAssetCategoriesUrl, assetCategories)
   const programHousesResponse = getResponse(programHousesUrl, programHouses)
-  const handlers = [fixedAssetResponse, fixedAssetCategoriesResponse, programHousesResponse];
+  const StateResponse = getResponse(statesUrl, states)
+  const handlers = [fixedAssetResponse, fixedAssetCategoriesResponse, programHousesResponse, StateResponse];
 
   const server = new setupServer(...handlers);
 
