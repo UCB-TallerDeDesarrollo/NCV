@@ -5,8 +5,8 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { Typography } from '@mui/material';
 
 import SingleItemCard from '../../../Components/SingleItemCard'
-import ButtonPrimary from '../../../Components/MUI-Button';
-
+import ButtonPrimary, { ButtonDanger, ButtonSecondary , ButtonPrimaryEditIcon} from '../../../Components/MUI-Button';
+var accesPermiss = sessionStorage.getItem("Access")
 
 function checkBooleanValue(value){
     var new_value;
@@ -18,6 +18,10 @@ function checkBooleanValue(value){
         return new_value
     }
     return new_value
+}
+
+function navigateEditFamilyReport(){
+    console.log("Editando...");
 }
 
 function FamilyReport({kidId, familyReport, familyReportStatusCode}){
@@ -45,7 +49,8 @@ function FamilyReport({kidId, familyReport, familyReportStatusCode}){
             "¿Tiene Familia Extendida?" : familyReport_hasExtendedFamily,
             "¿Tiene Familia de origen?" : familyReport_hasOriginFamily
         }
-        familyReportComponent = <SingleItemCard key={1} element={familyReportElement} title={"Reporte de Familia"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}} />
+        familyReportComponent = <><SingleItemCard key={1} element={familyReportElement} title={"Reporte de Familia"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}} />
+        {accesPermiss=="CompleteAccess"&&<ButtonPrimaryEditIcon onClick={navigateEditFamilyReport} sx={{alignSelf:'flex-end', left: '90%', background: '#5BCCD9', borderRadius: '50%', width: '50px', height: '50px'}}/>}</>
     }
     return familyReportComponent
 }
