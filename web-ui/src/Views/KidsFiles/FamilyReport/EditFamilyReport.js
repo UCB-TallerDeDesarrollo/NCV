@@ -25,38 +25,37 @@ const familyReport = {
 function EditFamilyReport() {
     const navigate = useNavigate();
     const {kidId} = useParams()
-    var urlEducationReport = "https://ncv-api.herokuapp.com/api/kids/"+ kidId +"/familyreports"
-    const [educationRep, setHealthRep] = useState(educationReport)
+    var urlFamilyReport = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/familyreports"
+    const [familyRep, setFamilyRep] = useState(familyReport)
     const [open, setOpen] = useState(false)
 
-    const fetchEducationReportData = () => {
-        var responseReporteducation = axios(urlEducationReport);
-        axios.all([responseReporteducation]).then(
+    const fetchFamilyReportData = () => {
+        var responseReportfamily = axios(urlFamilyReport);
+        axios.all([responseReportfamily]).then(
             axios.spread((...allData) => {
                 var dataBK = allData[0].data
-                setEducationRep(dataBK)
+                setFamilyRep(dataBK)
             })
     )}
 
     useEffect(() => {
-        fetchEducationReportData()
+        fetchFamilyReportData()
     }, [])
-    console.log("education report json: ",educationRep )
 
     const handleInputChange = (e)=>{
         const {name, value}=e.target
         setOpen(false)
-        setEducationRep({
-            ...educationRep,
+        setFamilyRep({
+            ...familyRep,
             [name]:value
         })
     }
 
     function handleFormSubmit() {
-        axios.put(urlEducationReport, educationRep)
+        axios.put(urlFamilyReport, familyRep)
           .then(function (response) {
             if (response.status == 200){
-                navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de educación actualizado correctamente"}});
+                navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de familia actualizado correctamente"}});
             }
           })
           .catch(function (error) {
@@ -67,39 +66,58 @@ function EditFamilyReport() {
           });
     }
     function handleClose() {
-        navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de educación sin modificaciones"}});
+        navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de familia sin modificaciones"}});
     }
     
     return (
         <><Navbar /><div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
-            <FormContainer title="Modificar reporte de educación">
+            <FormContainer title="Modificar reporte de familia">
                 <Collapse in={open} sx={{width:1, pt:2}}>
                 </Collapse>
                 <InputText
-                    id="grade"
-                    name="grade"
-                    label="Grado"
-                    type="text"
-                    value={educationRep.grade}
+                    id="siblingsInFoundation"
+                    name="siblingsInFoundation"
+                    label="Nro de Hermanos en el Centro"
+                    type="number"
+                    value={formReport.siblingsInFoundation}
+                    onChange={handleInputChange}
+                />
+                <InputText
+                    id="siblingsOutside"
+                    name="siblingsOutside"
+                    label="Nro de Hermanos externos"
+                    type="number"
+                    value={formReport.siblingsOutside}
+                    onChange={handleInputChange}
+                />
+                <InputText
+                    select
+                    id="hasExtendedFamily"
+                    name="hasExtendedFamily"
+                    label="¿Tiene familia extendida?"
+                    value={familyReport_hasExtendedFamily}
                     onChange={handleInputChange}
                 >
+                {booleansAnwers.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                    </MenuItem>
+                ))}
                 </InputText>
                 <InputText
-                    id="school"
-                    name="school"
-                    label="Unidad Educativa"
-                    type="text"
-                    value={educationRep.school}
+                    select
+                    id="hasOriginFamily"
+                    name="hasOriginFamily"
+                    label="¿Tiene familia de origen?"
+                    value={familyReport_hasOriginFamily}
                     onChange={handleInputChange}
-                />
-                <InputText
-                    id="rude"
-                    name="rude"
-                    label="RUDE"
-                    type="text"
-                    value={educationRep.rude}
-                    onChange={handleInputChange}
-                />
+                >
+                {booleansAnwers.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                    </MenuItem>
+                ))}
+                </InputText>
                 <Box sx={{display :'inline'}}>
                 <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
                 <ButtonPrimary label={"Guardar"} onClick={handleFormSubmit}></ButtonPrimary>     
