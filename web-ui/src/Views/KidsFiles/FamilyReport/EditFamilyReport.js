@@ -126,4 +126,4 @@ function EditFamilyReport() {
         </div></>
     );
 }
-export default EditEducationReport;
+export default EditFamilyReport;
