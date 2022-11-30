@@ -1,7 +1,7 @@
 describe('Home Page end to end tests', () => {
     
   beforeEach(() => {
-    const email = 'soprteNCV@gmail.com'
+    const email = 'soporteNCV@gmail.com'
     const password = 'Soporte!23'
 
     sessionStorage.setItem('Access','');
