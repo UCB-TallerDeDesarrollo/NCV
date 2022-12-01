@@ -203,6 +203,7 @@ namespace NinosConValorAPI.Data.Repository
             _dbContext.Entry(fixedAsset.AssetType).State = EntityState.Unchanged;
             _dbContext.Entry(fixedAsset.ProgramHouse).State = EntityState.Unchanged;
             _dbContext.Entry(fixedAsset.AssetState).State = EntityState.Unchanged;
+            _dbContext.Entry(fixedAsset.AssetResponsible).State = EntityState.Unchanged;
             _dbContext.FixedAssets.Add(fixedAsset);
         }
 
@@ -214,6 +215,7 @@ namespace NinosConValorAPI.Data.Repository
             query = query.Include(f => f.AssetType.AssetCategory);
             query = query.Include(f => f.ProgramHouse);
             query = query.Include(f => f.AssetState);
+            query = query.Include(f => f.AssetResponsible);
             query = query.Where(f => f.Deleted == false);
             var result = await query.ToListAsync();
             return result;
