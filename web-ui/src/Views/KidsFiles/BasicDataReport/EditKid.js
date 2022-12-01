@@ -155,6 +155,12 @@ function EditKidFile() {
     function handleClose() {
         navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Informacion Básica sin modificaciones"}});
     }
+
+    // to fix format date to show in edit report
+    console.log("fecha: ",kid.birthDate)
+    if(kid.birthDate ){
+        kid.birthDate = kid.birthDate.split("T")[0]
+    }
     
     return (
         <><Navbar /><div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
