@@ -26,6 +26,9 @@ import AddKid from './Views/KidsFiles/BasicDataReport/AddKid'
 import EditKid from './Views/KidsFiles/BasicDataReport/EditKid'
 import EditHealthReport from './Views/KidsFiles/HealthReport/EditHealthReport'
 import EditEducationReport from './Views/KidsFiles/EducationReport/EditEducationReport'
+import EditFamilyReport from './Views/KidsFiles/FamilyReport/EditFamilyReport'
+import EditLegalReport from './Views/KidsFiles/LegalReport/EditLegalReport'
+import EditFoundationReport from './Views/KidsFiles/FoundationReport/EditFoundationReport'
 
 import AddLegalReport from './Views/KidsFiles/LegalReport/AddLegalReport'
 import AddEducationReport from './Views/KidsFiles/EducationReport/AddEducationReport'
@@ -116,6 +119,18 @@ function App() {
                         path="ninos/:kidId/editar-reporte-educacion"
                         element={<EditEducationReport/>}
                     ></Route>
+                    <Route
+                        path="ninos/:kidId/editar-reporte-familia"
+                        element={<EditFamilyReport/>}
+                    ></Route>
+                <Route
+                    path="ninos/:kidId/editar-reporte-fundacion"
+                    element={<EditFoundationReport/>}
+                ></Route>
+                <Route
+                    path="ninos/:kidId/editar-reporte-legal"
+                    element={<EditLegalReport/>}
+                ></Route>
                     <Route path="*" element={<Navigate replace to="/" />} />
                 </Routes>
             </Router>
@@ -151,6 +166,18 @@ function App() {
                  <Route
                     path="ninos/:kidId/editar-reporte-education"
                     element={<EditEducationReport/>}
+                ></Route>
+                <Route
+                    path="ninos/:kidId/editar-reporte-familia"
+                    element={<EditFamilyReport/>}
+                ></Route>
+                <Route
+                    path="ninos/:kidId/editar-reporte-fundacion"
+                    element={<EditFoundationReport/>}
+                ></Route>
+                <Route
+                    path="ninos/:kidId/editar-reporte-legal"
+                    element={<EditLegalReport/>}
                 ></Route>
                 
                     <Route exact path="/" element={<LoginForm />}></Route>

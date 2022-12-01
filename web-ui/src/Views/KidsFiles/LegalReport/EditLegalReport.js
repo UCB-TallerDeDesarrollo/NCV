@@ -52,7 +52,7 @@ function EditLegalReport() {
     }
 
     function handleFormSubmit() {
-        axios.put(urlLegalReport, healthRep)
+        axios.put(urlLegalReport, legalRep)
           .then(function (response) {
             if (response.status == 200){
                 navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte legal actualizado correctamente"}});
@@ -82,7 +82,7 @@ function EditLegalReport() {
                     id="courtNumber"
                     name="courtNumber"
                     label="Número de Corte"
-                    value={formReport.courtNumber}
+                    value={legalRep.courtNumber}
                     onChange={handleInputChange}
                 />
                 <InputText
@@ -90,7 +90,7 @@ function EditLegalReport() {
                     name="dna"
                     label="DNA"
                     helperText="Opcional"
-                    value={formReport.dna}
+                    value={legalRep.dna}
                     onChange={handleInputChange}
                 />
                 <InputText
@@ -98,7 +98,7 @@ function EditLegalReport() {
                     name="nurej"
                     label="NUREJ"
                     helperText="Opcional"
-                    value={formReport.nurej}
+                    value={legalRep.nurej}
                     onChange={handleInputChange}
                 />
                 <InputText
@@ -107,12 +107,12 @@ function EditLegalReport() {
                     name="legalProcesses"
                     label="Procesos legales"
                     helperText="Opcional"
-                    value={formReport.legalProcesses}
+                    value={legalRep.legalProcesses}
                     onChange={handleInputChange}
                 />
                 <Box sx={{display: 'inline'}}>
                     <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
-                    <ButtonPrimary label={"Crear reporte legal"} onClick={handleFormSubmit}></ButtonPrimary>
+                    <ButtonPrimary label={"Guardar"} onClick={handleFormSubmit}></ButtonPrimary>
                 </Box>
             </FormContainer>
         </div></>

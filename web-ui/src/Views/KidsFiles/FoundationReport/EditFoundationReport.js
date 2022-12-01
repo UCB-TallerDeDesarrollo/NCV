@@ -82,7 +82,7 @@ function EditFoundationReport() {
                     name="admissionDate"
                     label="Fecha de Admision"
                     type="date"
-                    value={formReport.admissionDate}
+                    value={foundationRep.admissionDate}
                     InputLabelProps={{
                         shrink: true,
                     }}
@@ -94,12 +94,12 @@ function EditFoundationReport() {
                     name="admissionReason"
                     label="Razon o Motivo de Admision"
                     type="text"
-                    value={formReport.admissionReason}
+                    value={foundationRep.admissionReason}
                     onChange={handleInputChange}
                 />
                 <Box sx={{display: 'inline'}}>
                     <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
-                    <ButtonPrimary label={"Crear reporte"} onClick={handleFormSubmit}></ButtonPrimary>
+                    <ButtonPrimary label={"Guardar"} onClick={handleFormSubmit}></ButtonPrimary>
                 </Box>
             </FormContainer>
         </div></>
