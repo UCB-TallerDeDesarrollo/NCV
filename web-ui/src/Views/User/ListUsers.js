@@ -18,11 +18,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContentText from '@mui/material/DialogContentText';
 import { ButtonDanger, ButtonSecondary,   } from '../../Components/MUI-Button';
+import axios from "axios"
 var accesPermiss = sessionStorage.getItem("Access")
 
 function ListUsers() {
     const url = 'https://ncv-api.azurewebsites.net/api/auth'
-    //const url="http://localhost:5009/api/auth";
+   // const url="http://localhost:5009/api/auth";
     const { apiData: users, error } = getFromApi(url)
 
     const location = useLocation()
@@ -31,14 +32,9 @@ function ListUsers() {
     let alertMessage = location.state ? location.state.alertMessage : null
     const [open, setOpen] = useState(showAlert)
     const [usersList, setUsersList] = useState([])
-    const [userId, setUserId] = useState(0)
+    const [userSelect, setUserSelect] = useState(0)
     const [openToConfirm, setOpenToConfirm] = useState(false)
-    function handleClose(event, reason) {
-        if (reason === 'clickaway') {
-            return
-        }
-        setOpen(false)
-    }
+    
 
     function ordenCriteria(posts) {
         posts = posts.sort((a, b) => {
@@ -72,7 +68,23 @@ function ListUsers() {
         return resultsArray
     }
    
-    const fetchDeleteUSer = () => {   }
+    const fetchDeleteUSer = () => {  
+        axios.delete(url + "/"+userSelect.id)
+        .then(function (response) {
+            if (response.status == 200){
+                setShowAlert(true)
+                setAlertMessage("Usuario Eliminado")
+                setSeverity("success")
+                setOpen(true)
+                setOpenToConfirm(false)  
+                navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario eliminado exitosamente"}})                                        
+            }
+        })
+        .catch(err=> {
+            setErrorAssetStateDelete(err)     
+            setOpenToConfirm(false)        
+        })
+     }
     useEffect(() => {
         getListUsers()
             .then((json) =>
@@ -162,7 +174,7 @@ function ListUsers() {
         }
     
         let deleteAction = (id) => {
-            setUserId(id)          
+            setUserSelect(id)          
             handleCloseToConfirm()
             ToConfirmOpen()
         }         
@@ -212,7 +224,7 @@ function ListUsers() {
                     <DialogTitle sx={{display:'flex', justifyContent:'center'}}>Eliminar</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            ¿Desea eliminar todos los datos de {userId.title}?
+                            ¿Desea eliminar todos los datos de {userSelect.title}?
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions sx={{display:'flex',flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
