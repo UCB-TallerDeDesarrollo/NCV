@@ -17,9 +17,9 @@ jobs:
         working-directory: ./api
     steps:
       - run: |
-        rm appsettings.json
-        echo '{ "ConnectionStrings": { "NinosConValorDB": "${{ secrets.DB_CONNECTION_STRING }}" },' >> appsettings.json
-        echo '"Logging": { "LogLevel": { "Default": "Information", "Microsoft.AspNetCore": "Warning" } }, "AllowedHosts": "*", "AuthSettings": { "Key": "SuperSecretKey123456 ", "Audience": "http://NinosConValor.net","Issuer": "http://NinosConValor.net"}}' >> appsettings.json
+          rm appsettings.json
+          echo '{ "ConnectionStrings": { "NinosConValorDB": "${{ secrets.DB_CONNECTION_STRING }}" },' >> appsettings.json
+          echo '"Logging": { "LogLevel": { "Default": "Information", "Microsoft.AspNetCore": "Warning" } }, "AllowedHosts": "*", "AuthSettings": { "Key": "SuperSecretKey123456 ", "Audience": "http://NinosConValor.net","Issuer": "http://NinosConValor.net"}}' >> appsettings.json
       - uses: actions/checkout@v2
 
       - name: Set up .NET Core
