@@ -8,16 +8,15 @@ import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box'
-import ButtonPrimary, { ButtonDanger, ButtonSecondary, ButtonPrimaryEditIcon, ButtonPrimaryDeleteIcon } from './MUI-Button';
-import Alert from '@mui/material/Alert';
-import { ListItemIcon, Snackbar } from '@mui/material';
+import { ButtonDanger, ButtonSecondary, ButtonPrimaryEditIcon, ButtonPrimaryDeleteIcon } from './MUI-Button';
+
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContentText from '@mui/material/DialogContentText';
 
-export default function GutterlessList({items, withImage=true, withDeleteIcon=false}) {
+export default function GutterlessList({items, withImage=true, withDeleteIcon=true}) {
     const [openToConfirmDelete, setOpenToConfirmDelete] = useState(false);
     const [selectedRow, setSelectedRow] = useState([])
     function fetchDeleteUSer(){
@@ -42,8 +41,10 @@ export default function GutterlessList({items, withImage=true, withDeleteIcon=fa
                 
                 secondaryAction={
                     <Box sx={{alignSelf:'flex-end', display:'flex-end'}}>
-                        <ButtonPrimaryEditIcon id="edit_button" onClick={() => navigate(n.elementUrl)} sx={{color:'primary', marginLeft:1, alignSelf:'flex-end'}}/>
-                        {true && <ButtonPrimaryDeleteIcon id="delete_button" onClick={ToConfirmOpen} sx={{marginLeft:1, alignSelf:'flex-end'}}/>}
+                        <ButtonPrimaryEditIcon   aria-label="Editar" id="edit_button" onClick={() => navigate(n.elementUrl)}  sx={{color:'primary', marginLeft:1, alignSelf:'flex-end' } }title={"Editar"}/>
+                        {withDeleteIcon && 
+                            <ButtonPrimaryDeleteIcon  id="delete_button" onClick={ToConfirmOpen} sx={{marginLeft:1, alignSelf:'flex-end'}} title={"Eliminar"}/>
+                        }
                     </Box>
                 }
                 
