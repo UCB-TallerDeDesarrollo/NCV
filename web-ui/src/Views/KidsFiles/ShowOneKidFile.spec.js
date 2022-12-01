@@ -10,6 +10,7 @@ import {MemoryRouter, Route, Routes, BrowserRouter} from 'react-router-dom'
 describe('Show One Kid File', () => {
   const fileKidUrl ='https://ncv-api.azurewebsites.net/api/kids/1';
   const HealthReportUrl = 'https://ncv-api.azurewebsites.net/api/kids/1/healthreports'
+  const legalReportURL = 'https://ncv-api.azurewebsites.net/api/kids/1/legalreports'
 
   const fileKidResponse = rest.get(fileKidUrl, (req, res, ctx) => {
     return res(
@@ -51,7 +52,25 @@ describe('Show One Kid File', () => {
       {}
       ))})
 
-  const handlers = [fileKidResponse , healthReportResponse];
+  const legalReportResponse = rest.get(legalReportUrl, (req, res, ctx) => {
+    return res(
+      ctx.json(
+        {"id":1,
+        "kidId":1,
+        "courtNumber":"12",
+        "dna":"1234",
+        "nurej":"12345667",
+        "legalProcesses":"1234"}
+        ),
+    )
+  })
+  const legalReportIncompletedResponse = rest.get(HealthReportUrl, (req, res, ctx) => {
+    return res(ctx.json(
+      {}
+      ))})
+  
+
+  const handlers = [fileKidResponse , healthReportResponse, legalReportResponse];
 
   const server = new setupServer(...handlers);
 
@@ -127,4 +146,37 @@ describe('Show One Kid File', () => {
       expect(screen.getAllByText(" ----- ")).toHaveLength(6)
       })  
   })*/
+
+  it('Show legal data correctly', async () => {
+    act(()=>{render( 
+     <MemoryRouter initialEntries={["/ninos/1"]}>
+        <Routes>
+            <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
+        </Routes>
+    </MemoryRouter>
+    )})
+    await waitFor(() => {
+        expect(screen.getByText('12')).toBeVisible
+        expect(screen.getByText('1234')).toBeVisible
+        expect(screen.getByText('12345667')).toBeVisible
+        expect(screen.getByText('1234')).toBeVisible
+      })  
+  })
+
+  it('Show legal data correctly', async () => {
+    act(()=>{render( 
+     <MemoryRouter initialEntries={["/ninos/1"]}>
+        <Routes>
+            <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
+        </Routes>
+    </MemoryRouter>
+    )})
+    await waitFor(() => {
+        expect(screen.getByText('12')).toBeVisible
+        expect(screen.getByText('1234')).toBeVisible
+        expect(screen.getByText('12345667')).toBeVisible
+        expect(screen.getByText('1234')).toBeVisible
+      })  
+  })
+
 })
