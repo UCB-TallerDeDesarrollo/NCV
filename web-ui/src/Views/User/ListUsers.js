@@ -28,13 +28,13 @@ function ListUsers() {
 
     const location = useLocation()
     const [searchResult, setSearchResults] = useState([])
-    let showAlert = location.state ? location.state.showAlert : false
+    //let showAlert = location.state ? location.state.showAlert : false
     let alertMessage = location.state ? location.state.alertMessage : null
+    const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
     const [open, setOpen] = useState(showAlert)
     const [usersList, setUsersList] = useState([])
     const [userSelect, setUserSelect] = useState(0)
     const [openToConfirm, setOpenToConfirm] = useState(false)
-    
 
     function ordenCriteria(posts) {
         posts = posts.sort((a, b) => {
@@ -78,7 +78,7 @@ function ListUsers() {
                 setOpen(true)
                 setOpenToConfirm(false)  
                 navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario eliminado exitosamente"}})                                        
-            }
+            }   
         })
         .catch(err=> {
             setErrorAssetStateDelete(err)     
