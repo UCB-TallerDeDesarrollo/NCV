@@ -148,6 +148,10 @@ function App() {
                     path="ninos/:kidId/editar-reporte-salud"
                     element={<EditHealthReport/>}
                 ></Route>
+                 <Route
+                    path="ninos/:kidId/editar-reporte-education"
+                    element={<EditEducationReport/>}
+                ></Route>
                 
                     <Route exact path="/" element={<LoginForm />}></Route>
                     <Route path="*" element={<Navigate replace to="/" />} />
