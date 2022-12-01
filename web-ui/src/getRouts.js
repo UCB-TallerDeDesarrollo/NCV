@@ -15,7 +15,6 @@ import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
 import { ShowFixedAsset } from './Views/FixedAssets/ShowOneFixedAsset'
 import UpdateFixedAssetForm from './Views/FixedAssets/UpdateFixedAsset'
 import ShowAssetStates from './Views/FixedAssets/AssetStates/ShowAssetStates'
-import ShowAssetResponsibles from './Views/FixedAssets/AssetResponsibles/ShowAssetResponsibles'
 import ShowAssetTypesByCategory from './Views/FixedAssets/AssetTypes/ShowAssetTypesByCategory'
 
 import AddHealthReport from './Views/KidsFiles/HealthReport/AddHealthReport'
@@ -37,20 +36,21 @@ import AddEducationReport from './Views/KidsFiles/EducationReport/AddEducationRe
 import ListUsers from './Views/User/ListUsers'
 import Profile from './Views/User/Profile'
 import EditProfile from './Views/User/EditProfile'
-import ChangePassword from './Views/User/ChangePassword'
 
-let accesPermiss=sessionStorage.getItem("Access") 
-function App() {
-    if(accesPermiss== "CompleteAccess"){
-        return (
-            <Router>
+function getRouts(){
+    let routs
+    //let logginState= falselogginState =true
+    if(obtainRole != null){
+
+        switch (obtainRole) {
+            case "Soporte":
+                routs= <Router>
                 <Routes>
                     <Route exact path="/" element={<LoginForm />}></Route>
                     <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
                     <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
                     <Route path="/perfil-ncv" element={<Profile />}></Route>
                     <Route path="/editar-perfil" element={<EditProfile />}></Route>
-                    <Route path="/cambiar-contrasena" element={<ChangePassword />}></Route>
                     <Route path="/vista-usuarios" element={<ListUsers />}></Route>
                     <Route path="/registrar-nino" element={<AddKid />}></Route>
                     <Route
@@ -74,10 +74,6 @@ function App() {
                     <Route
                         path="/activos-fijos/estados"
                         element={<ShowAssetStates />}
-                    ></Route>
-                    <Route
-                        path="/activos-fijos/responsables"
-                        element={<ShowAssetResponsibles />}
                     ></Route>
                     <Route
                         path="/activos-fijos/tipos-por-categoria"
@@ -141,43 +137,90 @@ function App() {
                     <Route path="*" element={<Navigate replace to="/" />} />
                 </Routes>
             </Router>
-        )
-    }
-    if(accesPermiss== "RestriccionAccess"){
-        return(
-        <Router>
-            <Routes>
-                <Route exact path="/" element={<LoginForm />}></Route>
-                <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
-                <Route path="/perfil-ncv" element={<Profile />}></Route>
-                <Route path="/ninos" element={<ShowKidsFiles />}></Route>
-                <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
-                <Route
-                    path="ninos/:kidId/crear-reporte/"
-                    //element={<><NavBar/><AddHealthReport/></>}
-                    element={<AddHealthReport/>}
-                ></Route>
-                <Route
-                    path="ninos/:kidId/crear-reporte-estancia/"
-                    //element={<><NavBar/><AddFoundationReport/></>}
-                    element={<AddFoundationReport/>}
-                ></Route>
-                <Route
-                    path="ninos/:kidId/editar-nino"
-                    element={<EditKid/>}
-                ></Route>
-                <Route
-                    path="ninos/:kidId/editar-reporte-salud"
-                    element={<EditHealthReport/>}
-                ></Route>
-                 <Route
-                    path="ninos/:kidId/editar-reporte-education"
-                    element={<EditEducationReport/>}
-                ></Route>
-                <Route
-                    path="ninos/:kidId/editar-reporte-familia"
-                    element={<EditFamilyReport/>}
-                ></Route>
+                break;
+            case "Administrador":
+                routs= <Router>
+                <Routes>
+                    <Route exact path="/" element={<LoginForm />}></Route>
+                    <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
+                    <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
+                    <Route path="/perfil-ncv" element={<Profile />}></Route>
+                    <Route path="/editar-perfil" element={<EditProfile />}></Route>
+                    <Route path="/vista-usuarios" element={<ListUsers />}></Route>
+                    <Route path="/registrar-nino" element={<AddKid />}></Route>
+                    <Route
+                        path="/crear-activo-fijo"
+                        element={<CreateFixedAssetForm />}
+                    ></Route>
+
+                    <Route
+                        path="/activos-fijos"
+                        element={<ShowFixedAssets />}
+                    ></Route>
+
+                    <Route
+                        path="/activos-fijos/:fixedAssetId"
+                        element={<ShowFixedAsset />}
+                    ></Route>
+                    <Route
+                        path="activos-fijos/:fixedAssetId/editar-activo-fijo"
+                        element={<UpdateFixedAssetForm />}
+                    ></Route>
+                    <Route
+                        path="/activos-fijos/estados"
+                        element={<ShowAssetStates />}
+                    ></Route>
+                    <Route
+                        path="/activos-fijos/tipos-por-categoria"
+                        element={<ShowAssetTypesByCategory />}
+                    ></Route>
+                    <Route
+                        path="/vista-usuarios/:userId"
+                        element={<EditUser />}
+                    ></Route>
+                    <Route path="/ninos" element={<ShowKidsFiles />}></Route>
+                    <Route
+                        path="/ninos/:kidId"
+                        element={<ShowOneKidFile />}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/crear-reporte/"
+                        //element={<><NavBar/><AddHealthReport/></>}
+                        element={<AddHealthReport />}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/crear-reporte-estancia/"
+                        //element={<><NavBar/><AddFoundationReport/></>}
+                        element={<AddFoundationReport />}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/crear-reporte-familia/"
+                        element={<AddFamilyReport />}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/crear-reporte-legal/"
+                        element={<AddLegalReport />}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/crear-reporte-education/"
+                        element={<AddEducationReport />}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/editar-nino"
+                        element={<EditKid />}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/editar-reporte-salud"
+                        element={<EditHealthReport/>}
+                    ></Route>
+                     <Route
+                        path="ninos/:kidId/editar-reporte-educacion"
+                        element={<EditEducationReport/>}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/editar-reporte-familia"
+                        element={<EditFamilyReport/>}
+                    ></Route>
                 <Route
                     path="ninos/:kidId/editar-reporte-fundacion"
                     element={<EditFoundationReport/>}
@@ -186,15 +229,60 @@ function App() {
                     path="ninos/:kidId/editar-reporte-legal"
                     element={<EditLegalReport/>}
                 ></Route>
-                
-                    <Route exact path="/" element={<LoginForm />}></Route>
                     <Route path="*" element={<Navigate replace to="/" />} />
-            </Routes>
-        </Router>)
-    }
-    if((accesPermiss=="MediumAccess")){
-        return(
-        <Router>
+                </Routes>
+            </Router>
+                break;
+            case "AuntUser":
+                routs=<Router>
+                <Routes>
+                    <Route exact path="/" element={<LoginForm />}></Route>
+                    <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
+                    <Route path="/perfil-ncv" element={<Profile />}></Route>
+                    <Route path="/ninos" element={<ShowKidsFiles />}></Route>
+                    <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
+                    <Route
+                        path="ninos/:kidId/crear-reporte/"
+                        //element={<><NavBar/><AddHealthReport/></>}
+                        element={<AddHealthReport/>}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/crear-reporte-estancia/"
+                        //element={<><NavBar/><AddFoundationReport/></>}
+                        element={<AddFoundationReport/>}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/editar-nino"
+                        element={<EditKid/>}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/editar-reporte-salud"
+                        element={<EditHealthReport/>}
+                    ></Route>
+                     <Route
+                        path="ninos/:kidId/editar-reporte-education"
+                        element={<EditEducationReport/>}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/editar-reporte-familia"
+                        element={<EditFamilyReport/>}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/editar-reporte-fundacion"
+                        element={<EditFoundationReport/>}
+                    ></Route>
+                    <Route
+                        path="ninos/:kidId/editar-reporte-legal"
+                        element={<EditLegalReport/>}
+                    ></Route>
+                    
+                        <Route exact path="/" element={<LoginForm />}></Route>
+                        <Route path="*" element={<Navigate replace to="/" />} />
+                </Routes>
+            </Router>
+                break;
+            case "Equipo Tecnico":
+                routs=<Router>
                 <Routes>
                     <Route exact path="/" element={<LoginForm />}></Route>
                     <Route path="/inicio-ncv" element={<HomePageForm />}></Route>
@@ -261,18 +349,20 @@ function App() {
                     ></Route>
                     <Route path="*" element={<Navigate replace to="/" />} />
             </Routes>
-        </Router>)
-    }
-    else {
-        return(
-        <Router>
+        </Router>
+                break;        
+            default:
+                routs=<Router>
                 <Routes>
                     <Route exact path="/" element={<LoginForm />}></Route>
                     <Route path="*" element={<Navigate replace to="/" />} />
                 </Routes>
             </Router>
-        )
+                break;
+        }
+        
+        
     }
+    return routs
 }
-
-export default App
+export default issLoggin

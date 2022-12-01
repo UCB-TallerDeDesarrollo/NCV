@@ -20,8 +20,10 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
             <Box sx={{margin:3}}>
                 <Typography variant="body2">No se registraron datos de <b>salud</b></Typography>
             </Box>
-            <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
-        </Box>);
+            {(accesPermiss=="CompleteAccess") || (accesPermiss=="MediumAccess")&&
+                <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
+            }
+            </Box>);
     let healthReportComponent = null
     if (healthReportStatusCode == 404){
         healthReportComponent = buttonCreateHealthReport

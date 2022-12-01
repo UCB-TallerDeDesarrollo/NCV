@@ -119,8 +119,13 @@ function AddRowContacts({setContacts}){
                 </Table>
            </TableContainer>
            <Box sx={{pt: 3,display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
+<<<<<<< HEAD
                 {accesPermiss=="CompleteAccess"&&
                     <ButtonPrimary key={22} label="Añadir datos" onClick={handleFormSubmit} />
+=======
+                {(accesPermiss=="CompleteAccess") || (accesPermiss=="MediumAccess")&&
+                    <ButtonPrimary key={2} label="Añadir datos" onClick={handleFormSubmit} />
+>>>>>>> 4a4bc8d (Se controla seguridad para el nuevo rol)
                 }
             </Box>
            </div>
