@@ -8,8 +8,10 @@ import SingleItemCard from '../../../Components/SingleItemCard'
 import ButtonPrimary, { ButtonDanger, ButtonSecondary , ButtonPrimaryEditIcon} from '../../../Components/MUI-Button';
 var accesPermiss = sessionStorage.getItem("Access")
 
+const navigate = useNavigate();
 function navigateEditEducationReport(){
-    console.log("Editando...");
+    let path = `/ninos/${kidId}/editar-reporte-educacion`; 
+        navigate(path);
 }
 
 function EducationReport({kidId, educationReport, educationReportStatusCode}){
