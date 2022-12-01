@@ -11,6 +11,7 @@ describe('Show One Kid File', () => {
   const fileKidUrl ='https://ncv-api.azurewebsites.net/api/kids/1';
   const HealthReportUrl = 'https://ncv-api.azurewebsites.net/api/kids/1/healthreports'
   const legalReportUrl = 'https://ncv-api.azurewebsites.net/api/kids/1/legalreports'
+  const contactsReportUrl = 'https://ncv-api.azurewebsites.net/api/kids/1/contacts'
 
   const fileKidResponse = rest.get(fileKidUrl, (req, res, ctx) => {
     return res(
@@ -64,13 +65,28 @@ describe('Show One Kid File', () => {
         ),
     )
   })
-  const legalReportIncompletedResponse = rest.get(HealthReportUrl, (req, res, ctx) => {
+  const legalReportIncompletedResponse = rest.get(legalReportUrl, (req, res, ctx) => {
+    return res(ctx.json(
+      {}
+      ))})
+  
+const contactsReportResponse = rest.get(contactsReportUrl, (req, res, ctx) => {
+    return res(
+      ctx.json(
+        {"name":"Chucho",
+        "relationship":"tío",
+        "contactNumber":"442411359",
+        "address":"Av. Chucheria #55"}
+        ),
+    )
+  })
+  const contactsReportIncompletedResponse = rest.get(contactsReportUrl, (req, res, ctx) => {
     return res(ctx.json(
       {}
       ))})
   
 
-  const handlers = [fileKidResponse , healthReportResponse, legalReportResponse];
+  const handlers = [fileKidResponse , healthReportResponse, legalReportResponse, contactsReportResponse];
 
   const server = new setupServer(...handlers);
 
@@ -163,7 +179,7 @@ describe('Show One Kid File', () => {
       })  
   })
 
-  it('Show legal data correctly', async () => {
+  it('Show contact data correctly', async () => {
     act(()=>{render( 
      <MemoryRouter initialEntries={["/ninos/1"]}>
         <Routes>
@@ -172,10 +188,10 @@ describe('Show One Kid File', () => {
     </MemoryRouter>
     )})
     await waitFor(() => {
-        expect(screen.getByText('12')).toBeVisible
-        expect(screen.getByText('1234')).toBeVisible
-        expect(screen.getByText('12345667')).toBeVisible
-        expect(screen.getByText('1234')).toBeVisible
+        expect(screen.getByText('Chucho')).toBeVisible
+        expect(screen.getByText('tío')).toBeVisible
+        expect(screen.getByText('442411359')).toBeVisible
+        expect(screen.getByText('Av. Chucheria #55')).toBeVisible
       })  
   })
 
