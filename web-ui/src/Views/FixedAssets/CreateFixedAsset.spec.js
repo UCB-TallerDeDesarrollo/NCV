@@ -18,6 +18,7 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
   const programHousesUrl ='https://ncv-api.azurewebsites.net/api/programHouses'
   const categoriesUrl ='https://ncv-api.azurewebsites.net/api/AssetCategories'  
   const statesUrl ='https://ncv-api.azurewebsites.net/api/AssetStates' 
+  const responsiblesUrl ='https://ncv-api.azurewebsites.net/api/AssetResponsibles' 
 
   function getResponse(url, jsonData=null, code=200, text=null){
       const response = rest.get(url, (req, res, ctx) => {
@@ -92,11 +93,41 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
     }
   ]
 
+  const assetResponsibles = 
+  [
+    {
+        "id": 21,
+        "name": "Diego Delgadillo",
+        "fixedAssets": []
+    },
+    {
+        "id": 22,
+        "name": "Tiara Rojas",
+        "fixedAssets": []
+    },
+    {
+        "id": 23,
+        "name": "Javier Ferrel",
+        "fixedAssets": []
+    },
+    {
+        "id": 24,
+        "name": "Franklin Rosembluth",
+        "fixedAssets": []
+    },
+    {
+        "id": 25,
+        "name": "Juan Pablo Carrasco",
+        "fixedAssets": []
+    }
+  ]
+
   const programHousesResponse = getResponse(programHousesUrl, programHouses)
   const categoriesResponse = getResponse(categoriesUrl, assetCategories)
   const statesResponse = getResponse(statesUrl, assetStates)
+  const responsiblesResponse = getResponse(responsiblesUrl, assetResponsibles)
 
-  const handlers = [programHousesResponse, categoriesResponse, statesResponse]
+  const handlers = [programHousesResponse, categoriesResponse, statesResponse, responsiblesResponse]
 
   const server = new setupServer(...handlers)
 

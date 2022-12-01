@@ -20,6 +20,7 @@ function UpdateFixedAssetForm(props) {
     const urlProgramHouses = 'https://ncv-api.azurewebsites.net/api/programHouses'
     const urlCategories = 'https://ncv-api.azurewebsites.net/api/assetCategories'
     const urlStates = 'https://ncv-api.azurewebsites.net/api/assetStates'
+    const urlResponsibles = 'https://ncv-api.azurewebsites.net/api/assetResponsibles'
 
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null)
@@ -56,6 +57,7 @@ function UpdateFixedAssetForm(props) {
                 setProgramHouseSelectedValue(dataFA.programHouseId)
                 setTypeSelectedValue(dataFA.assetTypeId)
                 setStateSelectedValue(dataFA.assetStateId)
+                setResponsibleSelectedValue(dataFA.assetResponsibleId)
             })
     )}
 
@@ -75,6 +77,10 @@ function UpdateFixedAssetForm(props) {
     //states
     const [stateSelectedValue, setStateSelectedValue] = useState(null)
     const { apiData:states, error:errorStates } = getFromApi(urlStates) 
+
+    //responsibles
+    const [responsibleSelectedValue, setResponsibleSelectedValue] = useState(null)
+    const { apiData:responsibles, error:errorResponsibles } = getFromApi(urlResponsibles) 
 
     //types
     const [typeSelectedValue, setTypeSelectedValue] = useState(null)
@@ -113,6 +119,17 @@ function UpdateFixedAssetForm(props) {
     }}) 
     const stateOptions = statesList 
 
+    //responsibles options for DROPDOWN
+    if(errorResponsibles){
+        return ErrorPage(errorResponsibles)
+    }
+    if (!responsibles) return null 
+    let responsiblesList = responsibles.map( responsible =>  { return{
+        label: responsible.name,
+        value: responsible.id      
+    }}) 
+    const responsibleOptions = responsiblesList 
+
     function handleClose(event, reason) {
         navigate(`/activos-fijos/${fixedAssetId}`,{state:{showAlert:true,alertMessage:"Información sin modificaciones"}});
     }
@@ -124,7 +141,7 @@ function UpdateFixedAssetForm(props) {
     }
     function hasFormErrors(errorsFromForm){        
         let hasErrors=true
-        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features && !errorsFromForm.Code && !errorsFromForm.AssetStateId &&!errorsFromForm.AssetTypeId){
+        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features && !errorsFromForm.Code && !errorsFromForm.AssetStateId && !errorsFromForm.AssetResponsibleId &&!errorsFromForm.AssetTypeId){
             hasErrors = false
         }
         return hasErrors
@@ -210,6 +227,7 @@ function UpdateFixedAssetForm(props) {
             ProgramHouseId : programHouseSelectedValue,
             AssetTypeId : typeSelectedValue,
             AssetStateId: stateSelectedValue, //string
+            AssetResponsibleId: responsibleSelectedValue,
             Code: "F-" + programCode + "-" + categoryCode + "-" + code.split('-').pop(), //string
             }).then((res) => {
                 if (res.status == 200) {               
@@ -233,6 +251,7 @@ function UpdateFixedAssetForm(props) {
             ProgramHouseId : '', //int
             AssetCategoryId : '', //int
             AssetStateId: '', //string
+            AssetResponsibleId:'',
             AssetTypeId : '', //int
         }
         const regexNumber = /^[0-9]+([.][0-9]+)?$/;
@@ -282,6 +301,10 @@ function UpdateFixedAssetForm(props) {
 
         if(!stateSelectedValue){
             errors.AssetStateId= "El Estado del Activo Fijo es requerida!";
+        }
+
+        if(!responsibleSelectedValue){
+            errors.AssetResponsibleId= "El Responsable del Activo Fijo es requerida!";
         }
         return errors
     }
@@ -390,6 +413,19 @@ function UpdateFixedAssetForm(props) {
                 </Dropdown>   
                 {formErrors.AssetStateId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.AssetStateId}  </Alert>:<p></p> }
+                        <Dropdown 
+                    name={"Responsable"} 
+                    id="responsable-drop" 
+                    options={responsibleOptions}                                         
+                    selectedValue={responsibleSelectedValue}
+                    setSelectedValue = {setResponsibleSelectedValue}
+                    helperText = "Seleccione un responsable"
+                    InputLabelProps={{ shrink: true }}
+                    required                    
+                    >                                        
+                </Dropdown>   
+                {formErrors.AssetResponsibleId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
+                        {formErrors.AssetResponsibleId}  </Alert>:<p></p> }
                 <InputText
                     onChange={(e) => setFeatures(e.target.value)}
                     id="Features"

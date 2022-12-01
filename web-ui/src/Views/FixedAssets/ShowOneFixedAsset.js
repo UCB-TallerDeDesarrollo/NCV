@@ -42,7 +42,8 @@ export function ShowFixedAsset() {
         "Características": fixedAsset.features,
         "Fecha de Entrada": fixedAsset.entryDate!=null? new Date(fixedAsset.entryDate).toLocaleDateString():null,
         "Precio": fixedAsset.price,
-        "Estado": fixedAsset.assetStateState
+        "Estado": fixedAsset.assetStateState,
+        "Responsable": fixedAsset.assetResponsibleName
     }
 
     const fetchDeleteFixedAsset = () => {

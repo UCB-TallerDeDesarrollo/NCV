@@ -97,6 +97,7 @@ export default function ShowFixedAssets() {
                         'TIPO DE ACTIVO FIJO': data.assetTypeAssetCategoryCategory,
                         'TIPO': data.assetTypeType,
                         'ESTADO': data.assetStateState,
+                        'RESPONSABLE': data.assetResponsibleName,
                         'FECHA DE ENTRADA': data.entryDate!=null? new Date(data.entryDate).toLocaleDateString():null,
                         'DESCRIPCIÓN': data.description,
                         'CARACTERÍSTICAS': data.features,
@@ -213,13 +214,15 @@ export default function ShowFixedAssets() {
         })
         let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={listElements} isOpened={openList} />
         let assetStatesView = "/activos-fijos/estados"
+        let assetResponsiblesView = "/activos-fijos/responsables"
         let assetTypesByCategoryView = "/activos-fijos/tipos-por-categoria"
         let nexFixedAsset = "/crear-activo-fijo"
         const buttonsList =
             <Box sx={{ display: 'flex' }}>
                 <ButtonPrimary label={"Gestionar Estados"} onClick={() => navigate(assetStatesView)} />
                 <ButtonPrimary label={"Gestionar Tipos"} onClick={()=>navigate(assetTypesByCategoryView)}/>
-                <ButtonPrimary sx={{ marginLeft: 1 }} label={"Crear activo fijo"} onClick={() => navigate(nexFixedAsset)} />
+                <ButtonPrimary label={"Gestionar Responsables"} onClick={()=>navigate(assetResponsiblesView)}/>
+            <ButtonPrimary sx={{ marginLeft: 1 }} label={"Crear activo fijo"} onClick={() => navigate(nexFixedAsset)} />
                 <ExportExcel excelData={fixedAssetsData} fileName={`Lista de Activos Fijos ${new Date().toLocaleString()}`}/>
             </Box>
         const searchComponents =
