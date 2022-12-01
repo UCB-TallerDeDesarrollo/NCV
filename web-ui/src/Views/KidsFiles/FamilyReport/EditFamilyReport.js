@@ -15,14 +15,25 @@ import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 
 const familyReport = {
-    siblingsInFoundation: '',
-    siblingsOutside: '',
-    hasExtendedFamily: '',
-    hasOriginFamily: ''
+    siblingsInFoundation: null,
+    siblingsOutside: null,
 }
+
+const booleansAnwers = [
+    {
+      value: true,
+      label: 'SI',
+    },
+    {
+      value: false,
+      label: 'NO',
+    }
+  ];
 
 
 function EditFamilyReport() {
+    var familyReport_hasExtendedFamily;
+    var familyReport_hasOriginFamily;
     const navigate = useNavigate();
     const {kidId} = useParams()
     var urlFamilyReport = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/familyreports"
@@ -41,6 +52,7 @@ function EditFamilyReport() {
     useEffect(() => {
         fetchFamilyReportData()
     }, [])
+    
 
     const handleInputChange = (e)=>{
         const {name, value}=e.target
@@ -69,6 +81,7 @@ function EditFamilyReport() {
         navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de familia sin modificaciones"}});
     }
     
+    
     return (
         <><Navbar /><div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
             <FormContainer title="Modificar reporte de familia">
@@ -77,17 +90,17 @@ function EditFamilyReport() {
                 <InputText
                     id="siblingsInFoundation"
                     name="siblingsInFoundation"
-                    label="Nro de Hermanos en el Centro"
+                    
                     type="number"
-                    value={formReport.siblingsInFoundation}
+                    value={familyRep.siblingsInFoundation}
                     onChange={handleInputChange}
                 />
                 <InputText
                     id="siblingsOutside"
                     name="siblingsOutside"
-                    label="Nro de Hermanos externos"
+                   
                     type="number"
-                    value={formReport.siblingsOutside}
+                    value={familyRep.siblingsOutside}
                     onChange={handleInputChange}
                 />
                 <InputText
