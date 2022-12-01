@@ -78,7 +78,8 @@ function ListUsers() {
                 setSeverity("success")
                 setOpen(true)
                 setOpenToConfirm(false)  
-                navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario eliminado exitosamente"}})                                        
+                navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario eliminado exitosamente"}})    
+                window.location.reload(true);                                    
             }   
         })
         .catch(err=> {
