@@ -8,6 +8,6 @@ namespace NinosConValorAPI.Services
         Task<IEnumerable<ContactModel>> GetContactsAsync(int kidId);
         //TO DO: define Delete and Update signature
         Task DeleteContactAsync(int kidId);
-        Task<ContactModel> UpdateContactAsync(int kidId, ContactModel contacts);
+        Task<ContactModel> UpdateContactAsync(int kidId, int contactId,ContactModel contacts);
     }
 }

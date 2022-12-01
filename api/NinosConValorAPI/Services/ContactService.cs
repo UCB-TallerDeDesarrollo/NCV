@@ -42,10 +42,18 @@ namespace NinosConValorAPI.Services
         {
             throw new NotImplementedException();
         }
-
-        public Task<ContactModel> UpdateContactAsync(int kidId, ContactModel contacts)
+    
+        public async Task<ContactModel> UpdateContactAsync(int kidId, int contactId,ContactModel contacts)
         {
-            throw new NotImplementedException();
+            await ValidateIdKidAsync(kidId);
+            var contactEntity = _mapper.Map<ContactEntity>(contacts);
+            contactEntity = await _appRepository.UpdateContactAsync(kidId, contactId, contactEntity);
+            var saveResult = await _appRepository.SaveChangesAsync();
+            if (!saveResult)
+            {
+                throw new Exception("Database Error");
+            }
+            return _mapper.Map<ContactModel>(contactEntity);
         }
         private async Task ValidateIdKidAsync(int kidId)
         {

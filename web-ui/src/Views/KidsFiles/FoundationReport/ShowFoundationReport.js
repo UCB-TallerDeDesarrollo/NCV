@@ -8,12 +8,13 @@ import SingleItemCard from '../../../Components/SingleItemCard'
 import ButtonPrimary, { ButtonDanger, ButtonSecondary , ButtonPrimaryEditIcon} from '../../../Components/MUI-Button';
 var accesPermiss = sessionStorage.getItem("Access")
 
-function navigateEditFoundationReport(){
-    console.log("Editando...");
-}
 
 function FoundationReport({kidId, foundationReport, foundationReportStatusCode}){
     const navigate = useNavigate();
+    function navigateEditFoundationReport(){
+        let path = `/ninos/${kidId}/editar-reporte-fundacion`; 
+            navigate(path);
+    }
     let urlCreateFoundationReport = `/ninos/${kidId}/crear-reporte-estancia/`
     let buttonCreateFoundationReport = (
         <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>

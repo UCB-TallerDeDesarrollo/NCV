@@ -8,12 +8,14 @@ import SingleItemCard from '../../../Components/SingleItemCard'
 import ButtonPrimary, { ButtonDanger, ButtonSecondary, ButtonPrimaryEditIcon } from '../../../Components/MUI-Button';
 var accesPermiss = sessionStorage.getItem("Access")
 
-function navigateEditLegalReport(){
-    console.log("Editando...");
-}
+
 
 function LegalReport({kidId, legalReport, legalReportStatusCode}){
     const navigate = useNavigate();
+    function navigateEditLegalReport(){
+        let path = `/ninos/${kidId}/editar-reporte-legal`; 
+            navigate(path);
+    }
     let urlCreateLegalReport = `/ninos/${kidId}/crear-reporte-legal/`
     let buttonCreateLegalReport = (<Container sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}}>
         <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>

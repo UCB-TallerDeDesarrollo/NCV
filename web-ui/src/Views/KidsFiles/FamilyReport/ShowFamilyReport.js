@@ -20,12 +20,12 @@ function checkBooleanValue(value){
     return new_value
 }
 
-function navigateEditFamilyReport(){
-    console.log("Editando...");
-}
-
 function FamilyReport({kidId, familyReport, familyReportStatusCode}){
     const navigate = useNavigate();
+    function navigateEditFamilyReport(){
+        let path = `/ninos/${kidId}/editar-reporte-familia`; 
+            navigate(path);
+    }
     let urlCreateFamilyReport = `/ninos/${kidId}/crear-reporte-familia/`
     let buttonCreateFamilyReport = (
         <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>

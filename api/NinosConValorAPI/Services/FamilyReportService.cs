@@ -40,6 +40,18 @@ namespace NinosConValorAPI.Services
             throw new Exception("Database Error");
         }
 
+        public async Task<FamilyReportModel> UpdateFamilyReportAsync(int kidId, FamilyReportModel familyReportModel)
+        {
+            await ValidateKidAsync(kidId);
+            var familyReportEntity = _mapper.Map<FamilyReportEntity>(familyReportModel);
+            familyReportEntity = await _appRepository.UpdateFamilyReportAsync(kidId, familyReportEntity);
+            var saveResult = await _appRepository.SaveChangesAsync();
+            if (!saveResult)
+            {
+                throw new Exception("Database Error");
+            }
+            return _mapper.Map<FamilyReportModel>(familyReportEntity);
+        }
         private async Task ValidateKidAsync(int kidId)
         {
             var kid = await _appRepository.GetKidAsync(kidId);

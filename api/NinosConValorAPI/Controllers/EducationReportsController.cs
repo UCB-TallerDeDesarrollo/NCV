@@ -52,5 +52,32 @@ namespace NinosConValorAPI.Controllers
             }
             return response;
         }
+        [HttpPut]
+        public async Task<IActionResult> UpdateEducationReportAsync(int kidId, [FromBody] EducationReportModel educationReportModel)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    foreach (var pair in ModelState)
+                    {
+                        if (pair.Key == nameof(educationReportModel.Rude) && pair.Value.Errors.Count > 0)
+                        {
+                            return BadRequest(pair.Value.Errors);
+                        }
+                    }
+                }
+
+                return Ok(await _educationReportService.UpdateEducationReportAsync(kidId, educationReportModel));
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message); ;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happend: {ex.Message}");
+            }
+        }
     }
 }
