@@ -122,10 +122,11 @@ namespace NinosConValorAPI.Data.Repository
             await _dbContext.Contacts.AddAsync(contacts);
             return contacts;
         }
-        public async Task<ContactEntity> UpdateContactAsync(int kidId, ContactEntity contact)
+        
+        public async Task<ContactEntity> UpdateContactAsync(int kidId,int contactId, ContactEntity contact)
         {
             IQueryable<ContactEntity> query = _dbContext.Contacts;
-            var contactToUpdate = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            var contactToUpdate = await query.FirstOrDefaultAsync(rep => rep.KidId == kidId && rep.Id==contactId);
             contactToUpdate.Name = contact.Name ?? contactToUpdate.Name;
             contactToUpdate.Relationship = contact.Relationship ?? contactToUpdate.Relationship;
             contactToUpdate.ContactNumber = contact.ContactNumber ?? contactToUpdate.ContactNumber;

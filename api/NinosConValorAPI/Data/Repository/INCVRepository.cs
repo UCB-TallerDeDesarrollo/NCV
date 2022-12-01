@@ -38,7 +38,7 @@ namespace NinosConValorAPI.Data.Repository
         // CONTACTS
         Task<IEnumerable<ContactEntity>> GetContactsAsync(int kidId);
         Task<ContactEntity> CreateContactAsync(ContactEntity contact);
-        Task<ContactEntity> UpdateContactAsync(int kidId, ContactEntity contact);
+        Task<ContactEntity> UpdateContactAsync(int kidId,int contactId, ContactEntity contact);
 
         //PROGRAM HOUSE
         Task<IEnumerable<ProgramHouseEntity>> GetProgramHousesAsync();
