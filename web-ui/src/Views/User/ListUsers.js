@@ -12,7 +12,8 @@ import { useState, useEffect } from 'react'
 import TranslateRole from './Translate'
 import SearchBar from '../../Components/SearchBar'
 import { getListUsers } from './API/getAxios'
-import DropdownListUser from '../../Components/DropdownList'
+import DropdownListUser from '../../Components/DropdownListUser'
+import DropdownList from '../../Components/DropdownList'
 var accesPermiss = sessionStorage.getItem("Access")
 
 function ListUsers() {
@@ -145,7 +146,13 @@ function ListUsers() {
                 id:'03ce47ae-2cf7-4665-aea1-8f05976b0772', 
                 title:'Soporte',
                 description:``,
-            }
+            },
+            {
+                id:'37689015-1c2d-4015-a88a-1088bd977098', 
+                title:'Equipo Tecnico',
+                description:``,
+            },
+            
         ]
 
         let registerUser = '/registrarse-ncv'
@@ -179,6 +186,7 @@ function ListUsers() {
                         header={listHeaderComponents}
                     >
                         {userRolComponent}
+                        
                     </ListContainer>
                 </Box>
 

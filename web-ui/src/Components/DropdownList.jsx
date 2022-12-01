@@ -10,6 +10,8 @@ import { EditText} from 'react-edit-text';
 import ListElement from './ListElement';
 
 export default function DropdownList({itemsHeader, itemsSubheader, isOpened = false, editable=false, withDeleteIcon=false, deleteAction=null,editActionOnSave=null, deleteActionHeader=null,editableWithHeader=false}) {
+  console.log(itemsHeader)
+  console.log(itemsSubheader)
   const [isVisible, setIsVisible] = useState({});
   const navigate = useNavigate();
   const didChange = useRef(false);

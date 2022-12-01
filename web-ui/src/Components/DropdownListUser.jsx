@@ -15,9 +15,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContentText from '@mui/material/DialogContentText';
-import TranslateRole from './Translate'
+import GutterList from './GutterList'
 
 export default function DropdownList({itemsHeader, itemsSubheader, isOpened = false, editable=false, withDeleteIcon=false, deleteAction=null,editActionOnSave=null, deleteActionHeader=null,editableWithHeader=false}) {
+
+  console.log(itemsHeader)
+  console.log(itemsSubheader)
+  
   const [isVisible, setIsVisible] = useState({});
   const navigate = useNavigate();
   const didChange = useRef(false);
@@ -56,6 +60,7 @@ export default function DropdownList({itemsHeader, itemsSubheader, isOpened = fa
   };
   
   return (
+    
     <List sx={{ width: '100%', bgcolor: 'background.paper', alignItems :"flex-start" }}>
       {itemsHeader.map((h,i)=>{
         return (<>
@@ -71,21 +76,24 @@ export default function DropdownList({itemsHeader, itemsSubheader, isOpened = fa
                 {!isVisible?.[h.title] ? null : itemsSubheader.map((n,i)=>{
 
                         if (h.title == n.nameRole) {
-                            return (
-                                <ListItem
-                                    key={n.id ? n.id : i} id={n.id}  description={n.description} elementUrl={n.elementUrl} 
-                                    
-                                    secondaryAction={
-                                        <Box sx={{alignSelf:'flex-end', display:'flex-end'}}>
-                                            <ButtonPrimaryEditIcon id="edit_button" onClick={() => navigate(n.elementUrl)} sx={{color:'primary', marginLeft:1, alignSelf:'flex-end'}}/>
-                                            {true && <ButtonPrimaryDeleteIcon id="delete_button" onClick={ToConfirmOpen} sx={{marginLeft:1, alignSelf:'flex-end'}}/>}
-                                        </Box>
-                                    }
-                                    
-                                    
-                                ></ListItem>                              
-                                 
-                            )
+                          return(
+                            <ListItem
+                            key={n.id ? n.id : i} id={n.id}  description={n.description} elementUrl={n.elementUrl} 
+                            
+                            secondaryAction={
+                                <Box sx={{alignSelf:'flex-end', display:'flex-end'}}>
+                                    <ButtonPrimaryEditIcon id="edit_button" onClick={() => navigate(n.elementUrl)} sx={{color:'primary', marginLeft:1, alignSelf:'flex-end'}}/>
+                                    {true && <ButtonPrimaryDeleteIcon id="delete_button" onClick={ToConfirmOpen} sx={{marginLeft:1, alignSelf:'flex-end'}}/>}
+                                </Box>
+                            }
+                            
+                            
+                        >
+                        <ListItemText primary={n.title} secondary={n.description} key={n.id ? n.id : i} id={n.id} sx={{borderTop: 1, borderColor:'#CDCDCD', margin:0}}/>
+                            
+                        </ListItem>
+                          )
+                            
                         }
                 })}
         </>)})}
