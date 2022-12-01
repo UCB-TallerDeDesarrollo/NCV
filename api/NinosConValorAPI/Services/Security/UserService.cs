@@ -388,5 +388,24 @@ namespace NinosConValorAPI.Services.Security
                 IsSuccess = false,
             };
         }
+
+        public async Task<UserBasicInformationModel> GetUserByEmailAsync(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if(user == null)
+            {
+                throw new NotFoundElementException("User with email not registered");
+            }
+            var userBasicInfomodel = new UserBasicInformationModel
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                CellPhone = user.PhoneNumber,
+                Id = user.Id,
+
+            };
+            return userBasicInfomodel;
+        }
     }
 }
