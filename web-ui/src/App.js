@@ -25,6 +25,7 @@ import { ShowOneKidFile } from './Views/KidsFiles/ShowOneKidFile'
 import AddKid from './Views/KidsFiles/BasicDataReport/AddKid'
 import EditKid from './Views/KidsFiles/BasicDataReport/EditKid'
 import EditHealthReport from './Views/KidsFiles/HealthReport/EditHealthReport'
+import EditEducationReport from './Views/KidsFiles/EducationReport/EditEducationReport'
 
 import AddLegalReport from './Views/KidsFiles/LegalReport/AddLegalReport'
 import AddEducationReport from './Views/KidsFiles/EducationReport/AddEducationReport'
@@ -110,6 +111,10 @@ function App() {
                     <Route
                         path="ninos/:kidId/editar-reporte-salud"
                         element={<EditHealthReport/>}
+                    ></Route>
+                     <Route
+                        path="ninos/:kidId/editar-reporte-educacion"
+                        element={<EditEducationReport/>}
                     ></Route>
                     <Route path="*" element={<Navigate replace to="/" />} />
                 </Routes>
