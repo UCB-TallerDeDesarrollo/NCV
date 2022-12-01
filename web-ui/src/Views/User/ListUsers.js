@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react'
 import TranslateRole from './Translate'
 import SearchBar from '../../Components/SearchBar'
 import { getListUsers } from './API/getAxios'
+import DropdownListUser from '../../Components/DropdownList'
 var accesPermiss = sessionStorage.getItem("Access")
 
 function ListUsers() {
@@ -20,6 +21,7 @@ function ListUsers() {
     const { apiData: users, error } = getFromApi(url)
 
     const location = useLocation()
+    const [openList, setOpenList] = useState(false);
     const [searchResult, setSearchResults] = useState([])
     let showAlert = location.state ? location.state.showAlert : false
     let alertMessage = location.state ? location.state.alertMessage : null
@@ -43,6 +45,7 @@ function ListUsers() {
 
 
     function searchCriteria(e, posts) {
+        setOpenList(!openList)
         if (!e.target.value) return posts
         const resultsArray = posts.filter(
             (post) =>
@@ -99,7 +102,8 @@ function ListUsers() {
                 description: `${el.email} - ${el.cellPhone} - ${TranslateRole(
                     el.nameRole
                 )}`,
-                elementUrl: `${completeInfoUser}/${el.id}`
+                elementUrl: `${completeInfoUser}/${el.id}`,
+                nameRole: `${TranslateRole(el.nameRole)}`
             }
         })
 
@@ -126,9 +130,27 @@ function ListUsers() {
                 />
             </Box>
         )
+        const roles = [
+            {
+                id:'1d0773b2-dc7d-454e-abb7-748fc394a1eb', 
+                title:'Tia',
+                description:``,
+            },
+            {
+                id:'06ede763-edbe-4108-b315-7780e53fc6b1', 
+                title:'Administrador',
+                description:``,
+            },
+            {
+                id:'03ce47ae-2cf7-4665-aea1-8f05976b0772', 
+                title:'Soporte',
+                description:``,
+            }
+        ]
 
         let registerUser = '/registrarse-ncv'
-
+        let userRolComponent = <DropdownListUser itemsHeader={roles} itemsSubheader={listElements} isOpened={openList} withImage={false} withDeleteIcon={true} />
+      
         const listHeaderComponents = (
             <Box sx={{ display: 'flex' }}>
                 {searcher}
@@ -156,7 +178,7 @@ function ListUsers() {
                         title="Lista de usuarios"
                         header={listHeaderComponents}
                     >
-                        {usersComponents}
+                        {userRolComponent}
                     </ListContainer>
                 </Box>
 
