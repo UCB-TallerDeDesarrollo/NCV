@@ -65,10 +65,11 @@ namespace NinosConValorAPI.Services
             await GetProgramHouseAsync(programHouseId);
             await GetAssetTypeAsync(typeId);
             await GetAssetStateAsync(fixedAsset.AssetStateId);
-            await GetAssetResponsibleAsync(fixedAsset.AssetResponsibleId);
+            var assetResponsible = await GetAssetResponsibleAsync(fixedAsset.AssetResponsibleId);
             fixedAsset.ProgramHouseId = programHouseId;
             fixedAsset.AssetTypeId = typeId;
             var fixedAssetEntity = _mapper.Map<FixedAssetEntity>(fixedAsset);
+            fixedAssetEntity.AssetResponsible = assetResponsible;
             _NCVRepository.CreateFixedAsset(fixedAssetEntity, programHouseId);
             var result = await _NCVRepository.SaveChangesAsync();
             
