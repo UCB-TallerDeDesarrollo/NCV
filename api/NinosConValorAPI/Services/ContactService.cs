@@ -43,11 +43,11 @@ namespace NinosConValorAPI.Services
             throw new NotImplementedException();
         }
     
-        public async Task<ContactModel> UpdateContactAsync(int kidId, ContactModel contacts)
+        public async Task<ContactModel> UpdateContactAsync(int kidId, int contactId,ContactModel contacts)
         {
             await ValidateIdKidAsync(kidId);
             var contactEntity = _mapper.Map<ContactEntity>(contacts);
-            contactEntity = await _appRepository.UpdateContactAsync(kidId, contactEntity);
+            contactEntity = await _appRepository.UpdateContactAsync(kidId, contactId, contactEntity);
             var saveResult = await _appRepository.SaveChangesAsync();
             if (!saveResult)
             {

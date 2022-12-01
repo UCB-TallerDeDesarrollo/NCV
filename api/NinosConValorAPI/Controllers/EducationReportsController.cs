@@ -58,7 +58,16 @@ namespace NinosConValorAPI.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                {
+                    foreach (var pair in ModelState)
+                    {
+                        if (pair.Key == nameof(educationReportModel.Rude) && pair.Value.Errors.Count > 0)
+                        {
+                            return BadRequest(pair.Value.Errors);
+                        }
+                    }
+                }
+
                 return Ok(await _educationReportService.UpdateEducationReportAsync(kidId, educationReportModel));
             }
             catch (NotFoundElementException ex)
