@@ -147,32 +147,37 @@ function Contacts({contactsData,setContacts}){
         </Box>
     </>
 
-    const handleSave = ({name,value,previousValue},id) => {
+    const handleSave = ({fieldName,value,previousValue},id) => {
         if(value==previousValue || value=='') {
             window.location.reload() //review this part , test with HOCKS ¡¡
         }      
         else{
+            /*
             let updateData = {
-                state:value
+                fieldName:value
             }
-            submitUpdate(id,updateData)
+            submitUpdate(id,updateData)*/
+
+            UpdatedContact = contactsData.filter(c => c.id == id)[0]
+            console.log( "UpdatedContact: ",UpdatedContact )
+            UpdatedContact[fieldName] = value
+        
+            axios.put(urlUpdateContact + id, UpdatedContact).then((res) => {
+                if (res.status == 200) {
+                    window.location.reload()    
+                    /*           
+                    setShowAlert(true)
+                    setAlertMessage("Estado actualizado")
+                    setSeverity("success")
+                    setOpen(true)                    
+                    getAssetStates()
+                    */
+                   // show alert and reload in this case                    
+                }            
+            }).catch ((apiError) => {
+                setErrorUpdateAssetState(apiError)                    
+            })
         } 
-    }
-    function submitUpdate(id,updateData){
-        axios.put(urlUpdateContact + id, updateData).then((res) => {
-            if (res.status == 200) {    
-                /*           
-                setShowAlert(true)
-                setAlertMessage("Estado actualizado")
-                setSeverity("success")
-                setOpen(true)                    
-                getAssetStates()
-                */
-               // show alert and reload in this case                    
-            }            
-        }).catch ((apiError) => {
-            setErrorUpdateAssetState(apiError)                    
-        })
     }
 
     if (contactsData != null && contactsData.length > 0){
