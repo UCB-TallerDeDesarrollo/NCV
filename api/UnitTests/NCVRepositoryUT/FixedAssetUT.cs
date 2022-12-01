@@ -43,6 +43,11 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 1,
                 State = "Obsoleto",
             };
+            var assetResponsible = new AssetResponsibleEntity()
+            {
+                Id = 1,
+                Name = "Javier"
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -54,7 +59,8 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 ProgramHouse = programHouse,
                 AssetType = assetType,
-                AssetState = assetState
+                AssetState = assetState,
+                AssetResponsible = assetResponsible
             };
 
             ctx.Add(programHouse);
@@ -96,6 +102,11 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 1,
                 State = "Obsoleto",
             };
+            var assetResponsible = new AssetResponsibleEntity()
+            {
+                Id = 1,
+                Name = "Javier"
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -104,7 +115,8 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 ProgramHouse = programHouse,
                 AssetType = assetType,
-                AssetState = assetState
+                AssetState = assetState,
+                AssetResponsible = assetResponsible
             };
 
             ctx.Add(programHouse);
@@ -153,6 +165,11 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 1,
                 State = "Obsoleto",
             };
+            var assetResponsible = new AssetResponsibleEntity()
+            {
+                Id = 1,
+                Name = "Javier"
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -161,7 +178,8 @@ namespace UnitTests.NCVRepositoryUT
                 Price = 100.58m,
                 ProgramHouse = programHouse,
                 AssetType = assetType,
-                AssetState = assetState
+                AssetState = assetState,
+                AssetResponsible = assetResponsible
             };
 
             ctx.Add(programHouse);
@@ -209,6 +227,11 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 1,
                 State = "Obsoleto",
             };
+            var assetResponsible = new AssetResponsibleEntity()
+            {
+                Id = 1,
+                Name = "Javier"
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -220,7 +243,8 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 ProgramHouse= programHouse,
                 AssetType = assetType,
-                AssetState = assetState
+                AssetState = assetState,
+                AssetResponsible = assetResponsible
             };           
             ctx.Add(programHouse);
             ctx.Add(assetType);
@@ -262,6 +286,11 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 1,
                 State = "Obsoleto",
             };
+            var assetResponsible = new AssetResponsibleEntity()
+            {
+                Id = 1,
+                Name = "Javier"
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -273,7 +302,8 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 ProgramHouse = programHouse,
                 AssetType = assetType,
-                AssetState = assetState
+                AssetState = assetState,
+                AssetResponsible = assetResponsible
             };
             ctx.Add(programHouse);
             ctx.Add(assetType);
@@ -315,6 +345,11 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 1,
                 State = "Obsoleto",
             };
+            var assetResponsible = new AssetResponsibleEntity()
+            {
+                Id = 1,
+                Name = "Javier"
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -326,7 +361,8 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 ProgramHouse = programHouse,
                 AssetType = assetType,
-                AssetState = assetState
+                AssetState = assetState,
+                AssetResponsible=assetResponsible
             };
             ctx.Add(programHouse);
             ctx.Add(assetType);
@@ -368,6 +404,11 @@ namespace UnitTests.NCVRepositoryUT
                 Id = 1,
                 State = "Obsoleto",
             };
+            var assetResponsible = new AssetResponsibleEntity()
+            {
+                Id = 1,
+                Name = "Javier"
+            };
             var fixedAsset = new FixedAssetEntity()
             {
                 Id = 1,
@@ -379,7 +420,8 @@ namespace UnitTests.NCVRepositoryUT
                 Features = "8Gb de RAM",
                 ProgramHouse = programHouse,
                 AssetType = assetType,
-                AssetState = assetState
+                AssetState = assetState,
+                AssetResponsible = assetResponsible
             };
             ctx.Add(programHouse);
             ctx.Add(assetType);
