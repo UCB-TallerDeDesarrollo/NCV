@@ -10,7 +10,7 @@ import {MemoryRouter, Route, Routes, BrowserRouter} from 'react-router-dom'
 describe('Show One Kid File', () => {
   const fileKidUrl ='https://ncv-api.azurewebsites.net/api/kids/1';
   const HealthReportUrl = 'https://ncv-api.azurewebsites.net/api/kids/1/healthreports'
-  const legalReportURL = 'https://ncv-api.azurewebsites.net/api/kids/1/legalreports'
+  const legalReportUrl = 'https://ncv-api.azurewebsites.net/api/kids/1/legalreports'
 
   const fileKidResponse = rest.get(fileKidUrl, (req, res, ctx) => {
     return res(
