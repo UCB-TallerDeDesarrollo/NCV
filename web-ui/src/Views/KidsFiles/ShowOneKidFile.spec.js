@@ -12,6 +12,7 @@ describe('Show One Kid File', () => {
   const HealthReportUrl = 'https://ncv-api.azurewebsites.net/api/kids/1/healthreports'
   const legalReportUrl = 'https://ncv-api.azurewebsites.net/api/kids/1/legalreports'
   const contactsReportUrl = 'https://ncv-api.azurewebsites.net/api/kids/1/contacts'
+  const educationReportUrl = 'https://ncv-api.azurewebsites.net/api/kids/1/educationreports'
 
   const fileKidResponse = rest.get(fileKidUrl, (req, res, ctx) => {
     return res(
@@ -85,8 +86,22 @@ const contactsReportResponse = rest.get(contactsReportUrl, (req, res, ctx) => {
       {}
       ))})
   
-
-  const handlers = [fileKidResponse , healthReportResponse, legalReportResponse, contactsReportResponse];
+const educationReportResponse = rest.get(educationReportUrl, (req, res, ctx) => {
+    return res(
+      ctx.json(
+        {"id":1,
+        "kidId":1,
+        "grade":"Bachiller",
+        "school":"Domingo Dominguero",
+        "rude":"12354645138"}
+        ),
+    )
+  })
+  const educationReportIncompletedResponse = rest.get(educationReportUrl, (req, res, ctx) => {
+    return res(ctx.json(
+      {}
+      ))})
+  const handlers = [fileKidResponse , healthReportResponse, legalReportResponse, contactsReportResponse, educationReportResponse];
 
   const server = new setupServer(...handlers);
 
@@ -192,6 +207,21 @@ const contactsReportResponse = rest.get(contactsReportUrl, (req, res, ctx) => {
         expect(screen.getByText('tío')).toBeVisible
         expect(screen.getByText('442411359')).toBeVisible
         expect(screen.getByText('Av. Chucheria #55')).toBeVisible
+      })  
+  })
+
+  it('Show education data correctly', async () => {
+    act(()=>{render( 
+     <MemoryRouter initialEntries={["/ninos/1"]}>
+        <Routes>
+            <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
+        </Routes>
+    </MemoryRouter>
+    )})
+    await waitFor(() => {
+        expect(screen.getByText('Bachiller')).toBeVisible
+        expect(screen.getByText('Domingo Dominguero')).toBeVisible
+        expect(screen.getByText('12354645138')).toBeVisible
       })  
   })
 
