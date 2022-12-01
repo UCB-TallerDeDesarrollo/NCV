@@ -30,6 +30,7 @@ builder.Services.AddTransient<INCVRepository, NCVRepository>();
 builder.Services.AddTransient<IEducationReportService, EducationReportService>();
 builder.Services.AddTransient<IFamilyReportService, FamilyReportService>();
 builder.Services.AddTransient<IAssetTypeService, AssetTypeService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 

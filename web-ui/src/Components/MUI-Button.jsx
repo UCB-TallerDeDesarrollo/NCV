@@ -68,8 +68,7 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
         background: "#5CD4E2",
         color: "#023859", 
         boxShadow: 3,
-        marginRight: 2,
-        marginLeft: 2,
+        margin: 2,
         fontWeight: 'bold',
         textTransform: 'none',
     }
