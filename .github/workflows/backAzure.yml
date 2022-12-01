@@ -16,18 +16,16 @@ jobs:
       run:
         working-directory: ./api
     steps:
-      - run: |
-          rm appsettings.json
-          echo '{ "ConnectionStrings": { "NinosConValorDB": "${{ secrets.DB_CONNECTION_STRING }}" },' >> appsettings.json
-          echo '"Logging": { "LogLevel": { "Default": "Information", "Microsoft.AspNetCore": "Warning" } }, "AllowedHosts": "*", "AuthSettings": { "Key": "SuperSecretKey123456 ", "Audience": "http://NinosConValor.net","Issuer": "http://NinosConValor.net"}}' >> appsettings.json
       - uses: actions/checkout@v2
-
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
           include-prerelease: true
-
+      - run: |
+          rm appsettings.json
+          echo '{ "ConnectionStrings": { "NinosConValorDB": "${{ secrets.DB_CONNECTION_STRING }}" },' >> appsettings.json
+          echo '"Logging": { "LogLevel": { "Default": "Information", "Microsoft.AspNetCore": "Warning" } }, "AllowedHosts": "*", "AuthSettings": { "Key": "SuperSecretKey123456 ", "Audience": "http://NinosConValor.net","Issuer": "http://NinosConValor.net"}}' >> appsettings.json
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
