@@ -28,7 +28,7 @@ const roles = [
     },
     {
         label: 'Administrador',
-        value: 'ADMINISTRADOR'
+        value: 'Administrador'
     },
     {
         label: 'Soporte',
@@ -107,6 +107,7 @@ function CreateUser() {
                         'gP3o_iD52sF8GJvJH'
                     )
                     navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario creado exitosamente"}})
+                    showAlert=false
                 }
             })
             .catch(function (error) {

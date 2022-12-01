@@ -12,25 +12,29 @@ import { useState, useEffect } from 'react'
 import TranslateRole from './Translate'
 import SearchBar from '../../Components/SearchBar'
 import { getListUsers } from './API/getAxios'
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContentText from '@mui/material/DialogContentText';
+import { ButtonDanger, ButtonSecondary,   } from '../../Components/MUI-Button';
+import axios from "axios"
 var accesPermiss = sessionStorage.getItem("Access")
 
 function ListUsers() {
     const url = 'https://ncv-api.azurewebsites.net/api/auth'
-    //const url="http://localhost:5009/api/auth";
+   // const url="http://localhost:5009/api/auth";
     const { apiData: users, error } = getFromApi(url)
 
     const location = useLocation()
     const [searchResult, setSearchResults] = useState([])
-    let showAlert = location.state ? location.state.showAlert : false
+    //let showAlert = location.state ? location.state.showAlert : false
     let alertMessage = location.state ? location.state.alertMessage : null
+    const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
     const [open, setOpen] = useState(showAlert)
     const [usersList, setUsersList] = useState([])
-    function handleClose(event, reason) {
-        if (reason === 'clickaway') {
-            return
-        }
-        setOpen(false)
-    }
+    const [userSelect, setUserSelect] = useState(0)
+    const [openToConfirm, setOpenToConfirm] = useState(false)
 
     function ordenCriteria(posts) {
         posts = posts.sort((a, b) => {
@@ -64,7 +68,23 @@ function ListUsers() {
         return resultsArray
     }
    
-
+    const fetchDeleteUSer = () => {  
+        axios.delete(url + "/"+userSelect.id)
+        .then(function (response) {
+            if (response.status == 200){
+                setShowAlert(true)
+                setAlertMessage("Usuario Eliminado")
+                setSeverity("success")
+                setOpen(true)
+                setOpenToConfirm(false)  
+                navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario eliminado exitosamente"}})                                        
+            }   
+        })
+        .catch(err=> {
+            setErrorAssetStateDelete(err)     
+            setOpenToConfirm(false)        
+        })
+     }
     useEffect(() => {
         getListUsers()
             .then((json) =>
@@ -103,13 +123,7 @@ function ListUsers() {
             }
         })
 
-        let usersComponents = (
-            <GutterList
-                items={listElements}
-                withImage={false}
-                withDeleteIcon={true}
-            />
-        )
+        
         const searcher = (
             <Box
                 sx={{
@@ -141,7 +155,44 @@ function ListUsers() {
                 )}
             </Box>
         )
-
+        function handleClose(event, reason) {
+            if (reason === 'clickaway') {            
+                return
+            }
+            setOpen(false)        
+        }
+    
+        function handleCloseToConfirm(event, reason) {
+            if (reason === 'clickaway') {
+                return
+            }
+            setOpenToConfirm(false)
+        }
+        const ToConfirmOpen = () => {
+            handleCloseToConfirm();
+            setOpenToConfirm(true);
+        }
+    
+        let deleteAction = (id) => {
+            setUserSelect(id)          
+            handleCloseToConfirm()
+            ToConfirmOpen()
+        }         
+    
+        function handle(e) {
+            const newData = { ...data }
+            newData[e.target.id] = e.target.value
+            setData(newData)
+            setOpen(false)
+        }
+        let usersComponents = (
+            <GutterList
+                items={listElements}
+                withImage={false}
+                withDeleteIcon={true}
+                deleteAction={deleteAction}
+            />
+        )
         return (
             <>
                 <Navbar />
@@ -169,6 +220,18 @@ function ListUsers() {
                         {alertMessage}
                     </Alert>
                 </Snackbar>
+                <Dialog open={openToConfirm} onClose={handleCloseToConfirm} id="confirmation_popup" sx={{borderRadius:3 }}>
+                    <DialogTitle sx={{display:'flex', justifyContent:'center'}}>Eliminar</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            ¿Desea eliminar todos los datos de {userSelect.title}?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions sx={{display:'flex',flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                        <ButtonSecondary label="Cancelar" onClick={handleCloseToConfirm}></ButtonSecondary>
+                        <ButtonDanger label="Eliminar" id="confirm_delete_button" onClick={fetchDeleteUSer}></ButtonDanger>
+                    </DialogActions>
+                </Dialog>
             </>
         )
     }
