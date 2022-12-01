@@ -12,6 +12,8 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    environment:
+      name: Staging
     defaults:
       run:
         working-directory: ./api
