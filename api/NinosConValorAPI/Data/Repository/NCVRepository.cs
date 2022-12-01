@@ -229,6 +229,7 @@ namespace NinosConValorAPI.Data.Repository
             query = query.Include(f => f.AssetType.AssetCategory);
             query = query.Include(f=>f.ProgramHouse);
             query = query.Include(f => f.AssetState);
+            query = query.Include(f => f.AssetResponsible);
             var fixedAssetEntity = await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
             return fixedAssetEntity;
         }
@@ -244,7 +245,8 @@ namespace NinosConValorAPI.Data.Repository
             fixedAssetToUpdate.Features = fixedAsset.Features ?? fixedAssetToUpdate.Features;
             fixedAssetToUpdate.ProgramHouse = fixedAsset.ProgramHouse ?? fixedAssetToUpdate.ProgramHouse;
             fixedAssetToUpdate.AssetType = fixedAsset.AssetType ?? fixedAssetToUpdate.AssetType;
-            fixedAssetToUpdate.AssetState = fixedAsset.AssetState ?? fixedAssetToUpdate.AssetState;            
+            fixedAssetToUpdate.AssetState = fixedAsset.AssetState ?? fixedAssetToUpdate.AssetState;
+            fixedAssetToUpdate.AssetResponsible = fixedAsset.AssetResponsible ?? fixedAssetToUpdate.AssetResponsible;
         }
 
         // FOUNDATION REPORT
