@@ -14,7 +14,7 @@
 //   it('Se muestran la vista de usuarios', () => {
 //     cy.get('#btn-register-user').should('contain', 'Registrar Usuario');
 
-//     cy.get('ul').should('to.exist');
+//     
 //   });
 
 //   it('Se redirije a la vista de registro de usuario', () => {
