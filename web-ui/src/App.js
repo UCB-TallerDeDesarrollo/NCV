@@ -15,6 +15,7 @@ import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
 import { ShowFixedAsset } from './Views/FixedAssets/ShowOneFixedAsset'
 import UpdateFixedAssetForm from './Views/FixedAssets/UpdateFixedAsset'
 import ShowAssetStates from './Views/FixedAssets/AssetStates/ShowAssetStates'
+import ShowAssetResponsibles from './Views/FixedAssets/AssetResponsibles/ShowAssetResponsibles'
 import ShowAssetTypesByCategory from './Views/FixedAssets/AssetTypes/ShowAssetTypesByCategory'
 
 import AddHealthReport from './Views/KidsFiles/HealthReport/AddHealthReport'
@@ -71,6 +72,10 @@ function App() {
                     <Route
                         path="/activos-fijos/estados"
                         element={<ShowAssetStates />}
+                    ></Route>
+                    <Route
+                        path="/activos-fijos/responsables"
+                        element={<ShowAssetResponsibles />}
                     ></Route>
                     <Route
                         path="/activos-fijos/tipos-por-categoria"
