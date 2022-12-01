@@ -12,6 +12,12 @@ import { useState, useEffect } from 'react'
 import TranslateRole from './Translate'
 import SearchBar from '../../Components/SearchBar'
 import { getListUsers } from './API/getAxios'
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContentText from '@mui/material/DialogContentText';
+import { ButtonDanger, ButtonSecondary,   } from '../../Components/MUI-Button';
 var accesPermiss = sessionStorage.getItem("Access")
 
 function ListUsers() {
@@ -25,6 +31,8 @@ function ListUsers() {
     let alertMessage = location.state ? location.state.alertMessage : null
     const [open, setOpen] = useState(showAlert)
     const [usersList, setUsersList] = useState([])
+    const [userId, setUserId] = useState(0)
+    const [openToConfirm, setOpenToConfirm] = useState(false)
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
             return
@@ -64,7 +72,7 @@ function ListUsers() {
         return resultsArray
     }
    
-
+    const fetchDeleteUSer = () => {   }
     useEffect(() => {
         getListUsers()
             .then((json) =>
@@ -103,13 +111,7 @@ function ListUsers() {
             }
         })
 
-        let usersComponents = (
-            <GutterList
-                items={listElements}
-                withImage={false}
-                withDeleteIcon={true}
-            />
-        )
+        
         const searcher = (
             <Box
                 sx={{
@@ -141,7 +143,44 @@ function ListUsers() {
                 )}
             </Box>
         )
-
+        function handleClose(event, reason) {
+            if (reason === 'clickaway') {            
+                return
+            }
+            setOpen(false)        
+        }
+    
+        function handleCloseToConfirm(event, reason) {
+            if (reason === 'clickaway') {
+                return
+            }
+            setOpenToConfirm(false)
+        }
+        const ToConfirmOpen = () => {
+            handleCloseToConfirm();
+            setOpenToConfirm(true);
+        }
+    
+        let deleteAction = (id) => {
+            setUserId(id)          
+            handleCloseToConfirm()
+            ToConfirmOpen()
+        }         
+    
+        function handle(e) {
+            const newData = { ...data }
+            newData[e.target.id] = e.target.value
+            setData(newData)
+            setOpen(false)
+        }
+        let usersComponents = (
+            <GutterList
+                items={listElements}
+                withImage={false}
+                withDeleteIcon={true}
+                deleteAction={deleteAction}
+            />
+        )
         return (
             <>
                 <Navbar />
@@ -169,6 +208,18 @@ function ListUsers() {
                         {alertMessage}
                     </Alert>
                 </Snackbar>
+                <Dialog open={openToConfirm} onClose={handleCloseToConfirm} id="confirmation_popup" sx={{borderRadius:3 }}>
+                    <DialogTitle sx={{display:'flex', justifyContent:'center'}}>Eliminar</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            ¿Desea eliminar todos los datos de {userId.title}?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions sx={{display:'flex',flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                        <ButtonSecondary label="Cancelar" onClick={handleCloseToConfirm}></ButtonSecondary>
+                        <ButtonDanger label="Eliminar" id="confirm_delete_button" onClick={fetchDeleteUSer}></ButtonDanger>
+                    </DialogActions>
+                </Dialog>
             </>
         )
     }
