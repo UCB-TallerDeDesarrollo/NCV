@@ -6,6 +6,5 @@ export const api = axios.create({
 
 export const getListUsers = async () => {
     const response = await api.get('/api/auth')
-    console.log(response.data)
     return response.data
 }
