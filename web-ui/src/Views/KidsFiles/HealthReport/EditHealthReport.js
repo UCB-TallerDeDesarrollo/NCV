@@ -27,7 +27,7 @@ const healtReport = {
 function EditHealthReport() {
     const navigate = useNavigate();
     const {kidId} = useParams()
-    var urlHealthReport = "https://ncv-api.herokuapp.com/api/kids/"+ kidId +"/healthreports"
+    var urlHealthReport = "https://ncv-api.azurewebsites.net/api/kids/"+ kidId +"/healthreports"
     const [healthRep, setHealthRep] = useState(healtReport)
     const [open, setOpen] = useState(false)
 

@@ -5,10 +5,17 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { Typography } from '@mui/material';
 
 import SingleItemCard from '../../../Components/SingleItemCard'
-import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../../Components/MUI-Button';
+import ButtonPrimary, { ButtonDanger, ButtonSecondary, ButtonPrimaryEditIcon } from '../../../Components/MUI-Button';
+var accesPermiss = sessionStorage.getItem("Access")
+
+
 
 function LegalReport({kidId, legalReport, legalReportStatusCode}){
     const navigate = useNavigate();
+    function navigateEditLegalReport(){
+        let path = `/ninos/${kidId}/editar-reporte-legal`; 
+            navigate(path);
+    }
     let urlCreateLegalReport = `/ninos/${kidId}/crear-reporte-legal/`
     let buttonCreateLegalReport = (<Container sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}}>
         <Box sx={{display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
@@ -30,7 +37,8 @@ function LegalReport({kidId, legalReport, legalReportStatusCode}){
             "NUREJ" : legalReport.nurej ,
             "Procesos legales" : legalReport.legalProcesses
         }
-        legalReportComponent = <SingleItemCard key={1} element={legalReportElement} title={"Reporte Legal"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}}/>
+        legalReportComponent = <><SingleItemCard key={1} element={legalReportElement} title={"Reporte Legal"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}}/>
+        {accesPermiss=="CompleteAccess"&&<ButtonPrimaryEditIcon onClick={navigateEditLegalReport} sx={{alignSelf:'flex-end', left: '90%', background: '#5BCCD9', borderRadius: '50%', width: '50px', height: '50px'}}/>}</>
     }
     return legalReportComponent
 }

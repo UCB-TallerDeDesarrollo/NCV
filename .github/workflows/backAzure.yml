@@ -12,18 +12,22 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    environment:
+      name: Staging
     defaults:
       run:
         working-directory: ./api
     steps:
       - uses: actions/checkout@v2
-
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
           include-prerelease: true
-
+      - run: |
+          rm .\NinosConValorAPI\appsettings.json
+          echo '{ "ConnectionStrings": { "NinosConValorDB": "${{ secrets.DB_CONNECTION_STRING }}" },' >> .\NinosConValorAPI\appsettings.json
+          echo '"Logging": { "LogLevel": { "Default": "Information", "Microsoft.AspNetCore": "Warning" } }, "AllowedHosts": "*", "AuthSettings": { "Key": "SuperSecretKey123456 ", "Audience": "http://NinosConValor.net","Issuer": "http://NinosConValor.net"}}' >> .\NinosConValorAPI\appsettings.json
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
@@ -40,7 +44,7 @@ jobs:
     runs-on: windows-latest
     needs: build
     environment:
-      name: 'production'
+      name: Staging
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:

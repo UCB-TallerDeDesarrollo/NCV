@@ -7,22 +7,21 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 const DrawerComp = () => {
     var accesPermiss = sessionStorage.getItem("Access")
     const [open, setOpen] = useState(false)
-    
 
     function handleClickViewUsers(){
-        if(accesPermiss== "ComplitAcces"){  
+        if(accesPermiss== "CompleteAccess"){  
           window.location.href = "/vista-usuarios";
         }
       }
     
       function handleClickFiles(){
-        if(accesPermiss=="ComplitAcces" || accesPermiss=="RestrinccionAcces"){  
+        if(accesPermiss=="CompleteAccess" || accesPermiss=="RestriccionAccess"){  
           window.location.href = "/ninos";
         }
       }
     
       function handleClickAssets(){
-        if(accesPermiss=="ComplitAcces"){
+        if(accesPermiss=="CompleteAccess"){
           window.location.href = '/activos-fijos';
         }
       }
@@ -44,15 +43,15 @@ const DrawerComp = () => {
         onClose={()=>setOpen(false)} >
 
         <List sx={{color:'#023859'}}>
-            {accesPermiss=="ComplitAcces" &&
+            {accesPermiss=="CompleteAccess" &&
                   <Button sx={{marginRight:4,marginLeft:4,textTransform:'none'}} color="inherit" onClick={handleClickViewUsers}>Usuarios</Button>
             }
             <br></br>
-            {((accesPermiss=="ComplitAcces") || (accesPermiss=="RestrinccionAcces")) &&
+            {((accesPermiss=="CompleteAccess") || (accesPermiss=="RestriccionAccess")) &&
                   <Button  sx={{marginRight:4,marginLeft:4,textTransform:'none'}} className='btn-files' color="inherit" onClick={handleClickFiles}>Niños</Button>
             }
             <br></br>
-            {accesPermiss=="ComplitAcces" &&
+            {accesPermiss=="CompleteAccess" &&
                   <Button sx={{marginRight:4,marginLeft:4,textTransform:'none'}} className='btn-activosFijos' color="inherit" onClick={handleClickAssets}>Activos Fijos</Button>
             }
             <br></br>

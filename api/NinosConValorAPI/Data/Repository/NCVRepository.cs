@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NinosConValorAPI.Data.Entity;
+using NinosConValorAPI.Migrations;
 using NinosConValorAPI.Models;
 using System.Security.Cryptography;
 
@@ -71,7 +72,13 @@ namespace NinosConValorAPI.Data.Repository
 
         public async Task<LegalReportEntity> UpdateLegalReportAsync(int kidId, LegalReportEntity legalReport)
         {
-            throw new NotImplementedException();
+            IQueryable<LegalReportEntity> query = _dbContext.LegalReports;
+            var legalReportToUpdate = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            legalReportToUpdate.CourtNumber = legalReport.CourtNumber ?? legalReportToUpdate.CourtNumber;
+            legalReportToUpdate.Dna = legalReport.Dna ?? legalReportToUpdate.Dna;
+            legalReportToUpdate.Nurej = legalReport.Nurej ?? legalReportToUpdate.Nurej;
+            legalReportToUpdate.LegalProcesses = legalReport.LegalProcesses ?? legalReportToUpdate.LegalProcesses;
+            return legalReportToUpdate;
         }
 
         // FOUNDATION REPORT
@@ -115,6 +122,17 @@ namespace NinosConValorAPI.Data.Repository
             await _dbContext.Contacts.AddAsync(contacts);
             return contacts;
         }
+        
+        public async Task<ContactEntity> UpdateContactAsync(int kidId,int contactId, ContactEntity contact)
+        {
+            IQueryable<ContactEntity> query = _dbContext.Contacts;
+            var contactToUpdate = await query.FirstOrDefaultAsync(rep => rep.KidId == kidId && rep.Id==contactId);
+            contactToUpdate.Name = contact.Name ?? contactToUpdate.Name;
+            contactToUpdate.Relationship = contact.Relationship ?? contactToUpdate.Relationship;
+            contactToUpdate.ContactNumber = contact.ContactNumber ?? contactToUpdate.ContactNumber;
+            contactToUpdate.Address = contact.Address ?? contactToUpdate.Address;
+            return contactToUpdate;
+        }
 
         // EDUCATION REPORT
         public async Task<EducationReportEntity> CreateEducationReportAsync(EducationReportEntity educationReport)
@@ -130,6 +148,15 @@ namespace NinosConValorAPI.Data.Repository
             var educationReport = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
             return educationReport;
         }
+        public async Task<EducationReportEntity> UpdateEducationReportAsync(int kidId, EducationReportEntity educationReport)
+        {
+            IQueryable<EducationReportEntity> query = _dbContext.EducationReports;
+            var educationReportToUpdate = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            educationReportToUpdate.Rude = educationReport.Rude ?? educationReportToUpdate.Rude;
+            educationReportToUpdate.School = educationReport.School ?? educationReportToUpdate.School;
+            educationReportToUpdate.Grade = educationReport.Grade ?? educationReportToUpdate.Grade;
+            return educationReportToUpdate;
+        }
 
         // FAMILY REPORT
         public async Task<FamilyReportEntity> CreateFamilyReportAsync(FamilyReportEntity familyReportEntity)
@@ -144,6 +171,17 @@ namespace NinosConValorAPI.Data.Repository
             query = query.AsNoTracking();
             var familyReportEntity = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
             return familyReportEntity;
+        }
+
+        public async Task<FamilyReportEntity> UpdateFamilyReportAsync(int kidId, FamilyReportEntity familyReport)
+        {
+            IQueryable<FamilyReportEntity> query = _dbContext.FamilyReports;
+            var familyReportToUpdate = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            familyReportToUpdate.SiblingsInFoundation = familyReport.SiblingsInFoundation ?? familyReportToUpdate.SiblingsInFoundation;
+            familyReportToUpdate.SiblingsOutside = familyReport.SiblingsOutside ?? familyReportToUpdate.SiblingsOutside;
+            familyReportToUpdate.HasExtendedFamily = familyReport.HasExtendedFamily ?? familyReportToUpdate.HasExtendedFamily;
+            familyReportToUpdate.HasOriginFamily = familyReport.HasOriginFamily ?? familyReportToUpdate.HasOriginFamily;
+            return familyReportToUpdate;
         }
 
         // KID FILE
@@ -203,6 +241,7 @@ namespace NinosConValorAPI.Data.Repository
             _dbContext.Entry(fixedAsset.AssetType).State = EntityState.Unchanged;
             _dbContext.Entry(fixedAsset.ProgramHouse).State = EntityState.Unchanged;
             _dbContext.Entry(fixedAsset.AssetState).State = EntityState.Unchanged;
+            _dbContext.Entry(fixedAsset.AssetResponsible).State = EntityState.Unchanged;
             _dbContext.FixedAssets.Add(fixedAsset);
         }
 
@@ -214,6 +253,7 @@ namespace NinosConValorAPI.Data.Repository
             query = query.Include(f => f.AssetType.AssetCategory);
             query = query.Include(f => f.ProgramHouse);
             query = query.Include(f => f.AssetState);
+            query = query.Include(f => f.AssetResponsible);
             query = query.Where(f => f.Deleted == false);
             var result = await query.ToListAsync();
             return result;
@@ -227,6 +267,7 @@ namespace NinosConValorAPI.Data.Repository
             query = query.Include(f => f.AssetType.AssetCategory);
             query = query.Include(f=>f.ProgramHouse);
             query = query.Include(f => f.AssetState);
+            query = query.Include(f => f.AssetResponsible);
             var fixedAssetEntity = await query.FirstOrDefaultAsync(g => g.Id == fixedAssetId);
             return fixedAssetEntity;
         }
@@ -242,7 +283,8 @@ namespace NinosConValorAPI.Data.Repository
             fixedAssetToUpdate.Features = fixedAsset.Features ?? fixedAssetToUpdate.Features;
             fixedAssetToUpdate.ProgramHouse = fixedAsset.ProgramHouse ?? fixedAssetToUpdate.ProgramHouse;
             fixedAssetToUpdate.AssetType = fixedAsset.AssetType ?? fixedAssetToUpdate.AssetType;
-            fixedAssetToUpdate.AssetState = fixedAsset.AssetState ?? fixedAssetToUpdate.AssetState;            
+            fixedAssetToUpdate.AssetState = fixedAsset.AssetState ?? fixedAssetToUpdate.AssetState;
+            fixedAssetToUpdate.AssetResponsible = fixedAsset.AssetResponsible ?? fixedAssetToUpdate.AssetResponsible;
         }
 
         // FOUNDATION REPORT
@@ -259,9 +301,13 @@ namespace NinosConValorAPI.Data.Repository
             throw new NotImplementedException();
         }
 
-        public Task<FoundationReportEntity> UpdateFoundationReportAsync(int kidId, FoundationReportEntity foundationReport)
+        public async Task<FoundationReportEntity> UpdateFoundationReportAsync(int kidId, FoundationReportEntity foundationReport)
         {
-            throw new NotImplementedException();
+            IQueryable<FoundationReportEntity> query = _dbContext.FoundationReport;
+            var foundationReportToUpdate = await query.FirstOrDefaultAsync(rep => (rep.KidId == kidId));
+            foundationReportToUpdate.AdmissionDate = foundationReport.AdmissionDate ?? foundationReportToUpdate.AdmissionDate;
+            foundationReportToUpdate.AdmissionReason = foundationReport.AdmissionReason ?? foundationReportToUpdate.AdmissionReason;
+            return foundationReportToUpdate;
         }
 
         // PROGRAM
@@ -288,6 +334,7 @@ namespace NinosConValorAPI.Data.Repository
             IQueryable<AssetCategoryEntity> query = _dbContext.AssetCategories;
             query = query.AsNoTracking();
             query = query.Include(f => f.AssetTypes);
+            query = query.Include(f => f.AssetTypes.Where(f=>f.Deleted==false));
             var result = await query.ToListAsync();
             return result;
         }
@@ -328,9 +375,24 @@ namespace NinosConValorAPI.Data.Repository
             return assetState;
         }
 
+        public async Task<AssetResponsibleEntity> CreateAssetResponsible(AssetResponsibleEntity assetResponsible)
+        {
+            await _dbContext.AssetResponsibles.AddAsync(assetResponsible);
+            return assetResponsible;
+        }
+
         public async Task<IEnumerable<AssetStateEntity>> GetAssetStatesAsync()
         {
             IQueryable<AssetStateEntity> query = _dbContext.AssetStates;
+            query = query.AsNoTracking();
+            query = query.Where(f => f.Deleted == false);
+            var result = await query.ToListAsync();
+            return result;
+        }
+
+        public async Task<IEnumerable<AssetResponsibleEntity>> GetAssetResponsiblesAsync()
+        {
+            IQueryable<AssetResponsibleEntity> query = _dbContext.AssetResponsibles;
             query = query.AsNoTracking();
             query = query.Where(f => f.Deleted == false);
             var result = await query.ToListAsync();
@@ -345,6 +407,14 @@ namespace NinosConValorAPI.Data.Repository
             return assetState;
         }
 
+        public async Task<AssetResponsibleEntity> GetAssetResponsibleAsync(int assetResponsibleId)
+        {
+            IQueryable<AssetResponsibleEntity> query = _dbContext.AssetResponsibles;
+            query = query.AsNoTracking();
+            var assetResponsible = await query.FirstOrDefaultAsync(g => (g.Id == assetResponsibleId));
+            return assetResponsible;
+        }
+
         public async Task<bool> UpdateAssetStateAsync(int assetStateId, AssetStateEntity assetState)
         {
             var assetStateToUpdate = _dbContext.AssetStates.FirstOrDefault(c => c.Id == assetState.Id);
@@ -353,11 +423,26 @@ namespace NinosConValorAPI.Data.Repository
             return true;
         }
 
+        public async Task<bool> UpdateAssetResponsibleAsync(int assetResponsibleId, AssetResponsibleEntity assetResponsible)
+        {
+            var assetResponsibleToUpdate = _dbContext.AssetResponsibles.FirstOrDefault(c => c.Id == assetResponsible.Id);
+
+            _dbContext.Entry(assetResponsibleToUpdate).CurrentValues.SetValues(assetResponsible);
+            return true;
+        }
+
         public async Task DeleteAssetStateAsync(int assetStateId)
         {
             IQueryable<AssetStateEntity> query = _dbContext.AssetStates;
             var assetStateToDelete = await query.FirstOrDefaultAsync(g => (g.Id == assetStateId) & (g.Deleted == false));
             assetStateToDelete.Deleted = true;
+        }
+
+        public async Task DeleteAssetResponsibleAsync(int assetResponsibleId)
+        {
+            IQueryable<AssetResponsibleEntity> query = _dbContext.AssetResponsibles;
+            var assetResponsibleToDelete = await query.FirstOrDefaultAsync(g => (g.Id == assetResponsibleId) & (g.Deleted == false));
+            assetResponsibleToDelete.Deleted = true;
         }
 
         //ASSET TYPES

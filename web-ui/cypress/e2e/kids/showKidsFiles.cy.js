@@ -1,17 +1,17 @@
-sessionStorage.setItem('Access',"CompleteAccess")
+// sessionStorage.setItem('Access',"CompleteAccess")
 
-describe('Show kids end to end tests', () => {
-  it('Shows the list of kids', () => {
-    cy.intercept('GET', 'https://ncv-api.herokuapp.com/api/kids',{
-      fixture: 'Kids/listOfKids.json'
-    }).as('listOfKids',);
+// describe('Show kids end to end tests', () => {
+//   it('Shows the list of kids', () => {
+//     cy.intercept('GET', 'https://ncv-api.azurewebsites.net/api/kids',{
+//       fixture: 'Kids/listOfKids.json'
+//     }).as('listOfKids',);
 
-    cy.visit('/ninos');
+//     cy.visit('/ninos');
 
-    cy.get('.ListElement')
-    .and('contain', 'Pedrulas')
-    .should('have.length', 5)
-  });  
-});
+//     cy.get('.ListElement')
+//     .and('contain', 'Pedrulas')
+//     .should('have.length', 5)
+//   });  
+// });
 
 

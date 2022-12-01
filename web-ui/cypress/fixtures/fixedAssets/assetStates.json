@@ -1,0 +1,20 @@
+[{
+    "id": 23,
+    "state": "Dañado",
+    "fixedAssets": []
+},
+{
+    "id": 1,
+    "state": "Buenos",
+    "fixedAssets": []
+},
+{
+    "id": 6,
+    "state": "Obsoleto",
+    "fixedAssets": []
+},
+{
+    "id": 2,
+    "state": "Regular",
+    "fixedAssets": []
+}]

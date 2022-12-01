@@ -81,7 +81,7 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
     );
   }
 
-  export function ButtonPrimaryEditIcon({onClick, sx={}}) {
+  export function ButtonPrimaryEditIcon({onClick, sx={}, title=""}) {
     sx.background = sx.background ?? "#5CD4E2"
     sx.color = sx.color ?? "#023859"
     sx.boxShadow = sx.boxShadow ?? 3
@@ -90,14 +90,14 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
         background: "#389CFC"
     }
     return (
-      <IconButton aria-label="delete" size="small" className={"delete-assetState-button"} onClick={onClick} sx={sx}>
+      <IconButton title={title} aria-label="editar" size="small" className={"editar-assetState-button"} onClick={onClick} sx={sx}>
         <EditIcon fontSize="small" />
       </IconButton>
     );
   }
 
   
-  export function ButtonPrimaryDeleteIcon({onClick, sx={}}) {
+  export function ButtonPrimaryDeleteIcon({onClick, sx={}, title=""}) {
     sx.background = sx.background ?? "#E0544C"
     sx.color = sx.color ?? "white"
     sx.boxShadow = sx.boxShadow ?? 3
@@ -106,7 +106,7 @@ export default function ButtonPrimary({label, onClick, id, sx={}}) {
         background: "#C82C2C"
     }
     return (
-      <IconButton aria-label="delete" size="small" className={"delete-button"} onClick={onClick} sx={sx}>
+      <IconButton title={title} aria-label="delete" size="small" className={"delete-button"} onClick={onClick} sx={sx}>
         <DeleteIcon fontSize="small" />
       </IconButton>
     );

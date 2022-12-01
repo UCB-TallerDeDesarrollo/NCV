@@ -39,7 +39,7 @@ const biometricsForm = {
 
 function AddRowWeightAndHeight({setBiometrics}){
     const {kidId} = useParams()
-    var url = "https://ncv-api.herokuapp.com/api/kids/" + kidId +"/biometrics"
+    var url = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/biometrics"
 
     const [biometricsData, setbiometricsData] = useState(biometricsForm)
     const [open, setOpen] = useState(false)

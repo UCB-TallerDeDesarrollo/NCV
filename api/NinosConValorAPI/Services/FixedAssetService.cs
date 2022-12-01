@@ -51,15 +51,25 @@ namespace NinosConValorAPI.Services
             return assetStateEntity;
         }
 
+        private async Task<AssetResponsibleEntity> GetAssetResponsibleAsync(int responsibleId)
+        {
+            var assetResponsibleEntity = await _NCVRepository.GetAssetResponsibleAsync(responsibleId);
+            if (assetResponsibleEntity == null)
+                throw new NotFoundElementException($"El responsable con Id:{responsibleId} no existe.");
+            return assetResponsibleEntity;
+        }
+
         public async Task<FixedAssetModel> CreateFixedAssetAsync(FixedAssetModel fixedAsset, int programHouseId, int typeId)
         {
 
             await GetProgramHouseAsync(programHouseId);
             await GetAssetTypeAsync(typeId);
             await GetAssetStateAsync(fixedAsset.AssetStateId);
+            var assetResponsible = await GetAssetResponsibleAsync(fixedAsset.AssetResponsibleId);
             fixedAsset.ProgramHouseId = programHouseId;
             fixedAsset.AssetTypeId = typeId;
             var fixedAssetEntity = _mapper.Map<FixedAssetEntity>(fixedAsset);
+            fixedAssetEntity.AssetResponsible = assetResponsible;
             _NCVRepository.CreateFixedAsset(fixedAssetEntity, programHouseId);
             var result = await _NCVRepository.SaveChangesAsync();
             
@@ -100,18 +110,22 @@ namespace NinosConValorAPI.Services
             var fixedAssetToUpdate = await GetFixedAssetAsync(fixedAssetId);
             ProgramHouseEntity programHouseToUpdate = null;
             AssetTypeEntity typeToUpdate = null;
-            AssetStateEntity assetStateToUpdate = null; 
+            AssetStateEntity assetStateToUpdate = null;
+            AssetResponsibleEntity assetResponsibleToUpdate = null;
             if (fixedAsset.ProgramHouseId!=0)
                 programHouseToUpdate = await GetProgramHouseAsync(fixedAsset.ProgramHouseId);
             if(fixedAsset.AssetTypeId!=0)
                 typeToUpdate = await GetAssetTypeAsync(fixedAsset.AssetTypeId);
             if (fixedAsset.AssetStateId != 0)
                 assetStateToUpdate = await GetAssetStateAsync(fixedAsset.AssetStateId);
+            if (fixedAsset.AssetResponsibleId != 0)
+                assetResponsibleToUpdate = await GetAssetResponsibleAsync(fixedAsset.AssetResponsibleId);
             var fixedAssetEntity = _mapper.Map<FixedAssetEntity>(fixedAsset);           
             fixedAssetEntity.Id = fixedAssetId;
                fixedAssetEntity.ProgramHouse = programHouseToUpdate;
                 fixedAssetEntity.AssetType = typeToUpdate;
                 fixedAssetEntity.AssetState = assetStateToUpdate;
+                fixedAssetEntity.AssetResponsible = assetResponsibleToUpdate;
 
             await _NCVRepository.UpdateFixedAssetAsync(fixedAssetId, fixedAssetEntity);
             var result = await _NCVRepository.SaveChangesAsync();

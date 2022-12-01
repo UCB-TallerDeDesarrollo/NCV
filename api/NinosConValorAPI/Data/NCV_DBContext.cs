@@ -16,6 +16,7 @@ namespace NinosConValorAPI.Data
         public DbSet<AssetCategoryEntity> AssetCategories => Set<AssetCategoryEntity>();
 
         public DbSet<AssetStateEntity> AssetStates => Set<AssetStateEntity>();
+        public DbSet<AssetResponsibleEntity> AssetResponsibles => Set<AssetResponsibleEntity>();
 
         public DbSet<AssetTypeEntity> AssetTypes => Set<AssetTypeEntity>();
         public DbSet<BiometricsEntity> Biometrics { get; set; }
@@ -47,6 +48,7 @@ namespace NinosConValorAPI.Data
             modelBuilder.Entity<FixedAssetEntity>().HasOne(d => d.ProgramHouse).WithMany(d=>d.FixedAssets);
             modelBuilder.Entity<FixedAssetEntity>().HasOne(d => d.AssetType).WithMany(d => d.FixedAssets);
             modelBuilder.Entity<FixedAssetEntity>().HasOne(d => d.AssetState).WithMany(d => d.FixedAssets);
+            modelBuilder.Entity<FixedAssetEntity>().HasOne(d => d.AssetResponsible).WithMany(d => d.FixedAssets);
 
 
             //kid
@@ -94,6 +96,11 @@ namespace NinosConValorAPI.Data
             modelBuilder.Entity<AssetStateEntity>().ToTable("AssetState");
             modelBuilder.Entity<AssetStateEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<AssetStateEntity>().HasMany(d => d.FixedAssets).WithOne(d => d.AssetState);
+
+            //AssetResponsibles
+            modelBuilder.Entity<AssetResponsibleEntity>().ToTable("AssetResponsible");
+            modelBuilder.Entity<AssetResponsibleEntity>().Property(d => d.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<AssetResponsibleEntity>().HasMany(d => d.FixedAssets).WithOne(d => d.AssetResponsible);
 
             //Education
             modelBuilder.Entity<EducationReportEntity>().ToTable("EducationReports");

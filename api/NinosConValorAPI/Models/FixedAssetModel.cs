@@ -7,9 +7,9 @@ namespace NinosConValorAPI.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage ="Código Requerido")]
+        [Required(ErrorMessage = "Código Requerido")]
         public string? Code { get; set; }
-        [Required(ErrorMessage ="Nombre Requerido")]
+        [Required(ErrorMessage = "Nombre Requerido")]
         public string? Name { get; set; }
         public string? Description { get; set; }
         public DateTime? EntryDate { get; set; }
@@ -27,6 +27,9 @@ namespace NinosConValorAPI.Models
 
         public int AssetTypeId { get; set; }
         public string? AssetTypeType { get; set; }
+
+        public int AssetResponsibleId { get; set; }
+        public string? AssetResponsibleName { get; set; }
 
         public bool Deleted { get; set; }
     }
