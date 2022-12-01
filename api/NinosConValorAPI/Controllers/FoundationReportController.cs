@@ -52,5 +52,24 @@ namespace NinosConValorAPI.Controllers
             }
             return response;
         }
+        [HttpPut]
+        public async Task<IActionResult> UpdateFoundationReportAsync(int kidId, [FromBody] FoundationReportModel foundationReportModel)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                return Ok(await _foundationReportService.UpdateFoundationReportAsync(kidId, foundationReportModel));
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message); ;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happend: {ex.Message}");
+            }
+        }
     }
 }

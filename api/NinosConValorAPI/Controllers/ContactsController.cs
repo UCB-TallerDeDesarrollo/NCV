@@ -53,5 +53,21 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
             }
         }
+        [HttpPut("{contactId:int}")]
+        public async Task<IActionResult> UpdateContactAsync(int kidId,int contactId, [FromBody] ContactModel contacts)
+        {
+            try
+            {
+                return Ok(await _contactsService.UpdateContactAsync(kidId,contactId, contacts));
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Lo sentimos, algo sucedió: {ex.Message}");
+            }
+        }
     }
 }
