@@ -204,9 +204,9 @@ function UpdateFixedAssetForm(props) {
             case 3:
                 categoryCode = 'MAQ'
             case 4:
-                categoryCode = 'VEH'
-            case 6:
-                categoryCode = 'EC' 
+                categoryCode = 'EQC'
+            case 5:
+                categoryCode = 'VEH' 
         }
         return categoryCode
     }
@@ -220,10 +220,10 @@ function UpdateFixedAssetForm(props) {
         if(!hasFormErrors(errorsFromForm)){
             axios.put(urlFixedAsset, {
             Name: name.trim(),
-            Description: description==''? '':description.trim(), // string
+            Description: description==null? '':description.trim(), // string
             EntryDate: entryDate==null? null:entryDate.split('T')[0], // dateTime
             Price: price==''? null:parseFloat(price).toFixed(2), // decimal
-            Features: features==''? '':features.trim(), // string
+            Features: features==null? '':features.trim(), // string
             ProgramHouseId : programHouseSelectedValue,
             AssetTypeId : typeSelectedValue,
             AssetStateId: stateSelectedValue, //string
@@ -257,11 +257,11 @@ function UpdateFixedAssetForm(props) {
         const regexNumber = /^[0-9]+([.][0-9]+)?$/;
         const regexSpaces = /\s/g;
         if(!name){
-            errors.Name="El Nombre del Activo Fijo es requerido!";
+            errors.Name="El Detalle del Activo Fijo es requerido!";
         }else if(!name.replace(regexSpaces, '').length){
-            errors.Name="El campo Nombre del Activo Fijo no puede ser vacío";
+            errors.Name="El campo Detalle del Activo Fijo no puede ser vacío";
         }else if(name.length>60){
-            errors.Name="El campo Nombre del Activo Fijo debe ser menor o igual a 60 caracteres!";
+            errors.Name="El campo Detalle del Activo Fijo debe ser menor o igual a 60 caracteres!";
         }
     
         if(!code){
@@ -275,11 +275,11 @@ function UpdateFixedAssetForm(props) {
         }
     
         if(price==null){
-            errors.Price= "El Precio del Activo Fijo es requerido!";
+            errors.Price= "El Valor del Activo Fijo es requerido!";
         }else if(price < 0){
-            errors.Price= "El Precio del Activo Fijo debe ser un número positivo!";
+            errors.Price= "El Valor del Activo Fijo debe ser un número positivo!";
         }else if(!regexNumber.test(price)){
-            errors.Price= "El Precio del Activo Fijo debe ser ingresado en formato decimal!";
+            errors.Price= "El Valor del Activo Fijo debe ser ingresado en formato decimal!";
         }
 
         if(!programHouseSelectedValue){
@@ -287,15 +287,15 @@ function UpdateFixedAssetForm(props) {
         }
 
         if(!categorySelectedValue){
-            errors.AssetCategoryId= "La categoría del Activo Fijo es requerida!";
+            errors.AssetCategoryId= "El tipo de Activo Fijo es requerido!";
         }
-        console.log("typeSelectedValue",typeSelectedValue)
+
         if(!typeSelectedValue){
-            errors.AssetTypeId= "El tipo del Activo Fijo es requerido!";            
+            errors.AssetTypeId= "El Activo Fijo es requerido!";            
         }
 
         if(typesOptions.length==0){
-            errors.AssetTypeId = `Seleccione una categoría para ver los tipos`
+            errors.AssetTypeId = `Seleccione el tipo de Activo Fijo para ver sus respectivos activos`
         }
     
         if(features&&features.length>1000){
@@ -303,11 +303,11 @@ function UpdateFixedAssetForm(props) {
         }
 
         if(!stateSelectedValue){
-            errors.AssetStateId= "El Estado del Activo Fijo es requerida!";
+            errors.AssetStateId= "El Estado del Activo Fijo es requerido!";
         }
 
         if(!responsibleSelectedValue){
-            errors.AssetResponsibleId= "El Responsable del Activo Fijo es requerida!";
+            errors.AssetResponsibleId= "El Responsable del Activo Fijo es requerido!";
         }
         return errors
     }
@@ -326,8 +326,8 @@ function UpdateFixedAssetForm(props) {
                     onChange={(e) => setName(e.target.value)}
                     id="Name"
                     name="Name"                    
-                    value={name.trim()}
-                    label="Nombre"
+                    value={name}
+                    label="Detalle"
                     type="text"
                     InputLabelProps={{ shrink: true }}
                 />
@@ -335,10 +335,10 @@ function UpdateFixedAssetForm(props) {
                     {formErrors.Name}                   
                 </Alert>:<p></p> }
                 <Dropdown 
-                    name={"Categoría"} 
+                    name={"Tipo de Activo Fijo"} 
                     id="category-drop" 
                     options={categoriesOptions} 
-                    helperText = "Seleccione una categoría" 
+                    helperText = "Seleccione un tipo de Activo Fijo" 
                     selectedValue={categorySelectedValue}
                     setSelectedValue = {setCategorySelectedValue}
                     onChangeF = {getTypesByCategory}
@@ -349,10 +349,10 @@ function UpdateFixedAssetForm(props) {
                 {formErrors.AssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.AssetCategoryId}  </Alert>:<p></p> }  
                 <Dropdown 
-                    name={"Tipo"} 
+                    name={"Activo Fijo"} 
                     id="type-drop" 
                     options={typesOptions} 
-                    helperText = "Seleccione un tipo" 
+                    helperText = "Seleccione un Activo Fijo" 
                     selectedValue={typeSelectedValue}
                     setSelectedValue = {setTypeSelectedValue}
                     InputLabelProps={{ shrink: true }}
@@ -364,7 +364,7 @@ function UpdateFixedAssetForm(props) {
                 <InputText
                     onChange={(e) => setDescription(e.target.value)}
                     id="Description"
-                    value={description.trim()}
+                    value={description}
                     label="Descripción"
                     type="text"
                     InputLabelProps={{ shrink: true }}
@@ -384,7 +384,7 @@ function UpdateFixedAssetForm(props) {
                     onChange={(e) => setPrice(e.target.value)}
                     id="Price"
                     value={price}
-                    label="Precio"
+                    label="Valor"
                     type="number"
                     InputLabelProps={{ shrink: true }}
                 />
@@ -432,7 +432,7 @@ function UpdateFixedAssetForm(props) {
                 <InputText
                     onChange={(e) => setFeatures(e.target.value)}
                     id="Features"
-                    value={features.trim()}
+                    value={features}
                     label="Características"
                     type="text"
                     InputLabelProps={{ shrink: true }}
@@ -443,7 +443,7 @@ function UpdateFixedAssetForm(props) {
                     required
                     id="Code"
                     name="Code"
-                    value={code.split('-').pop().trim()}
+                    value={code == null ? code : code.split('-').pop().trim()}
                     label="Código"
                     type="text"
                     onChange={(e) => setCode(e.target.value)}

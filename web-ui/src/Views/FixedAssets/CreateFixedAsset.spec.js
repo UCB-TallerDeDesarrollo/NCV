@@ -142,7 +142,7 @@ describe('Inputs from CreateFixedAsset component must be empty in the beginning'
             renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
         })
         await waitFor(() => {
-            expect(screen.getByLabelText(/Nombre/i)).toHaveDisplayValue('')
+            expect(screen.getByLabelText(/Detalle/i)).toHaveDisplayValue('')
         })
     })
     it('Doesnt show any result in the beginning at the Description space', async () => {
@@ -166,7 +166,7 @@ describe('Inputs from CreateFixedAsset component must be empty in the beginning'
             renderWithRouter(<CreateFixedAssetForm />, "/crear-activo-fijo","/crear-activo-fijo")
         })
         await waitFor(() => {
-            expect(screen.getByLabelText(/Precio/i)).toHaveDisplayValue('')
+            expect(screen.getByLabelText(/Valor/i)).toHaveDisplayValue('')
         })
     })
     it('Doesnt show any result in the beginning at Features', async () => {
@@ -184,7 +184,7 @@ describe('Validating inputs from CreateFixedAssets component', () => {
             renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
         })        
         await waitFor(() => {
-            const priceInput = screen.getByLabelText(/Precio/i)
+            const priceInput = screen.getByLabelText(/Valor/i)
             priceInput.value = 'test'
             expect(priceInput).toHaveDisplayValue('')
         })
