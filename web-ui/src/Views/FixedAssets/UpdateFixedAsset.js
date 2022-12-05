@@ -220,10 +220,10 @@ function UpdateFixedAssetForm(props) {
         if(!hasFormErrors(errorsFromForm)){
             axios.put(urlFixedAsset, {
             Name: name,
-            Description: description==''? null:description, // string
+            Description: description==''? '':description, // string
             EntryDate: entryDate==null? null:entryDate.split('T')[0], // dateTime
             Price: price==''? null:parseFloat(price).toFixed(2), // decimal
-            Features: features==''? null:features, // string
+            Features: features==''? '':features, // string
             ProgramHouseId : programHouseSelectedValue,
             AssetTypeId : typeSelectedValue,
             AssetStateId: stateSelectedValue, //string
