@@ -204,9 +204,9 @@ function UpdateFixedAssetForm(props) {
             case 3:
                 categoryCode = 'MAQ'
             case 4:
-                categoryCode = 'VEH'
+                categoryCode = 'EQC'
             case 6:
-                categoryCode = 'EC' 
+                categoryCode = 'VEH' 
         }
         return categoryCode
     }

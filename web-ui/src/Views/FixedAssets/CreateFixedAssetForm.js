@@ -192,9 +192,9 @@ function CreateFixedAssetForm(props) {
             case 3:
                 categoryCode = 'MAQ'
             case 4:
-                categoryCode = 'VEH'
-            case 6:
-                categoryCode = 'EC' 
+                categoryCode = 'EQC'
+            case 5:
+                categoryCode = 'VEH' 
         }
         return categoryCode
     }
