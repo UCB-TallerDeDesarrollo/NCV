@@ -208,16 +208,16 @@ function CreateFixedAssetForm(props) {
         setIsSubmit(true)
         if(!hasFormErrors(errorsFromForm)){
             Axios.post(url, {
-            Name: data.Name,
-            Description: data.Description==''? null:data.Description, // string
+            Name: data.Name.trim(),
+            Description: (data.Description=='' || data.Description==null) ? null:data.Description.trim(), // string
             EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
             Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
-            Features: data.Features==''? null:data.Features, // string
+            Features: (data.Features=='' || data.Features==null) ? null:data.Features.trim(), // string
             ProgramHouseId : programHouseSelectedValue,
             AssetTypeId : typeSelectedValue,
             AssetStateId : stateSelectedValue, //string
             AssetResponsibleId : responsibleSelectedValue, //string
-            Code: "F-" + programCode + "-" + categoryCode + "-" + data.Code //string
+            Code: "F-" + programCode + "-" + categoryCode + "-" + data.Code.trim() //string
             }).then((res) => {
                 if (res.status == 201) {               
                     navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo creado exitosamente"}})
@@ -244,10 +244,13 @@ function CreateFixedAssetForm(props) {
             AssetTypeId : '' //int
         }
         const regexNumber = /^[0-9]+([.][0-9]+)?$/;
+        const regexSpaces = /\s/g;
         if(!datas.Name){
-            errors.Name="El Nombre del Activo Fijo es requerido!";
+            errors.Name="El Detalle del Activo Fijo es requerido!";
+        }else if(!datas.Name.replace(regexSpaces, '').length){
+            errors.Name="El campo Detalle del Activo Fijo no puede ser vacío";
         }else if(datas.Name.length>60){
-            errors.Name="El campo Nombre del Activo Fijo debe ser menor o igual a 60 caracteres!";
+            errors.Name="El campo Detalle del Activo Fijo debe ser menor o igual a 60 caracteres!";
         }
     
         if(!datas.Code){
@@ -261,11 +264,11 @@ function CreateFixedAssetForm(props) {
         }
     
         if(!datas.Price){
-            errors.Price= "El Precio del Activo Fijo es requerido!";
+            errors.Price= "El Valor del Activo Fijo es requerido!";
         }else if(datas.Price < 0){
-            errors.Price= "El Precio del Activo Fijo debe ser un número positivo!";
+            errors.Price= "El Valor del Activo Fijo debe ser un número positivo!";
         }else if(!regexNumber.test(datas.Price)){
-            errors.Price= "El Precio del Activo Fijo debe ser ingresado en formato decimal!";
+            errors.Price= "El Valor del Activo Fijo debe ser ingresado en formato decimal!";
         }
 
         if(!programHouseSelectedValue){
@@ -273,15 +276,15 @@ function CreateFixedAssetForm(props) {
         }
 
         if(!categorySelectedValue){
-            errors.AssetCategoryId= "La categoría del Activo Fijo es requerida!";
+            errors.AssetCategoryId= "El tipo de Activo Fijo es requerido!";
         }
 
         if(!typeSelectedValue){
-            errors.AssetTypeId= "El tipo del Activo Fijo es requerido!";            
+            errors.AssetTypeId= "El Activo Fijo es requerido!";            
         }
 
         if(typesOptions.length==0){
-            errors.AssetTypeId = `Seleccione una categoría para ver los tipos`
+            errors.AssetTypeId = `Seleccione el tipo de Activo Fijo para ver sus respectivos activos`
         }
     
         if(datas.Features.length>1000){
@@ -306,9 +309,8 @@ function CreateFixedAssetForm(props) {
         return ErrorPage(error)
     }
     return (
-        <><Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
-        </Box>
-        <div style={{display:'flex', justifyContent:'center'}}>
+        <><Navbar />
+        <div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
             <FormContainer title="Crear activo fijo">
                 <InputText
                     required
@@ -316,17 +318,17 @@ function CreateFixedAssetForm(props) {
                     id="Name"
                     name="Name"
                     value={data.Name}
-                    label="Nombre"
+                    label="Detalle"
                     type="text"
                 />
                 {formErrors.Name? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
                     {formErrors.Name}                   
                 </Alert>:<p></p> }
                 <Dropdown 
-                    name={"Categoría"} 
+                    name={"Tipo de Activo Fijo"} 
                     id="category-drop" 
                     options={categoriesOptions} 
-                    helperText = "Seleccione una categoría" 
+                    helperText = "Seleccione un tipo de Activo Fijo" 
                     selectedValue={categorySelectedValue}
                     setSelectedValue = {setCategorySelectedValue}
                     onChangeF = {getTypesByCategory}
@@ -336,10 +338,10 @@ function CreateFixedAssetForm(props) {
                 {formErrors.AssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.AssetCategoryId}  </Alert>:<p></p> }  
                 <Dropdown 
-                    name={"Tipo"} 
+                    name={"Activo Fijo"} 
                     id="type-drop" 
                     options={typesOptions} 
-                    helperText = "Seleccione un tipo" 
+                    helperText = "Seleccione un Activo Fijo" 
                     selectedValue={typeSelectedValue}
                     setSelectedValue = {setTypeSelectedValue}
                     required
@@ -371,7 +373,7 @@ function CreateFixedAssetForm(props) {
                     onChange={(e) => handle(e)}
                     id="Price"
                     value={data.Price}
-                    label="Precio"
+                    label="Valor"
                     type="number"
                 />
                 {formErrors.Price? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
@@ -425,7 +427,7 @@ function CreateFixedAssetForm(props) {
                     required
                     id="Code"
                     name="Code"
-                    value={data.Code}
+                    value={data.Code.trim()}
                     label="Código"
                     type="text"
                     onChange={(e) => {
@@ -435,7 +437,9 @@ function CreateFixedAssetForm(props) {
                 {formErrors.Code? <Alert  sx={{ width: 1, pt: 1 }} severity="error"> 
                     {formErrors.Code}                   
                 </Alert>:<p></p> }
+                <Box sx={{display: 'inline'}}>
                 <ButtonPrimary label={"Crear"} id="submit_button" onClick={submit}/>
+                </Box>
                 <Snackbar
                     open={open}
                     autoHideDuration={6000}
