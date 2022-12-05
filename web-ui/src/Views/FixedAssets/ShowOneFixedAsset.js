@@ -36,12 +36,12 @@ export function ShowFixedAsset() {
     }
     if (!fixedAsset) return null
     const fixedAssetData = {
-        "Categoría": fixedAsset.assetTypeAssetCategoryCategory,
-        "Tipo": fixedAsset.assetTypeType,
+        "Tipo de Activo Fijo": fixedAsset.assetTypeAssetCategoryCategory,
+        "Activo Fijo": fixedAsset.assetTypeType,
         "Descripción": fixedAsset.description,
         "Características": fixedAsset.features,
         "Fecha de Entrada": fixedAsset.entryDate!=null? new Date(fixedAsset.entryDate).toLocaleDateString():null,
-        "Precio": fixedAsset.price,
+        "Valor": fixedAsset.price,
         "Estado": fixedAsset.assetStateState,
         "Responsable": fixedAsset.assetResponsibleName
     }
