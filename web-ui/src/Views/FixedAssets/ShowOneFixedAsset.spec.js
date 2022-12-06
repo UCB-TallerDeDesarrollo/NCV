@@ -25,7 +25,6 @@ describe('Show Fixed Asset', () => {
       description: "Es un teclado razer",
       entryDate: "2022-03-03T00:00:00",
       price: 200,
-      features: "Color negro a medio uso",
       assetStateState: "Obsoleto"
   }
 
@@ -36,7 +35,6 @@ describe('Show Fixed Asset', () => {
     description: null,
     entryDate: null,
     price: 50,
-    features: null,
     assetStateState: "Obsoleto"
   }
 
@@ -69,7 +67,6 @@ describe('Show Fixed Asset', () => {
         expect(screen.getByText('Es un teclado razer')).toBeVisible
         expect(screen.getByText('3/3/2022')).toBeVisible
         expect(screen.getByText('200')).toBeVisible
-        expect(screen.getByText('Color negro a medio uso')).toBeVisible
         expect(screen.getByText('Obsoleto')).toBeVisible
       })  
   })

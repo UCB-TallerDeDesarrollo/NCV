@@ -82,7 +82,6 @@ describe('Show Fixed Asset', () => {
        "description":"Description from asset 1",
        "entryDate":"2022-10-16T20:00:00",
        "price":100.58,
-       "features":"8Gb de RAM",
        "quantity":5
     },
     {
@@ -91,7 +90,6 @@ describe('Show Fixed Asset', () => {
        "description":"Description from asset 2",
        "entryDate":"2020-11-12T20:00:00",
        "price":100.58,
-       "features":"8Gb de RAM",
        "quantity":5
     },
     {
@@ -100,7 +98,6 @@ describe('Show Fixed Asset', () => {
        "description":"Description from asset 3",
        "entryDate":"2022-09-11T00:00:00",
        "price":1000,
-       "features":"8 GB de ram",
        "quantity":1
     },
     {
@@ -109,7 +106,6 @@ describe('Show Fixed Asset', () => {
        "description":"Description from asset 4",
        "entryDate":"2022-09-11T00:00:00",
        "price":200,
-       "features":"Tiene un rayon",
        "quantity":1
     },
     {
@@ -118,7 +114,6 @@ describe('Show Fixed Asset', () => {
        "description":"Description from asset 5",
        "entryDate":"2022-09-11T00:00:00",
        "price":100,
-       "features":"Tiene RGB",
        "quantity":1
     }
   ]
@@ -132,7 +127,6 @@ describe('Show Fixed Asset', () => {
        "description":null,
        "entryDate":null,
        "price":100,
-       "features":null,
        "quantity":1
     },
     {
@@ -142,7 +136,6 @@ describe('Show Fixed Asset', () => {
        "description":null,
        "entryDate":null,
        "price":100,
-       "features":null,
        "quantity":1
     },
     {
@@ -152,7 +145,6 @@ describe('Show Fixed Asset', () => {
        "description":null,
        "entryDate":null,
        "price":100,
-       "features":null,
        "quantity":1
     },
     {
@@ -162,7 +154,6 @@ describe('Show Fixed Asset', () => {
        "description":null,
        "entryDate":null,
        "price":100,
-       "features":null,
        "quantity":1
     },
     {
@@ -172,7 +163,6 @@ describe('Show Fixed Asset', () => {
        "description":null,
        "entryDate":null,
        "price":100,
-       "features":null,
        "quantity":1
     }
   ]
