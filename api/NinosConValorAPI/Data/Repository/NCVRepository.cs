@@ -122,16 +122,27 @@ namespace NinosConValorAPI.Data.Repository
             await _dbContext.Contacts.AddAsync(contacts);
             return contacts;
         }
-        
-        public async Task<ContactEntity> UpdateContactAsync(int kidId,int contactId, ContactEntity contact)
+
+        public async Task UpdateContactAsync(int kidId, int contactId, ContactEntity contact)
         {
-            IQueryable<ContactEntity> query = _dbContext.Contacts;
-            var contactToUpdate = await query.FirstOrDefaultAsync(rep => rep.KidId == kidId && rep.Id==contactId);
+            var contactToUpdate = await _dbContext.Contacts.FirstOrDefaultAsync(d => d.Id == contactId && d.Kid.Id == kidId);
             contactToUpdate.Name = contact.Name ?? contactToUpdate.Name;
             contactToUpdate.Relationship = contact.Relationship ?? contactToUpdate.Relationship;
             contactToUpdate.ContactNumber = contact.ContactNumber ?? contactToUpdate.ContactNumber;
             contactToUpdate.Address = contact.Address ?? contactToUpdate.Address;
-            return contactToUpdate;
+        }
+
+        public async Task DeleteContactAsync(int kidId, int contactId)
+        {
+            var contactToDelete = await _dbContext.Contacts.FirstOrDefaultAsync(d => d.Kid.Id == kidId && d.Id == contactId);
+            _dbContext.Contacts.Remove(contactToDelete);
+        }
+
+        public async Task<ContactEntity> GetContactAsync(int kidId, int contactId)
+        {
+            IQueryable<ContactEntity> query = _dbContext.Contacts;
+            query = query.AsNoTracking();
+            return await query.FirstOrDefaultAsync(d => d.Id == contactId && d.Kid.Id == kidId);
         }
 
         // EDUCATION REPORT
@@ -281,6 +292,7 @@ namespace NinosConValorAPI.Data.Repository
             fixedAssetToUpdate.EntryDate = fixedAsset.EntryDate ?? fixedAssetToUpdate.EntryDate;
             fixedAssetToUpdate.Price = fixedAsset.Price ?? fixedAssetToUpdate.Price;
             fixedAssetToUpdate.Features = fixedAsset.Features ?? fixedAssetToUpdate.Features;
+            fixedAssetToUpdate.Location = fixedAsset.Location ?? fixedAssetToUpdate.Location;
             fixedAssetToUpdate.ProgramHouse = fixedAsset.ProgramHouse ?? fixedAssetToUpdate.ProgramHouse;
             fixedAssetToUpdate.AssetType = fixedAsset.AssetType ?? fixedAssetToUpdate.AssetType;
             fixedAssetToUpdate.AssetState = fixedAsset.AssetState ?? fixedAssetToUpdate.AssetState;

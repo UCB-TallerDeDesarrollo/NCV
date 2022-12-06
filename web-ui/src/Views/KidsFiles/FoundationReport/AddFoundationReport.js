@@ -68,15 +68,15 @@ function AddFoundationReport() {
         console.log(birthYear + " " + birthMonth+ " " +birthDay);
         console.log(selectedYear + " " + selectedMonth+ " " +selectedDay);
 
-        if( selectedYear > birthYear) {
+        if( selectedYear < birthYear) {
             console.log("Seleccion de año posterior.");
             check = false;
         }else{
-            if( selectedYear == birthYear && selectedMonth > (birthMonth)) {
+            if( selectedYear == birthYear && selectedMonth < (birthMonth)) {
                 console.log("Seleccion de mes posterior.");
                 check = false;
             }else{
-                if( selectedYear == birthYear && selectedMonth == (birthMonth) && selectedDay > birthDay) {
+                if( selectedYear == birthYear && selectedMonth == (birthMonth) && selectedDay < birthDay) {
                     console.log("Seleccion de dia posterior.");
                     check = false;
                 }

@@ -17,6 +17,7 @@ namespace NinosConValorAPI.Data.Entity
         public decimal? Price { get; set; }
         public string? Description { get; set; }
         public DateTime? EntryDate { get; set; }
+        public string? Location { get; set; }
         public string? Features { get; set; }
 
         [ForeignKey("ProgramHouseId")]
