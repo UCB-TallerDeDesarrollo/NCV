@@ -34,6 +34,7 @@ function UpdateFixedAssetForm(props) {
     const [price, setPrice] = useState(null)
     const [features, setFeatures] = useState(null)
     const [code, setCode] = useState(null)
+    const [location, setLocation] = useState(null)
 
     const assetsCodes = []
     getAssetsCodes();
@@ -58,6 +59,7 @@ function UpdateFixedAssetForm(props) {
                 setTypeSelectedValue(dataFA.assetTypeId)
                 setStateSelectedValue(dataFA.assetStateId)
                 setResponsibleSelectedValue(dataFA.assetResponsibleId)
+                setLocation(dataFA.location)
             })
     )}
 
@@ -224,6 +226,7 @@ function UpdateFixedAssetForm(props) {
             EntryDate: entryDate==null? null:entryDate.split('T')[0], // dateTime
             Price: price==''? null:parseFloat(price).toFixed(2), // decimal
             Features: features==null? '':features.trim(), // string
+            Location: location==null? '':location.trim(), // string
             ProgramHouseId : programHouseSelectedValue,
             AssetTypeId : typeSelectedValue,
             AssetStateId: stateSelectedValue, //string
@@ -439,6 +442,14 @@ function UpdateFixedAssetForm(props) {
                 />
                  {formErrors.Features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.Features} </Alert>:<p></p> } 
+                <InputText
+                    onChange={(e) => setFeatures(e.target.value)}
+                    id="Location"
+                    value={location}
+                    label="Ubicación"
+                    type="text"
+                    InputLabelProps={{ shrink: true }}
+                />
                 <InputText
                     required
                     id="Code"
