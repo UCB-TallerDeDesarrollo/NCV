@@ -281,6 +281,7 @@ namespace NinosConValorAPI.Data.Repository
             fixedAssetToUpdate.EntryDate = fixedAsset.EntryDate ?? fixedAssetToUpdate.EntryDate;
             fixedAssetToUpdate.Price = fixedAsset.Price ?? fixedAssetToUpdate.Price;
             fixedAssetToUpdate.Features = fixedAsset.Features ?? fixedAssetToUpdate.Features;
+            fixedAssetToUpdate.Location = fixedAsset.Location ?? fixedAssetToUpdate.Location;
             fixedAssetToUpdate.ProgramHouse = fixedAsset.ProgramHouse ?? fixedAssetToUpdate.ProgramHouse;
             fixedAssetToUpdate.AssetType = fixedAsset.AssetType ?? fixedAssetToUpdate.AssetType;
             fixedAssetToUpdate.AssetState = fixedAsset.AssetState ?? fixedAssetToUpdate.AssetState;
