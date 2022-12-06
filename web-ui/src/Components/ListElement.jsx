@@ -49,7 +49,7 @@ export default function ListElement({id=0, title = "default title", description 
     <EditText sx={sxListItemText}
       id={id.toString()}
       onSave={(props)=>editActionOnSave(props,id,headerId)}      
-      defaultValue = {title} 
+      defaultValue = {title}
       editButtonProps={{ style: { marginLeft: '5px', width: 16 } }}      
     />
   }

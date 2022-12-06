@@ -121,7 +121,10 @@ function AddRowContacts({setContacts}){
 
 
 function Contacts({contactsData,setContacts}){
-    var urlUpdateContact = ""
+    const {kidId} = useParams()
+    var urlUpdateContact = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/contacts/"
+
+    // var urlUpdateContact = ""
 
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
@@ -147,7 +150,11 @@ function Contacts({contactsData,setContacts}){
         </Box>
     </>
 
-    const handleSave = ({fieldName,value,previousValue},id) => {
+    const handleSave = ({name,value,previousValue},id) => {
+        console.log("name: ", name)
+        console.log("value: ", value)
+        console.log("previousValue: ", previousValue)
+        console.log("id: ", id)
         if(value==previousValue || value=='') {
             window.location.reload() //review this part , test with HOCKS ¡¡
         }      
@@ -158,13 +165,12 @@ function Contacts({contactsData,setContacts}){
             }
             submitUpdate(id,updateData)*/
 
-            UpdatedContact = contactsData.filter(c => c.id == id)[0]
-            console.log( "UpdatedContact: ",UpdatedContact )
-            UpdatedContact[fieldName] = value
-        
+            let UpdatedContact = contactsData.filter(c => c.id == id)[0]
+            UpdatedContact[name] = value
+
             axios.put(urlUpdateContact + id, UpdatedContact).then((res) => {
                 if (res.status == 200) {
-                    window.location.reload()    
+                    // window.location.reload()    
                     /*           
                     setShowAlert(true)
                     setAlertMessage("Estado actualizado")

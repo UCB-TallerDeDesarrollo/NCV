@@ -15,10 +15,11 @@ const sxListItemText = {
   }
 }
 
-function TextCell( { value, editableAction}){
+function TextCell({fieldName,value, editableAction , id=0}){
   if(editableAction != null){
     return (  <EditText sx={sxListItemText}
-      onSave={(props)=>editActionOnSave(props,id)}      
+      name = {fieldName}
+      onSave={(props)=>editableAction(props,id)}      
       defaultValue = {value} 
       editButtonProps={{ style: { marginLeft: '5px', width: 16 } }}      
     /> )
@@ -44,10 +45,11 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
   }
 
   if (data != null){
-    console.log("data: ",data)
     tableBody = (<TableBody>
       {data.map((row, rowIdx) => {
         let rowKeys = Object.keys(row);
+        rowKeys.shift(); // to delete the first elements: id , kidId
+        rowKeys.shift();
         return (<TableRow
           key={rowIdx}
           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -58,7 +60,7 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
             if (rk.includes('empty'))
               backgroundColor = '#f2f2f2'
             let cell = (<TableCell key={i} align={align} sx={{backgroundColor:backgroundColor}}>
-                                  <TextCell value = {row[rk]} editableAction={editableAction}/>
+                                  <TextCell fieldName={rk} value = {row[rk]} editableAction={editableAction} id={row.id}/>
                           </TableCell>)
             if (rk=='groupTitle')
               cell = (<TableCell key={i} align={align} sx={{fontWeight:'bold',paddingTop:3, fontSize:20, backgroundColor:'#f2f2f2'}}>{row[rk]}</TableCell>)
