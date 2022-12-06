@@ -12,6 +12,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ButtonPrimary from '../../../Components/MUI-Button';
 
+import ErrorPage from '../../../Components/ErrorPage'
+
 var accesPermiss = sessionStorage.getItem("Access")
 
 const contactsForm = {
@@ -159,26 +161,14 @@ function Contacts({contactsData,setContacts}){
             window.location.reload() //review this part , test with HOCKS ¡¡
         }      
         else{
-            /*
-            let updateData = {
-                fieldName:value
-            }
-            submitUpdate(id,updateData)*/
-
             let UpdatedContact = contactsData.filter(c => c.id == id)[0]
             UpdatedContact[name] = value
 
             axios.put(urlUpdateContact + id, UpdatedContact).then((res) => {
                 if (res.status == 200) {
-                    // window.location.reload()    
-                    /*           
-                    setShowAlert(true)
-                    setAlertMessage("Estado actualizado")
-                    setSeverity("success")
-                    setOpen(true)                    
-                    getAssetStates()
-                    */
-                   // show alert and reload in this case                    
+                    console.log(" something happend with the endpoint - 200 error")
+                    return ErrorPage(error)
+                
                 }            
             }).catch ((apiError) => {
                 setErrorUpdateAssetState(apiError)                    
