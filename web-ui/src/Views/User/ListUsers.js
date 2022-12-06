@@ -1,5 +1,4 @@
 import ErrorPage from '../../Components/ErrorPage'
-import getFromApi from '../../Components/GetFromApi'
 import Alert from '@mui/material/Alert'
 import { Snackbar } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -26,7 +25,6 @@ import DropdownList from '../../Components/DropdownList'
 function ListUsers() {
     const url = 'https://ncv-api.azurewebsites.net/api/auth'
    // const url="http://localhost:5009/api/auth";
-    const { apiData: users, error } = getFromApi(url)
 
     const location = useLocation()
     const [openList, setOpenList] = useState(false);
@@ -109,13 +107,13 @@ function ListUsers() {
     const completeInfoUser = '/vista-usuarios'
 
     const navigate = useNavigate()
-    if (error) {
+    /*if (error) {
         return ErrorPage(error)
     }
-    if (!users) return null
+    if (!users) return null*/
 
 
-    if (users.length > 0) {
+    if (searchResult.length > 0) {
         const listElements = searchResult.map((el) => {
             return {
                 id: el.id,
