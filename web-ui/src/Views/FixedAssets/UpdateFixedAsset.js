@@ -29,8 +29,6 @@ function UpdateFixedAssetForm(props) {
 
     //data
     const [name, setName] = useState(null)
-    const [description, setDescription] = useState(null)
-    const [entryDate, setEntryDate] = useState(null)
     const [price, setPrice] = useState(null)
     const [code, setCode] = useState(null)
     const [location, setLocation] = useState(null)
@@ -47,9 +45,7 @@ function UpdateFixedAssetForm(props) {
             axios.spread((...allData) => {
                 var dataFA = allData[0].data
                 setName(dataFA.name)
-                setDescription(dataFA.description)
                 setPrice(dataFA.price)
-                setEntryDate(dataFA.entryDate)
                 setCode(dataFA.code)
                 getTypesByCategory(dataFA.assetTypeAssetCategoryId,false)
                 setCategorySelectedValue(dataFA.assetTypeAssetCategoryId)
@@ -141,7 +137,7 @@ function UpdateFixedAssetForm(props) {
     }
     function hasFormErrors(errorsFromForm){        
         let hasErrors=true
-        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Code && !errorsFromForm.AssetStateId && !errorsFromForm.AssetResponsibleId &&!errorsFromForm.AssetTypeId){
+        if(!errorsFromForm.Name && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Code && !errorsFromForm.AssetStateId && !errorsFromForm.AssetResponsibleId &&!errorsFromForm.AssetTypeId){
             hasErrors = false
         }
         return hasErrors
@@ -220,8 +216,6 @@ function UpdateFixedAssetForm(props) {
         if(!hasFormErrors(errorsFromForm)){
             axios.put(urlFixedAsset, {
             Name: name.trim(),
-            Description: description==null? '':description.trim(), // string
-            EntryDate: entryDate==null? null:entryDate.split('T')[0], // dateTime
             Price: price==''? null:parseFloat(price).toFixed(2), // decimal           
             Location: location==null? '':location.trim(), // string
             ProgramHouseId : programHouseSelectedValue,
@@ -244,8 +238,6 @@ function UpdateFixedAssetForm(props) {
         const errors = {
             Name: '', // string
             Code: '',
-            Description: '', // string
-            EntryDate: '', // dateTime
             Price: '', // decimal
             ProgramHouseId : '', //int
             AssetCategoryId : '', //int
@@ -267,10 +259,6 @@ function UpdateFixedAssetForm(props) {
             errors.Code="El Código del Activo Fijo es requerido!";
         } else if(assetsCodes.includes(code)){
             errors.Code="El Código del Activo Fijo ya existe!";
-        }
-
-        if(description && description.length>1000){
-            errors.Description="El campo Descripción del Activo Fijo debe ser menor o igual a 1000 caracteres!";
         }
     
         if(price==null){
@@ -356,24 +344,6 @@ function UpdateFixedAssetForm(props) {
                 </Dropdown> 
                 {formErrors.AssetTypeId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.AssetTypeId}  </Alert>:<p></p> }            
-                <InputText
-                    onChange={(e) => setDescription(e.target.value)}
-                    id="Description"
-                    value={description}
-                    label="Descripción"
-                    type="text"
-                    InputLabelProps={{ shrink: true }}
-                />
-                {formErrors.Description? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Description} </Alert>:<p></p> }
-                <InputText
-                    onChange={(e) => setEntryDate(e.target.value)}
-                    id="EntryDate"
-                    value={entryDate == null ? entryDate : entryDate.split('T')[0]}
-                    label="Fecha de Entrada"
-                    type="date"
-                    InputLabelProps={{ shrink: true }}
-                />
                 <InputText
                     required
                     onChange={(e) => setPrice(e.target.value)}

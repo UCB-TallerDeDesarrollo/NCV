@@ -22,8 +22,6 @@ describe('Show Fixed Asset', () => {
   {
       id: 1,
       name: "Teclado",
-      description: "Es un teclado razer",
-      entryDate: "2022-03-03T00:00:00",
       price: 200,
       assetStateState: "Obsoleto"
   }
@@ -32,8 +30,6 @@ describe('Show Fixed Asset', () => {
   {
     id: 1,
     name: "cuaderno",
-    description: null,
-    entryDate: null,
     price: 50,
     assetStateState: "Obsoleto"
   }
@@ -64,8 +60,6 @@ describe('Show Fixed Asset', () => {
     }) 
     await waitFor(() => {
         expect(screen.getByText('Teclado')).toBeVisible
-        expect(screen.getByText('Es un teclado razer')).toBeVisible
-        expect(screen.getByText('3/3/2022')).toBeVisible
         expect(screen.getByText('200')).toBeVisible
         expect(screen.getByText('Obsoleto')).toBeVisible
       })  

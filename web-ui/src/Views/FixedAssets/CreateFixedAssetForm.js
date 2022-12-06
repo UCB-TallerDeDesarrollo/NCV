@@ -33,12 +33,10 @@ function CreateFixedAssetForm(props) {
     const [data, setData] = useState({
         Name: '', // string
         Code: '', // string
-        Description: '', // string
-        EntryDate: '', // dateTime
         Price: '', // decimal
         Location: '', //string
         ProgramHouseId : '', //int
-        AssetCategoryId : '', //int
+        AssetTypeId : '', //int
         AssetStateId: '', //string
         AssetResponsibleId: ''
     })
@@ -131,7 +129,7 @@ function CreateFixedAssetForm(props) {
     }
     function hasFormErrors(errorsFromForm){
         let hasErrors=true
-        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Code && !errorsFromForm.AssetStateId && !errorsFromForm.AssetResponsibleId &&!errorsFromForm.AssetTypeId){
+        if(!errorsFromForm.Name && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Code && !errorsFromForm.AssetStateId && !errorsFromForm.AssetResponsibleId &&!errorsFromForm.AssetTypeId){
             hasErrors = false
         }
         return hasErrors
@@ -209,8 +207,6 @@ function CreateFixedAssetForm(props) {
         if(!hasFormErrors(errorsFromForm)){
             Axios.post(url, {
             Name: data.Name.trim(),
-            Description: (data.Description=='' || data.Description==null) ? null:data.Description.trim(), // string
-            EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
             Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
             Location: (data.Location=='' || data.Location==null) ? null:data.Location.trim(), // string
             ProgramHouseId : programHouseSelectedValue,
@@ -232,9 +228,7 @@ function CreateFixedAssetForm(props) {
     const validate = (datas) => {        
         const errors = {
             Name: '', // string
-            Code: '',
-            Description: '', // string
-            EntryDate: '', // dateTime
+            Code: '',           
             Price: '', // decimal
             ProgramHouseId : '', //int
             AssetCategoryId : '', //int
@@ -256,10 +250,6 @@ function CreateFixedAssetForm(props) {
             errors.Code="El Código del Activo Fijo es requerido!";
         } else if(assetsCodes.includes(datas.Code)){
             errors.Code="El Código del Activo Fijo ya existe!";
-        }
-
-        if(datas.Description.length>1000){
-            errors.Description="El campo Descripción del Activo Fijo debe ser menor o igual a 1000 caracteres!";
         }
     
         if(!datas.Price){
@@ -344,25 +334,6 @@ function CreateFixedAssetForm(props) {
                 </Dropdown> 
                 {formErrors.AssetTypeId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.AssetTypeId}  </Alert>:<p></p> }                              
-                <InputText
-                    onChange={(e) => handle(e)}
-                    id="Description"
-                    value={data.Description}
-                    label="Descripción"
-                    type="text"
-                />
-                {formErrors.Description? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Description} </Alert>:<p></p> }
-                <InputText
-                    onChange={(e) => handle(e)}
-                    id="EntryDate"
-                    value={data.EntryDate}
-                    label="Fecha de Entrada"
-                    type="date"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
                 <InputText
                     required
                     onChange={(e) => handle(e)}
