@@ -40,6 +40,7 @@ export function ShowFixedAsset() {
         "Activo Fijo": fixedAsset.assetTypeType,
         "Descripción": fixedAsset.description,
         "Características": fixedAsset.features,
+        "Ubicación": fixedAsset.location,
         "Fecha de Entrada": fixedAsset.entryDate!=null? new Date(fixedAsset.entryDate).toLocaleDateString():null,
         "Valor": fixedAsset.price,
         "Estado": fixedAsset.assetStateState,

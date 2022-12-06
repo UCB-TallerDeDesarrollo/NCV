@@ -37,6 +37,7 @@ function CreateFixedAssetForm(props) {
         EntryDate: '', // dateTime
         Price: '', // decimal
         Features: '', // string
+        Location: '', //string
         ProgramHouseId : '', //int
         AssetCategoryId : '', //int
         AssetStateId: '', //string
@@ -213,6 +214,7 @@ function CreateFixedAssetForm(props) {
             EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
             Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
             Features: (data.Features=='' || data.Features==null) ? null:data.Features.trim(), // string
+            Location: (data.Location=='' || data.Location==null) ? null:data.Location.trim(), // string
             ProgramHouseId : programHouseSelectedValue,
             AssetTypeId : typeSelectedValue,
             AssetStateId : stateSelectedValue, //string
@@ -423,6 +425,13 @@ function CreateFixedAssetForm(props) {
                 />
                  {formErrors.Features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.Features} </Alert>:<p></p> } 
+                <InputText
+                    onChange={(e) => handle(e)}
+                    id="Location"
+                    value={data.Location}
+                    label="Ubicación"
+                    type="text"
+                />
                 <InputText
                     required
                     id="Code"
