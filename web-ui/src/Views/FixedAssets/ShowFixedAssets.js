@@ -46,6 +46,7 @@ export default function ShowFixedAssets() {
     const { apiData: assetCategories, errors } = getFromApi(urlCategories)
     const { apiData: programHouses, errorProgramHouses } = getFromApi(urlProgramHouses)
     const { apiData: states, error: errorStates } = getFromApi(urlStates)
+    console.log('estados', states)
     const { currentProgramHouse, setCurrentProgramHouse } = getFromApi(null)
     const headerIndices = [];
     const getHeaderName = (i) => {
@@ -168,6 +169,7 @@ export default function ShowFixedAssets() {
             value: state.id
         }
     })
+    statesList.push({label: 'TODOS', value: 0})
 
     const searcher = <SearchBar posts={fixedAssets} setSearchResults={setSearchResults} orderCriteria={ordenCriteria} searchCriteria={searchByName} />
     if (fixedAssets.length > 0 && assetCategories.length > 0) {
