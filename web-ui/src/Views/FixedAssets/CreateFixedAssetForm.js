@@ -36,7 +36,6 @@ function CreateFixedAssetForm(props) {
         Description: '', // string
         EntryDate: '', // dateTime
         Price: '', // decimal
-        Features: '', // string
         Location: '', //string
         ProgramHouseId : '', //int
         AssetCategoryId : '', //int
@@ -132,7 +131,7 @@ function CreateFixedAssetForm(props) {
     }
     function hasFormErrors(errorsFromForm){
         let hasErrors=true
-        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features && !errorsFromForm.Code && !errorsFromForm.AssetStateId && !errorsFromForm.AssetResponsibleId &&!errorsFromForm.AssetTypeId){
+        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Code && !errorsFromForm.AssetStateId && !errorsFromForm.AssetResponsibleId &&!errorsFromForm.AssetTypeId){
             hasErrors = false
         }
         return hasErrors
@@ -213,7 +212,6 @@ function CreateFixedAssetForm(props) {
             Description: (data.Description=='' || data.Description==null) ? null:data.Description.trim(), // string
             EntryDate: data.EntryDate==''? null:data.EntryDate.split('T')[0], // dateTime
             Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
-            Features: (data.Features=='' || data.Features==null) ? null:data.Features.trim(), // string
             Location: (data.Location=='' || data.Location==null) ? null:data.Location.trim(), // string
             ProgramHouseId : programHouseSelectedValue,
             AssetTypeId : typeSelectedValue,
@@ -238,7 +236,6 @@ function CreateFixedAssetForm(props) {
             Description: '', // string
             EntryDate: '', // dateTime
             Price: '', // decimal
-            Features: '', // string
             ProgramHouseId : '', //int
             AssetCategoryId : '', //int
             AssetStateId: '', //string
@@ -282,15 +279,11 @@ function CreateFixedAssetForm(props) {
         }
 
         if(!typeSelectedValue){
-            errors.AssetTypeId= "El Activo Fijo es requerido!";            
+            errors.AssetTypeId= "El Tipo es requerido!";            
         }
 
         if(typesOptions.length==0){
-            errors.AssetTypeId = `Seleccione el tipo de Activo Fijo para ver sus respectivos activos`
-        }
-    
-        if(datas.Features.length>1000){
-            errors.Features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
+            errors.AssetTypeId = `Seleccione el tipo de Activo Fijo para ver sus respectivos tipos`
         }
 
         if(!stateSelectedValue){
@@ -340,10 +333,10 @@ function CreateFixedAssetForm(props) {
                 {formErrors.AssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.AssetCategoryId}  </Alert>:<p></p> }  
                 <Dropdown 
-                    name={"Activo Fijo"} 
+                    name={"Tipo"} 
                     id="type-drop" 
                     options={typesOptions} 
-                    helperText = "Seleccione un Activo Fijo" 
+                    helperText = "Seleccione un Tipo" 
                     selectedValue={typeSelectedValue}
                     setSelectedValue = {setTypeSelectedValue}
                     required
@@ -415,16 +408,7 @@ function CreateFixedAssetForm(props) {
                     >                                        
                 </Dropdown>   
                 {formErrors.AssetResponsibleId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.AssetResponsibleId}  </Alert>:<p></p> }
-                <InputText
-                    onChange={(e) => handle(e)}
-                    id="Features"
-                    value={data.Features}
-                    label="Características"
-                    type="text"
-                />
-                 {formErrors.Features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Features} </Alert>:<p></p> } 
+                        {formErrors.AssetResponsibleId}  </Alert>:<p></p> }                 
                 <InputText
                     onChange={(e) => handle(e)}
                     id="Location"

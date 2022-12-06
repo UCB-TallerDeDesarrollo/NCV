@@ -32,7 +32,6 @@ function UpdateFixedAssetForm(props) {
     const [description, setDescription] = useState(null)
     const [entryDate, setEntryDate] = useState(null)
     const [price, setPrice] = useState(null)
-    const [features, setFeatures] = useState(null)
     const [code, setCode] = useState(null)
     const [location, setLocation] = useState(null)
 
@@ -50,7 +49,6 @@ function UpdateFixedAssetForm(props) {
                 setName(dataFA.name)
                 setDescription(dataFA.description)
                 setPrice(dataFA.price)
-                setFeatures(dataFA.features)
                 setEntryDate(dataFA.entryDate)
                 setCode(dataFA.code)
                 getTypesByCategory(dataFA.assetTypeAssetCategoryId,false)
@@ -143,7 +141,7 @@ function UpdateFixedAssetForm(props) {
     }
     function hasFormErrors(errorsFromForm){        
         let hasErrors=true
-        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Features && !errorsFromForm.Code && !errorsFromForm.AssetStateId && !errorsFromForm.AssetResponsibleId &&!errorsFromForm.AssetTypeId){
+        if(!errorsFromForm.Name && !errorsFromForm.Description && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Code && !errorsFromForm.AssetStateId && !errorsFromForm.AssetResponsibleId &&!errorsFromForm.AssetTypeId){
             hasErrors = false
         }
         return hasErrors
@@ -224,8 +222,7 @@ function UpdateFixedAssetForm(props) {
             Name: name.trim(),
             Description: description==null? '':description.trim(), // string
             EntryDate: entryDate==null? null:entryDate.split('T')[0], // dateTime
-            Price: price==''? null:parseFloat(price).toFixed(2), // decimal
-            Features: features==null? '':features.trim(), // string
+            Price: price==''? null:parseFloat(price).toFixed(2), // decimal           
             Location: location==null? '':location.trim(), // string
             ProgramHouseId : programHouseSelectedValue,
             AssetTypeId : typeSelectedValue,
@@ -250,7 +247,6 @@ function UpdateFixedAssetForm(props) {
             Description: '', // string
             EntryDate: '', // dateTime
             Price: '', // decimal
-            Features: '', // string
             ProgramHouseId : '', //int
             AssetCategoryId : '', //int
             AssetStateId: '', //string
@@ -294,15 +290,11 @@ function UpdateFixedAssetForm(props) {
         }
 
         if(!typeSelectedValue){
-            errors.AssetTypeId= "El Activo Fijo es requerido!";            
+            errors.AssetTypeId= "El Tipo es requerido!";            
         }
 
         if(typesOptions.length==0){
-            errors.AssetTypeId = `Seleccione el tipo de Activo Fijo para ver sus respectivos activos`
-        }
-    
-        if(features&&features.length>1000){
-            errors.Features= "El campo de Características del Activo Fijo debe ser menor o igual a 1000 caracteres!";
+            errors.AssetTypeId = `Seleccione el tipo de Activo Fijo para ver sus respectivos tipos`
         }
 
         if(!stateSelectedValue){
@@ -352,10 +344,10 @@ function UpdateFixedAssetForm(props) {
                 {formErrors.AssetCategoryId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.AssetCategoryId}  </Alert>:<p></p> }  
                 <Dropdown 
-                    name={"Activo Fijo"} 
+                    name={"Tipo"} 
                     id="type-drop" 
                     options={typesOptions} 
-                    helperText = "Seleccione un Activo Fijo" 
+                    helperText = "Seleccione un Tipo" 
                     selectedValue={typeSelectedValue}
                     setSelectedValue = {setTypeSelectedValue}
                     InputLabelProps={{ shrink: true }}
@@ -432,18 +424,9 @@ function UpdateFixedAssetForm(props) {
                 </Dropdown>   
                 {formErrors.AssetResponsibleId? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
                         {formErrors.AssetResponsibleId}  </Alert>:<p></p> }
+                
                 <InputText
-                    onChange={(e) => setFeatures(e.target.value)}
-                    id="Features"
-                    value={features}
-                    label="Características"
-                    type="text"
-                    InputLabelProps={{ shrink: true }}
-                />
-                 {formErrors.Features? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
-                        {formErrors.Features} </Alert>:<p></p> } 
-                <InputText
-                    onChange={(e) => setFeatures(e.target.value)}
+                    onChange={(e) => setLocation(e.target.value)}
                     id="Location"
                     value={location}
                     label="Ubicación"

@@ -37,9 +37,8 @@ export function ShowFixedAsset() {
     if (!fixedAsset) return null
     const fixedAssetData = {
         "Tipo de Activo Fijo": fixedAsset.assetTypeAssetCategoryCategory,
-        "Activo Fijo": fixedAsset.assetTypeType,
+        "Tipo": fixedAsset.assetTypeType,
         "Descripción": fixedAsset.description,
-        "Características": fixedAsset.features,
         "Ubicación": fixedAsset.location,
         "Fecha de Entrada": fixedAsset.entryDate!=null? new Date(fixedAsset.entryDate).toLocaleDateString():null,
         "Valor": fixedAsset.price,
