@@ -4,6 +4,8 @@ namespace NinosConValorAPI.Models
 {
     public class ContactModel
     {
+        public int Id { get; set; }
+        public int KidId { get; set; }
         [Required(ErrorMessage = "Nombre requerido")]
         public string Name { get; set; }
         public string Relationship { get; set; }
