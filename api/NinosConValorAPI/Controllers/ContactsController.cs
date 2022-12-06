@@ -53,20 +53,40 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
             }
         }
-        [HttpPut("{contactId:int}")]
-        public async Task<IActionResult> UpdateContactAsync(int kidId,int contactId, [FromBody] ContactModel contacts)
+
+        [HttpDelete("{contactId}")]
+        public async Task<ActionResult> DeleteContactAsync(int kidId, int contactId)
         {
             try
             {
-                return Ok(await _contactsService.UpdateContactAsync(kidId,contactId, contacts));
+                await _contactsService.DeleteContactAsync(kidId, contactId);
+                return Ok();
             }
             catch (NotFoundElementException ex)
             {
                 return NotFound(ex.Message);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Lo sentimos, algo sucedió: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
+            }
+        }
+
+        [HttpPut("{contactId}")]
+        public async Task<ActionResult<ContactModel>> UpdateContactAsync(int kidId, int contactId, [FromBody] ContactModel contact)
+        {
+            try
+            {
+                var updatedContact = await _contactsService.UpdateContactAsync(kidId, contactId, contact);
+                return Ok(updatedContact);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
             }
         }
     }
