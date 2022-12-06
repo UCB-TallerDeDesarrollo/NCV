@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: "https://ncv-api.herokuapp.com/"
+    baseURL: "https://ncv-api.azurewebsites.net"
 })
 
 export const getListUsers = async () => {
