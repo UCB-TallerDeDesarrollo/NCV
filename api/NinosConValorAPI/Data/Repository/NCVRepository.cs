@@ -138,6 +138,13 @@ namespace NinosConValorAPI.Data.Repository
             _dbContext.Contacts.Remove(contactToDelete);
         }
 
+        public async Task<ContactEntity> GetContactAsync(int kidId, int contactId)
+        {
+            IQueryable<ContactEntity> query = _dbContext.Contacts;
+            query = query.AsNoTracking();
+            return await query.FirstOrDefaultAsync(d => d.Id == contactId && d.Kid.Id == kidId);
+        }
+
         // EDUCATION REPORT
         public async Task<EducationReportEntity> CreateEducationReportAsync(EducationReportEntity educationReport)
         {

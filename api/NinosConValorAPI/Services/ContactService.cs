@@ -37,24 +37,44 @@ namespace NinosConValorAPI.Services
             }
             throw new Exception("Database Error");
         }
-
-        public Task DeleteContactAsync(int kidId)
+        public async Task DeleteContactAsync(int kidId, int contactId)
         {
-            throw new NotImplementedException();
+            await GetContactAsync(kidId, contactId);
+            await _appRepository.DeleteContactAsync(kidId, contactId);
+            var result = await _appRepository.SaveChangesAsync();
+            if (!result)
+            {
+                throw new Exception("Database Error.");
+
+            }
         }
-    
-        public async Task<ContactModel> UpdateContactAsync(int kidId, int contactId,ContactModel contacts)
+
+        public async Task<ContactModel> UpdateContactAsync(int kidId, int contactId, ContactModel contact)
+        {
+            await GetContactAsync(kidId, contactId);
+            var entity = _mapper.Map<ContactEntity>(contact);
+            await _appRepository.UpdateContactAsync(kidId, contactId, entity);
+            var result = await _appRepository.SaveChangesAsync();
+            if (result)
+            {
+                return _mapper.Map<ContactModel>(entity);
+            }
+
+            throw new Exception("Database Error.");
+        }
+
+        public async Task<ContactModel> GetContactAsync(int kidId, int contactId)
         {
             await ValidateIdKidAsync(kidId);
-            var contactEntity = _mapper.Map<ContactEntity>(contacts);
-            contactEntity = await _appRepository.UpdateContactAsync(kidId, contactId, contactEntity);
-            var saveResult = await _appRepository.SaveChangesAsync();
-            if (!saveResult)
-            {
-                throw new Exception("Database Error");
-            }
-            return _mapper.Map<ContactModel>(contactEntity);
+
+            var contact = await _appRepository.GetContactAsync(kidId,contactId);
+            if (contact == null)
+                throw new Exception($"the contact with id:{contactId} does not exists for the given kid with id: {kidId}.");
+
+            return _mapper.Map<ContactModel>(contact);
         }
+
+
         private async Task ValidateIdKidAsync(int kidId)
         {
             var kid = await _appRepository.GetKidAsync(kidId);
