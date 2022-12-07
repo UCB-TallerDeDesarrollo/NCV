@@ -1,10 +1,7 @@
 {
   "id":24,
   "name":"Computadora cypress",
-  "description":"Computadora de escritorio",
-  "entryDate":"2022-10-16T20:00:00",
   "price":2424.24,
-  "quantity":3,
   "programHouseId":2,
   "assetStateState":"Obsoleto"
 }
