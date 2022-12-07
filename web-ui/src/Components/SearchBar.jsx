@@ -30,10 +30,8 @@ const SearchBar = ({posts, setSearchResults, orderCriteria, searchCriteria }) =>
                 <SearchIcon sx={{color:'#989a9f'}}/>
               </InputAdornment>
             ),
-            borderRadius:5
           }}
         >
-        
         </InputText>
         </Box>
       </form>
