@@ -10,7 +10,13 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import ButtonPrimary from '../../../Components/MUI-Button';
+import ButtonPrimary, { ButtonDanger, ButtonSecondary }  from '../../../Components/MUI-Button';
+
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContentText from '@mui/material/DialogContentText'
 
 var accesPermiss = sessionStorage.getItem("Access")
 
@@ -27,6 +33,7 @@ function AddRowContacts({setContacts}){
 
     const [contactsData, setcontactsData] = useState(contactsForm)
     const [open, setOpen] = useState(false)
+
 
     function handleFormSubmit() {
         console.log("Datos enviados: ", contactsData)
@@ -97,7 +104,7 @@ function AddRowContacts({setContacts}){
                                     style={{ width:120, textAlign:'center' }}
                                 ></input>
                             </TableCell>
-                            <TableCell key={2} align={'center'}>
+                            <TableCell key={3} align={'center'}>
                                 <input
                                     placeholder="dirección..."
                                     name="address"
@@ -113,7 +120,7 @@ function AddRowContacts({setContacts}){
            </TableContainer>
            <Box sx={{pt: 3,display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
                 {accesPermiss=="CompleteAccess"&&
-                    <ButtonPrimary key={2} label="Añadir datos" onClick={handleFormSubmit} />
+                    <ButtonPrimary key={22} label="Añadir datos" onClick={handleFormSubmit} />
                 }
             </Box>
            </div>
@@ -121,6 +128,39 @@ function AddRowContacts({setContacts}){
 
 
 function Contacts({contactsData,setContacts}){
+    const {kidId} = useParams()
+    var urlContacts = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/contacts/"
+
+    // hocks for delete function
+    const [openToConfirm, setOpenToConfirm] = useState(false)
+    const [contactId, setContactId] = useState(0)
+
+    function handleCloseToConfirm(event, reason) {
+        if (reason === 'clickaway') {
+            return
+        }
+        setOpenToConfirm(false)
+    }
+    const fetchDeleteContact = () => {    
+        axios.delete(urlContacts + contactId)
+        .then(function (response) {
+            if (response.status == 200){
+                console.log("Datos de contacto eliminado¡¡¡")
+                axios.get(urlContacts)
+                    .then((res) => {
+                        setContacts(res.data)
+                    })
+                    .catch((e)=>{
+                })                                     
+            }
+        })
+        .catch(err=> {
+            console.log("something happped with the endpoint")         
+        })
+        handleCloseToConfirm()
+    }
+
+
 
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
@@ -146,22 +186,67 @@ function Contacts({contactsData,setContacts}){
         </Box>
     </>
 
+    const handleSave = ({name,value,previousValue},id) => {
+        console.log("name: ", name)
+        console.log("value: ", value)
+        console.log("previousValue: ", previousValue)
+        console.log("id: ", id)
+        if(value==previousValue || value=='') {
+            window.location.reload() //review this part , test with HOCKS ¡¡
+        }      
+        else{
+            let UpdatedContact = contactsData.filter(c => c.id == id)[0]
+            UpdatedContact[name] = value
+
+            axios.put(urlContacts + id, UpdatedContact).then((res) => {
+                console.log("data saved sucessfully")           
+            }).catch ((apiError) => {
+                setErrorUpdateAssetState(apiError)                    
+            })
+        } 
+    }
+    const ToConfirmOpen = () => {
+        handleCloseToConfirm();
+        setOpenToConfirm(true);
+    }
+
+    const deleteAction = (id) => {
+        setContactId(id)
+        handleCloseToConfirm()
+        ToConfirmOpen()
+        console.log("delete item of id: ",id)
+    }
+
+   
+
     if (contactsData != null && contactsData.length > 0){
         table = (<>
             <Box sx={{display:"flex", flexDirection:"row"}}>
-                <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}}></TableBasic>
+                <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}} editableAction={handleSave} deleteAction={deleteAction}></TableBasic>
             </Box>
         </>);
         contactsTitle = <Typography variant="h3" sx={{marginBottom:1.5}}>contactos</Typography>;
     }
     return (<Box sx={{ display: 'flex', flexDirection:'column' }}>
-        <Box sx={{ display: 'flex', flexDirection:'row', alignItems:'center',  justifyContent:'space-between'}}>
-            {contactsTitle}
-        </Box>
-        {table}
-        <AddRowContacts setContacts={setContacts}/>
-    </Box>);
-}
+                <Box sx={{ display: 'flex', flexDirection:'row', alignItems:'center',  justifyContent:'space-between'}}>
+                    {contactsTitle}
+                </Box>
+                {table}
+                <AddRowContacts setContacts={setContacts}/>
 
+                <Dialog open={openToConfirm} onClose={handleCloseToConfirm} id="confirmation_popup" sx={{borderRadius:3 }}>
+                        <DialogTitle sx={{display:'flex', justifyContent:'center'}}>Eliminar Contacto</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                ¿Desea eliminar el contacto?
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions sx={{display:'flex',flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                            <ButtonSecondary label="Cancelar" onClick={handleCloseToConfirm}></ButtonSecondary>
+                            <ButtonDanger label="Eliminar" id="confirm_delete_button" onClick={fetchDeleteContact}></ButtonDanger>
+                        </DialogActions>
+                    </Dialog>
+            </Box>);
+}
 
 export default Contacts;
