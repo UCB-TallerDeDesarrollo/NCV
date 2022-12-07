@@ -187,14 +187,19 @@ function CreateFixedAssetForm(props) {
         switch (categoryValue){
             case 1:
                 categoryCode = 'HER'
+                break
             case 2:
                 categoryCode = 'MUE'
+                break
             case 3:
                 categoryCode = 'MAQ'
+                break
             case 4:
                 categoryCode = 'EQC'
+                break
             case 5:
                 categoryCode = 'VEH' 
+                break
         }
         return categoryCode
     }
@@ -202,7 +207,6 @@ function CreateFixedAssetForm(props) {
     function submit(e) {
         programCode = getProgramCode(programHouseSelectedValue)
         categoryCode = getCategoryCode(categorySelectedValue)
-
         const errorsFromForm= validate(data)
         setFormErrors(errorsFromForm)
         setIsSubmit(true)
@@ -294,7 +298,6 @@ function CreateFixedAssetForm(props) {
             errors.AssetResponsibleId= "El Responsable del Activo Fijo es requerido!";
         }
 
-        console.log('errs',errors)
         return errors
     }
     
