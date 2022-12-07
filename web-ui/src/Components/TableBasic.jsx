@@ -38,13 +38,10 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
   var emptyHeader = null
   var insertDeleteIcon = null
 
-  if (deleteAction == null){
-      console.log("definitivmente es nlll ¡¡")
-  }else{
-      console.log("no es null  ¡¡")
-      emptyHeader = <TableCell sx={{backgroundColor:'#CEECF2',fontWeight: 'fontWeightBold' }} key="emptyHeader" align={align}></TableCell>
-      insertDeleteIcon = (id) => { return ( <TableCell key="Deletebutton" align={align}> <ButtonPrimaryDeleteIcon onClick={()=>{deleteAction(id)}} sx={{marginLeft:1, alignSelf:'center'}} ></ButtonPrimaryDeleteIcon></TableCell> )}
-    }
+  if (deleteAction != null){
+    emptyHeader = <TableCell sx={{backgroundColor:'#CEECF2',fontWeight: 'fontWeightBold' }} key="emptyHeader" align={align}></TableCell>
+    insertDeleteIcon = (id) => { return ( <TableCell key="Deletebutton" align={align}> <ButtonPrimaryDeleteIcon onClick={()=>{deleteAction(id)}} sx={{marginLeft:1, alignSelf:'center'}} ></ButtonPrimaryDeleteIcon></TableCell> )}
+  }
 
 /*
   if( deleteAction == null){
