@@ -87,7 +87,6 @@ function CreateFixedAssetForm(props) {
         value: category.id      
     }}) 
     const categoriesOptions = categoriesList  
-    console.log('categorias', categoriesOptions)
 
     //states options for DROPDOWN
     if(errorStates){
@@ -208,9 +207,6 @@ function CreateFixedAssetForm(props) {
     function submit(e) {
         programCode = getProgramCode(programHouseSelectedValue)
         categoryCode = getCategoryCode(categorySelectedValue)
-        console.log('valor cat', categorySelectedValue)
-        console.log('category code', categoryCode)
-
         const errorsFromForm= validate(data)
         setFormErrors(errorsFromForm)
         setIsSubmit(true)
@@ -302,7 +298,6 @@ function CreateFixedAssetForm(props) {
             errors.AssetResponsibleId= "El Responsable del Activo Fijo es requerido!";
         }
 
-        console.log('errs',errors)
         return errors
     }
     
