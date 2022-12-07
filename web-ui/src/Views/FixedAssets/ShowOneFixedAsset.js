@@ -51,7 +51,6 @@ export function ShowFixedAsset() {
                 navigate(`/activos-fijos`,{state:{showAlert:true,alertMessage:"Activo Fijo Eliminado"}})
             }
         })
-        .catch(err=> console.log(err))
     }
 
     function handleCloseToConfirm(event, reason) {

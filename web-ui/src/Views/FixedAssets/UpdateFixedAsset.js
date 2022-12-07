@@ -155,7 +155,6 @@ function UpdateFixedAssetForm(props) {
                     value: type.id      
                 }}) 
                 setTypesOptions(typesList)
-                console.log("setTypeNull",setTypeNull)
                 if(setTypeNull) setTypeSelectedValue(null)
             }
         ).catch((e)=>{
