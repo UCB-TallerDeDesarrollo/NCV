@@ -116,7 +116,7 @@ export default function ShowFixedAssetsResponsibles() {
         axios.put(urlAssetResponsible + id, updateData).then((res) => {
             if (res.status == 200) {               
                 setShowAlert(true)
-                setAlertMessage("Estado actualizado")
+                setAlertMessage("Responsable actualizado")
                 setSeverity("success")
                 setOpen(true)                    
                 getAssetResponsibles()                    
@@ -133,7 +133,7 @@ export default function ShowFixedAssetsResponsibles() {
             axios.post(urlAssetResponsible, data).then((res) => {
                 if (res.status == 201) {     
                     setShowAlert(true)
-                    setAlertMessage("Estado creado")
+                    setAlertMessage("Responsable creado")
                     setSeverity("success")
                     setOpen(true)
                     getAssetResponsibles()
