@@ -87,6 +87,7 @@ function CreateFixedAssetForm(props) {
         value: category.id      
     }}) 
     const categoriesOptions = categoriesList  
+    console.log('categorias', categoriesOptions)
 
     //states options for DROPDOWN
     if(errorStates){
@@ -187,14 +188,19 @@ function CreateFixedAssetForm(props) {
         switch (categoryValue){
             case 1:
                 categoryCode = 'HER'
+                break
             case 2:
                 categoryCode = 'MUE'
+                break
             case 3:
                 categoryCode = 'MAQ'
+                break
             case 4:
                 categoryCode = 'EQC'
+                break
             case 5:
                 categoryCode = 'VEH' 
+                break
         }
         return categoryCode
     }
@@ -202,6 +208,8 @@ function CreateFixedAssetForm(props) {
     function submit(e) {
         programCode = getProgramCode(programHouseSelectedValue)
         categoryCode = getCategoryCode(categorySelectedValue)
+        console.log('valor cat', categorySelectedValue)
+        console.log('category code', categoryCode)
 
         const errorsFromForm= validate(data)
         setFormErrors(errorsFromForm)
