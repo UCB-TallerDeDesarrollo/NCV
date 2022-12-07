@@ -129,11 +129,12 @@ function AddRowContacts({setContacts}){
 
 function Contacts({contactsData,setContacts}){
     const {kidId} = useParams()
-    var urlUpdateContact = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/contacts/"
+    var urlContacts = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/contacts/"
 
     // hocks for delete function
     const [openToConfirm, setOpenToConfirm] = useState(false)
     const [contactId, setContactId] = useState(0)
+
     function handleCloseToConfirm(event, reason) {
         if (reason === 'clickaway') {
             return
@@ -141,17 +142,22 @@ function Contacts({contactsData,setContacts}){
         setOpenToConfirm(false)
     }
     const fetchDeleteContact = () => {    
-        axios.delete(urlUpdateContact + contactId)
+        axios.delete(urlContacts + contactId)
         .then(function (response) {
             if (response.status == 200){
-                setOpen(true)
-                setOpenToConfirm(false)                                     
+                console.log("Datos de contacto eliminado¡¡¡")
+                axios.get(urlContacts)
+                    .then((res) => {
+                        setContacts(res.data)
+                    })
+                    .catch((e)=>{
+                })                                     
             }
         })
         .catch(err=> {
-            console.log("something happped with the endpoint") 
-            setOpenToConfirm(false)        
+            console.log("something happped with the endpoint")         
         })
+        handleCloseToConfirm()
     }
 
 
@@ -192,7 +198,7 @@ function Contacts({contactsData,setContacts}){
             let UpdatedContact = contactsData.filter(c => c.id == id)[0]
             UpdatedContact[name] = value
 
-            axios.put(urlUpdateContact + id, UpdatedContact).then((res) => {
+            axios.put(urlContacts + id, UpdatedContact).then((res) => {
                 console.log("data saved sucessfully")           
             }).catch ((apiError) => {
                 setErrorUpdateAssetState(apiError)                    
@@ -240,7 +246,6 @@ function Contacts({contactsData,setContacts}){
                             <ButtonDanger label="Eliminar" id="confirm_delete_button" onClick={fetchDeleteContact}></ButtonDanger>
                         </DialogActions>
                     </Dialog>
-
             </Box>);
 }
 
