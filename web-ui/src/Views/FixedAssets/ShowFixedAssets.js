@@ -45,7 +45,6 @@ export default function ShowFixedAssets() {
     let alertMessage = location.state ? location.state.alertMessage : null
     const { apiData: assetCategories, errors } = getFromApi(urlCategories)
     const { apiData: programHouses, errorProgramHouses } = getFromApi(urlProgramHouses)
-    console.log('programas', programHouses)
     const { apiData: states, error: errorStates } = getFromApi(urlStates)
     const { currentProgramHouse, setCurrentProgramHouse } = getFromApi(null)
     const headerIndices = [];
@@ -147,7 +146,6 @@ export default function ShowFixedAssets() {
     programHouses.map(programHouse => {
         acronymsList.push(programHouse.acronym)
     })
-    console.log("acronyms: " + acronymsList)
 
     let idProgram = 0
     let programHousesList = programHouses.map(programHouse => {
@@ -158,11 +156,6 @@ export default function ShowFixedAssets() {
         }
     })
     programHousesList.push({label: 'TODOS', value: 0})
-    /*programHousesList[idProgram + 1] = {
-        label: "TODOS",
-        value: idProgram + 1
-    }*/
-    console.log(programHousesList)
 
     let statesList = states.map(state => {
         return {
