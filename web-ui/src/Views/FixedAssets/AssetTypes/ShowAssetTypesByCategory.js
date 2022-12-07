@@ -154,8 +154,6 @@ export default function ShowAssetTypesByCategory() {
             }).catch ((apiError) => {
                 setErrorCreateAssetType(apiError)                               
             })
-        }else{
-            console.log(errorsFromForm)
         }
     }
 

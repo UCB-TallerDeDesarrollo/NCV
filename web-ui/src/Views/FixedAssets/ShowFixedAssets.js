@@ -46,7 +46,6 @@ export default function ShowFixedAssets() {
     const { apiData: assetCategories, errors } = getFromApi(urlCategories)
     const { apiData: programHouses, errorProgramHouses } = getFromApi(urlProgramHouses)
     const { apiData: states, error: errorStates } = getFromApi(urlStates)
-    console.log('estados', states)
     const { currentProgramHouse, setCurrentProgramHouse } = getFromApi(null)
     const headerIndices = [];
     const getHeaderName = (i) => {

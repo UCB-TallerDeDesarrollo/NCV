@@ -145,8 +145,6 @@ export default function ShowFixedAssetsResponsibles() {
                 setErrorCreateAssetResponsible(apiError) 
                 checkError()                    
             })
-        }else{
-            console.log(errorsFromForm)
         }
     }
     if (errorAssetResponsibles) return ErrorPage(errorAssetResponsibles)

@@ -145,8 +145,6 @@ export default function ShowFixedAssets() {
                 setErrorCreateAssetState(apiError) 
                 checkError()                    
             })
-        }else{
-            console.log(errorsFromForm)
         }
     }
     if (errorAssetStates) return ErrorPage(errorAssetStates)
