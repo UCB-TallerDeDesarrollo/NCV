@@ -145,22 +145,6 @@ describe('Inputs from CreateFixedAsset component must be empty in the beginning'
             expect(screen.getByLabelText(/Detalle/i)).toHaveDisplayValue('')
         })
     })
-    it('Doesnt show any result in the beginning at the Description space', async () => {
-        act(()=>{
-            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
-        })
-        await waitFor(() => {
-            expect(screen.getByLabelText(/Descripción/i)).toHaveDisplayValue('')
-        })
-    })
-    it('Doesnt show any result in the beginning at EntryDate space', async () => {
-        act(()=>{
-            renderWithRouter(<CreateFixedAssetForm />, "/crear-activo-fijo","/crear-activo-fijo")
-        })
-        await waitFor(() => {
-            expect(screen.getByLabelText(/Fecha de Entrada/i)).toHaveDisplayValue('')
-        })
-    })
     it('Doesnt show any result in the beginning at Price space', async () => {
         act(()=>{
             renderWithRouter(<CreateFixedAssetForm />, "/crear-activo-fijo","/crear-activo-fijo")
@@ -179,26 +163,6 @@ describe('Validating inputs from CreateFixedAssets component', () => {
             const priceInput = screen.getByLabelText(/Valor/i)
             priceInput.value = 'test'
             expect(priceInput).toHaveDisplayValue('')
-        })
-    })
-    it('EntryDate Input cant have more than 32 days', async () => {
-        act(()=>{
-            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
-        })       
-        await waitFor(() => {
-            const entryDateInput =screen.getByLabelText(/Fecha de Entrada/i)
-            entryDateInput.value = '2022-09-33'
-            expect(entryDateInput).toHaveDisplayValue('')
-        })
-    })
-    it('EntryDate Input cant have more than 12 months', async () => {
-        act(()=>{
-            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")            
-        })        
-        await waitFor(() => {
-            const entryDateInput = screen.getByLabelText(/Fecha de Entrada/i)
-            entryDateInput.value = '2022-13-03'
-            expect(entryDateInput).toHaveDisplayValue('')
         })
     })
 })

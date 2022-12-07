@@ -79,40 +79,30 @@ describe('Show Fixed Asset', () => {
     {
        "id":1,
        "name":"Asset name 1",
-       "description":"Description from asset 1",
-       "entryDate":"2022-10-16T20:00:00",
        "price":100.58,
        "quantity":5
     },
     {
        "id":2,
        "name":"Asset name 2",
-       "description":"Description from asset 2",
-       "entryDate":"2020-11-12T20:00:00",
        "price":100.58,
        "quantity":5
     },
     {
        "id":3,
        "name":"Asset name 3",
-       "description":"Description from asset 3",
-       "entryDate":"2022-09-11T00:00:00",
        "price":1000,
        "quantity":1
     },
     {
        "id":4,
        "name":"Asset name 4",
-       "description":"Description from asset 4",
-       "entryDate":"2022-09-11T00:00:00",
        "price":200,
        "quantity":1
     },
     {
        "id":5,
        "name":"Asset name 5",
-       "description":"Description from asset 5",
-       "entryDate":"2022-09-11T00:00:00",
        "price":100,
        "quantity":1
     }
@@ -124,8 +114,6 @@ describe('Show Fixed Asset', () => {
        "id":1,
        "code": "TEC-001",
        "name":"Asset name 1",
-       "description":null,
-       "entryDate":null,
        "price":100,
        "quantity":1
     },
@@ -133,8 +121,6 @@ describe('Show Fixed Asset', () => {
        "id":2,
        "code": "TEC-002",
        "name":"Asset name 2",
-       "description":null,
-       "entryDate":null,
        "price":100,
        "quantity":1
     },
@@ -142,8 +128,6 @@ describe('Show Fixed Asset', () => {
        "id":3,
        "code": "TEC-003",
        "name":"Asset name 3",
-       "description":null,
-       "entryDate":null,
        "price":100,
        "quantity":1
     },
@@ -151,8 +135,6 @@ describe('Show Fixed Asset', () => {
        "id":4,
        "code": "TEC-004",
        "name":"Asset name 4",
-       "description":null,
-       "entryDate":null,
        "price":100,
        "quantity":1
     },
@@ -160,8 +142,6 @@ describe('Show Fixed Asset', () => {
        "id":5,
        "code": "TEC-005",
        "name":"Asset name 5",
-       "description":null,
-       "entryDate":null,
        "price":100,
        "quantity":1
     }

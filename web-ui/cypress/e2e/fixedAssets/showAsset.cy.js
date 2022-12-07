@@ -10,7 +10,6 @@ describe('Show a fixed asset end to end tests', () => {
 
     cy.get('div')
     cy.contains('Computadora cypress')
-    cy.contains('Computadora de escritorio')
     cy.contains(2424.24)
     cy.contains('Obsoleto')
   });

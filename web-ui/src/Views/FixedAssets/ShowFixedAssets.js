@@ -99,8 +99,6 @@ export default function ShowFixedAssets() {
                         'TIPO': data.assetTypeType,
                         'ESTADO': data.assetStateState,
                         'RESPONSABLE': data.assetResponsibleName,
-                        'FECHA DE ENTRADA': data.entryDate!=null? new Date(data.entryDate).toLocaleDateString():null,
-                        'DESCRIPCIÓN': data.description,
                         'VALOR': data.price,
                         'PROGRAMA': data.programHouseName
                     }
