@@ -37,6 +37,7 @@ import AddEducationReport from './Views/KidsFiles/EducationReport/AddEducationRe
 import ListUsers from './Views/User/ListUsers'
 import Profile from './Views/User/Profile'
 import EditProfile from './Views/User/EditProfile'
+import ChangePassword from './Views/User/ChangePassword'
 
 let accesPermiss=sessionStorage.getItem("Access") 
 function App() {
@@ -49,6 +50,7 @@ function App() {
                     <Route path="/registrarse-ncv" element={<CreateUser />}></Route>
                     <Route path="/perfil-ncv" element={<Profile />}></Route>
                     <Route path="/editar-perfil" element={<EditProfile />}></Route>
+                    <Route path="/cambiar-contrasena" element={<ChangePassword />}></Route>
                     <Route path="/vista-usuarios" element={<ListUsers />}></Route>
                     <Route path="/registrar-nino" element={<AddKid />}></Route>
                     <Route
