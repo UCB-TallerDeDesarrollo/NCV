@@ -23,6 +23,41 @@ const healtReport = {
     healthProblems: ''
 }
 
+const bloodtypes = [
+    {
+        value: 'O+',
+        label: 'O+',
+    },
+    {
+        value: 'O-',
+        label: 'O-',
+    },
+    {
+      value: 'A+',
+      label: 'A+',
+    },
+    {
+      value: 'A-',
+      label: 'A-',
+    },
+    {
+        value: 'B+',
+        label: 'B+',
+    },
+    {
+        value: 'B-',
+        label: 'B-',
+    },
+    {
+        value: 'AB+',
+        label: 'AB+',
+    },
+    {
+        value: 'AB-',
+        label: 'AB-',
+    }
+
+  ];
 
 function EditHealthReport() {
     const navigate = useNavigate();
@@ -81,6 +116,8 @@ function EditHealthReport() {
                     </Alert>
                 </Collapse>
                 <InputText
+                    required
+                    select
                     id="bloodtype"
                     name="bloodType"
                     label="Grupo sanguineo"
@@ -88,6 +125,11 @@ function EditHealthReport() {
                     value={healthRep.bloodType}
                     onChange={handleInputChange}
                 >
+                {bloodtypes.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                    </MenuItem>
+                ))}
                 </InputText>
                 <InputText
                     id="ciDiscapacidad"
