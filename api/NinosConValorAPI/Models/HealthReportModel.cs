@@ -8,7 +8,6 @@ namespace NinosConValorAPI.Models
         public int KidId { get; set; }
         [Required]
         public string? BloodType { get; set; }
-        [Required]
         public string? CIDiscapacidad { get; set; }
         public string? PsychologicalDiagnosis { get; set; }
         public string? NeurologicalDiagnosis { get; set; }
