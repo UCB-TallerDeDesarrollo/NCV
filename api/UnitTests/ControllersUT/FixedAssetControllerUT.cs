@@ -25,10 +25,7 @@ namespace UnitTests.ControllersUT
             var fixedAssetModel = new FixedAssetModel()
             {
                 Name = "Computadora",
-                Description = "Computadora de escritorio",
-                EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
-                Features = "8Gb de RAM",
                 ProgramHouseId = 2,
                 AssetTypeId = 1
             };           
@@ -63,20 +60,14 @@ namespace UnitTests.ControllersUT
             {
                 Id = 1,
                 Name = "Computadora",
-                Description = "Computadora de escritorio",
-                EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
-                Features = "8Gb de RAM"
             };
 
             var fixedAsset2 = new FixedAssetModel()
             {
                 Id = 2,
                 Name = "Silla",
-                Description = "Silla de Madera",
-                EntryDate = new DateTime(2006, 6, 6),
                 Price = 20.32m,
-                Features = "Tachas de oro"
             };
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
             var mapper = config.CreateMapper();
@@ -100,10 +91,7 @@ namespace UnitTests.ControllersUT
             {
                 Id = 1,
                 Name = "Computadora",
-                Description = "Computadora de escritorio",
-                EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
-                Features = "8Gb de RAM"
             };
 
             var fixedAssetServiceMock = new Mock<IFixedAssetService>();
