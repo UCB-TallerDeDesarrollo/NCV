@@ -10,10 +10,40 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-staging:
     runs-on: windows-latest
     environment:
       name: Staging
+    defaults:
+      run:
+        working-directory: ./api
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+          include-prerelease: true
+      - run: |
+          rm .\NinosConValorAPI\appsettings.json
+          echo '{ "ConnectionStrings": { "NinosConValorDB": "${{ secrets.DB_CONNECTION_STRING }}" },' >> .\NinosConValorAPI\appsettings.json
+          echo '"Logging": { "LogLevel": { "Default": "Information", "Microsoft.AspNetCore": "Warning" } }, "AllowedHosts": "*", "AuthSettings": { "Key": "SuperSecretKey123456 ", "Audience": "http://NinosConValor.net","Issuer": "http://NinosConValor.net"}}' >> .\NinosConValorAPI\appsettings.json
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+
+      - name: dotnet publish
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/myapp
+  
+  build-production:
+    runs-on: windows-latest
+    environment:
+      name: Production
     defaults:
       run:
         working-directory: ./api
