@@ -68,7 +68,6 @@ function ChangePassword() {
 
     function handleChangePassword(){
         //Send to the API the new password for the user
-        setIdentityVerified(!identityVerified);
     }
 
     return ( 
@@ -134,6 +133,18 @@ function ChangePassword() {
                                         value={newPassword}
                                         required
                                         error={error.errorNewPassword.hasError}
+                                        endAdornment={
+                                            <InputAdornment position='end'>
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={() => setShowNewPassword(!showNewPassword)}
+                                                    onMouseDown={(event) => event.preventDefault()}
+                                                    edge="end"
+                                                >
+                                                    {showNewPassword ? <Visibility /> : <VisibilityOff />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        }
                                     />
                                 </div>
                                 <div className="form-outline mb-4">
