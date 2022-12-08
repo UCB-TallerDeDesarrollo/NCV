@@ -30,7 +30,7 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
         var healthReportElement = {
             "Tipo de Sangre" : healthReport.bloodType ,
             "CI Discapacitado" : healthReport.ciDiscapacidad ,
-            "Diagnostico Fisico" : healthReport.psychologicalDiagnosis ,
+            "Diagnostico Psicológico" : healthReport.psychologicalDiagnosis ,
             "Diagnostico Neurologico" : healthReport.neurologicalDiagnosis ,
             "Diagnostico especial" : healthReport.specialDiagnosis ,
             "Problemas de salud" : healthReport.healthProblems ,

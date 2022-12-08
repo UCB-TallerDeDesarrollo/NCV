@@ -128,7 +128,7 @@ function AddHealthReport() {
                     multiline={true}
                     id="PsychologicalDiagnosis"
                     name="PsychologicalDiagnosis"
-                    label="Diagnostico Fisico"
+                    label="Diagnostico Psicológico"
                     helperText="Opcional"
                     value={formReport.PsychologicalDiagnosis}
                     onChange={handleInputChange}
