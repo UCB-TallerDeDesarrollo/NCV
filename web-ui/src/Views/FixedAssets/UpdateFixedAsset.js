@@ -15,12 +15,12 @@ import axios from "axios"
 import { useParams } from 'react-router-dom'
 function UpdateFixedAssetForm(props) {
     const {fixedAssetId} = useParams()
-    var urlFixedAsset = `https://ncv-api.azurewebsites.net/api/fixedAssets/${fixedAssetId}`
-    const url = 'https://ncv-api.azurewebsites.net/api/fixedAssets'
-    const urlProgramHouses = 'https://ncv-api.azurewebsites.net/api/programHouses'
-    const urlCategories = 'https://ncv-api.azurewebsites.net/api/assetCategories'
-    const urlStates = 'https://ncv-api.azurewebsites.net/api/assetStates'
-    const urlResponsibles = 'https://ncv-api.azurewebsites.net/api/assetResponsibles'
+    var urlFixedAsset = `https://ncv-api-dev.azurewebsites.net/api/fixedAssets/${fixedAssetId}`
+    const url = 'https://ncv-api-dev.azurewebsites.net/api/fixedAssets'
+    const urlProgramHouses = 'https://ncv-api-dev.azurewebsites.net/api/programHouses'
+    const urlCategories = 'https://ncv-api-dev.azurewebsites.net/api/assetCategories'
+    const urlStates = 'https://ncv-api-dev.azurewebsites.net/api/assetStates'
+    const urlResponsibles = 'https://ncv-api-dev.azurewebsites.net/api/assetResponsibles'
 
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null)
@@ -144,7 +144,7 @@ function UpdateFixedAssetForm(props) {
     }
 
     function getTypesByCategory(id, setTypeNull=true){
-        const urlTypesByCategory = `https://ncv-api.azurewebsites.net/api/assetCategories/${id}/assetTypes`
+        const urlTypesByCategory = `https://ncv-api-dev.azurewebsites.net/api/assetCategories/${id}/assetTypes`
         let types=null
         let errorTypes=null
         axios.get(urlTypesByCategory).then(            
@@ -165,7 +165,7 @@ function UpdateFixedAssetForm(props) {
     }
 
     function getAssetsCodes(){        
-        const url = 'https://ncv-api.azurewebsites.net/api/fixedAssets/'
+        const url = 'https://ncv-api-dev.azurewebsites.net/api/fixedAssets/'
         getFixedAssets(url).then(
             response => {
                 if(response.name != "AxiosError"){

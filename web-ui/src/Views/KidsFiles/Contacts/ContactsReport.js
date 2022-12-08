@@ -29,7 +29,7 @@ const contactsForm = {
 
 function AddRowContacts({setContacts}){
     const {kidId} = useParams()
-    var url = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/contacts"
+    var url = "https://ncv-api-dev.azurewebsites.net/api/kids/" + kidId +"/contacts"
 
     const [contactsData, setcontactsData] = useState(contactsForm)
     const [open, setOpen] = useState(false)
@@ -129,7 +129,7 @@ function AddRowContacts({setContacts}){
 
 function Contacts({contactsData,setContacts}){
     const {kidId} = useParams()
-    var urlContacts = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/contacts/"
+    var urlContacts = "https://ncv-api-dev.azurewebsites.net/api/kids/" + kidId +"/contacts/"
 
     // hocks for delete function
     const [openToConfirm, setOpenToConfirm] = useState(false)

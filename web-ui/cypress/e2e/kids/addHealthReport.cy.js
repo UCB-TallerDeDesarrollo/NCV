@@ -12,7 +12,7 @@ describe('Add a Health report end to end tests', () => {
       cy.get('#submit_button').click();
   
       cy.clock();
-      cy.intercept('POST', 'https://ncv-api.azurewebsites.net/api/kids/6/healthreports',{
+      cy.intercept('POST', 'https://ncv-api-dev.azurewebsites.net/api/kids/6/healthreports',{
         fixture: 'Kids/listOfKids.json',
         statusCode: 201
       }).as('anKidPost',);

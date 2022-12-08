@@ -20,7 +20,7 @@ export default function DropdownListUser({itemsHeader, itemsSubheader, isOpened 
 
   console.log(itemsHeader)
   console.log(itemsSubheader)
-  const url = 'https://ncv-api.azurewebsites.net/api/auth'
+  const url = 'https://ncv-api-dev.azurewebsites.net/api/auth'
   const [isVisible, setIsVisible] = useState({});
   const [userSelect, setUserSelect] = useState(0)
   const navigate = useNavigate();

@@ -36,7 +36,7 @@ function LoginForm() {
             password
         }
         
-        fetch("https://ncv-api.azurewebsites.net/api/auth/Login", {
+        fetch("https://ncv-api-dev.azurewebsites.net/api/auth/Login", {
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
             },

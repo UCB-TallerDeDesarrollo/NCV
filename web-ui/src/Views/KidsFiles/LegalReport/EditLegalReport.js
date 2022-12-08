@@ -25,7 +25,7 @@ const legalReport = {
 function EditLegalReport() {
     const navigate = useNavigate();
     const {kidId} = useParams()
-    var urlLegalReport = "https://ncv-api.azurewebsites.net/api/kids/"+ kidId +"/legalreports"
+    var urlLegalReport = "https://ncv-api-dev.azurewebsites.net/api/kids/"+ kidId +"/legalreports"
     const [legalRep, setLegalRep] = useState(legalReport)
     const [open, setOpen] = useState(false)
 

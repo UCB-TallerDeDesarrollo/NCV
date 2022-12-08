@@ -19,8 +19,8 @@ const foundReport = {
 function AddFoundationReport() {
     const navigate = useNavigate();
     const {kidId} = useParams();
-    var url = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/foundationreport";
-    var urlkid = "https://ncv-api.azurewebsites.net/api/kids/" + kidId;
+    var url = "https://ncv-api-dev.azurewebsites.net/api/kids/" + kidId +"/foundationreport";
+    var urlkid = "https://ncv-api-dev.azurewebsites.net/api/kids/" + kidId;
 
     const [formReport, setformReport] = useState(foundReport);
     const [open, setOpen] = useState(false);

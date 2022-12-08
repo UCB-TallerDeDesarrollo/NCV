@@ -24,7 +24,7 @@ const foundationReport = {
 function EditFoundationReport() {
     const navigate = useNavigate();
     const {kidId} = useParams()
-    var urlFoundationReport = "https://ncv-api.azurewebsites.net/api/kids/"+ kidId +"/foundationreport"
+    var urlFoundationReport = "https://ncv-api-dev.azurewebsites.net/api/kids/"+ kidId +"/foundationreport"
     const [foundationRep, setFoundationRep] = useState(foundationReport)
     const [open, setOpen] = useState(false)
 

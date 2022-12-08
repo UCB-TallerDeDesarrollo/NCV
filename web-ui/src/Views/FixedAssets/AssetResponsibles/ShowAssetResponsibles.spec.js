@@ -7,8 +7,8 @@ import {act} from 'react-dom/test-utils'
 
 import {MemoryRouter, Route, Routes} from 'react-router-dom'
 
-const getAssetResponsiblesUrl ='https://ncv-api.azurewebsites.net/api/assetResponsibles'  
-const oneAssetResponsiblesUrl ='https://ncv-api.azurewebsites.net/api/assetResponsibles/1'   
+const getAssetResponsiblesUrl ='https://ncv-api-dev.azurewebsites.net/api/assetResponsibles'  
+const oneAssetResponsiblesUrl ='https://ncv-api-dev.azurewebsites.net/api/assetResponsibles/1'   
 
 const assetResponsibles =
   [

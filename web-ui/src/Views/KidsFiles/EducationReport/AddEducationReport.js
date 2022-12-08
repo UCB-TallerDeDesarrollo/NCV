@@ -20,7 +20,7 @@ const foundReport = {
 function AddEducationReport() {
     const navigate = useNavigate();
     const {kidId} = useParams();
-    var url = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/educationreports";
+    var url = "https://ncv-api-dev.azurewebsites.net/api/kids/" + kidId +"/educationreports";
 
     const [formReport, setformReport] = useState(foundReport);
     const [open, setOpen] = useState(false);

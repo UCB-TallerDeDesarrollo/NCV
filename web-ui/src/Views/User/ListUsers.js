@@ -23,7 +23,7 @@ import DropdownListUser from '../../Components/DropdownListUser'
 import DropdownList from '../../Components/DropdownList'
 
 function ListUsers() {
-    const url = 'https://ncv-api.azurewebsites.net/api/auth'
+    const url = 'https://ncv-api-dev.azurewebsites.net/api/auth'
    // const url="http://localhost:5009/api/auth";
 
     const location = useLocation()

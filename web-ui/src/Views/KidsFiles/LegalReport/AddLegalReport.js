@@ -19,7 +19,7 @@ const legalReport = {
 function AddLegalReport() {
     const navigate = useNavigate();
     const {kidId} = useParams()
-    var url = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/legalreports"
+    var url = "https://ncv-api-dev.azurewebsites.net/api/kids/" + kidId +"/legalreports"
 
     const [formReport, setformReport] = useState(legalReport)
     const [open, setOpen] = useState(false)

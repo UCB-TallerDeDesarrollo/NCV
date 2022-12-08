@@ -58,15 +58,15 @@ function ShowOneKidFile() {
 
 
 
-    const urlKid = 'https://ncv-api.azurewebsites.net/api/kids/'+ kidId
-    const urlHealthKid = 'https://ncv-api.azurewebsites.net/api/kids/'+ kidId +'/healthreports'
-    const urlBiometrics = 'https://ncv-api.azurewebsites.net/api/kids/'+ kidId +'/biometrics'
+    const urlKid = 'https://ncv-api-dev.azurewebsites.net/api/kids/'+ kidId
+    const urlHealthKid = 'https://ncv-api-dev.azurewebsites.net/api/kids/'+ kidId +'/healthreports'
+    const urlBiometrics = 'https://ncv-api-dev.azurewebsites.net/api/kids/'+ kidId +'/biometrics'
     const urlCreateFoundationReport = `/ninos/${kidId}/crear-reporte-estancia/`
-    const urlLegalKid = 'https://ncv-api.azurewebsites.net/api/kids/'+ kidId +'/legalreports'
-    const urlContacts = 'https://ncv-api.azurewebsites.net/api/kids/'+ kidId +'/contacts'
-    const urlFoundationReportKid = 'https://ncv-api.azurewebsites.net/api/kids/'+ kidId +'/foundationreport'
-    const urlFamilyReportKid = 'https://ncv-api.azurewebsites.net/api/kids/'+ kidId +'/familyreports'
-    const urlEducationKid = 'https://ncv-api.azurewebsites.net/api/kids/'+ kidId +'/educationreports'
+    const urlLegalKid = 'https://ncv-api-dev.azurewebsites.net/api/kids/'+ kidId +'/legalreports'
+    const urlContacts = 'https://ncv-api-dev.azurewebsites.net/api/kids/'+ kidId +'/contacts'
+    const urlFoundationReportKid = 'https://ncv-api-dev.azurewebsites.net/api/kids/'+ kidId +'/foundationreport'
+    const urlFamilyReportKid = 'https://ncv-api-dev.azurewebsites.net/api/kids/'+ kidId +'/familyreports'
+    const urlEducationKid = 'https://ncv-api-dev.azurewebsites.net/api/kids/'+ kidId +'/educationreports'
 
     const navigate = useNavigate();
     const navigateEditKid = () =>{ 

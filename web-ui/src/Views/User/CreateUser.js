@@ -72,7 +72,7 @@ const generatePassword=()=>{
 }
 function CreateUser() {
     const  [passwordGenerate, generatePasswordChange]=useState('')
-    var url = 'https://ncv-api.azurewebsites.net/api/auth'
+    var url = 'https://ncv-api-dev.azurewebsites.net/api/auth'
     //var url = 'http://localhost:5009/api/auth' 
     const navigate = useNavigate()
     const [open, setOpen] = useState(false)

@@ -24,7 +24,7 @@ const educationReport = {
 function EditEducationReport() {
     const navigate = useNavigate();
     const {kidId} = useParams()
-    var urlEducationReport = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/educationreports"
+    var urlEducationReport = "https://ncv-api-dev.azurewebsites.net/api/kids/" + kidId +"/educationreports"
     const [educationRep, setEducationRep] = useState(educationReport)
     const [open, setOpen] = useState(false)
 
