@@ -29,6 +29,7 @@ export function Profile() {
             })
         )
     }
+    //deberia enviar el id mas para verificar a que usuario se le cambio la contraseña
     const userData = {
         "Nombre": user.firstName,
         "Apellido": user.lastName,
@@ -41,6 +42,15 @@ export function Profile() {
         'https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg'
     
     const navigateEdit = () => { navigate(`/editar-perfil`); }
+    const navigateChangePassword = () => { navigate(`/cambiar-contrasena`) }
+
+    const buttonChangePassword = <ButtonPrimary 
+        label={'Cambiar Contraseña'}
+        onClick={navigateChangePassword}
+        sx={{
+            alignSelf:'flex-end' 
+        }}
+    /> 
 
     useEffect(() => {
         fetchData()
@@ -61,23 +71,23 @@ export function Profile() {
                 }}
             >
                 <SingleItemCard 
-                title={user.firstName} 
-                secondaryField={user.lastName} element={userData} imageUrl={imageUrl} 
-                imageCirle={false} 
-                imgHeight={300} imgWidth={500} />   
+                    title={user.firstName} 
+                    secondaryField={user.lastName} element={userData} imageUrl={imageUrl} 
+                    imageCirle={false} 
+                    imgHeight={300} imgWidth={500}
+                    button={buttonChangePassword} 
+                />   
                 <Box sx={{alignItems :'center'}}>
-                {false&&<ButtonPrimary
-                        label={'Editar'}
-                        onClick={navigateEdit}
-                        sx={{marginRight:1}}
-                    />}    
-                {false&&<ButtonPrimary
-                        label={'Cambiar Contrasena'}
-                        //onClick={handleFormSubmit}
-                        sx={{marginUp:1}}
-                    />  }  
-                    
-                    
+                    {false&&<ButtonPrimary
+                            label={'Editar'}
+                            onClick={navigateEdit}
+                            sx={{marginRight:1}}
+                        />}    
+                    {false&&<ButtonPrimary
+                            label={'Cambiar Contrasena'}
+                            //onClick={handleFormSubmit}
+                            sx={{marginUp:1}}
+                        />  }      
                     </Box> 
                 
             </div>
