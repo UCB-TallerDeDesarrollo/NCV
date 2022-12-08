@@ -3,7 +3,6 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NinosConValorAPI.Data.Entity;
-using NinosConValorAPI.Migrations;
 using NinosConValorAPI.Models;
 using System.Security.Cryptography;
 
