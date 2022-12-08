@@ -101,7 +101,7 @@ function EditHealthReport() {
                     multiline={true}
                     id="psychologicalDiagnosis"
                     name="psychologicalDiagnosis"
-                    label="Diagnostico Fisico"
+                    label="Diagnostico Psicológico"
                     helperText="Opcional"
                     value={healthRep.psychologicalDiagnosis}
                     onChange={handleInputChange}
