@@ -28,10 +28,10 @@ export default function DropdownList({itemsHeader, itemsSubheader, isOpened = fa
     didChange.current = isOpened
   }
   return (
-    <List sx={{ width: '100%', bgcolor: 'background.paper', alignItems :"flex-start" }}>
-      {itemsHeader.map((h)=>{
+    <List sx={{ width: '100%', bgcolor: 'background.paper', alignItems :"flex-start" }} key={0}>
+      {itemsHeader.map((h,i)=>{
         return (<>
-            <ListItemButton sx={{borderTop: 1, borderColor:'#CDCDCD', margin:0}} key={h.id} alignItems="flex-start"
+            <ListItemButton sx={{borderTop: 1, borderColor:'#CDCDCD', margin:0}} key={h.i} alignItems="flex-start"
               onClick={() => setIsVisible({
                 ...isVisible,
                 [h.title]: !isVisible?.[h.title],

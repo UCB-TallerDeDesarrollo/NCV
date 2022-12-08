@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import React, { useEffect, useState, useRef } from 'react'
 import Box from '@mui/material/Box'
 import ErrorPage from '../../Components/ErrorPage'

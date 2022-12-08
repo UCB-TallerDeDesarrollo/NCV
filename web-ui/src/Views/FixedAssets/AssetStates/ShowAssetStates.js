@@ -29,7 +29,6 @@ export default function ShowFixedAssets() {
     const [assetStates, setAssetStates] = useState(null)
     const [errorAssetStates, setErrorAssetStates] = useState(null)
     let errorsFromForm = null
-    const [assetState, setAssetState] = useState([]) 
     const [open, setOpen] = useState(showAlert)
     const [assetStateId, setAssetStateId] = useState(0)
     const [openToConfirm, setOpenToConfirm] = useState(false)
@@ -97,7 +96,7 @@ export default function ShowFixedAssets() {
         return errors     
     }
 
-    const handleSave = ({name,value,previousValue},id) => {
+    const handleSave = ({value,previousValue},id) => {
         if(value==previousValue || value=='') {
             window.location.reload()
         }      
@@ -159,8 +158,7 @@ export default function ShowFixedAssets() {
     } 
     if (errorCreateAssetState) return ErrorPage(errorCreateAssetState)
     if (errorUpdateAssetState) return ErrorPage(errorUpdateAssetState)
-    if (!assetStates) return null    
-    if (!assetState)return <h1>ERROR: Estado de activo fijo no encontrado en la base de datos</h1>
+    if (!assetStates) return null
     const assetStatesListElements = assetStates.map((assetState)=>{
         return {
             id:assetState.id, 

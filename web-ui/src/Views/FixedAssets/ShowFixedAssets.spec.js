@@ -1,5 +1,4 @@
 import {render, screen, waitFor} from '@testing-library/react';
-import {ShowFixedAsset} from './ShowOneFixedAsset';
 
 import {rest} from 'msw';
 import {setupServer} from 'msw/node';
