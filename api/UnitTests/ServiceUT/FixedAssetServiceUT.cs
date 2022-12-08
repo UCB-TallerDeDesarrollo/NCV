@@ -40,10 +40,7 @@ namespace UnitTests.ServiceUT
             {
                 Id = 1,
                 Name = "Computadora",
-                Description = "Computadora de escritorio",
-                EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
-                Features = "8Gb de RAM",
                 AssetType = assetType,
                 AssetState = assetState,
                 AssetResponsible = assetResponsible
@@ -81,10 +78,7 @@ namespace UnitTests.ServiceUT
             {
                 Id = 1,
                 Name = "Computadora",
-                Description = "Computadora de escritorio",
-                EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
-                Features = "8Gb de RAM",
                 AssetType = assetType
             };
 
@@ -92,10 +86,7 @@ namespace UnitTests.ServiceUT
             {
                 Id = 2,
                 Name = "Silla",
-                Description = "Silla de Madera",
-                EntryDate = new DateTime(2006, 6, 6),
                 Price = 20.32m,
-                Features = "Tachas de oro",
                 AssetType = assetType
             };
             var config = new MapperConfiguration(cfg => cfg.AddProfile<AutomapperProfile>());
@@ -122,10 +113,7 @@ namespace UnitTests.ServiceUT
             {
                 Id = 1,
                 Name = "Computadora",
-                Description = "Computadora de escritorio",
-                EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
-                Features = "8Gb de RAM",
                 AssetType = assetType
             };
 

@@ -288,10 +288,7 @@ namespace NinosConValorAPI.Data.Repository
             var fixedAssetToUpdate = await _dbContext.FixedAssets.FirstOrDefaultAsync(f => f.Id == fixedAssetId);
             fixedAssetToUpdate.Code = fixedAsset.Code ?? fixedAssetToUpdate.Code;
             fixedAssetToUpdate.Name = fixedAsset.Name ?? fixedAssetToUpdate.Name;
-            fixedAssetToUpdate.Description = fixedAsset.Description ?? fixedAssetToUpdate.Description;
-            fixedAssetToUpdate.EntryDate = fixedAsset.EntryDate ?? fixedAssetToUpdate.EntryDate;
             fixedAssetToUpdate.Price = fixedAsset.Price ?? fixedAssetToUpdate.Price;
-            fixedAssetToUpdate.Features = fixedAsset.Features ?? fixedAssetToUpdate.Features;
             fixedAssetToUpdate.Location = fixedAsset.Location ?? fixedAssetToUpdate.Location;
             fixedAssetToUpdate.ProgramHouse = fixedAsset.ProgramHouse ?? fixedAssetToUpdate.ProgramHouse;
             fixedAssetToUpdate.AssetType = fixedAsset.AssetType ?? fixedAssetToUpdate.AssetType;
