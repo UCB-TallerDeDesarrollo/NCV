@@ -19,8 +19,8 @@ function ChangePassword() {
     let parseToken = parseJwt(sessionStorage.getItem("jwt") )
     const navigate = useNavigate()
     const userIdLogin  = parseToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
-    //var url = 'https://ncv-api.azurewebsites.net/api/auth' + userIdLogin
-    var url = 'http://localhost:5009/api/auth/' + userIdLogin
+    var url = process.env.REACT_APP_BACKEND_URL+'/api/auth/ChangePass' 
+    //var url = 'http://localhost:5009/api/auth/ChangePass'
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)
     const [error, setError] = useState({
@@ -41,30 +41,29 @@ function ChangePassword() {
     const [verifyPassword, setVerifyPassword] = useState("");
     const [showVerifyPassword, setShowVerifyPassword] = useState(false)
     const [showNewPassword, setShowNewPassword] = useState(false)
-
-    useEffect(() => {
-        fetchData()
-        console.log(error.errorCheckPassword.hasError)
-        if (!error.errorCheckPassword.hasError && isSubmit){
-           console.log(user);
-        }
-    }, [error.errorCheckPassword.hasError])
-    console.log('user json: ', user)
+    
     
     const fetchData = () => {
         var responseUser = axios(url)
-        axios.all([responseUser]).then(
+        axios.post([responseUser]).then(
             axios.spread((...allData) => {
                 var dataUser = allData[0].data
                 setUser(dataUser)
             })
-        )
+            )
     }
-
+        
+    useEffect(() => {
+        fetchData()
+        console.log(error.errorCheckPassword.hasError)
+        if (!error.errorCheckPassword.hasError && isSubmit){
+            //console.log(user);
+        }
+    }, [error.errorCheckPassword.hasError])
     function handleSubmitChangePassword(event){
         //Send to the API the new password for the user
         event.preventDefault();
-        if(showNewPassword !== verifyPassword){
+        if(newPassword != verifyPassword){
             setError({
                 ...error,
                 "errorNewPassword": {
@@ -74,6 +73,31 @@ function ChangePassword() {
             });
             return;
         }
+        const passwordChangeData = {
+            CurrentPassword: password,
+            NewPassWord: newPassword,
+            VerifyNewPassWord: verifyPassword,
+            IdUser:userIdLogin
+        }
+        setIsSubmit(true)
+        axios
+            .post(url, passwordChangeData)
+            .then(function (response) {
+                if (response.status == 200) {
+                    navigate(`/perfil-ncv`, {
+                        state: {
+                            showAlert: true,
+                            alertMessage: 'Contraseña cambiada correctamente'
+                        }
+                    })
+                }
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    if (error.response.status >= 400|| error.response.status <= 500) 
+                        setOpen(true)
+                }
+            })
     }
 
     return ( 
