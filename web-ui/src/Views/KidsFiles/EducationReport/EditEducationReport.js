@@ -73,6 +73,9 @@ function EditEducationReport() {
         <><Navbar /><div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
             <FormContainer title="Modificar reporte de educación">
                 <Collapse in={open} sx={{width:1, pt:2}}>
+                    <Alert severity="error">
+                        {'El campo de "Rude" y/o "Unidad Educativa" esta vacio'}
+                    </Alert>
                 </Collapse>
                 <InputText
                     id="grade"
