@@ -72,7 +72,7 @@ jobs:
 
   deploy-staging:
     runs-on: windows-latest
-    needs: build
+    needs: [build-staging]
     environment:
       name: Staging
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
