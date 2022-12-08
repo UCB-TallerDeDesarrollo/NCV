@@ -1,17 +1,13 @@
 import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
 import { ListItemButton } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import { useState, useRef } from "react";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import { ButtonPrimaryEditIcon, ButtonPrimaryDeleteIcon } from './MUI-Button';
-import { EditText} from 'react-edit-text';
 import ListElement from './ListElement';
 
 export default function DropdownList({itemsHeader, itemsSubheader, isOpened = false, editable=false, withDeleteIcon=false, deleteAction=null,editActionOnSave=null, deleteActionHeader=null,editableWithHeader=false}) {
   const [isVisible, setIsVisible] = useState({});
-  const navigate = useNavigate();
   const didChange = useRef(false);
   const sxListItemText = {
     '& .MuiListItemText-primary': {
@@ -33,7 +29,7 @@ export default function DropdownList({itemsHeader, itemsSubheader, isOpened = fa
   }
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper', alignItems :"flex-start" }}>
-      {itemsHeader.map((h,i)=>{
+      {itemsHeader.map((h)=>{
         return (<>
             <ListItemButton sx={{borderTop: 1, borderColor:'#CDCDCD', margin:0}} key={h.id} alignItems="flex-start"
               onClick={() => setIsVisible({

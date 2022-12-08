@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import ErrorPage from '../../../Components/ErrorPage'
-import getFromApi from '../../../Components/GetFromApi'
+import GetFromApi from '../../../Components/GetFromApi'
 import Navbar from '../../../Components/NavBar'
 import ListContainer from '../../../Components/ListContainer'
 import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../../Components/MUI-Button'

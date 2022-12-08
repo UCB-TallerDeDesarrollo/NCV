@@ -19,7 +19,7 @@ export async function deleteFixedAssets(url){
   }
 }
 
-export default function getFromApi(url){
+export default function GetFromApi(url){
   const [apiData, setApiData] = useState(null);
   const [error, setError] = useState(null);
   useEffect(() => {

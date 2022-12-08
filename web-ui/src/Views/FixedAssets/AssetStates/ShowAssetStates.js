@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import ErrorPage from '../../../Components/ErrorPage'
-import getFromApi from '../../../Components/GetFromApi'
 import Navbar from '../../../Components/NavBar'
 import ListContainer from '../../../Components/ListContainer'
 import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../../Components/MUI-Button'
@@ -13,21 +12,20 @@ import DialogContentText from '@mui/material/DialogContentText'
 import Alert from '@mui/material/Alert'
 import { Snackbar } from '@mui/material'
 import ListGrid from '../../../Components/ListGrid'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import axios from "axios"
 import FormContainer from '../../../Components/FormContainer'
 import InputText from '../../../Components/InputText'
 
-var accesPermiss = sessionStorage.getItem("Access")
+let accesPermiss = sessionStorage.getItem("Access")
 
 export default function ShowFixedAssets() {
-    const navigate = useNavigate();
     const location = useLocation()    
     const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
     const [alertMessage, setAlertMessage] = useState(location.state ? location.state.alertMessage : null)
     const [severity, setSeverity] = useState(location.state ? location.state.severity : "success")
     const urlAssetStates = 'https://ncv-api.azurewebsites.net/api/assetStates'
-    let [urlAssetState, setUrlAssetState] = useState('https://ncv-api.azurewebsites.net/api/assetStates/')   
+    const urlAssetState = 'https://ncv-api.azurewebsites.net/api/assetStates/'
     const [assetStates, setAssetStates] = useState(null)
     const [errorAssetStates, setErrorAssetStates] = useState(null)
     let errorsFromForm = null
