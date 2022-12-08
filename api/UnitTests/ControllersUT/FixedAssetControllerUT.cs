@@ -35,10 +35,7 @@ namespace UnitTests.ControllersUT
             {
                 Id=1,
                 Name = "Computadora",
-                Description = "Computadora de escritorio",
-                EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
-                Features = "8Gb de RAM",
                 ProgramHouseId=2,
                 AssetTypeId=1
             });
