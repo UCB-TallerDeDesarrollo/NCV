@@ -62,6 +62,7 @@ function ChangePassword() {
     }, [error.errorCheckPassword.hasError])
     function handleSubmitChangePassword(event){
         //Send to the API the new password for the user
+<<<<<<< HEAD
         event.preventDefault();
         if(newPassword != verifyPassword){
             setError({
@@ -98,6 +99,8 @@ function ChangePassword() {
                         setOpen(true)
                 }
             })
+=======
+>>>>>>> 222212e (Little change in new password visibility)
     }
 
     return ( 
