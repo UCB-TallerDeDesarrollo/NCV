@@ -36,7 +36,7 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
 
 
   var emptyHeader = null
-  var insertDeleteIcon = null
+  var insertDeleteIcon = (id) => {}
 
   if (deleteAction != null){
     emptyHeader = <TableCell sx={{backgroundColor:'#CEECF2',fontWeight: 'fontWeightBold' }} key="emptyHeader" align={align}></TableCell>
