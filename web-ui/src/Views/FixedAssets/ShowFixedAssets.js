@@ -141,12 +141,13 @@ export default function ShowFixedAssets() {
     }
     if (!fixedAssets || !assetCategories || !programHouses) return null
 
+    acronymsList.push("TODOS")
+
     programHouses.map(programHouse => {
         acronymsList.push(programHouse.acronym)
     })
-    acronymsList.push("TODOS")
 
-    let idProgram = -1
+    let idProgram = 0
     let programHousesList = programHouses.map(programHouse => {
         idProgram++
         return {
@@ -154,10 +155,7 @@ export default function ShowFixedAssets() {
             value: idProgram
         }
     })
-    programHousesList[idProgram + 1] = {
-        label: "TODOS",
-        value: idProgram + 1
-    }
+    programHousesList.push({label: 'TODOS', value: 0})
 
     let statesList = states.map(state => {
         return {
