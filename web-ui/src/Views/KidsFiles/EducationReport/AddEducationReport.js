@@ -10,6 +10,7 @@ import axios from 'axios'
 import Navbar from '../../../Components/NavBar';
 import { Box } from '@mui/system';
 
+
 const foundReport = {
     grade: '',
     school: '',
@@ -34,6 +35,8 @@ function AddEducationReport() {
     }
 
     function handleFormSubmit() {
+       
+      
         axios.post(url, formReport)
           .then(function (response) {
             if (response.status == 201){
@@ -44,23 +47,23 @@ function AddEducationReport() {
             if (error.response){
                 if (error.response.status == 400 )
                     setOpen(true)
+                
             }
           });
+        
     }
     function handleClose() {
         navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de Educación no creado"}});
     }
-
     return (
         <><Navbar /><div style={{marginTop: '3em', display:'flex', justifyContent:'center'}}>
             <FormContainer title="Reporte de Educación">
                 <Collapse in={open} sx={{width:1, pt:2}}>
                     <Alert severity="error">
-                        {'El campo de "Rude" es requerido'}
+                        {'El campo de "Rude" y/o "Unidad Educativa" esta vacio'}
                     </Alert>
                 </Collapse>
                 <InputText
-                    required
                     id="Grade"
                     name="grade"
                     label="Grado Escolar"
