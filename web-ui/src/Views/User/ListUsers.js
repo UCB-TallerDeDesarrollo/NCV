@@ -8,7 +8,7 @@ import ButtonPrimary from '../../Components/MUI-Button'
 import GutterList from '../../Components/GutterList'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import TranslateRole from './Translate'
+import {TranslateRole} from './basicFunctionUser'
 import SearchBar from '../../Components/SearchBar'
 import { getListUsers } from './API/getAxios'
 import Dialog from '@mui/material/Dialog';
@@ -20,7 +20,6 @@ import { ButtonDanger, ButtonSecondary,   } from '../../Components/MUI-Button';
 import axios from "axios"
 var accesPermiss = sessionStorage.getItem("Access")
 import DropdownListUser from '../../Components/DropdownListUser'
-import DropdownList from '../../Components/DropdownList'
 
 function ListUsers() {
     const url = process.env.REACT_APP_BACKEND_URL + '/api/auth'

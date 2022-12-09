@@ -156,5 +156,20 @@ namespace NinosConValorAPI.Controllers
                 return Ok(result);
             return BadRequest(result);
         }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassword(ChangePassword model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var result = await _userService.ChangePassword(model);
+            if (result.IsSuccess)
+                return Ok(result); // Status Code: 200 
+
+            return BadRequest(result);
+        }
     }
 }

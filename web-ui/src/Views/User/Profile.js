@@ -7,17 +7,16 @@ import Navbar from '../../Components/NavBar'
 import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
 import SingleItemCard from '../../Components/SingleItemCard'
 import { Box } from '@mui/system'
-
+import {parseJwt} from './basicFunctionUser'
 
 export function Profile() {
     let parseToken=parseJwt(sessionStorage.getItem("jwt") )
     const navigate = useNavigate()
     const userIdLogin  = parseToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
-    var url = process.env.REACT_APP_BACKEND_URL + '/api/auth/' + userIdLogin
+   // var url = 'https://ncv-api-dev.azurewebsites.net/api/auth/' + userIdLogin
     //var url = 'http://localhost:5009/api/auth/' + userIdLogin
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)
-    const [formErrors, setFormErrors] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
 
     const fetchData = () => {
@@ -94,14 +93,5 @@ export function Profile() {
         </>
     )
 }
-function parseJwt (token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-    //debugger;
-    console.log(jsonPayload);
-    return JSON.parse(jsonPayload);
-};
+
 export default Profile
