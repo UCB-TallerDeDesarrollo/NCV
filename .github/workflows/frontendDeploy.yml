@@ -41,7 +41,7 @@ jobs:
       - name: E2E Tests
         uses: cypress-io/github-action@v4
         with:
-          build: npm run build
+          build: CI=false npm run build
           working-directory: web-ui/
           start: npm start
           wait-on: "http://localhost:3000"
