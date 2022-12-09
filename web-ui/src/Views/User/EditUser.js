@@ -13,7 +13,7 @@ import { useParams } from 'react-router-dom'
 
 import { Box } from '@mui/system'
 import MenuItem from '@mui/material/MenuItem'
-import TranslateRole from './Translate'
+import {TranslateRole} from './basicFunctionUser'
 const roles = [
     {
         label: 'Tia',
