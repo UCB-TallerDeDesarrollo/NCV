@@ -63,7 +63,6 @@ jobs:
       
       - name: Creating .env file
         run: |
-          rm ./.env
           echo REACT_APP_BACKEND_URL=${{ secrets.REACT_APP_BACKEND_URL }} >> ./.env
 
       - name: Preparing Build Directory
