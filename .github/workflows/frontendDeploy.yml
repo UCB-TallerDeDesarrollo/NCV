@@ -29,6 +29,11 @@ jobs:
 
       - name: Run ESLint
         run: npm run lint
+      
+      - name: Preparing Build Directory
+        run: npm run build
+        env:
+          CI: false
 
       - name: Unit Tests
         run: npm test -- --watchAll=false  --passWithNoTests
@@ -37,7 +42,7 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           working-directory: web-ui/
-          run: npm run build
+          build: npm run build
           start: npm start
           wait-on: "http://localhost:3000"
   
