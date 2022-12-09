@@ -3,7 +3,7 @@ sessionStorage.setItem('Access',"CompleteAccess")
 
 describe('Show a file kid end to end tests', () => {
     it('Verifies the fields from a single kid file', () => {
-      cy.intercept('GET', process.env.REACT_APP_BACKEND_URL + '/api/kids/42',{
+      cy.intercept('GET', 'https://ncv-api-dev.azurewebsites.net/api/kids/42',{
         fixture: 'fixedAssets/aBasicInfo.json'
       }).as('getBasicInfo',);
   

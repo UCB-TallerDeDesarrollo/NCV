@@ -3,7 +3,7 @@ sessionStorage.setItem('Access',"CompleteAccess")
 
 describe('Show delete button proofs that doesnt exist after delete action', () => {
     it('Verifies the delete button and that files are deleted', () => {
-      cy.intercept('GET', process.env.REACT_APP_BACKEND_URL + '/api/kids/42',{
+      cy.intercept('GET', 'https://ncv-api-dev.azurewebsites.netapi/kids/42',{
         fixture: 'fixedAssets/aBasicInfo.json'
       }).as('getBasicInfo',);
       cy.visit('/ninos/42');

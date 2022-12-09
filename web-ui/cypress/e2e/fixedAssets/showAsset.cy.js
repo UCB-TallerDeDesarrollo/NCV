@@ -2,7 +2,7 @@
 sessionStorage.setItem('Access',"CompleteAccess")
 describe('Show a fixed asset end to end tests', () => {
   it('Verifies the fields from a single fixed asset', () => {
-    cy.intercept('GET', process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets/9',{    
+    cy.intercept('GET', 'https://ncv-api-dev.azurewebsites.net/api/fixedAssets/9',{    
       fixture: 'fixedAssets/anAsset.json'
     }).as('getAnAsset',);
 
