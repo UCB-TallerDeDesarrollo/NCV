@@ -25,7 +25,7 @@ export function ShowFixedAsset() {
     let showAlert = location.state ? location.state.showAlert : false 
     let alertMessage = location.state ? location.state.alertMessage : null 
     const [open, setOpen] = useState(showAlert);
-    const url = `https://ncv-api-dev.azurewebsites.net/api/fixedAssets/${fixedAssetId}`  
+    const url = process.env.REACT_APP_BACKEND_URL + `/api/fixedAssets/${fixedAssetId}`  
     const { apiData:fixedAsset, error } = getFromApi(url)
     let imageUrl = "https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg" 
     const navigate = useNavigate();

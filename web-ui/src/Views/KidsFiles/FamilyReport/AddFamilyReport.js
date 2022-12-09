@@ -34,7 +34,7 @@ function AddFamilyReport() {
 
     const navigate = useNavigate();
     const {kidId} = useParams();
-    var url = "https://ncv-api-dev.azurewebsites.net/api/kids/" + kidId +"/familyreports";
+    var url = process.env.REACT_APP_BACKEND_URL + "/api/kids/" + kidId +"/familyreports";
 
     const [formReport, setformReport] = useState(familyReport);
     const [open, setOpen] = useState(false);

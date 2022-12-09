@@ -94,7 +94,7 @@ jobs:
   
   deploy-production:
     runs-on: windows-latest
-    needs: [deploy-staging]
+    needs: [deploy-staging, build-production]
     environment:
       name: Production
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}

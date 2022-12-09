@@ -9,10 +9,10 @@ import {MemoryRouter, Route, Routes} from 'react-router-dom'
 import ShowFixedAssets from './ShowFixedAssets';
 
 describe('Show Fixed Asset', () => {
-  const fixedAssetUrl ='https://ncv-api-dev.azurewebsites.net/api/fixedAssets'  
-  const fixedAssetCategoriesUrl ='https://ncv-api-dev.azurewebsites.net/api/assetCategories?showAssets=true'
-  const programHousesUrl ='https://ncv-api-dev.azurewebsites.net/api/programHouses'
-  const statesUrl = 'https://ncv-api-dev.azurewebsites.net/api/assetStates'
+  const fixedAssetUrl =process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets'  
+  const fixedAssetCategoriesUrl =process.env.REACT_APP_BACKEND_URL + '/api/assetCategories?showAssets=true'
+  const programHousesUrl =process.env.REACT_APP_BACKEND_URL + '/api/programHouses'
+  const statesUrl = process.env.REACT_APP_BACKEND_URL + '/api/assetStates'
 
   function getResponse(url, jsonData=null, code=200, text=null){
     const response = rest.get(url, (req, res, ctx) => {

@@ -26,7 +26,7 @@ export default function ShowAssetTypesByCategory() {
     const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
     const [alertMessage, setAlertMessage] = useState(location.state ? location.state.alertMessage : null)
     const [severity, setSeverity] = useState(location.state ? location.state.severity : "success")
-    const urlAssetCategories = 'https://ncv-api-dev.azurewebsites.net/api/assetCategories'   
+    const urlAssetCategories = process.env.REACT_APP_BACKEND_URL + '/api/assetCategories'   
     const [assetTypes, setAssetTypes] = useState(null)
     const [assetCategories, setAssetCategories] = useState(null)
     const [assetCategoryId, setAssetcategoryId] = useState(null)

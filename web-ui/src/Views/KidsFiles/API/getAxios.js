@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: "https://ncv-api-dev.azurewebsites.net"
+    baseURL: process.env.REACT_APP_BACKEND_URL + ""
 })
 
 export const getListKids = async () => {

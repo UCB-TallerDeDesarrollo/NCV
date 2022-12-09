@@ -2,7 +2,7 @@
 
 describe('Add a fixed asset end to end tests', () => {
     it('Creates a fixed asset', () => {
-      cy.intercept('GET', 'https://ncv-api-dev.azurewebsites.net/api/programHouses',{
+      cy.intercept('GET', process.env.REACT_APP_BACKEND_URL + '/api/programHouses',{
         fixture: 'programHouses/listOfProgramHouses.json',
         statusCode: 200
       }).as('programHouses',)     
@@ -18,7 +18,7 @@ describe('Add a fixed asset end to end tests', () => {
       cy.get('#submit_button').click()
   
       cy.clock()      
-      cy.intercept('POST', 'https://ncv-api-dev.azurewebsites.net/api/fixedAssets',{
+      cy.intercept('POST', process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets',{
         fixture: 'fixedAssets/listOfAssets.json',
         statusCode: 201
       }).as('anAssetPost',)

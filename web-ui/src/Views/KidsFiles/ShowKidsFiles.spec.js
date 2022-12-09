@@ -10,7 +10,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import '@testing-library/jest-dom'
 
 describe('Show Kids Files', () => {
-    const filesKidsUrl ='https://ncv-api-dev.azurewebsites.net/api/kids';
+    const filesKidsUrl =process.env.REACT_APP_BACKEND_URL + '/api/kids';
 
     function getResponse(url, jsonData=null, code=200, text=null){
       const response = rest.get(url, (req, res, ctx) => {

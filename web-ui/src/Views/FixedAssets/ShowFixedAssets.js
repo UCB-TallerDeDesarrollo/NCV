@@ -36,10 +36,10 @@ export default function ShowFixedAssets() {
     const acronymsList = []
 
     const completeInfoFixedAsset = '/activos-fijos'
-    const urlProgramHouses = 'https://ncv-api-dev.azurewebsites.net/api/programHouses'
-    const url = 'https://ncv-api-dev.azurewebsites.net/api/fixedAssets/'
-    const urlCategories = 'https://ncv-api-dev.azurewebsites.net/api/assetCategories?showAssets=true'
-    const urlStates = 'https://ncv-api-dev.azurewebsites.net/api/assetStates'
+    const urlProgramHouses = process.env.REACT_APP_BACKEND_URL + '/api/programHouses'
+    const url = process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets/'
+    const urlCategories = process.env.REACT_APP_BACKEND_URL + '/api/assetCategories?showAssets=true'
+    const urlStates = process.env.REACT_APP_BACKEND_URL + '/api/assetStates'
 
     let showAlert = location.state ? location.state.showAlert : false
     let alertMessage = location.state ? location.state.alertMessage : null

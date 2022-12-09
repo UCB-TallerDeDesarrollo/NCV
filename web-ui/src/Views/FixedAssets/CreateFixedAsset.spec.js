@@ -15,10 +15,10 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
       </MemoryRouter>
     )
   }
-  const programHousesUrl ='https://ncv-api-dev.azurewebsites.net/api/programHouses'
-  const categoriesUrl ='https://ncv-api-dev.azurewebsites.net/api/AssetCategories'  
-  const statesUrl ='https://ncv-api-dev.azurewebsites.net/api/AssetStates' 
-  const responsiblesUrl ='https://ncv-api-dev.azurewebsites.net/api/AssetResponsibles' 
+  const programHousesUrl =process.env.REACT_APP_BACKEND_URL + '/api/programHouses'
+  const categoriesUrl =process.env.REACT_APP_BACKEND_URL + '/api/AssetCategories'  
+  const statesUrl =process.env.REACT_APP_BACKEND_URL + '/api/AssetStates' 
+  const responsiblesUrl =process.env.REACT_APP_BACKEND_URL + '/api/AssetResponsibles' 
 
   function getResponse(url, jsonData=null, code=200, text=null){
       const response = rest.get(url, (req, res, ctx) => {

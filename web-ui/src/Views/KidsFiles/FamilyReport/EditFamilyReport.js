@@ -38,7 +38,7 @@ function EditFamilyReport() {
     var familyReport_hasOriginFamily;
     const navigate = useNavigate();
     const {kidId} = useParams()
-    var urlFamilyReport = "https://ncv-api-dev.azurewebsites.net/api/kids/" + kidId +"/familyreports"
+    var urlFamilyReport = process.env.REACT_APP_BACKEND_URL + "/api/kids/" + kidId +"/familyreports"
     const [familyRep, setFamilyRep] = useState(familyReport)
     const [open, setOpen] = useState(false)
 

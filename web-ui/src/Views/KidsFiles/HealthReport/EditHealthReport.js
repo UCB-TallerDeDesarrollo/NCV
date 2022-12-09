@@ -62,7 +62,7 @@ const bloodtypes = [
 function EditHealthReport() {
     const navigate = useNavigate();
     const {kidId} = useParams()
-    var urlHealthReport = "https://ncv-api-dev.azurewebsites.net/api/kids/"+ kidId +"/healthreports"
+    var urlHealthReport = process.env.REACT_APP_BACKEND_URL + "/api/kids/"+ kidId +"/healthreports"
     const [healthRep, setHealthRep] = useState(healtReport)
     const [open, setOpen] = useState(false)
 

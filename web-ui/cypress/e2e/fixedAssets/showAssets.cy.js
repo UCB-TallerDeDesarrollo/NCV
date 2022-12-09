@@ -3,16 +3,16 @@ sessionStorage.setItem('Access',"CompleteAccess")
 
 describe('Show fixed assets end to end tests', () => {
   it('Shows the list of fixed assets', () => {
-    cy.intercept('GET', 'https://ncv-api-dev.azurewebsites.net/api/assetCategories?showAssets=true',{    
+    cy.intercept('GET', process.env.REACT_APP_BACKEND_URL + '/api/assetCategories?showAssets=true',{    
       fixture: 'fixedAssets/assetCategories.json'
     }).as('getAssetCategories',);
-    cy.intercept('GET', 'https://ncv-api-dev.azurewebsites.net/api/fixedAssets',{    
+    cy.intercept('GET', process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets',{    
       fixture: 'fixedAssets/listOfAssets.json'
     }).as('listOfAssets',);
-    cy.intercept('GET', 'https://ncv-api-dev.azurewebsites.net/api/programHouses',{    
+    cy.intercept('GET', process.env.REACT_APP_BACKEND_URL + '/api/programHouses',{    
       fixture: 'programHouses/listOfProgramHouses.json'
     }).as('listOfProgramHouses',);
-    cy.intercept('GET', 'https://ncv-api-dev.azurewebsites.net/api/assetStates',{    
+    cy.intercept('GET', process.env.REACT_APP_BACKEND_URL + '/api/assetStates',{    
       fixture: 'fixedAssets/assetStates.json'
     }).as('listOfAssetStates',);
 
@@ -34,16 +34,16 @@ describe('Show fixed assets end to end tests', () => {
     .should('have.length', 9)
   });
   it('Verifies the fields from a fixed asset category form the list', () => {
-    cy.intercept('GET', 'https://ncv-api-dev.azurewebsites.net/api/assetCategories?showAssets=true',{    
+    cy.intercept('GET', process.env.REACT_APP_BACKEND_URL + '/api/assetCategories?showAssets=true',{    
       fixture: 'fixedAssets/assetCategories.json'
     }).as('getAssetCategories',);
-    cy.intercept('GET', 'https://ncv-api-dev.azurewebsites.net/api/fixedAssets',{    
+    cy.intercept('GET', process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets',{    
       fixture: 'fixedAssets/listOfAssets.json'
     }).as('listOfAssets',);
-    cy.intercept('GET', 'https://ncv-api-dev.azurewebsites.net/api/programHouses',{    
+    cy.intercept('GET', process.env.REACT_APP_BACKEND_URL + '/api/programHouses',{    
       fixture: 'programHouses/listOfProgramHouses.json'
     }).as('listOfProgramHouses',);
-    cy.intercept('GET', 'https://ncv-api-dev.azurewebsites.net/api/assetStates',{    
+    cy.intercept('GET', process.env.REACT_APP_BACKEND_URL + '/api/assetStates',{    
       fixture: 'fixedAssets/assetStates.json'
     }).as('listOfAssetStates',);
 

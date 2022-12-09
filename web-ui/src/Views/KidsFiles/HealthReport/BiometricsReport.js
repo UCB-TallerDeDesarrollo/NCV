@@ -39,7 +39,7 @@ const biometricsForm = {
 
 function AddRowWeightAndHeight({setBiometrics}){
     const {kidId} = useParams()
-    var url = "https://ncv-api-dev.azurewebsites.net/api/kids/" + kidId +"/biometrics"
+    var url = process.env.REACT_APP_BACKEND_URL + "/api/kids/" + kidId +"/biometrics"
 
     const [biometricsData, setbiometricsData] = useState(biometricsForm)
     const [open, setOpen] = useState(false)
