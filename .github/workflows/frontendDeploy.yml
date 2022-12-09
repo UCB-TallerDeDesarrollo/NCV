@@ -45,8 +45,6 @@ jobs:
           working-directory: web-ui/
           start: npm start
           wait-on: "http://localhost:3000"
-        env: 
-          CI: false
   
   deploy-staging:
     name: Deploy to staging
