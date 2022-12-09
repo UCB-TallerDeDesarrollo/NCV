@@ -54,6 +54,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install Dependencies
         run: npm install
+      
+      - name: Creating .env file
+        run: |
+          rm .env
+          echo REACT_APP_BACKEND_URL=${{ secrets.REACT_APP_BACKEND_URL }} >> .env
 
       - name: Preparing Build Directory
         run: npm run build
@@ -82,6 +87,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install Dependencies
         run: npm install
+      
+      - name: Creating .env file
+        run: |
+          rm .env
+          echo REACT_APP_BACKEND_URL=${{ secrets.REACT_APP_BACKEND_URL }} >> .env
 
       - name: Preparing Build Directory
         run: npm run build
