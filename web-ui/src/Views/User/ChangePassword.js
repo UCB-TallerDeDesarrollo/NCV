@@ -33,7 +33,6 @@ function ChangePassword() {
         }
     });
     const [isSubmit, setIsSubmit] = useState(false)
-    const [identityVerified, setIdentityVerified] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const [password, setPassword] = useState("")
@@ -61,13 +60,19 @@ function ChangePassword() {
         )
     }
 
-    function handleVerifyIdentity(){
-        //Send to the API if the password or the user is correct
-        setIdentityVerified(!identityVerified);
-    }
-
-    function handleChangePassword(){
+    function handleSubmitChangePassword(event){
         //Send to the API the new password for the user
+        event.preventDefault();
+        if(showNewPassword !== verifyPassword){
+            setError({
+                ...error,
+                "errorNewPassword": {
+                    "hasError": true,
+                    "message": "Las contraseñas nuevas no coinciden"
+                }
+            });
+            return;
+        }
     }
 
     return ( 
@@ -81,47 +86,38 @@ function ChangePassword() {
                 }}
             >
                 <FormContainer title='Cambiar Contraseña'>
-                    <div className='form-align'>
-                        <p>Ingresa tu contraseña actual para verificar tu identidad</p>
-                        <InputPassword
-                            type={showVerifyPassword ? "text" : "password"}
-                            id="input-text-verify-password"
-                            label="Contraseña"
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                            required
-                            disabled={identityVerified}
-                            error={error.errorCheckPassword.hasError}
-                            endAdornment={
-                                <InputAdornment position='end'>
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={() => setShowVerifyPassword(!showVerifyPassword)}
-                                        onMouseDown={(event) => event.preventDefault()}
-                                        disabled={identityVerified}
-                                        edge="end"
-                                    >
-                                        {showVerifyPassword ? <Visibility /> : <VisibilityOff />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                        />
-                        <div className='m-4'>
-                            {
-                                identityVerified && 
-                                <Alert id="verify-succes" severity="success">
-                                    Su contraseña ha sido verificada!
-                                </Alert>
-                            }
-                            {
-                                error.errorCheckPassword.hasError && 
-                                <Alert id="alert-bad-user" severity="error">
-                                    {error.errorCheckPassword.message}
-                                </Alert>
-                            }
-                        </div>
-                        {
-                            identityVerified &&
+                    <form onSubmit={handleSubmitChangePassword}>
+                        <div className='form-align'>
+                            <p>Ingresa tu contraseña actual para verificar tu identidad</p>
+                            <InputPassword
+                                type={showVerifyPassword ? "text" : "password"}
+                                id="input-text-verify-password"
+                                label="Contraseña"
+                                onChange={(e) => setPassword(e.target.value)}
+                                value={password}
+                                required
+                                error={error.errorCheckPassword.hasError}
+                                endAdornment={
+                                    <InputAdornment position='end'>
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={() => setShowVerifyPassword(!showVerifyPassword)}
+                                            onMouseDown={(event) => event.preventDefault()}
+                                            edge="end"
+                                        >
+                                            {showVerifyPassword ? <Visibility /> : <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                            <div>
+                                {
+                                    error.errorCheckPassword.hasError && 
+                                    <Alert id="alert-bad-user" severity="error" sx={{margin: 4}}>
+                                        {error.errorCheckPassword.message}
+                                    </Alert>
+                                }
+                            </div>
                             <div>
                                 <p>Ingrese su nueva contraseña: </p>
                                 <div className="form-outline mb-4">
@@ -158,23 +154,25 @@ function ChangePassword() {
                                         error={error.errorNewPassword.hasError}
                                     />
                                 </div>
+                            </div>
+                            <div>
                                 {
                                     error.errorNewPassword.hasError && 
-                                    <Alert id="alert-bad-user" severity="error">
+                                    <Alert id="alert-bad-user" severity="error" sx={{margin: 4}}>
                                         {error.errorNewPassword.message}
                                     </Alert>
                                 }
                             </div>
-                        }
-                        <div className="pt-1 m-1">
-                            <ButtonLoading 
-                                id="input-verify-password" 
-                                label={identityVerified ? "Cambiar contraseña" : "Verificar contraseña"} 
-                                loading={isLoading} 
-                                onClick={identityVerified ? handleChangePassword : handleVerifyIdentity}
-                            />  
+                            <div className="pt-1 m-1">
+                                <ButtonLoading 
+                                    id="input-verify-password" 
+                                    label="Camibar contraseña"
+                                    loading={isLoading} 
+                                    type="submit"                            
+                                />  
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </FormContainer>
             </div>
         </>
