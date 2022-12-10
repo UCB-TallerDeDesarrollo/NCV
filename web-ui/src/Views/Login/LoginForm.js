@@ -32,8 +32,8 @@ function LoginForm() {
         setIsLoading(true);
         event.preventDefault()
         const user = {
-            email,
-            password
+            email: email,
+            password: password
         }
         
         fetch(process.env.REACT_APP_BACKEND_URL + "/api/auth/Login", {
