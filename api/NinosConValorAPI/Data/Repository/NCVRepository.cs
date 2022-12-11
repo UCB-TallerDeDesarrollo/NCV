@@ -105,7 +105,17 @@ namespace NinosConValorAPI.Data.Repository
             //_dbContext.Entry(biometrics.Kid).State = EntityState.Detached;
             return biometrics;
         }
-
+        public async Task DeleteBiometricsAsync(int kidId, int biometricsId)
+        {
+            var biometricsToDelete = await _dbContext.Biometrics.FirstOrDefaultAsync(d => d.Kid.Id == kidId && d.Id == biometricsId);
+            _dbContext.Biometrics.Remove(biometricsToDelete);
+        }
+        public async Task<BiometricsEntity> GetBiometricsAsync(int kidId, int biometricsId)
+        {
+            IQueryable<BiometricsEntity> query = _dbContext.Biometrics;
+            query = query.AsNoTracking();
+            return await query.FirstOrDefaultAsync(d => d.Id == biometricsId && d.Kid.Id == kidId);
+        }
         // CONTACTS
 
         public async Task<IEnumerable<ContactEntity>> GetContactsAsync(int kidId)
