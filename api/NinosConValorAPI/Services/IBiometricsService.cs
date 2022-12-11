@@ -8,6 +8,6 @@ namespace NinosConValorAPI.Services
         Task<IEnumerable<BiometricsModel>> GetBiometricsAsync(int kidId);
 
         Task DeleteBiometricsAsync(int kidId, int biometricsId);
-        Task<BiometricsModel> GetBiometricsAsync(int kidId, int biometricsId);
+        Task<BiometricsModel> GetBiometricAsync(int kidId, int biometricsId);
     }
 }
