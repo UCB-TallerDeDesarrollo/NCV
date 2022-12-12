@@ -10,7 +10,7 @@ function issLoggin(obtainRole){
             case "Administrador":
                 permiss="CompleteAccess"
                 break;
-            case "AuntUser":
+            case "Tia":
                 permiss="RestriccionAccess"
                 break;
             case "Equipo Tecnico":
