@@ -51,5 +51,23 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
             }
         }
+        [HttpDelete("{biometricsId}")]
+        public async Task<ActionResult> DeleteBiometricsAsync(int kidId, int biometricsId)
+        {
+            try
+            {
+                await _biometricsService.DeleteBiometricsAsync(kidId, biometricsId);
+                return Ok();
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
+            }
+        }
+
     }
 }
