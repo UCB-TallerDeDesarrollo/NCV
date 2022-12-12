@@ -20,7 +20,7 @@ function ChangePassword() {
     const navigate = useNavigate()
     const userIdLogin  = parseToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
     //var url = 'https://ncv-api.azurewebsites.net/api/auth' + userIdLogin
-    var url = 'http://localhost:5009/api/auth/' + userIdLogin
+    var url = 'http://localhost:5009/api/auth/ChangePass'
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)
     const [error, setError] = useState({
@@ -41,7 +41,11 @@ function ChangePassword() {
     const [verifyPassword, setVerifyPassword] = useState("");
     const [showVerifyPassword, setShowVerifyPassword] = useState(false)
     const [showNewPassword, setShowNewPassword] = useState(false)
-
+    const passwordChangeData = {
+        currentPass: password,
+        newPass: newPassword,
+        validatePass: verifyPassword
+    }
     useEffect(() => {
         fetchData()
         console.log(error.errorCheckPassword.hasError)
@@ -49,11 +53,11 @@ function ChangePassword() {
            console.log(user);
         }
     }, [error.errorCheckPassword.hasError])
-    console.log('user json: ', user)
+    //console.log('user json: ', user)
     
     const fetchData = () => {
         var responseUser = axios(url)
-        axios.all([responseUser]).then(
+        axios.post([responseUser]).then(
             axios.spread((...allData) => {
                 var dataUser = allData[0].data
                 setUser(dataUser)
@@ -64,7 +68,7 @@ function ChangePassword() {
     function handleSubmitChangePassword(event){
         //Send to the API the new password for the user
         event.preventDefault();
-        if(showNewPassword !== verifyPassword){
+        if(newPassword != verifyPassword){
             setError({
                 ...error,
                 "errorNewPassword": {
