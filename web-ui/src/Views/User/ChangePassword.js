@@ -19,8 +19,13 @@ function ChangePassword() {
     let parseToken = parseJwt(sessionStorage.getItem("jwt") )
     const navigate = useNavigate()
     const userIdLogin  = parseToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
+<<<<<<< HEAD
     var url = process.env.REACT_APP_BACKEND_URL+'/api/auth/ChangePass' 
     //var url = 'http://localhost:5009/api/auth/ChangePass'
+=======
+    //var url = 'https://ncv-api.azurewebsites.net/api/auth' + userIdLogin
+    var url = 'http://localhost:5009/api/auth/ChangePass'
+>>>>>>> 5769e22 (Correcion en el perfil)
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)
     const [error, setError] = useState({
@@ -41,7 +46,23 @@ function ChangePassword() {
     const [verifyPassword, setVerifyPassword] = useState("");
     const [showVerifyPassword, setShowVerifyPassword] = useState(false)
     const [showNewPassword, setShowNewPassword] = useState(false)
+<<<<<<< HEAD
     
+=======
+    const passwordChangeData = {
+        currentPass: password,
+        newPass: newPassword,
+        validatePass: verifyPassword
+    }
+    useEffect(() => {
+        fetchData()
+        console.log(error.errorCheckPassword.hasError)
+        if (!error.errorCheckPassword.hasError && isSubmit){
+           console.log(user);
+        }
+    }, [error.errorCheckPassword.hasError])
+    //console.log('user json: ', user)
+>>>>>>> 5769e22 (Correcion en el perfil)
     
     const fetchData = () => {
         var responseUser = axios(url)

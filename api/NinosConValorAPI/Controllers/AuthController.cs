@@ -157,7 +157,7 @@ namespace NinosConValorAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost]
+        [HttpPost("ChangePass")]
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePassword(ChangePassword model)
         {

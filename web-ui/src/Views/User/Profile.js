@@ -14,9 +14,8 @@ export function Profile() {
     const navigate = useNavigate()
     const userIdLogin  = parseToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
     //Produccion
-    var url = 'https://ncv-api.azurewebsites.net/api/auth/' + userIdLogin
-    //desarrollo
-   // var url = 'https://ncv-api-dev.azurewebsites.net/api/auth/' + userIdLogin
+    var url = process.env.REACT_APP_BACKEND_URL + '/api/auth/' +  userIdLogin
+    const [formErrors, setFormErrors] = useState({})
     //var url = 'http://localhost:5009/api/auth/' + userIdLogin
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)
