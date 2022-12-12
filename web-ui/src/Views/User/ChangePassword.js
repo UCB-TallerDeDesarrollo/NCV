@@ -20,12 +20,17 @@ function ChangePassword() {
     const navigate = useNavigate()
     const userIdLogin  = parseToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
 <<<<<<< HEAD
+<<<<<<< HEAD
     var url = process.env.REACT_APP_BACKEND_URL+'/api/auth/ChangePass' 
     //var url = 'http://localhost:5009/api/auth/ChangePass'
 =======
     //var url = 'https://ncv-api.azurewebsites.net/api/auth' + userIdLogin
     var url = 'http://localhost:5009/api/auth/ChangePass'
 >>>>>>> 5769e22 (Correcion en el perfil)
+=======
+    var url = process.env.REACT_APP_BACKEND_URL+'/api/auth/ChangePass' 
+    //var url = 'http://localhost:5009/api/auth/ChangePass'
+>>>>>>> deda14c (Ya se cambia la contrasena del usuario que inicio sesion)
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)
     const [error, setError] = useState({
@@ -47,6 +52,7 @@ function ChangePassword() {
     const [showVerifyPassword, setShowVerifyPassword] = useState(false)
     const [showNewPassword, setShowNewPassword] = useState(false)
 <<<<<<< HEAD
+<<<<<<< HEAD
     
 =======
     const passwordChangeData = {
@@ -63,6 +69,9 @@ function ChangePassword() {
     }, [error.errorCheckPassword.hasError])
     //console.log('user json: ', user)
 >>>>>>> 5769e22 (Correcion en el perfil)
+=======
+    
+>>>>>>> deda14c (Ya se cambia la contrasena del usuario que inicio sesion)
     
     const fetchData = () => {
         var responseUser = axios(url)
@@ -120,8 +129,11 @@ function ChangePassword() {
                         setOpen(true)
                 }
             })
+<<<<<<< HEAD
 =======
 >>>>>>> 222212e (Little change in new password visibility)
+=======
+>>>>>>> deda14c (Ya se cambia la contrasena del usuario que inicio sesion)
     }
 
     return ( 
