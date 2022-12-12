@@ -83,29 +83,7 @@ const fetchDeleteUSer = () => {
       setOpenToConfirm(false)        
   })
 }
-  /*const fetchDeleteUSer = () => {  
-    
-    axios.delete(url + "/"+userSelect.id)
-    console.log('f')     
-    navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario eliminado exitosamente"}})
-       
-        //.then(function (response) {
-            
-            //if (response.status == 200){
-                //setShowAlert(true)
-                //setAlertMessage("Usuario Eliminado")
-                //setSeverity("success")
-                //setOpen(true)
-                //setOpenToConfirm(false)  
-                //navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario eliminado exitosamente"}})   
-                //navigate(`/vista-usuarios`)                                       
-            //}   
-        //})
-        /*.catch(err=> {
-            setErrorAssetStateDelete(err)     
-            setOpenToConfirm(false)        
-        })
-     } */
+  
   
 
   return (
@@ -127,16 +105,16 @@ const fetchDeleteUSer = () => {
                         if (h.title == n.nameRole) {
                           return(
                             <ListItem
-                    key={n.id ? n.id : i} id={n.id}  description={n.description} elementUrl={n.elementUrl} 
+                              key={n.id ? n.id : i} id={n.id}  description={n.description} elementUrl={n.elementUrl} 
 
-                    secondaryAction={
-                        <Box sx={{alignSelf:'flex-end', display:'flex-end'}}>
-                            <ButtonPrimaryEditIcon   aria-label="Editar" id="edit_button" onClick={() => navigate(n.elementUrl)}  sx={{color:'primary', marginLeft:1, alignSelf:'flex-end' } }title={"Editar"}/>
-                            {withDeleteIcon && 
-                                <ButtonPrimaryDeleteIcon  id="delete_button"  sx={{marginLeft:1, alignSelf:'flex-end'}} title={"Eliminar"} onClick={()=>{deleteAction(n)}}/>
-                            }
-                        </Box>
-                    }
+                              secondaryAction={
+                                  <Box sx={{alignSelf:'flex-end', display:'flex-end'}}>
+                                      <ButtonPrimaryEditIcon   aria-label="Editar" id="edit_button" onClick={() => navigate(n.elementUrl)}  sx={{color:'primary', marginLeft:1, alignSelf:'flex-end' } }title={"Editar"}/>
+                                      {withDeleteIcon && 
+                                          <ButtonPrimaryDeleteIcon  id="delete_button"  sx={{marginLeft:1, alignSelf:'flex-end'}} title={"Eliminar"} onClick={()=>{deleteAction(n)}}/>
+                                      }
+                                  </Box>
+                        }
 
 
                 >
@@ -152,7 +130,7 @@ const fetchDeleteUSer = () => {
             <DialogTitle sx={{display:'flex', justifyContent:'center'}}>Eliminar</DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    ¿Desea eliminar todos los datos?
+                    ¿Desea eliminar todos los datos {userSelect.title}?
                 </DialogContentText>
             </DialogContent>
             <DialogActions sx={{display:'flex',flexDirection:'row', alignItems:'center', justifyContent:'center'}}>

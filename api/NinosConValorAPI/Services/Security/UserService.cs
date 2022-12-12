@@ -249,23 +249,7 @@ namespace NinosConValorAPI.Services.Security
                 IsSuccess = false
             };
         }
-        public async Task<UserManagerResponse> RegisterAdminUserAsync(RegisterViewModel model)
-        {
-            return await RegisterUserRole(model, "AdminUser");
-
-        }
-
-        public async Task<UserManagerResponse> RegisterAuntUserAsync(RegisterViewModel model)
-        {
-            return await RegisterUserRole(model, "AuntUser");
-
-        }
-
-        public async Task<UserManagerResponse> RegisterSuperUserAsync(RegisterViewModel model)
-        {
-            return await RegisterUserRole(model, "Soporte");
-
-        }
+        
 
         public async Task<UserManagerResponse> RegisterUserRole(RegisterViewModel model, string role)
         {
@@ -275,13 +259,13 @@ namespace NinosConValorAPI.Services.Security
             var user = await userManager.FindByEmailAsync(model.Email);
             var userId = user.Id;
 
-            var adminRole = await roleManager.FindByNameAsync(role);
-            var adminRoleId = adminRole.Id;
+            var nameRole = await roleManager.FindByNameAsync(role);
+            var roleId = nameRole.Id;
 
             var userRoleModel = new CreateUserRoleViewModel()
             {
                 UserId = userId,
-                RoleId = adminRoleId
+                RoleId = roleId
             };
 
             var assignedRoleResponse = await CreateUserRoleAsync(userRoleModel);
@@ -378,6 +362,27 @@ namespace NinosConValorAPI.Services.Security
                 return new UserManagerResponse
                 {
                     Token = $"User deleted successfully",
+                    IsSuccess = true,
+                };
+            }
+
+            return new UserManagerResponse
+            {
+                Token = $"Something happened",
+                IsSuccess = false,
+            };
+        }
+
+        public async Task<UserManagerResponse> ChangePassword(ChangePassword model)
+        {
+            var user = await userManager.FindByIdAsync(model.IdUser);
+            var respons = await userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+            var result = await userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return new UserManagerResponse
+                {
+                    Token = $"User change password successfully",
                     IsSuccess = true,
                 };
             }
