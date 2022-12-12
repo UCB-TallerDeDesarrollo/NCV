@@ -36,7 +36,7 @@ function FoundationReport({kidId, foundationReport, foundationReportStatusCode})
             "Tiempo total de su estancia" : foundationReport.timeInFoundation,
         }
         foundationReportComponent = <><SingleItemCard key={1} element={foundationReportElement} title={"Reporte de Estancia"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}} />
-        {(accesPermiss=="CompleteAccess") || (accesPermiss=="MediumAccess")&&<ButtonPrimaryEditIcon onClick={navigateEditFoundationReport} sx={{alignSelf:'flex-end', left: '90%', background: '#5BCCD9', borderRadius: '50%', width: '50px', height: '50px'}}/>}</>
+        {((accesPermiss=="CompleteAccess") || (accesPermiss=="MediumAccess"))&&<ButtonPrimaryEditIcon onClick={navigateEditFoundationReport} sx={{alignSelf:'flex-end', left: '90%', background: '#5BCCD9', borderRadius: '50%', width: '50px', height: '50px'}}/>}</>
     }
     return foundationReportComponent
 }

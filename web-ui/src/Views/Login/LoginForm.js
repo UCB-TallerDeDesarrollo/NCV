@@ -7,7 +7,7 @@ import InputText, {InputPassword} from '../../Components/InputText'
 import { ButtonLoading } from '../../Components/MUI-Button';
 import FormContainer from '../../Components/FormContainer'
 import './LoginForm.css'
-import issLoggin from '../../security';
+import {issLoggin} from '../../security';
 import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 

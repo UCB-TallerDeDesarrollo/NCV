@@ -24,7 +24,7 @@ const user = {
 const roles = [
     {
         label: 'Tia',
-        value: 'AuntUser'
+        value: 'Tia'
     },
     {
         label: 'Administrador',
@@ -184,10 +184,10 @@ function CreateUser() {
         return errors;
 
     }
-    /*let pass=generatePassword()
+    let pass=generatePassword()
     data.password=pass
     data.confirmPassword=pass
-    console.log(pass)*/
+    console.log(pass)
     return (
         <>
             <Navbar />
@@ -260,7 +260,7 @@ function CreateUser() {
                         name="password"
                         label="Contraseña"
                         type="password"
-                        value={data.password}
+                        value={pass}
                         onChange={handleInputChange}
                     />
                     {formErrors.password? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 
@@ -274,7 +274,7 @@ function CreateUser() {
                         label="Confirmar contraseña"
                         type="password"
                         
-                        value={data.confirmPassword}
+                        value={pass}
                         onChange={handleInputChange}
                     />
                     {formErrors.confirmPassword? <Alert sx={{ width: 1, pt: 1 }} severity="error"> 

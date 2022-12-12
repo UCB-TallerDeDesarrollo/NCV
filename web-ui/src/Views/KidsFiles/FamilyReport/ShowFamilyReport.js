@@ -50,7 +50,8 @@ function FamilyReport({kidId, familyReport, familyReportStatusCode}){
             "¿Tiene Familia de origen?" : familyReport_hasOriginFamily
         }
         familyReportComponent = <><SingleItemCard key={1} element={familyReportElement} title={"Reporte de Familia"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}} />
-        {(accesPermiss=="CompleteAccess") || (accesPermiss=="MediumAccess")&&<ButtonPrimaryEditIcon onClick={navigateEditFamilyReport} sx={{alignSelf:'flex-end', left: '90%', background: '#5BCCD9', borderRadius: '50%', width: '50px', height: '50px'}}/>}</>
+        {((accesPermiss=="CompleteAccess") || (accesPermiss=="MediumAccess"))&&
+            <ButtonPrimaryEditIcon onClick={navigateEditFamilyReport} sx={{alignSelf:'flex-end', left: '90%', background: '#5BCCD9', borderRadius: '50%', width: '50px', height: '50px'}}/>}</>
     }
     return familyReportComponent
 }
