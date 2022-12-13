@@ -34,14 +34,27 @@ namespace NinosConValorAPI.Services
             throw new Exception("Database Error");
         }
 
-        public Task DeleteBiometricsAsync(int kidId)
+        public async Task DeleteBiometricsAsync(int kidId, int biometricsId)
         {
-            throw new NotImplementedException();
+            await GetBiometricAsync(kidId, biometricsId);
+            await _appRepository.DeleteBiometricsAsync(kidId, biometricsId);
+            var result = await _appRepository.SaveChangesAsync();
+            if (!result)
+            {
+                throw new Exception("Database Error.");
+
+            }
         }
 
-        public Task<BiometricsModel> UpdateBiometricsAsync(int kidId, BiometricsModel biometrics)
+        public async Task<BiometricsModel> GetBiometricAsync(int kidId, int biometricId)
         {
-            throw new NotImplementedException();
+            await ValidateIdKidAsync(kidId);
+
+            var biometrics = await _appRepository.GetBiometricsAsync(kidId, biometricId);
+            if (biometrics == null)
+                throw new Exception($"the Biometrics with id:{biometricId} does not exists for the given kid with id: {kidId}.");
+
+            return _mapper.Map<BiometricsModel>(biometrics);
         }
         private async Task ValidateIdKidAsync(int kidId)
         {

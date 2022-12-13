@@ -28,7 +28,7 @@ function Navbar() {
     function handleClickFiles() {
         if (
             accesPermiss == 'CompleteAccess' ||
-            accesPermiss == 'RestriccionAccess'
+            accesPermiss == 'RestriccionAccess'||accesPermiss=="MediumAccess"
         ) {
             window.location.href = '/ninos'
         }
@@ -122,8 +122,7 @@ function Navbar() {
                                 </Button>
                             )}
 
-                            {(accesPermiss == 'CompleteAccess' ||
-                                accesPermiss == 'RestriccionAccess') && (
+                            
                                 <Button
                                     sx={{
                                         marginLeft: 5,
@@ -135,7 +134,7 @@ function Navbar() {
                                 >
                                     Niños
                                 </Button>
-                            )}
+                            
 
                             {accesPermiss == 'CompleteAccess' && (
                                 <Button

@@ -89,10 +89,7 @@ namespace UnitTests.AutomapperUT
             var fixedAssetEntity = new FixedAssetEntity() {
                 Id = 1,
                 Name = "Computadora",
-                Description = "Computadora de escritorio",
-                EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
-                Features = "8Gb de RAM"
             };
             return fixedAssetEntity;
         }
@@ -102,10 +99,7 @@ namespace UnitTests.AutomapperUT
             {
                 Id = 1,
                 Name = "Computadora",
-                Description = "Computadora de escritorio",
-                EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
-                Features = "8Gb de RAM"
             };
             return fixedAssetModel;
         }

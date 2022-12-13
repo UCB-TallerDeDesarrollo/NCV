@@ -24,8 +24,9 @@ export default function ShowFixedAssetsResponsibles() {
     const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
     const [alertMessage, setAlertMessage] = useState(location.state ? location.state.alertMessage : null)
     const [severity, setSeverity] = useState(location.state ? location.state.severity : "success")
-    const urlAssetResponsibles = 'https://ncv-api.azurewebsites.net/api/assetResponsibles'  
-    const urlAssetResponsible='https://ncv-api.azurewebsites.net/api/assetResponsibles/'
+    const urlAssetResponsibles = process.env.REACT_APP_BACKEND_URL + '/api/assetResponsibles'  
+    const urlAssetResponsible = process.env.REACT_APP_BACKEND_URL + '/api/assetResponsibles/'
+    
     const [assetResponsibles, setAssetResponsibles] = useState(null)
     const [errorAssetResponsibles, setErrorAssetResponsibles] = useState(null)
     let errorsFromForm = null

@@ -17,6 +17,7 @@ describe('TableBasic', () => {
     expect(screen.getAllByRole("cell").length).toBe(columnHeaders.length);
     expect(screen.getAllByRole("cell",{name:"Feb 25"}).length).toBe(1); 
   });
-*/
+  */
+
 });
 

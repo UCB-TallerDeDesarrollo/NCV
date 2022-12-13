@@ -24,7 +24,7 @@ const user = {
 const roles = [
     {
         label: 'Tia',
-        value: 'AuntUser'
+        value: 'Tia'
     },
     {
         label: 'Administrador',
@@ -71,8 +71,8 @@ const generatePassword=()=>{
     return password;
 }
 function CreateUser() {
-    const  [passwordGenerate, generatePasswordChange]=useState('')
-    var url = 'https://ncv-api.azurewebsites.net/api/auth'
+    const  [passwordGenerate,generatePasswordChange]=useState('')
+    var url = process.env.REACT_APP_BACKEND_URL + '/api/auth'
     //var url = 'http://localhost:5009/api/auth' 
     const navigate = useNavigate()
     const [open, setOpen] = useState(false)

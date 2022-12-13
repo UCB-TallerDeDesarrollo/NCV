@@ -13,11 +13,11 @@ import { useParams } from 'react-router-dom'
 
 import { Box } from '@mui/system'
 import MenuItem from '@mui/material/MenuItem'
-import TranslateRole from './Translate'
+import {TranslateRole} from './basicFunctionUser'
 const roles = [
     {
         label: 'Tia',
-        value: 'AuntUser'
+        value: 'Tia'
     },
     {
         label: 'Administrador',
@@ -38,7 +38,7 @@ export function EditUser() {
     const navigate = useNavigate()
     //const userId = '4cf62dc7-5e67-46fa-a227-f8dae70cba5a'
     const { userId } = useParams()
-    var url = 'https://ncv-api.azurewebsites.net/api/auth/' + userId
+    var url = process.env.REACT_APP_BACKEND_URL + '/api/auth/' + userId
     //var url = 'http://localhost:5009/api/auth/' + userId
     const [user, setUser] = useState([])
     const [open, setOpen] = useState(false)

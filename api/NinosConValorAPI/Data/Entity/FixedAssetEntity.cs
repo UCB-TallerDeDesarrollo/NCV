@@ -15,10 +15,7 @@ namespace NinosConValorAPI.Data.Entity
         public string? Name { get; set; }
         [Required(ErrorMessage = "Precio Requerido")]
         public decimal? Price { get; set; }
-        public string? Description { get; set; }
-        public DateTime? EntryDate { get; set; }
         public string? Location { get; set; }
-        public string? Features { get; set; }
 
         [ForeignKey("ProgramHouseId")]
         public virtual ProgramHouseEntity? ProgramHouse { get; set; }

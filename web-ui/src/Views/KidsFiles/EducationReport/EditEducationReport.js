@@ -24,7 +24,7 @@ const educationReport = {
 function EditEducationReport() {
     const navigate = useNavigate();
     const {kidId} = useParams()
-    var urlEducationReport = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/educationreports"
+    var urlEducationReport = process.env.REACT_APP_BACKEND_URL + "/api/kids/" + kidId +"/educationreports"
     const [educationRep, setEducationRep] = useState(educationReport)
     const [open, setOpen] = useState(false)
 
@@ -73,6 +73,9 @@ function EditEducationReport() {
         <><Navbar /><div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
             <FormContainer title="Modificar reporte de educación">
                 <Collapse in={open} sx={{width:1, pt:2}}>
+                    <Alert severity="error">
+                        {'El campo de "Rude" y/o "Unidad Educativa" esta vacio'}
+                    </Alert>
                 </Collapse>
                 <InputText
                     id="grade"

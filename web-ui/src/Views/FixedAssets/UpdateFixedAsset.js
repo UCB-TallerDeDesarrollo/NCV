@@ -30,11 +30,12 @@ function hasErrors(errorCategory, errorStates, errorResponsibles){
 
 function UpdateFixedAssetForm() {
     const {fixedAssetId} = useParams()
-    const urlFixedAsset = `https://ncv-api.azurewebsites.net/api/fixedAssets/${fixedAssetId}`
-    const urlProgramHouses = 'https://ncv-api.azurewebsites.net/api/programHouses'
-    const urlCategories = 'https://ncv-api.azurewebsites.net/api/assetCategories'
-    const urlStates = 'https://ncv-api.azurewebsites.net/api/assetStates'
-    const urlResponsibles = 'https://ncv-api.azurewebsites.net/api/assetResponsibles'
+    var urlFixedAsset = process.env.REACT_APP_BACKEND_URL + `/api/fixedAssets/${fixedAssetId}`
+    const url = process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets'
+    const urlProgramHouses = process.env.REACT_APP_BACKEND_URL + '/api/programHouses'
+    const urlCategories = process.env.REACT_APP_BACKEND_URL + '/api/assetCategories'
+    const urlStates = process.env.REACT_APP_BACKEND_URL + '/api/assetStates'
+    const urlResponsibles = process.env.REACT_APP_BACKEND_URL + '/api/assetResponsibles'
 
     const open = false
     const isSubmit = false
@@ -149,7 +150,7 @@ let categoriesList = categories.map( category =>  { return{
     }
 
     function getTypesByCategory(id, setTypeNull=true){
-        const urlTypesByCategory = `https://ncv-api.azurewebsites.net/api/assetCategories/${id}/assetTypes`
+        const urlTypesByCategory = process.env.REACT_APP_BACKEND_URL + `/api/assetCategories/${id}/assetTypes`
         let types=null
         let errorTypes=null
         axios.get(urlTypesByCategory).then(            
@@ -170,7 +171,7 @@ let categoriesList = categories.map( category =>  { return{
     }
 
     function getAssetsCodes(){        
-        const url = 'https://ncv-api.azurewebsites.net/api/fixedAssets/'
+        const url = process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets/'
         getFixedAssets(url).then(
             response => {
                 if(response.name != "AxiosError"){

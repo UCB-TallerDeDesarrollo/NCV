@@ -96,7 +96,7 @@ function checkData(dataToCheck){
 function EditKidFile() {
     const navigate = useNavigate();
     const {kidId} = useParams()
-    var urlKid = "https://ncv-api.azurewebsites.net/api/kids/"+ kidId 
+    var urlKid = process.env.REACT_APP_BACKEND_URL + "/api/kids/"+ kidId 
     const [kid, setKid] = useState([])
     const [open, setOpen] = useState(false)
     const [firstNameValidation, setFirstNameValidation] = useState(false)

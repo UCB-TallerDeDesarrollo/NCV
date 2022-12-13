@@ -3,7 +3,6 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NinosConValorAPI.Data.Entity;
-using NinosConValorAPI.Migrations;
 using NinosConValorAPI.Models;
 using System.Security.Cryptography;
 
@@ -106,7 +105,17 @@ namespace NinosConValorAPI.Data.Repository
             //_dbContext.Entry(biometrics.Kid).State = EntityState.Detached;
             return biometrics;
         }
-
+        public async Task DeleteBiometricsAsync(int kidId, int biometricsId)
+        {
+            var biometricsToDelete = await _dbContext.Biometrics.FirstOrDefaultAsync(d => d.Kid.Id == kidId && d.Id == biometricsId);
+            _dbContext.Biometrics.Remove(biometricsToDelete);
+        }
+        public async Task<BiometricsEntity> GetBiometricsAsync(int kidId, int biometricsId)
+        {
+            IQueryable<BiometricsEntity> query = _dbContext.Biometrics;
+            query = query.AsNoTracking();
+            return await query.FirstOrDefaultAsync(d => d.Id == biometricsId && d.Kid.Id == kidId);
+        }
         // CONTACTS
 
         public async Task<IEnumerable<ContactEntity>> GetContactsAsync(int kidId)
@@ -288,10 +297,7 @@ namespace NinosConValorAPI.Data.Repository
             var fixedAssetToUpdate = await _dbContext.FixedAssets.FirstOrDefaultAsync(f => f.Id == fixedAssetId);
             fixedAssetToUpdate.Code = fixedAsset.Code ?? fixedAssetToUpdate.Code;
             fixedAssetToUpdate.Name = fixedAsset.Name ?? fixedAssetToUpdate.Name;
-            fixedAssetToUpdate.Description = fixedAsset.Description ?? fixedAssetToUpdate.Description;
-            fixedAssetToUpdate.EntryDate = fixedAsset.EntryDate ?? fixedAssetToUpdate.EntryDate;
             fixedAssetToUpdate.Price = fixedAsset.Price ?? fixedAssetToUpdate.Price;
-            fixedAssetToUpdate.Features = fixedAsset.Features ?? fixedAssetToUpdate.Features;
             fixedAssetToUpdate.Location = fixedAsset.Location ?? fixedAssetToUpdate.Location;
             fixedAssetToUpdate.ProgramHouse = fixedAsset.ProgramHouse ?? fixedAssetToUpdate.ProgramHouse;
             fixedAssetToUpdate.AssetType = fixedAsset.AssetType ?? fixedAssetToUpdate.AssetType;

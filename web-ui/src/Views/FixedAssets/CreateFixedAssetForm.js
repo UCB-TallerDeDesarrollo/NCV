@@ -13,11 +13,11 @@ import Dropdown from '../../Components/Dropdown'
 import GetFromApi, {getFixedAssets} from '../../Components/GetFromApi'
 
 function CreateFixedAssetForm() {
-    const url = 'https://ncv-api.azurewebsites.net/api/fixedAssets'
-    const urlProgramHouses = 'https://ncv-api.azurewebsites.net/api/programHouses'
-    const urlCategories = 'https://ncv-api.azurewebsites.net/api/assetCategories'
-    const urlStates = 'https://ncv-api.azurewebsites.net/api/assetStates'
-    const urlResponsibles = 'https://ncv-api.azurewebsites.net/api/assetResponsibles'
+    const url = process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets'
+    const urlProgramHouses = process.env.REACT_APP_BACKEND_URL + '/api/programHouses'
+    const urlCategories = process.env.REACT_APP_BACKEND_URL + '/api/assetCategories'
+    const urlStates = process.env.REACT_APP_BACKEND_URL + '/api/assetStates'
+    const urlResponsibles = process.env.REACT_APP_BACKEND_URL + '/api/assetResponsibles'
 
     const [open, setOpen] = useState(false)
     const [error, setError] = useState(null)
@@ -135,7 +135,7 @@ function CreateFixedAssetForm() {
     }
 
     function getTypesByCategory(id){
-        const urlTypesByCategory = `https://ncv-api.azurewebsites.net/api/assetCategories/${id}/assetTypes`
+        const urlTypesByCategory = process.env.REACT_APP_BACKEND_URL + `/api/assetCategories/${id}/assetTypes`
         let types=null
         let errorTypes=null
         axios.get(urlTypesByCategory).then(            
@@ -155,7 +155,7 @@ function CreateFixedAssetForm() {
     }
 
     function getAssetsCodes(){        
-        const url = 'https://ncv-api.azurewebsites.net/api/fixedAssets/'
+        const url = process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets/'
         getFixedAssets(url).then(
             response => {
                 if(response.name != "AxiosError"){

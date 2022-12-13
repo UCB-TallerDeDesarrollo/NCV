@@ -17,10 +17,7 @@ namespace UnitTests.DBUT
                 Id = 1,
                 Code = "TEC-489",
                 Name = "Computadora",
-                Description = "Computadora de escritorio",
-                EntryDate = new DateTime(2001, 3, 2),
                 Price = 100.58m,
-                Features = "8Gb de RAM",
             };
 
             var fixedAssetAdded = ctx.Add(fixedAsset);

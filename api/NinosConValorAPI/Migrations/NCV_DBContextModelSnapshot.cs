@@ -375,15 +375,6 @@ namespace NinosConValorAPI.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("EntryDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Features")
-                        .HasColumnType("text");
-
                     b.Property<string>("Location")
                         .HasColumnType("text");
 

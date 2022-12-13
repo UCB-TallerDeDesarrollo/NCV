@@ -15,8 +15,10 @@ import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 
 const familyReport = {
-    siblingsInFoundation: null,
-    siblingsOutside: null,
+    siblingsInFoundation: '',
+    siblingsOutside: '',
+    hasExtendedFamily: '',
+    hasOriginFamily : ''
 }
 
 const booleansAnwers = [
@@ -36,7 +38,7 @@ function EditFamilyReport() {
     var familyReport_hasOriginFamily;
     const navigate = useNavigate();
     const {kidId} = useParams()
-    var urlFamilyReport = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/familyreports"
+    var urlFamilyReport = process.env.REACT_APP_BACKEND_URL + "/api/kids/" + kidId +"/familyreports"
     const [familyRep, setFamilyRep] = useState(familyReport)
     const [open, setOpen] = useState(false)
 
@@ -85,12 +87,10 @@ function EditFamilyReport() {
     return (
         <><Navbar /><div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
             <FormContainer title="Modificar reporte de familia">
-                <Collapse in={open} sx={{width:1, pt:2}}>
-                </Collapse>
                 <InputText
                     id="siblingsInFoundation"
                     name="siblingsInFoundation"
-                    
+                    label="Nro de Hermanos en el Centro"
                     type="number"
                     value={familyRep.siblingsInFoundation}
                     onChange={handleInputChange}
@@ -98,7 +98,7 @@ function EditFamilyReport() {
                 <InputText
                     id="siblingsOutside"
                     name="siblingsOutside"
-                   
+                    label="Nro de Hermanos externos"
                     type="number"
                     value={familyRep.siblingsOutside}
                     onChange={handleInputChange}
@@ -108,7 +108,7 @@ function EditFamilyReport() {
                     id="hasExtendedFamily"
                     name="hasExtendedFamily"
                     label="¿Tiene familia extendida?"
-                    value={familyReport_hasExtendedFamily}
+                    value={familyRep.hasExtendedFamily}
                     onChange={handleInputChange}
                 >
                 {booleansAnwers.map((option) => (
@@ -122,7 +122,7 @@ function EditFamilyReport() {
                     id="hasOriginFamily"
                     name="hasOriginFamily"
                     label="¿Tiene familia de origen?"
-                    value={familyReport_hasOriginFamily}
+                    value={familyRep.hasOriginFamily}
                     onChange={handleInputChange}
                 >
                 {booleansAnwers.map((option) => (

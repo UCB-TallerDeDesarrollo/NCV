@@ -59,7 +59,7 @@ const bloodtypes = [
 function AddHealthReport() {
     const navigate = useNavigate();
     const {kidId} = useParams()
-    var url = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/healthreports"
+    var url = process.env.REACT_APP_BACKEND_URL + "/api/kids/" + kidId +"/healthreports"
 
     const [formReport, setformReport] = useState(healtReport)
     const [open, setOpen] = useState(false)
@@ -128,7 +128,7 @@ function AddHealthReport() {
                     multiline={true}
                     id="PsychologicalDiagnosis"
                     name="PsychologicalDiagnosis"
-                    label="Diagnostico Fisico"
+                    label="Diagnostico Psicológico"
                     helperText="Opcional"
                     value={formReport.PsychologicalDiagnosis}
                     onChange={handleInputChange}

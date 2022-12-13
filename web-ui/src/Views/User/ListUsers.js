@@ -1,4 +1,3 @@
-import ErrorPage from '../../Components/ErrorPage'
 import Alert from '@mui/material/Alert'
 import { Snackbar } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -8,7 +7,7 @@ import ButtonPrimary from '../../Components/MUI-Button'
 import GutterList from '../../Components/GutterList'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import TranslateRole from './Translate'
+import {TranslateRole} from './basicFunctionUser'
 import SearchBar from '../../Components/SearchBar'
 import { getListUsers } from './API/getAxios'
 import Dialog from '@mui/material/Dialog';
@@ -20,10 +19,9 @@ import { ButtonDanger, ButtonSecondary,   } from '../../Components/MUI-Button';
 import axios from "axios"
 var accesPermiss = sessionStorage.getItem("Access")
 import DropdownListUser from '../../Components/DropdownListUser'
-import DropdownList from '../../Components/DropdownList'
 
 function ListUsers() {
-    const url = 'https://ncv-api.azurewebsites.net/api/auth'
+    const url = process.env.REACT_APP_BACKEND_URL + '/api/auth'
    // const url="http://localhost:5009/api/auth";
 
     const location = useLocation()
@@ -79,7 +77,8 @@ function ListUsers() {
                 setSeverity("success")
                 setOpen(true)
                 setOpenToConfirm(false)  
-                navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario eliminado exitosamente"}})                                        
+                navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario eliminado exitosamente"}})    
+                window.location.reload(true);                                    
             }   
         })
         .catch(err=> {

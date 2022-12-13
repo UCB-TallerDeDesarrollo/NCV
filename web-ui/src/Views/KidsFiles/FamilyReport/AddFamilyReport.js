@@ -8,6 +8,8 @@ import axios from 'axios'
 import Navbar from '../../../Components/NavBar';
 import MenuItem from '@mui/material/MenuItem';
 import { Box } from '@mui/system';
+import Collapse from '@mui/material/Collapse';
+import Alert from '@mui/material/Alert';
 
 const familyReport = {
     siblingsInFoundation: null,
@@ -28,10 +30,11 @@ const booleansAnwers = [
 function AddFamilyReport() {
     var familyReport_hasExtendedFamily;
     var familyReport_hasOriginFamily;
+    var familyReport_copyIni = familyReport;
 
     const navigate = useNavigate();
     const {kidId} = useParams();
-    var url = "https://ncv-api.azurewebsites.net/api/kids/" + kidId +"/familyreports";
+    var url = process.env.REACT_APP_BACKEND_URL + "/api/kids/" + kidId +"/familyreports";
 
     const [formReport, setformReport] = useState(familyReport);
     const [open, setOpen] = useState(false);
@@ -46,6 +49,9 @@ function AddFamilyReport() {
     }
     
     function handleFormSubmit() {
+        if(formReport == familyReport_copyIni){
+            setOpen(true)
+        }else{
         axios.post(url, formReport)
           .then(function (response) {
             if (response.status == 201){
@@ -58,6 +64,7 @@ function AddFamilyReport() {
                     setOpen(true)
             }
           });
+        }
     }
     function handleClose() {
         navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de Familia no creado"}});
@@ -67,6 +74,11 @@ function AddFamilyReport() {
     return (
         <><Navbar /><div style={{marginTop: '3em', display:'flex', justifyContent:'center'}}>
             <FormContainer title="Reporte de Familia">
+                <Collapse in={open} sx={{width:1, pt:2}}>
+                    <Alert severity="error">
+                        {'Al menos un datos debe ser llenado'}
+                    </Alert>
+                </Collapse>
                 <InputText
                     id="siblingsInFoundation"
                     name="siblingsInFoundation"

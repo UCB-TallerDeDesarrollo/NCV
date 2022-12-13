@@ -11,12 +11,9 @@ namespace NinosConValorAPI.Models
         public string? Code { get; set; }
         [Required(ErrorMessage = "Nombre Requerido")]
         public string? Name { get; set; }
-        public string? Description { get; set; }
-        public DateTime? EntryDate { get; set; }
 
         [Required(ErrorMessage = "Precio Requerido")]
         public decimal? Price { get; set; }
-        public string? Features { get; set; }
         public string? Location { get; set; }
         public int ProgramHouseId { get; set; }
         public int AssetTypeAssetCategoryId { get; set; }

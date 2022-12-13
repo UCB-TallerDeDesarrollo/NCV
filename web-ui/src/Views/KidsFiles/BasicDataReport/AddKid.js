@@ -52,7 +52,7 @@ const genders = [
   ];
 
 function CreateFile() {
-    var url = "https://ncv-api.azurewebsites.net/api/kids"
+    var url = process.env.REACT_APP_BACKEND_URL + "/api/kids"
     const navigate = useNavigate()
     const [data, setData] = useState(kidFile)
     const [open, setOpen] = useState(false)

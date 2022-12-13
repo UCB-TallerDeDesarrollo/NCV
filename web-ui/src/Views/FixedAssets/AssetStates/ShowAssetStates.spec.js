@@ -6,8 +6,8 @@ import {act} from 'react-dom/test-utils'
 
 import {MemoryRouter, Route, Routes} from 'react-router-dom'
 
-const getAssetStatesUrl ='https://ncv-api.azurewebsites.net/api/assetStates'  
-const oneAssetStatesUrl ='https://ncv-api.azurewebsites.net/api/assetStates/1'   
+const getAssetStatesUrl =process.env.REACT_APP_BACKEND_URL + '/api/assetStates'  
+const oneAssetStatesUrl =process.env.REACT_APP_BACKEND_URL + '/api/assetStates/1'   
 
 const assetStates =
   [

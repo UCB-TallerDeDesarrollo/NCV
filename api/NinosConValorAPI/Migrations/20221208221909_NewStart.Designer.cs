@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NinosConValorAPI.Migrations
 {
     [DbContext(typeof(NCV_DBContext))]
-    [Migration("20221016000121_ProgramHouseRequiredIdFixedAsset")]
-    partial class ProgramHouseRequiredIdFixedAsset
+    [Migration("20221208221909_NewStart")]
+    partial class NewStart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -156,6 +156,203 @@ namespace NinosConValorAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.AssetCategoryEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssetCategory", (string)null);
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.AssetResponsibleEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssetResponsible", (string)null);
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.AssetStateEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssetState", (string)null);
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.AssetTypeEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AssetCategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetCategoryId");
+
+                    b.ToTable("AssetTypes");
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.BiometricsEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal?>("Height")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("KidId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("RegisterDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<decimal?>("Weight")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KidId");
+
+                    b.ToTable("Biometrics", (string)null);
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.ContactEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactNumber")
+                        .HasColumnType("text");
+
+                    b.Property<int>("KidId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Relationship")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KidId");
+
+                    b.ToTable("Contact", (string)null);
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.EducationReportEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Grade")
+                        .HasColumnType("text");
+
+                    b.Property<int>("KidId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Rude")
+                        .HasColumnType("text");
+
+                    b.Property<string>("School")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KidId");
+
+                    b.ToTable("EducationReports", (string)null);
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.FamilyReportEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool?>("HasExtendedFamily")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("HasOriginFamily")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("KidId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SiblingsInFoundation")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SiblingsOutside")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KidId")
+                        .IsUnique();
+
+                    b.ToTable("FamilyReports", (string)null);
+                });
+
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.FixedAssetEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -164,33 +361,72 @@ namespace NinosConValorAPI.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
+                    b.Property<int?>("AssetResponsibleId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("AssetStateId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("AssetTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("EntryDate")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
 
-                    b.Property<string>("Features")
+                    b.Property<string>("Location")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal?>("Price")
+                        .IsRequired()
                         .HasColumnType("numeric");
 
                     b.Property<int?>("ProgramHouseId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("AssetResponsibleId");
+
+                    b.HasIndex("AssetStateId");
+
+                    b.HasIndex("AssetTypeId");
 
                     b.HasIndex("ProgramHouseId");
 
                     b.ToTable("FixedAsset", (string)null);
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.FoundationReportEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("AdmissionDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("AdmissionReason")
+                        .HasColumnType("text");
+
+                    b.Property<int>("KidId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KidId")
+                        .IsUnique();
+
+                    b.ToTable("FoundationReport", (string)null);
                 });
 
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.HealthReportEntity", b =>
@@ -259,9 +495,43 @@ namespace NinosConValorAPI.Migrations
                     b.Property<string>("ProgramHouse")
                         .HasColumnType("text");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("Kid", (string)null);
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.LegalReportEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CourtNumber")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Dna")
+                        .HasColumnType("text");
+
+                    b.Property<int>("KidId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("LegalProcesses")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Nurej")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KidId")
+                        .IsUnique();
+
+                    b.ToTable("LegalReports", (string)null);
                 });
 
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.ProgramHouseEntity", b =>
@@ -422,13 +692,95 @@ namespace NinosConValorAPI.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.AssetTypeEntity", b =>
+                {
+                    b.HasOne("NinosConValorAPI.Data.Entity.AssetCategoryEntity", "AssetCategory")
+                        .WithMany("AssetTypes")
+                        .HasForeignKey("AssetCategoryId");
+
+                    b.Navigation("AssetCategory");
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.BiometricsEntity", b =>
+                {
+                    b.HasOne("NinosConValorAPI.Data.Entity.KidEntity", "Kid")
+                        .WithMany("Biometrics")
+                        .HasForeignKey("KidId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Kid");
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.ContactEntity", b =>
+                {
+                    b.HasOne("NinosConValorAPI.Data.Entity.KidEntity", "Kid")
+                        .WithMany("Contacts")
+                        .HasForeignKey("KidId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Kid");
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.EducationReportEntity", b =>
+                {
+                    b.HasOne("NinosConValorAPI.Data.Entity.KidEntity", "Kid")
+                        .WithMany()
+                        .HasForeignKey("KidId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Kid");
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.FamilyReportEntity", b =>
+                {
+                    b.HasOne("NinosConValorAPI.Data.Entity.KidEntity", "Kid")
+                        .WithOne("FamilyReport")
+                        .HasForeignKey("NinosConValorAPI.Data.Entity.FamilyReportEntity", "KidId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Kid");
+                });
+
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.FixedAssetEntity", b =>
                 {
+                    b.HasOne("NinosConValorAPI.Data.Entity.AssetResponsibleEntity", "AssetResponsible")
+                        .WithMany("FixedAssets")
+                        .HasForeignKey("AssetResponsibleId");
+
+                    b.HasOne("NinosConValorAPI.Data.Entity.AssetStateEntity", "AssetState")
+                        .WithMany("FixedAssets")
+                        .HasForeignKey("AssetStateId");
+
+                    b.HasOne("NinosConValorAPI.Data.Entity.AssetTypeEntity", "AssetType")
+                        .WithMany("FixedAssets")
+                        .HasForeignKey("AssetTypeId");
+
                     b.HasOne("NinosConValorAPI.Data.Entity.ProgramHouseEntity", "ProgramHouse")
                         .WithMany("FixedAssets")
                         .HasForeignKey("ProgramHouseId");
 
+                    b.Navigation("AssetResponsible");
+
+                    b.Navigation("AssetState");
+
+                    b.Navigation("AssetType");
+
                     b.Navigation("ProgramHouse");
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.FoundationReportEntity", b =>
+                {
+                    b.HasOne("NinosConValorAPI.Data.Entity.KidEntity", "Kid")
+                        .WithOne("FoundationReport")
+                        .HasForeignKey("NinosConValorAPI.Data.Entity.FoundationReportEntity", "KidId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Kid");
                 });
 
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.HealthReportEntity", b =>
@@ -436,6 +788,17 @@ namespace NinosConValorAPI.Migrations
                     b.HasOne("NinosConValorAPI.Data.Entity.KidEntity", "Kid")
                         .WithOne("HealthReport")
                         .HasForeignKey("NinosConValorAPI.Data.Entity.HealthReportEntity", "KidId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Kid");
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.LegalReportEntity", b =>
+                {
+                    b.HasOne("NinosConValorAPI.Data.Entity.KidEntity", "Kid")
+                        .WithOne("LegalReport")
+                        .HasForeignKey("NinosConValorAPI.Data.Entity.LegalReportEntity", "KidId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -453,9 +816,39 @@ namespace NinosConValorAPI.Migrations
                     b.Navigation("ResponsibleUser");
                 });
 
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.AssetCategoryEntity", b =>
+                {
+                    b.Navigation("AssetTypes");
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.AssetResponsibleEntity", b =>
+                {
+                    b.Navigation("FixedAssets");
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.AssetStateEntity", b =>
+                {
+                    b.Navigation("FixedAssets");
+                });
+
+            modelBuilder.Entity("NinosConValorAPI.Data.Entity.AssetTypeEntity", b =>
+                {
+                    b.Navigation("FixedAssets");
+                });
+
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.KidEntity", b =>
                 {
+                    b.Navigation("Biometrics");
+
+                    b.Navigation("Contacts");
+
+                    b.Navigation("FamilyReport");
+
+                    b.Navigation("FoundationReport");
+
                     b.Navigation("HealthReport");
+
+                    b.Navigation("LegalReport");
                 });
 
             modelBuilder.Entity("NinosConValorAPI.Data.Entity.ProgramHouseEntity", b =>
