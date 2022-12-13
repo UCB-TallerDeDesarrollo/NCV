@@ -39,7 +39,7 @@ function CreateFixedAssetForm() {
         AssetResponsibleId: ''
     })
     //programHouses
-    const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
+    const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState('')
     const { apiData:programHouses, error:errorProgramHouses } = GetFromApi(urlProgramHouses)    
 
     useEffect(()=>{
@@ -48,19 +48,19 @@ function CreateFixedAssetForm() {
         }
     },[formErrors]);
     //categories
-    const [categorySelectedValue, setCategorySelectedValue] = useState(null)
+    const [categorySelectedValue, setCategorySelectedValue] = useState('')
     const { apiData:categories, error:errorCategory } = GetFromApi(urlCategories) 
     
     //states
-    const [stateSelectedValue, setStateSelectedValue] = useState(null)
+    const [stateSelectedValue, setStateSelectedValue] = useState('')
     const { apiData:states, error:errorStates } = GetFromApi(urlStates) 
 
     //responsibles
-    const [responsibleSelectedValue, setResponsibleSelectedValue] = useState(null)
+    const [responsibleSelectedValue, setResponsibleSelectedValue] = useState('')
     const { apiData:responsibles, error:errorResponsibles } = GetFromApi(urlResponsibles) 
 
     //types
-    const [typeSelectedValue, setTypeSelectedValue] = useState(null)
+    const [typeSelectedValue, setTypeSelectedValue] = useState('')
     const [typesOptions, setTypesOptions] = useState([])
 
     // program Houses Options for DROPDOWN

@@ -30,7 +30,7 @@ export default function DropdownList({itemsHeader, itemsSubheader, isOpened = fa
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper', alignItems :"flex-start" }} key={0}>
       {itemsHeader.map((h,i)=>{
-        return (<>
+        return (<div key={i}>
             <ListItemButton sx={{borderTop: 1, borderColor:'#CDCDCD', margin:0}} key={h.i} alignItems="flex-start"
               onClick={() => setIsVisible({
                 ...isVisible,
@@ -47,6 +47,6 @@ export default function DropdownList({itemsHeader, itemsSubheader, isOpened = fa
                             )
                         }
                 })}
-        </>)})}
+        </div>)})}
     </List>
   )};

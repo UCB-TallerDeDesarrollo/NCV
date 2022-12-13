@@ -37,7 +37,7 @@ export default function ShowAssetTypesByCategory() {
     const [errorAssetTypeDelete, setErrorAssetTypeDelete] = useState(null)
     const [errorCreateAssetType, setErrorCreateAssetType] = useState(null)
     const [errorUpdateAssetType, setErrorUpdateAssetType] = useState(null)
-    const [categorySelectedValue, setCategorySelectedValue] = useState(null)
+    const [categorySelectedValue, setCategorySelectedValue] = useState('')
     
     const [data, setData] = useState({
         type:''//string
