@@ -228,13 +228,18 @@ namespace NinosConValorAPI.Data.Repository
             _dbContext.Kids.Add(kid);
         }
 
-        public async Task<bool> UpdateKidAsync(KidEntity kidModel)
+        public async Task<KidEntity> UpdateKidAsync(KidEntity kid)
         {
-            var kidToUpdate = _dbContext.Kids.FirstOrDefault(c => c.Id == kidModel.Id);
-            var programHouse = await _dbContext.ProgramHouses.FirstOrDefaultAsync(p => p.Name == kidModel.ProgramHouse.Name);
-            _dbContext.Entry(kidToUpdate).CurrentValues.SetValues(kidModel);
-            kidToUpdate.ProgramHouse = programHouse;
-            return true;
+            var kidToUpdate = _dbContext.Kids.FirstOrDefault(c => c.Id == kid.Id);
+            _dbContext.Entry(kid.ProgramHouse).State = EntityState.Unchanged;
+            kidToUpdate.ProgramHouse = kid.ProgramHouse ?? kidToUpdate.ProgramHouse;
+            kidToUpdate.FirstName = kid.FirstName ?? kidToUpdate.FirstName;
+            kidToUpdate.LastName = kid.LastName ?? kidToUpdate.LastName;
+            kidToUpdate.CI = kid.CI ?? kidToUpdate.CI;
+            kidToUpdate.BirthDate = kid.BirthDate ?? kidToUpdate.BirthDate;
+            kidToUpdate.BirthPlace = kid.BirthPlace ?? kidToUpdate.BirthPlace;
+            kidToUpdate.Gender = kid.Gender ?? kidToUpdate.Gender;
+            return kidToUpdate;
         }
 
         public async Task DeleteKidAsync(int kidId)
