@@ -227,8 +227,9 @@ function Contacts({contactsData,setContacts}){
                 {(accesPermiss=="CompleteAccess") &&
                     <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}} editableAction={handleSave}  deleteAction={deleteAction}></TableBasic>
                 }
-                <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}} editableAction={handleSave}  ></TableBasic>
-                
+                {(accesPermiss=="MediumAccess")&&
+                    <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}} editableAction={handleSave}  ></TableBasic>
+                }
             </Box>
         </>);
         contactsTitle = <Typography variant="h3" sx={{marginBottom:1.5}}>contactos</Typography>;
