@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 
 import Alert from '@mui/material/Alert'
-import LoadingButton from '@mui/lab/LoadingButton';
 
 import InputText, {InputPassword} from '../../Components/InputText'
 import { ButtonLoading } from '../../Components/MUI-Button';
 import FormContainer from '../../Components/FormContainer'
 import './LoginForm.css'
-import issLoggin from '../../security';
+import {issLoggin} from '../../security';
 import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
@@ -16,7 +15,7 @@ function LoginForm() {
     const [password, setPassword] = useState('')
 
     const [hasAnError, sethasAnError] = useState(false);
-    const [error, setErrors] = useState([]);
+    const [ setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
@@ -48,11 +47,9 @@ function LoginForm() {
             console.log(data);
             if(data.isSuccess) {
                 console.log('logging successfully')
-                // Seguridad por Java Web Token
                 sessionStorage.setItem("jwt", data.token);
                 var parseToken = parseJwt(data.token)
                 var Role = parseToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
-                //localStorage.setItem('Role',Role)
                 const permiss= issLoggin(Role)
                 sessionStorage.setItem('Access',permiss)
                 window.location.href = '/inicio-ncv'
@@ -142,7 +139,6 @@ function parseJwt (token) {
     var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
-    //debugger;
     console.log(jsonPayload);
     return JSON.parse(jsonPayload);
 };

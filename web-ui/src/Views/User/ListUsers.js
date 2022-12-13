@@ -1,4 +1,3 @@
-import ErrorPage from '../../Components/ErrorPage'
 import Alert from '@mui/material/Alert'
 import { Snackbar } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -78,7 +77,8 @@ function ListUsers() {
                 setSeverity("success")
                 setOpen(true)
                 setOpenToConfirm(false)  
-                navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario eliminado exitosamente"}})                                        
+                navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario eliminado exitosamente"}})    
+                window.location.reload(true);                                    
             }   
         })
         .catch(err=> {

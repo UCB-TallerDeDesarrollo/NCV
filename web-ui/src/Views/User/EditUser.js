@@ -17,7 +17,7 @@ import {TranslateRole} from './basicFunctionUser'
 const roles = [
     {
         label: 'Tia',
-        value: 'AuntUser'
+        value: 'Tia'
     },
     {
         label: 'Administrador',
