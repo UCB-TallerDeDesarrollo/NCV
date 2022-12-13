@@ -224,8 +224,7 @@ namespace NinosConValorAPI.Data.Repository
         }
         public async void CreateKidAsync(KidEntity kid)
         {
-            var programHouse = await _dbContext.ProgramHouses.FirstOrDefaultAsync(p => p.Name == kid.ProgramHouse.Name);
-            kid.ProgramHouse = programHouse;
+            _dbContext.Entry(kid.ProgramHouse).State = EntityState.Unchanged;
             _dbContext.Kids.Add(kid);
         }
 

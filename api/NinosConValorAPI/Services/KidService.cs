@@ -18,6 +18,9 @@ namespace NinosConValorAPI.Services
         public async Task<KidModel> CreateKidAsync(KidModel kid)
         {
             var kidEntity = _mapper.Map<KidEntity>(kid);
+            var programHouses = await _NCVRepository.GetProgramHousesAsync();
+            var programHouseId = programHouses.FirstOrDefault(p => p.Name == kid.ProgramHouse).Id;
+            kidEntity.ProgramHouse = await _NCVRepository.GetProgramHouseAsync(programHouseId);
             _NCVRepository.CreateKidAsync(kidEntity);
             var result = await _NCVRepository.SaveChangesAsync();
             if (result)
