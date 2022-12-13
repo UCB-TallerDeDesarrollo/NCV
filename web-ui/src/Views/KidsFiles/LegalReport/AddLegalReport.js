@@ -23,6 +23,7 @@ function AddLegalReport() {
 
     const [formReport, setformReport] = useState(legalReport)
     const [open, setOpen] = useState(false)
+    const [alert, setAlert] = useState("")
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -32,20 +33,51 @@ function AddLegalReport() {
             [name]: value
         })
     }
+
+    function checkFields(){
+        var res = true;
+        var errors = "";
+        if(formReport.courtNumber == "" || formReport.courtNumber == null ){
+            console.log("Falta Num Corte");
+            errors = errors + " 'Numero de Corte' "; 
+            res = false;
+            setOpen(true);
+        }
+        if(formReport.dna == "" || formReport.dna == null ){
+            console.log("Falta DNA");
+            if(errors != "") errors = errors + ", ";
+            errors = errors + " 'DNA' "; 
+            res = false;
+            setOpen(true);
+        }
+        if(formReport.nurej == "" || formReport.nurej == null ){
+            console.log("Falta NUREJ");
+            if(errors != "") errors = errors + ", ";
+            errors = errors + " 'NUREJ' "; 
+            res = false;
+            setOpen(true);
+        }
+        var alertError = "Los campos:" + errors + "son requeridos."
+        setAlert(alertError);
+        return res;
+    }
     
     function handleFormSubmit() {
-        axios.post(url, formReport)
-          .then(function (response) {
-            if (response.status == 201){
-                navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte Legal creado"}});
-            }
-          })
-          .catch(function (error) {
-            if (error.response){
-                if (error.response.status == 400 )
-                    setOpen(true)
-            }
-          });
+        setOpen(false);
+        if(checkFields()){
+            axios.post(url, formReport)
+            .then(function (response) {
+                if (response.status == 201){
+                    navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte Legal creado"}});
+                }
+            })
+            .catch(function (error) {
+                if (error.response){
+                    if (error.response.status == 400 )
+                        setOpen(true)
+                }
+            });
+        }
     }
 
     function handleClose() {
@@ -56,7 +88,7 @@ function AddLegalReport() {
             <FormContainer title="Reporte Legal">
                 <Collapse in={open} sx={{width:1, pt:2}}>
                     <Alert severity="error">
-                        {'El campo de "Número de  Corte" es requerido'}
+                        {alert}
                     </Alert>
                 </Collapse>
                 <InputText
@@ -68,6 +100,7 @@ function AddLegalReport() {
                     onChange={handleInputChange}
                 />
                 <InputText
+                    required
                     id="dna"
                     name="dna"
                     label="DNA"
@@ -76,6 +109,7 @@ function AddLegalReport() {
                     onChange={handleInputChange}
                 />
                 <InputText
+                    required
                     id="nurej"
                     name="nurej"
                     label="NUREJ"

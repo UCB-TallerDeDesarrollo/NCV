@@ -42,7 +42,8 @@ function AddFoundationReport() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
-        setOpen(false)
+        setOpen(false);
+        setAdmissionDateValitacion(false);
         setformReport({
             ...formReport,
             [name]: value
@@ -50,14 +51,29 @@ function AddFoundationReport() {
     }
 
     function checkData(){
-        if(formReport.admissionDate == "") return false;
+        console.log("Checking...");
+        var check = true;
+        if(formReport.admissionReason == ""){
+            setOpen(true);
+            check = false;
+        }
+
+        console.log("Checking date...");
+        console.log(formReport.admissionDate); 
+        if(formReport.admissionDate == ""){
+            console.log(formReport.admissionDate);
+            console.log(typeof(formReport.admissionDate));
+            check = false;
+            setAdmissionDateValitacion(true);
+        } 
 
         var birthDayKid = kid.birthDate;
         var dateSelected = formReport.admissionDate;
-        var check = true;
+        
         console.log(kid);
         console.log(birthDayKid);
         console.log(typeof(birthDayKid));
+        console.log(birthDayKid);
         var birthYear = birthDayKid[0] + birthDayKid[1] + birthDayKid[2] + birthDayKid[3];
         var birthMonth = birthDayKid[5] + birthDayKid[6];
         var birthDay = birthDayKid[8] + birthDayKid[9];
@@ -87,6 +103,7 @@ function AddFoundationReport() {
     
     function handleFormSubmit() {
         setAdmissionDateValitacion(false);
+        setOpen(false);
         if(checkData()){
             axios.post(url, formReport)
             .then(function (response) {
@@ -100,8 +117,6 @@ function AddFoundationReport() {
                         setOpen(true)
                 }
             });
-        }else{
-            setAdmissionDateValitacion(true);
         }
     }
     function handleClose() {
@@ -111,11 +126,7 @@ function AddFoundationReport() {
     return (
         <><Navbar /><div style={{marginTop: '3em', display:'flex', justifyContent:'center'}}>
             <FormContainer title="Reporte de Estancia">
-                <Collapse in={open} sx={{width:1, pt:2}}>
-                    <Alert severity="error">
-                        {'El campo de "Fecha de Admision" es requerido'}
-                    </Alert>
-                </Collapse>
+                
                 <InputText
                     required
                     id="AdmissionDate"
@@ -131,7 +142,7 @@ function AddFoundationReport() {
 
                 <Collapse in={admissionDateValitacion} sx={{width:1, pt:2}}>
                     <Alert severity="error">
-                        La fecha de admision debe ser posterior al nacimiento del niño -.- 
+                        {'El campo de "Fecha de Admision" es requerido y debe ser una fecha valida'}
                     </Alert>
                 </Collapse>
                 <InputText
@@ -143,6 +154,11 @@ function AddFoundationReport() {
                     value={formReport.admissionReason}
                     onChange={handleInputChange}
                 />
+                <Collapse in={open} sx={{width:1, pt:2}}>
+                    <Alert severity="error">
+                        {'El campo de "Razon o Motivo de Admision" es requerido'}
+                    </Alert>
+                </Collapse>
                 <Box sx={{display: 'inline'}}>
                     <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
                     <ButtonPrimary label={"Crear reporte"} onClick={handleFormSubmit}></ButtonPrimary>
