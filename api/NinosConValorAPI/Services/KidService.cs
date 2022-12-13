@@ -18,7 +18,7 @@ namespace NinosConValorAPI.Services
         public async Task<KidModel> CreateKidAsync(KidModel kid)
         {
             var kidEntity = _mapper.Map<KidEntity>(kid);
-            _NCVRepository.CreateKid(kidEntity);
+            _NCVRepository.CreateKidAsync(kidEntity);
             var result = await _NCVRepository.SaveChangesAsync();
             if (result)
             {
@@ -41,7 +41,7 @@ namespace NinosConValorAPI.Services
             var kidEntity = _mapper.Map<KidEntity>(kidModel);
             await GetKidAsync(kidId);
             kidEntity.Id = kidId;
-            _NCVRepository.UpdateKid(kidEntity);
+            _NCVRepository.UpdateKidAsync(kidEntity);
 
             var saveResult = await _NCVRepository.SaveChangesAsync();
 

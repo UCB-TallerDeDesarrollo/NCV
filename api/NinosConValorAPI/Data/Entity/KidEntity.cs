@@ -17,7 +17,6 @@ namespace NinosConValorAPI.Data.Entity
         public string? LastName { get; set; }
         public string? CI { get; set; }
         public DateTime? BirthDate { get; set; }
-        public string? ProgramHouse { get; set; }
         public string? BirthPlace { get; set; }
         public string? Gender { get; set; }
         public EntityStatus Status { get; set; }  = EntityStatus.Active;
@@ -28,5 +27,6 @@ namespace NinosConValorAPI.Data.Entity
         public virtual FamilyReportEntity? FamilyReport { get; set; }
         public virtual ICollection<BiometricsEntity> Biometrics { get; set; }
         public virtual ICollection<ContactEntity> Contacts { get; set; }
+        public virtual ProgramHouseEntity? ProgramHouse { get; set; }
     }
 }

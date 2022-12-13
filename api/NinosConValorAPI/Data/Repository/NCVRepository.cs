@@ -210,27 +210,31 @@ namespace NinosConValorAPI.Data.Repository
         {
             IQueryable<KidEntity> query = _dbContext.Kids;
             query = query.AsNoTracking();
-
+            query = query.Include(k => k.ProgramHouse);
             return await query.FirstOrDefaultAsync(c => (c.Id == kidId) & (c.Status != EntityStatus.Deleted));
         }
         public async Task<IEnumerable<KidEntity>> GetKidsAsync()
         {
             IQueryable<KidEntity> query = _dbContext.Kids;
             query = query.AsNoTracking();
+            query = query.Include(k => k.ProgramHouse);
             query = query.Where( k => k.Status != EntityStatus.Deleted);
             query = query.OrderBy(k => k.FirstName).ThenBy(k => k.LastName);
             return await query.ToListAsync() ;
         }
-        public void CreateKid(KidEntity kid)
+        public async void CreateKidAsync(KidEntity kid)
         {
+            var programHouse = await _dbContext.ProgramHouses.FirstOrDefaultAsync(p => p.Name == kid.ProgramHouse.Name);
+            kid.ProgramHouse = programHouse;
             _dbContext.Kids.Add(kid);
         }
 
-        public bool UpdateKid(KidEntity kidModel)
+        public async Task<bool> UpdateKidAsync(KidEntity kidModel)
         {
             var kidToUpdate = _dbContext.Kids.FirstOrDefault(c => c.Id == kidModel.Id);
-
+            var programHouse = await _dbContext.ProgramHouses.FirstOrDefaultAsync(p => p.Name == kidModel.ProgramHouse.Name);
             _dbContext.Entry(kidToUpdate).CurrentValues.SetValues(kidModel);
+            kidToUpdate.ProgramHouse = programHouse;
             return true;
         }
 

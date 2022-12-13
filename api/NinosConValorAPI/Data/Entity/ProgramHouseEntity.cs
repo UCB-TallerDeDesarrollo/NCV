@@ -24,6 +24,7 @@ namespace NinosConValorAPI.Data.Entity
 
         //fixed assets that belong to the program house
         public ICollection<FixedAssetEntity>? FixedAssets { get; set; }
+        public virtual ICollection<KidEntity>? Kids { get; set; }
 
     }
 }
