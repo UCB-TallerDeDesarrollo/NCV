@@ -171,6 +171,7 @@ function EditKidFile() {
                     </Alert>
                 </Collapse>
                 <InputText
+                    required
                     id="firstName"
                     name="firstName"
                     label="Nombres"
@@ -187,6 +188,7 @@ function EditKidFile() {
                     </Alert>
                 </Collapse>
                  <InputText
+                    required
                     id="lastName"
                     name="lastName"
                     type="text"
@@ -215,6 +217,7 @@ function EditKidFile() {
                     }}
                 />
                 <InputText
+                    required
                     id="birthDate"
                     name="birthDate"
                     InputLabelProps={{ shrink: true }}
@@ -231,6 +234,7 @@ function EditKidFile() {
                     </Alert>
                 </Collapse>
                 <InputText
+                    required
                     id="programHouse"
                     name="programHouse"
                     type="text"
@@ -242,6 +246,7 @@ function EditKidFile() {
                     }}
                 />
                 <InputText
+                    required
                     id="birthPlace"
                     name="birthPlace"
                     type="text"
@@ -253,6 +258,7 @@ function EditKidFile() {
                     }}
                 />
                 <InputText
+                    required
                     id="gender"
                     name="gender"
                     type="text"
