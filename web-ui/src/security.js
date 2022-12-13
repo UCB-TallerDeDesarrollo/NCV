@@ -124,12 +124,10 @@ export function viewsAcces(access){
                         ></Route>
                         <Route
                             path="ninos/:kidId/crear-reporte/"
-                            //element={<><NavBar/><AddHealthReport/></>}
                             element={<AddHealthReport />}
                         ></Route>
                         <Route
                             path="ninos/:kidId/crear-reporte-estancia/"
-                            //element={<><NavBar/><AddFoundationReport/></>}
                             element={<AddFoundationReport />}
                         ></Route>
                         <Route
@@ -185,12 +183,10 @@ export function viewsAcces(access){
                         <Route path="/ninos/:kidId" element={<ShowOneKidFile />}></Route>
                         <Route
                             path="ninos/:kidId/crear-reporte/"
-                            //element={<><NavBar/><AddHealthReport/></>}
                             element={<AddHealthReport/>}
                         ></Route>
                         <Route
                             path="ninos/:kidId/crear-reporte-estancia/"
-                            //element={<><NavBar/><AddFoundationReport/></>}
                             element={<AddFoundationReport/>}
                         ></Route>
                         <Route
@@ -246,12 +242,10 @@ export function viewsAcces(access){
                             ></Route>
                             <Route
                                 path="ninos/:kidId/crear-reporte/"
-                                //element={<><NavBar/><AddHealthReport/></>}
                                 element={<AddHealthReport />}
                             ></Route>
                             <Route
                                 path="ninos/:kidId/crear-reporte-estancia/"
-                                //element={<><NavBar/><AddFoundationReport/></>}
                                 element={<AddFoundationReport />}
                             ></Route>
                             <Route
@@ -296,12 +290,7 @@ export function viewsAcces(access){
             break;        
         default:
             return(
-                <Router>
-                        <Routes>
-                            <Route exact path="/" element={<LoginForm />}></Route>
-                            <Route path="*" element={<Navigate replace to="/" />} />
-                        </Routes>
-                    </Router>
+                null
                 )
             break;
         
