@@ -13,18 +13,6 @@ import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 
-const genders = [
-    {
-      value: 'M',
-      label: 'M',
-    },
-    {
-      value: 'F',
-      label: 'F',
-    }
-  ];
-
-  
 var listCheck = {
     checkFirstName: true,
     checkLastName: true,
@@ -171,11 +159,16 @@ function EditKidFile() {
                     </Alert>
                 </Collapse>
                 <InputText
+                    required
                     id="firstName"
                     name="firstName"
+                    label="Nombres"
                     type="text"
                     value={kid.firstName}
                     onChange={handleInputChange}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                 />
                 <Collapse in={firstNameValidation} sx={{width:1, pt:2}}>
                     <Alert severity="error">
@@ -183,11 +176,16 @@ function EditKidFile() {
                     </Alert>
                 </Collapse>
                  <InputText
+                    required
                     id="lastName"
                     name="lastName"
                     type="text"
+                    label="Apellidos"
                     value={kid.lastName}
                     onChange={handleInputChange}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                 />
                 <Collapse in={lastNameValidation} sx={{width:1, pt:2}}>
                     <Alert severity="error">
@@ -199,14 +197,20 @@ function EditKidFile() {
                     id="ci"
                     name="ci"
                     type="text"
+                    label="Carnet de identidad (CI)"
                     value={kid.ci}
                     onChange={handleInputChange}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                 />
                 <InputText
+                    required
                     id="birthDate"
                     name="birthDate"
                     InputLabelProps={{ shrink: true }}
                     type="date"
+                    label="Fecha de nacimiento"
                     value={kid.birthDate}
                     defaultValue={kid.birthDate}
                     onChange={handleInputChange}
@@ -218,25 +222,40 @@ function EditKidFile() {
                     </Alert>
                 </Collapse>
                 <InputText
+                    required
                     id="programHouse"
                     name="programHouse"
                     type="text"
+                    label="Casa"
                     value={kid.programHouse}
                     onChange={handleInputChange}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                 />
                 <InputText
+                    required
                     id="birthPlace"
                     name="birthPlace"
                     type="text"
+                    label="Lugar de Nacimiento"
                     value={kid.birthPlace}
                     onChange={handleInputChange}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                 />
                 <InputText
+                    required
                     id="gender"
                     name="gender"
                     type="text"
+                    label="Genero"
                     value={kid.gender}
                     onChange={handleInputChange}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                 >
                 </InputText>
                 <Box sx={{display: 'inline'}}>
