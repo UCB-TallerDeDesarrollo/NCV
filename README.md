@@ -3,6 +3,22 @@
 <img alt="Logo" align="right" src="./web-ui/src/Assets/img/logo-ncv.png" width="20%" />
 
 <details>
+    <summary><strong>Comandos para instalar</strong></summary>
+
+- Abrir una ventana de comandos CMD
+  Ejecutar los siguientes comandos para verificar la instalación
+  node --version
+  npm --version
+- Crear un proyecto con React Js
+  npx create-react-app "Nombre de la aplicacion"
+- Abrir Visual studio Code y ejecutar el siguiente comando
+  npm start
+- Comandos adicionales en caso de que las rutas no funcionen
+  npm i react-router-dom
+
+</details>
+
+<details>
   <summary><strong>Comandos para Inicializar</strong></summary>
 
 #### Comando para instalar Dependencias
@@ -14,23 +30,6 @@
     npm start
 
 - _Comienza a escuchar en el puerto [localhost 3000](http://localhost:3000/)_
-
-</details>
-
-<details>
-    <summary><strong>Comandos para instalar</strong></summary>
-
-Abrir una ventana de comandos CMD
-Ejecutar los siguientes comandos para verificar la instalación
-node --version
-npm --version
-Crear un proyecto con React Js
-npx create-react-app "Nombre de la aplicacion"
-Abrir Visual studio Code y ejecutar el siguiente comando
-npm start
-Comandos adicionales crear evento
-npm i react-router-dom
-npm i reactstrap
 
 </details>
 
