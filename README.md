@@ -52,19 +52,23 @@ Nos ofrece componentes para un desarrollo web más rápido y fácil. Construya s
 
 React te ayuda a crear interfaces de usuario interactivas de forma sencilla. Diseña vistas simples para cada estado en tu aplicación, y React se encargará de actualizar y renderizar de manera eficiente los componentes correctos cuando los datos cambien.
 
-[![Firebase Version](https://img.shields.io/badge/Firebase-4.5.0-yellowgreen)](https://console.firebase.google.com/u/0/?hl=es&pli=1)
+[![Firebase Version](https://img.shields.io/badge/Firebase-yellowgreen)](https://console.firebase.google.com/u/0/?hl=es&pli=1)
 
 Nos ofrece herramientas de Google para compilar infraestructuras de apps, mejorar la calidad de las apps y desarrollar tu empresa
 
+[![Azure](https://img.shields.io/badge/Azure-blue)](https://azure.microsoft.com/)
+
+Nos ofrece herramientas para el manejo de la base de datos
+
 [![Axios Version](https://img.shields.io/badge/Axios-0.27.2-red)](https://www.npmjs.com/package/axios)
 
-Cliente HTTP basado en promesas para el navegador y el nodo.js
+Cliente HTTP basado en promesas para el navegador
 
 [![JavaScript Version](https://img.shields.io/badge/Javascript-ECMA%206-inactive)](https://www.w3schools.com/js/js_es6.asp)
 
 ECMAScript 2015 fue la segunda revisión importante de JavaScript.
 
-[![react-export-excel Version](https://img.shields.io/badge/react--export--excel-0.5.3-blueviolet)](https://www.npmjs.com/package/react-export-excel)
+[![react-export-excel Version](https://img.shields.io/badge/react--export--excel-blueviolet)](https://www.npmjs.com/package/react-export-excel)
 
 Una biblioteca de exportación a Excel creada con y para React.
 
