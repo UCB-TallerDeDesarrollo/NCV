@@ -13,18 +13,6 @@ import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 
-const genders = [
-    {
-      value: 'M',
-      label: 'M',
-    },
-    {
-      value: 'F',
-      label: 'F',
-    }
-  ];
-
-  
 var listCheck = {
     checkFirstName: true,
     checkLastName: true,
