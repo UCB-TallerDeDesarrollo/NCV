@@ -210,28 +210,36 @@ namespace NinosConValorAPI.Data.Repository
         {
             IQueryable<KidEntity> query = _dbContext.Kids;
             query = query.AsNoTracking();
-
+            query = query.Include(k => k.ProgramHouse);
             return await query.FirstOrDefaultAsync(c => (c.Id == kidId) & (c.Status != EntityStatus.Deleted));
         }
         public async Task<IEnumerable<KidEntity>> GetKidsAsync()
         {
             IQueryable<KidEntity> query = _dbContext.Kids;
             query = query.AsNoTracking();
+            query = query.Include(k => k.ProgramHouse);
             query = query.Where( k => k.Status != EntityStatus.Deleted);
             query = query.OrderBy(k => k.FirstName).ThenBy(k => k.LastName);
             return await query.ToListAsync() ;
         }
-        public void CreateKid(KidEntity kid)
+        public async void CreateKidAsync(KidEntity kid)
         {
+            _dbContext.Entry(kid.ProgramHouse).State = EntityState.Unchanged;
             _dbContext.Kids.Add(kid);
         }
 
-        public bool UpdateKid(KidEntity kidModel)
+        public async Task<KidEntity> UpdateKidAsync(KidEntity kid)
         {
-            var kidToUpdate = _dbContext.Kids.FirstOrDefault(c => c.Id == kidModel.Id);
-
-            _dbContext.Entry(kidToUpdate).CurrentValues.SetValues(kidModel);
-            return true;
+            var kidToUpdate = _dbContext.Kids.FirstOrDefault(c => c.Id == kid.Id);
+            _dbContext.Entry(kid.ProgramHouse).State = EntityState.Unchanged;
+            kidToUpdate.ProgramHouse = kid.ProgramHouse ?? kidToUpdate.ProgramHouse;
+            kidToUpdate.FirstName = kid.FirstName ?? kidToUpdate.FirstName;
+            kidToUpdate.LastName = kid.LastName ?? kidToUpdate.LastName;
+            kidToUpdate.CI = kid.CI ?? kidToUpdate.CI;
+            kidToUpdate.BirthDate = kid.BirthDate ?? kidToUpdate.BirthDate;
+            kidToUpdate.BirthPlace = kid.BirthPlace ?? kidToUpdate.BirthPlace;
+            kidToUpdate.Gender = kid.Gender ?? kidToUpdate.Gender;
+            return kidToUpdate;
         }
 
         public async Task DeleteKidAsync(int kidId)

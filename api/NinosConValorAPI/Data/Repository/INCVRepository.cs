@@ -18,10 +18,10 @@ namespace NinosConValorAPI.Data.Repository
         Task<FoundationReportEntity> UpdateFoundationReportAsync(int kidId, FoundationReportEntity foundationReport);
 
         //KIDS
-        public void CreateKid(KidEntity kid);
+        public void CreateKidAsync(KidEntity kid);
         Task<KidEntity> GetKidAsync(int kidId);
         Task<IEnumerable<KidEntity>> GetKidsAsync();
-        bool UpdateKid(KidEntity kidModel);
+        Task<KidEntity> UpdateKidAsync(KidEntity kidModel);
         Task DeleteKidAsync(int kidId);
 
         //FIXED ASSETS

@@ -27,7 +27,9 @@ namespace NinosConValorAPI
                 .ForMember(ent => ent.AssetResponsible, mod => mod.MapFrom(modSrc => new AssetResponsibleEntity() { Id = modSrc.AssetResponsibleId }))
                 .ReverseMap();
             this.CreateMap<KidEntity, KidModel>()
-                .ReverseMap();
+                .ForMember(mod => mod.ProgramHouse, ent => ent.MapFrom(entSrc => entSrc.ProgramHouse.Name ))
+                .ReverseMap()
+                .ForMember(ent => ent.ProgramHouse, mod => mod.MapFrom(modSrc => new ProgramHouseEntity() { Name = modSrc.ProgramHouse } ));
             this.CreateMap<HealthReportEntity, HealthReportModel>()
                 .ReverseMap();
             this.CreateMap<LegalReportEntity, LegalReportModel>()

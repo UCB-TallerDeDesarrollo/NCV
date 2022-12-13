@@ -50,7 +50,7 @@ namespace UnitTests.ModelsAndEntities
                 LastName = "Flores",
                 CI = "1234567",
                 BirthDate = new DateTime(2010, 9, 12),
-                ProgramHouse = "SDA",
+                ProgramHouse = new ProgramHouseEntity() { Id = 2, Name = "Sendero de Esperanza" },
                 BirthPlace = "Cochabamba",
                 Gender = "masculino"
             };
@@ -61,7 +61,6 @@ namespace UnitTests.ModelsAndEntities
             Assert.Equal("Flores", kidEntity.LastName);
             Assert.Equal("1234567", kidEntity.CI);
             Assert.Equal(new DateTime(2010, 9, 12), kidEntity.BirthDate);
-            Assert.Equal("SDA", kidEntity.ProgramHouse);
             Assert.Equal("Cochabamba", kidEntity.BirthPlace);
             Assert.Equal("masculino", kidEntity.Gender);
 

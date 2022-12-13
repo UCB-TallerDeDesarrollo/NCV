@@ -29,7 +29,7 @@ namespace UnitTests.ServiceUT
                 LastName = "Flores",
                 CI = "1234567",
                 BirthDate = new DateTime(2010, 9, 12),
-                ProgramHouse = "SDA",
+                ProgramHouse = new ProgramHouseEntity() { Id = 2, Name = "Sendero de Esperanza" },
                 BirthPlace = "Cochabamba",
                 Gender = "masculino"
             };

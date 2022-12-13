@@ -18,7 +18,10 @@ namespace NinosConValorAPI.Services
         public async Task<KidModel> CreateKidAsync(KidModel kid)
         {
             var kidEntity = _mapper.Map<KidEntity>(kid);
-            _NCVRepository.CreateKid(kidEntity);
+            var programHouses = await _NCVRepository.GetProgramHousesAsync();
+            var programHouseId = programHouses.FirstOrDefault(p => p.Name == kid.ProgramHouse).Id;
+            kidEntity.ProgramHouse = await _NCVRepository.GetProgramHouseAsync(programHouseId);
+            _NCVRepository.CreateKidAsync(kidEntity);
             var result = await _NCVRepository.SaveChangesAsync();
             if (result)
             {
@@ -41,7 +44,13 @@ namespace NinosConValorAPI.Services
             var kidEntity = _mapper.Map<KidEntity>(kidModel);
             await GetKidAsync(kidId);
             kidEntity.Id = kidId;
-            _NCVRepository.UpdateKid(kidEntity);
+            if (kidModel.ProgramHouse != null)
+            {
+                var programHouses = await _NCVRepository.GetProgramHousesAsync();
+                var programHouseId = programHouses.FirstOrDefault(p => p.Name == kidModel.ProgramHouse).Id;
+                kidEntity.ProgramHouse = await _NCVRepository.GetProgramHouseAsync(programHouseId);
+            }
+            kidEntity = await _NCVRepository.UpdateKidAsync(kidEntity);
 
             var saveResult = await _NCVRepository.SaveChangesAsync();
 
@@ -49,7 +58,7 @@ namespace NinosConValorAPI.Services
             {
                 throw new Exception("Database Error");
             }
-            return kidModel;
+            return _mapper.Map<KidModel>(kidEntity);
         }
         
         public async Task DeleteKidAsync(int kidId)

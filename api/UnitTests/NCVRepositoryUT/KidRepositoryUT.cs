@@ -24,13 +24,13 @@ namespace UnitTests.NCVRepositoryUT
                 LastName = "Flores",
                 CI = "1234567",
                 BirthDate = new DateTime(2010, 9, 12),
-                ProgramHouse = "SDA",
+                ProgramHouse = new ProgramHouseEntity() { Id = 2, Name = "Sendero de Esperanza" },
                 BirthPlace = "Cochabamba",
                 Gender = "masculino"
             };
             int kidId = 1;
 
-            repository.CreateKid(kidEntity);
+            repository.CreateKidAsync(kidEntity);
             var result = await repository.SaveChangesAsync();
 
             // ACT 
@@ -51,13 +51,13 @@ namespace UnitTests.NCVRepositoryUT
                 LastName = "Flores",
                 CI = "1234567",
                 BirthDate = new DateTime(2010, 9, 12),
-                ProgramHouse = "SDA",
+                ProgramHouse = new ProgramHouseEntity() { Id = 2, Name = "Sendero de Esperanza" },
                 BirthPlace = "Cochabamba",
                 Gender = "masculino"
             };
 
             // ACT 
-            repository.CreateKid(kid);
+            repository.CreateKidAsync(kid);
             var result = await repository.SaveChangesAsync();
 
             // ASSERT
@@ -75,11 +75,11 @@ namespace UnitTests.NCVRepositoryUT
                 LastName = "Flores",
                 CI = "1234567",
                 BirthDate = new DateTime(2010, 9, 12),
-                ProgramHouse = "SDA",
+                ProgramHouse = new ProgramHouseEntity() { Id = 2, Name = "Sendero de Esperanza" },
                 BirthPlace = "Cochabamba",
                 Gender = "masculino"
             };
-            repository.CreateKid(kid);
+            repository.CreateKidAsync(kid);
             var result = await repository.SaveChangesAsync();
 
             // NUMBER OF FIXED ASSETS

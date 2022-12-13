@@ -29,7 +29,7 @@ namespace UnitTests.ServiceUT
                 LastName = "Flores",
                 CI = "1234567",
                 BirthDate = new DateTime(2010, 9, 12),
-                ProgramHouse = "SDA",
+                ProgramHouse = new ProgramHouseEntity() { Id=2, Name= "Sendero de Esperanza" },
                 BirthPlace = "Cochabamba",
                 Gender = "masculino"
             };
@@ -61,7 +61,7 @@ namespace UnitTests.ServiceUT
                 LastName = "Flores",
                 CI = "1234567",
                 BirthDate = new DateTime(2010, 9, 12),
-                ProgramHouse = "SDA",
+                ProgramHouse = "Sendero de Esperanza",
                 BirthPlace = "Cochabamba",
                 Gender = "masculino"
             };
@@ -72,13 +72,15 @@ namespace UnitTests.ServiceUT
                 LastName = "Flores",
                 CI = "1234567",
                 BirthDate = new DateTime(2010, 9, 12),
-                ProgramHouse = "SDA",
+                ProgramHouse = new ProgramHouseEntity() { Id = 2, Name = "Sendero de Esperanza" },
                 BirthPlace = "Cochabamba",
                 Gender = "masculino"
             };
 
             var kidRepositoryMock = new Mock<INCVRepository>();
-            kidRepositoryMock.Setup(r => r.CreateKid(kidEntity));
+            kidRepositoryMock.Setup(r => r.CreateKidAsync(kidEntity));
+            kidRepositoryMock.Setup(r => r.GetProgramHouseAsync(2)).ReturnsAsync(new ProgramHouseEntity() { Id = 2, Name = "Sendero de Esperanza" });
+            kidRepositoryMock.Setup(r => r.GetProgramHousesAsync()).ReturnsAsync(new List<ProgramHouseEntity>(){ new ProgramHouseEntity() { Id = 2, Name = "Sendero de Esperanza" } });
             kidRepositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(true);
 
             var kidService = new KidService(kidRepositoryMock.Object, mapper);
@@ -95,7 +97,7 @@ namespace UnitTests.ServiceUT
                 LastName = "Flores",
                 CI = "1234567",
                 BirthDate = new DateTime(2010, 9, 12),
-                ProgramHouse = "SDA",
+                ProgramHouse = new ProgramHouseEntity() { Id = 2, Name = "Sendero de Esperanza" },
                 BirthPlace = "Cochabamba",
                 Gender = "masculino"
             };
@@ -107,7 +109,7 @@ namespace UnitTests.ServiceUT
                 LastName = "Tintos",
                 CI = "1234563",
                 BirthDate = new DateTime(2010, 9, 15),
-                ProgramHouse = "SDA",
+                ProgramHouse = new ProgramHouseEntity() { Id = 2, Name = "Sendero de Esperanza" },
                 BirthPlace = "Cochabamba",
                 Gender = "masculino"
             };
