@@ -72,7 +72,7 @@ function AddRowContacts({setContacts}){
 
     return <div><TableContainer component={Paper}>
                 <Table sx={{ minWidth: 50 }} size="small" aria-label="a dense table">
-                    {accesPermiss=="CompleteAccess"&&
+                    {((accesPermiss=="CompleteAccess") || (accesPermiss=="MediumAccess"))&&
                         <TableRow key={0} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell key={0} align={'center'} sx={{width:0.285}} >
                                 <input
@@ -119,8 +119,10 @@ function AddRowContacts({setContacts}){
                 </Table>
            </TableContainer>
            <Box sx={{pt: 3,display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
-                {accesPermiss=="CompleteAccess"&&
-                    <ButtonPrimary key={22} label="Añadir datos" onClick={handleFormSubmit} />
+
+                {(accesPermiss=="CompleteAccess") || (accesPermiss=="MediumAccess")&&
+                    <ButtonPrimary key={2} label="Añadir datos" onClick={handleFormSubmit} />
+
                 }
             </Box>
            </div>
@@ -222,7 +224,12 @@ function Contacts({contactsData,setContacts}){
     if (contactsData != null && contactsData.length > 0){
         table = (<>
             <Box sx={{display:"flex", flexDirection:"row"}}>
-                <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}} editableAction={handleSave} deleteAction={deleteAction}></TableBasic>
+                {(accesPermiss=="CompleteAccess") &&
+                    <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}} editableAction={handleSave}  deleteAction={deleteAction}></TableBasic>
+                }
+                {(accesPermiss=="MediumAccess")&&
+                    <TableBasic align='center' columnHeaders={columnNames} data={contactsData} sxTableContainer={{width:1}} editableAction={handleSave}  ></TableBasic>
+                }
             </Box>
         </>);
         contactsTitle = <Typography variant="h3" sx={{marginBottom:1.5}}>contactos</Typography>;

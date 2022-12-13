@@ -20,8 +20,10 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
             <Box sx={{margin:3}}>
                 <Typography variant="body2">No se registraron datos de <b>salud</b></Typography>
             </Box>
-            <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
-        </Box>);
+            {(accesPermiss=="CompleteAccess") || (accesPermiss=="MediumAccess")&&
+                <ButtonPrimary key={2} label="Crear reporte de salud" onClick={()=>{navigate(urlCreateHealthReport)}} />
+            }
+            </Box>);
     let healthReportComponent = null
     if (healthReportStatusCode == 404){
         healthReportComponent = buttonCreateHealthReport
@@ -37,7 +39,7 @@ function HealthReport({kidId, healthReport, healthReportStatusCode}){
         }
         healthReportComponent = (<>
             <SingleItemCard key={1} element={healthReportElement} title={"Reporte de salud"} sx={{ p: 0 , pt: 0, m:0, width:1, borderRadius:0, border:0, boxShadow:0}} />
-            {accesPermiss=="CompleteAccess"&&<ButtonPrimaryEditIcon onClick={navigateEditHealthReport} sx={{alignSelf:'flex-end', left: '90%', background: '#5BCCD9', borderRadius: '50%', width: '50px', height: '50px'}}/>}
+            {((accesPermiss=="CompleteAccess") || (accesPermiss=="MediumAccess"))&&<ButtonPrimaryEditIcon onClick={navigateEditHealthReport} sx={{alignSelf:'flex-end', left: '90%', background: '#5BCCD9', borderRadius: '50%', width: '50px', height: '50px'}}/>}
         </>)
     }
     return healthReportComponent

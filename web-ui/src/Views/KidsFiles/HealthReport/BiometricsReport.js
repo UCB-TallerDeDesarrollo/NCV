@@ -84,7 +84,7 @@ function AddRowWeightAndHeight({setBiometrics}){
     // {formatDate(actualDate)}
     return <div><TableContainer component={Paper}>
                 <Table sx={{ minWidth: 50 }} size="small" aria-label="a dense table">
-                    {accesPermiss=="CompleteAccess"&&
+                    {((accesPermiss=="CompleteAccess") || (accesPermiss=="MediumAccess"))&&
                         <TableRow key={0} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell key={0} align={'center'} sx={{width:0.285}} >
                                 <input
@@ -119,7 +119,7 @@ function AddRowWeightAndHeight({setBiometrics}){
                 </Table>
            </TableContainer>
            <Box sx={{pt: 3,display:"flex", flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
-                {accesPermiss=="CompleteAccess"&&
+                {((accesPermiss=="CompleteAccess") || (accesPermiss=="MediumAccess"))&&
                     <ButtonPrimary key={2} label="Añadir datos" onClick={handleFormSubmit} />
                 }
             </Box>
