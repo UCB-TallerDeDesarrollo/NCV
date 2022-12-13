@@ -37,7 +37,7 @@ npm i reactstrap
 <details>
     <summary><strong>Tecnologías usadas</strong></summary>
 
-[![Material Version](https://img.shields.io/badge/Material--ui-v4.-blue)](https://v4.mui.com/)
+[![Material Version](https://img.shields.io/badge/Material--ui-v5.-blue)](https://mui.com/material-ui/getting-started/installation/)
 
 Nos ofrece componentes para un desarrollo web más rápido y fácil. Construya su propio sistema de diseño o comience con el diseño de materiales.
 
@@ -49,7 +49,7 @@ React te ayuda a crear interfaces de usuario interactivas de forma sencilla. Dis
 
 Nos ofrece herramientas de Google para compilar infraestructuras de apps, mejorar la calidad de las apps y desarrollar tu empresa
 
-[![Axios Version](https://img.shields.io/badge/Axios-0.21.4-red)](https://www.npmjs.com/package/axios)
+[![Axios Version](https://img.shields.io/badge/Axios-0.27.2-red)](https://www.npmjs.com/package/axios)
 
 Cliente HTTP basado en promesas para el navegador y el nodo.js
 
@@ -67,6 +67,22 @@ Una biblioteca de exportación a Excel creada con y para React.
     <summary><strong>Estructura de Carpetas y Folders</strong></summary>
 
 - api
+
+  - NinosConValorAPI
+
+    - **Controller**
+
+    - **Data**
+
+    - **Documentation**
+    - **Exceptions**
+    - **Migrations**
+    - **Models**
+    - **Properties**
+    - **Services** -**AutomapperProfile.cs** -**NinosConValorAPI.csproj** -**Program.cs** -**appsettings.Development.json** -**appsettings.json**
+
+  - UnitTests
+  - NinosConValorAPI.sln
 
 - web-ui
 
@@ -100,10 +116,11 @@ Una biblioteca de exportación a Excel creada con y para React.
 
 </details>
 
-### TechStack
+### Pila de Tecnologia
 
 <code><img height="30" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/firebase/firebase.png"></code>
-<code><img height="30" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png"></code>
+<code><img height="30" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K"></code>
 <code><img height="30" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/visual-studio-code/visual-studio-code.png"></code>
+<code><img height="30" src="https://commons.wikimedia.org/wiki/File:Visual_Studio_Icon_2022.svg#/media/File:Visual_Studio_Icon_2022.svg"></code>
 <code><img height="30" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/git/git.png"></code>
 <code><img height="30" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/terminal/terminal.png"></code>
