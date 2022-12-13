@@ -5,16 +5,24 @@
 <details>
     <summary><strong>Comandos para instalar</strong></summary>
 
-- Abrir una ventana de comandos CMD
-  Ejecutar los siguientes comandos para verificar la instalación
+#### Abrir una ventana de comandos CMD
+
+- Ejecutar los siguientes comandos para verificar la instalación
   node --version
   npm --version
-- Crear un proyecto con React Js
-  npx create-react-app "Nombre de la aplicacion"
-- Abrir Visual studio Code y ejecutar el siguiente comando
-  npm start
-- Comandos adicionales en caso de que las rutas no funcionen
-  npm i react-router-dom
+- _En caso de no tener instalado node entrar a : [Node js](https://nodejs.org/es/download/)_
+
+#### Crear un proyecto con React Js
+
+npx create-react-app "Nombre de la aplicacion"
+
+#### Abrir Visual studio Code y ejecutar el siguiente comando
+
+npm start
+
+#### Comandos adicionales en caso de que las rutas no funcionen
+
+npm i react-router-dom
 
 </details>
 
