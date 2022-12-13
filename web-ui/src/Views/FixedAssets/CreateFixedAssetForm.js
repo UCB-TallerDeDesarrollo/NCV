@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Axios from 'axios'
+import axios from 'axios'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import ErrorPage from '../../Components/ErrorPage'
@@ -9,12 +9,10 @@ import Navbar from '../../Components/NavBar'
 import Box from '@mui/material/Box'
 import { useNavigate } from 'react-router-dom';
 import ButtonPrimary from '../../Components/MUI-Button'
-import getFromApi from '../../Components/GetFromApi'
 import Dropdown from '../../Components/Dropdown'
-import {getFixedAssets} from '../../Components/GetFromApi'
-import axios from "axios"
+import GetFromApi, {getFixedAssets} from '../../Components/GetFromApi'
 
-function CreateFixedAssetForm(props) {
+function CreateFixedAssetForm() {
     const url = process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets'
     const urlProgramHouses = process.env.REACT_APP_BACKEND_URL + '/api/programHouses'
     const urlCategories = process.env.REACT_APP_BACKEND_URL + '/api/assetCategories'
@@ -42,23 +40,24 @@ function CreateFixedAssetForm(props) {
     })
     //programHouses
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
-    const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)    
+    const { apiData:programHouses, error:errorProgramHouses } = GetFromApi(urlProgramHouses)    
 
     useEffect(()=>{
         if (Object.keys(formErrors).length === 0 && isSubmit){
+          // TODO document why this block is empty
         }
     },[formErrors]);
     //categories
     const [categorySelectedValue, setCategorySelectedValue] = useState(null)
-    const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
+    const { apiData:categories, error:errorCategory } = GetFromApi(urlCategories) 
     
     //states
     const [stateSelectedValue, setStateSelectedValue] = useState(null)
-    const { apiData:states, error:errorStates } = getFromApi(urlStates) 
+    const { apiData:states, error:errorStates } = GetFromApi(urlStates) 
 
     //responsibles
     const [responsibleSelectedValue, setResponsibleSelectedValue] = useState(null)
-    const { apiData:responsibles, error:errorResponsibles } = getFromApi(urlResponsibles) 
+    const { apiData:responsibles, error:errorResponsibles } = GetFromApi(urlResponsibles) 
 
     //types
     const [typeSelectedValue, setTypeSelectedValue] = useState(null)
@@ -161,7 +160,7 @@ function CreateFixedAssetForm(props) {
             response => {
                 if(response.name != "AxiosError"){
                     response.data.map((el)=>{
-                        var splitCode = el.code.split("-")
+                        let splitCode = el.code.split("-")
                         assetsCodes.push(splitCode[splitCode.length-1]);
                         return response;
                     })
@@ -202,14 +201,14 @@ function CreateFixedAssetForm(props) {
         return categoryCode
     }
 
-    function submit(e) {
+    function submit() {
         programCode = getProgramCode(programHouseSelectedValue)
         categoryCode = getCategoryCode(categorySelectedValue)
         const errorsFromForm= validate(data)
         setFormErrors(errorsFromForm)
         setIsSubmit(true)
         if(!hasFormErrors(errorsFromForm)){
-            Axios.post(url, {
+            axios.post(url, {
             Name: data.Name.trim(),
             Price: data.Price==''? null:parseFloat(data.Price).toFixed(2), // decimal
             Location: (data.Location=='' || data.Location==null) ? null:data.Location.trim(), // string
@@ -240,7 +239,7 @@ function CreateFixedAssetForm(props) {
             AssetResponsibleId: '', //string
             AssetTypeId : '' //int
         }
-        const regexNumber = /^[0-9]+([.][0-9]+)?$/;
+        const regexNumber = /^\d+([.]\d+)?$/;
         const regexSpaces = /\s/g;
         if(!datas.Name){
             errors.Name="El Detalle del Activo Fijo es requerido!";

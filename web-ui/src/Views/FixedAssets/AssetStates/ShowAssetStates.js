@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import ErrorPage from '../../../Components/ErrorPage'
-import getFromApi from '../../../Components/GetFromApi'
 import Navbar from '../../../Components/NavBar'
 import ListContainer from '../../../Components/ListContainer'
 import ButtonPrimary, { ButtonDanger, ButtonSecondary } from '../../../Components/MUI-Button'
@@ -13,25 +12,23 @@ import DialogContentText from '@mui/material/DialogContentText'
 import Alert from '@mui/material/Alert'
 import { Snackbar } from '@mui/material'
 import ListGrid from '../../../Components/ListGrid'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import axios from "axios"
 import FormContainer from '../../../Components/FormContainer'
 import InputText from '../../../Components/InputText'
 
-var accesPermiss = sessionStorage.getItem("Access")
+let accesPermiss = sessionStorage.getItem("Access")
 
 export default function ShowFixedAssets() {
-    const navigate = useNavigate();
     const location = useLocation()    
     const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
     const [alertMessage, setAlertMessage] = useState(location.state ? location.state.alertMessage : null)
     const [severity, setSeverity] = useState(location.state ? location.state.severity : "success")
     const urlAssetStates = process.env.REACT_APP_BACKEND_URL + '/api/assetStates'
-    let [urlAssetState, setUrlAssetState] = useState(process.env.REACT_APP_BACKEND_URL + '/api/assetStates/')   
+    const urlAssetState = process.env.REACT_APP_BACKEND_URL + '/api/assetStates/'
     const [assetStates, setAssetStates] = useState(null)
     const [errorAssetStates, setErrorAssetStates] = useState(null)
     let errorsFromForm = null
-    const [assetState, setAssetState] = useState([]) 
     const [open, setOpen] = useState(showAlert)
     const [assetStateId, setAssetStateId] = useState(0)
     const [openToConfirm, setOpenToConfirm] = useState(false)
@@ -99,7 +96,7 @@ export default function ShowFixedAssets() {
         return errors     
     }
 
-    const handleSave = ({name,value,previousValue},id) => {
+    const handleSave = ({value,previousValue},id) => {
         if(value==previousValue || value=='') {
             window.location.reload()
         }      
@@ -161,8 +158,7 @@ export default function ShowFixedAssets() {
     } 
     if (errorCreateAssetState) return ErrorPage(errorCreateAssetState)
     if (errorUpdateAssetState) return ErrorPage(errorUpdateAssetState)
-    if (!assetStates) return null    
-    if (!assetState)return <h1>ERROR: Estado de activo fijo no encontrado en la base de datos</h1>
+    if (!assetStates) return null
     const assetStatesListElements = assetStates.map((assetState)=>{
         return {
             id:assetState.id, 

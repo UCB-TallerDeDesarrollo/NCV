@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom';
-import {useLocation} from 'react-router-dom'
-import getFromApi, { deleteFixedAssets } from '../../Components/GetFromApi'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
+import GetFromApi, { deleteFixedAssets } from '../../Components/GetFromApi'
 import ErrorPage from '../../Components/ErrorPage'
 import Navbar from '../../Components/NavBar'
 import SingleItemCard from '../../Components/SingleItemCard'
-import BoxWithButton from '../../Components/BoxWithButton'
-import ButtonPrimary, { ButtonDanger, ButtonSecondary, ButtonPrimaryEditIcon, ButtonPrimaryDeleteIcon } from '../../Components/MUI-Button';
+import { ButtonDanger, ButtonSecondary, ButtonPrimaryEditIcon, ButtonPrimaryDeleteIcon } from '../../Components/MUI-Button';
 import Box from '@mui/material/Box'
 import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
@@ -17,7 +14,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContentText from '@mui/material/DialogContentText';
 
-var accesPermiss = sessionStorage.getItem("Access")
+let accesPermiss = sessionStorage.getItem("Access")
 
 export function ShowFixedAsset() {
     const { fixedAssetId } = useParams()
@@ -25,8 +22,8 @@ export function ShowFixedAsset() {
     let showAlert = location.state ? location.state.showAlert : false 
     let alertMessage = location.state ? location.state.alertMessage : null 
     const [open, setOpen] = useState(showAlert);
-    const url = process.env.REACT_APP_BACKEND_URL + `/api/fixedAssets/${fixedAssetId}`  
-    const { apiData:fixedAsset, error } = getFromApi(url)
+    const url = process.env.REACT_APP_BACKEND_URL + `/api/fixedAssets/${fixedAssetId}`
+    const { apiData:fixedAsset, error } = GetFromApi(url)
     let imageUrl = "https://st.depositphotos.com/1005574/2080/v/450/depositphotos_20808761-stock-illustration-laptop.jpg" 
     const navigate = useNavigate();
     const navigateUpdateFixedAsset = () => { navigate(`/activos-fijos/${fixedAssetId}/editar-activo-fijo`); }

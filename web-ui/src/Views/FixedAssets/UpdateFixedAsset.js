@@ -6,14 +6,29 @@ import FormContainer from '../../Components/FormContainer'
 import InputText from '../../Components/InputText'
 import Navbar from '../../Components/NavBar'
 import { Box } from '@mui/system';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button'
-import getFromApi from '../../Components/GetFromApi'
 import Dropdown from '../../Components/Dropdown'
-import {getFixedAssets} from '../../Components/GetFromApi'
+import GetFromApi, {getFixedAssets} from '../../Components/GetFromApi'
 import axios from "axios"
-import { useParams } from 'react-router-dom'
-function UpdateFixedAssetForm(props) {
+
+function hasErrors(errorCategory, errorStates, errorResponsibles){
+    // categories options for DROPDOWN
+    if(errorCategory){
+        return ErrorPage(errorCategory)
+    }     
+    //states options for DROPDOWN
+    if(errorStates){
+        return ErrorPage(errorStates)
+    }
+    //responsibles options for DROPDOWN
+    if(errorResponsibles){
+        return ErrorPage(errorResponsibles)
+    }
+    return null
+}   
+
+function UpdateFixedAssetForm() {
     const {fixedAssetId} = useParams()
     var urlFixedAsset = process.env.REACT_APP_BACKEND_URL + `/api/fixedAssets/${fixedAssetId}`
     const url = process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets'
@@ -22,10 +37,10 @@ function UpdateFixedAssetForm(props) {
     const urlStates = process.env.REACT_APP_BACKEND_URL + '/api/assetStates'
     const urlResponsibles = process.env.REACT_APP_BACKEND_URL + '/api/assetResponsibles'
 
-    const [open, setOpen] = useState(false)
+    const open = false
+    const isSubmit = false
     const [error, setError] = useState(null)
     const [formErrors,setFormErrors] = useState({})
-    const [isSubmit, setIsSubmit] = useState(false)
 
     //data
     const [name, setName] = useState(null)
@@ -40,10 +55,10 @@ function UpdateFixedAssetForm(props) {
     const navigate = useNavigate()
 
     const fetchBasicData = () => {
-        var responseFA = axios(urlFixedAsset);
+        let responseFA = axios(urlFixedAsset);
         axios.all([responseFA]).then(
             axios.spread((...allData) => {
-                var dataFA = allData[0].data
+                let dataFA = allData[0].data
                 setName(dataFA.name)
                 setPrice(dataFA.price)
                 setCode(dataFA.code)
@@ -59,24 +74,25 @@ function UpdateFixedAssetForm(props) {
 
     //programHouses
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(null)
-    const { apiData:programHouses, error:errorProgramHouses } = getFromApi(urlProgramHouses)    
+    const { apiData:programHouses, error:errorProgramHouses } = GetFromApi(urlProgramHouses)    
 
     useEffect(()=>{
         if(!Object.keys(formErrors).length) fetchBasicData()
         if (Object.keys(formErrors).length === 0 && isSubmit){
+          // TODO document why this block is empty
         }
     },[formErrors]);
     //categories
     const [categorySelectedValue, setCategorySelectedValue] = useState(null)
-    const { apiData:categories, error:errorCategory } = getFromApi(urlCategories) 
+    const { apiData:categories, error:errorCategory } = GetFromApi(urlCategories) 
     
     //states
     const [stateSelectedValue, setStateSelectedValue] = useState(null)
-    const { apiData:states, error:errorStates } = getFromApi(urlStates) 
+    const { apiData:states, error:errorStates } = GetFromApi(urlStates) 
 
     //responsibles
     const [responsibleSelectedValue, setResponsibleSelectedValue] = useState(null)
-    const { apiData:responsibles, error:errorResponsibles } = getFromApi(urlResponsibles) 
+    const { apiData:responsibles, error:errorResponsibles } = GetFromApi(urlResponsibles) 
 
     //types
     const [typeSelectedValue, setTypeSelectedValue] = useState(null)
@@ -86,47 +102,37 @@ function UpdateFixedAssetForm(props) {
     if(errorProgramHouses){
         return ErrorPage(errorProgramHouses)
     }
-    if (!programHouses) return null 
-    let programHousesList = programHouses.map( programHouse =>  { return{
+    if (!programHouses || !categories || !states || !responsibles) return null  
+let programHousesList = programHouses.map( programHouse =>  { return{
         label: programHouse.acronym,
         value: programHouse.id      
     }}) 
     const programHousesOptions = programHousesList 
     
-    // categories options for DROPDOWN
-    if(errorCategory){
-        return ErrorPage(errorCategory)
+    let errorsFound = hasErrors(errorCategory, errorStates, errorResponsibles)
+    if(errorsFound){
+        return errorsFound
     }
-    if (!categories) return null        
-    let categoriesList = categories.map( category =>  { return{
+
+let categoriesList = categories.map( category =>  { return{
         label: category.category,
         value: category.id      
     }}) 
     const categoriesOptions = categoriesList  
 
-    //states options for DROPDOWN
-    if(errorStates){
-        return ErrorPage(errorStates)
-    }
-    if (!states) return null 
     let statesList = states.map( state =>  { return{
         label: state.state,
         value: state.id      
     }}) 
     const stateOptions = statesList 
 
-    //responsibles options for DROPDOWN
-    if(errorResponsibles){
-        return ErrorPage(errorResponsibles)
-    }
-    if (!responsibles) return null 
     let responsiblesList = responsibles.map( responsible =>  { return{
         label: responsible.name,
         value: responsible.id      
     }}) 
     const responsibleOptions = responsiblesList 
 
-    function handleClose(event, reason) {
+    function handleClose() {
         navigate(`/activos-fijos/${fixedAssetId}`,{state:{showAlert:true,alertMessage:"Información sin modificaciones"}});
     }
     
@@ -170,7 +176,7 @@ function UpdateFixedAssetForm(props) {
             response => {
                 if(response.name != "AxiosError"){
                     response.data.map((el)=>{
-                        var splitCode = el.code.split("-")
+                        let splitCode = el.code.split("-")
                         assetsCodes.push(splitCode[splitCode.length-1]);
                         return response;
                     })
@@ -194,19 +200,24 @@ function UpdateFixedAssetForm(props) {
         switch (categoryValue){
             case 1:
                 categoryCode = 'HER'
+                break;
             case 2:
                 categoryCode = 'MUE'
+                break;
             case 3:
                 categoryCode = 'MAQ'
+                break;
             case 4:
                 categoryCode = 'EQC'
+                break;
             case 5:
                 categoryCode = 'VEH' 
+                break;
         }
         return categoryCode
     }
 
-    function handleFormSubmit(e) {
+    function handleFormSubmit() {
         programCode = getProgramCode(programHouseSelectedValue)
         categoryCode = getCategoryCode(categorySelectedValue)
         const errorsFromForm= validate()
@@ -244,7 +255,7 @@ function UpdateFixedAssetForm(props) {
             AssetResponsibleId:'',
             AssetTypeId : '', //int
         }
-        const regexNumber = /^[0-9]+([.][0-9]+)?$/;
+        const regexNumber = /^\d+([.]\d+)?$/;
         const regexSpaces = /\s/g;
         if(!name){
             errors.Name="El Detalle del Activo Fijo es requerido!";

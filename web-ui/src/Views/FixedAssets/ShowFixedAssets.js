@@ -1,23 +1,18 @@
-/* eslint-disable react/jsx-key */
 import React, { useEffect, useState, useRef } from 'react'
 import Box from '@mui/material/Box'
 import ErrorPage from '../../Components/ErrorPage'
-import { getFixedAssets } from '../../Components/GetFromApi'
-import getFromApi from '../../Components/GetFromApi'
+import GetFromApi, { getFixedAssets } from '../../Components/GetFromApi'
 import Navbar from '../../Components/NavBar'
 import ListContainer from "../../Components/ListContainer"
-import ListBasic from '../../Components/ListBasic'
 import DropdownList from '../../Components/DropdownList'
 import Dropdown from '../../Components/Dropdown'
-import ButtonPrimary, { ButtonSecondary } from '../../Components/MUI-Button';
+import ButtonPrimary from '../../Components/MUI-Button';
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import SearchBar from '../../Components/SearchBar';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { display } from '@mui/system'
 import axios from 'axios';
 import ExportExcel, {compareSort, capitalizeFirstLowerCase} from '../../Components/ExportExcel'
-import { ConstructionOutlined } from '@mui/icons-material'
 
 export default function ShowFixedAssets() {
     const [open, setOpen] = useState(null);
@@ -43,29 +38,20 @@ export default function ShowFixedAssets() {
 
     let showAlert = location.state ? location.state.showAlert : false
     let alertMessage = location.state ? location.state.alertMessage : null
-    const { apiData: assetCategories, errors } = getFromApi(urlCategories)
-    const { apiData: programHouses, errorProgramHouses } = getFromApi(urlProgramHouses)
-    const { apiData: states, error: errorStates } = getFromApi(urlStates)
-    const { currentProgramHouse, setCurrentProgramHouse } = getFromApi(null)
-    const headerIndices = [];
-    const getHeaderName = (i) => {
-        switch (i) {
-            case 1:
-                return 'Equipos y herramientas';
-            case 2:
-                return 'Muebles y enseres';
-            case 3:
-                return 'Maquinaria';
-            case 4:
-                return 'Herramientas';
-        }
+    const { apiData: assetCategories, errors } = GetFromApi(urlCategories)
+    const { apiData: programHouses, errorProgramHouses } = GetFromApi(urlProgramHouses)
+    const { apiData: states, error: errorStates } = GetFromApi(urlStates)
+    
+    function haveErrorsInBasicData (){
+        return (errors || errorProgramHouses || errorStates)
     }
+
     function ordenCriteria(posts) {
         posts = posts.sort((a, b) => { return a.name.toLowerCase().localeCompare(b.name.toLowerCase()) });
         return posts;
     }
 
-    function searchByName(e, posts) {
+    function searchByName(e) {
         setSearchBYNameValue(e.target.value)
         return searchCriteria()
     }
@@ -86,11 +72,11 @@ export default function ShowFixedAssets() {
         return resultsArray;
     }
     const fetchBasicData = () => {
-        var responseAllData = axios(url);
+        let responseAllData = axios(url);
         axios.all([responseAllData]).then(
             axios.spread((...allData) => {
-                var dataFA = allData[0].data
-                var newDataFA = dataFA.map((data) => {
+                let dataFA = allData[0].data
+                let newDataFA = dataFA.map((data) => {
                     return {
                         'DETALLE': capitalizeFirstLowerCase(data.name),
                         'CÓDIGO': data.code,
@@ -139,7 +125,7 @@ export default function ShowFixedAssets() {
     if (hasErrorWithFetch != null) {
         return ErrorPage(hasErrorWithFetch)
     }
-    if (!fixedAssets || !assetCategories || !programHouses) return null
+    if (!fixedAssets || !assetCategories || !programHouses || haveErrorsInBasicData()) return null
 
     acronymsList.push("TODOS")
 

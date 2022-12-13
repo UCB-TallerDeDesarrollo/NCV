@@ -1,9 +1,8 @@
-import TextField from '@mui/material/TextField'
 import MenuItem from '@mui/material/MenuItem'
 import InputText from '../Components/InputText'
 
 export default function Dropdown({name, id, options, selectedValue, required=false, setSelectedValue, helperText = "Seleccione un valor", onChangeF=null}) {
-  var handleChange = (event, onChangeF) => {
+  let handleChange = (event, onChangeF) => {
     setSelectedValue(event.target.value)
     if(onChangeF!=null){
       onChangeF(event.target.value)

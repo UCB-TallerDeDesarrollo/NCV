@@ -11,7 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogContentText from '@mui/material/DialogContentText'
 import Alert from '@mui/material/Alert'
 import { Snackbar } from '@mui/material'
-import {useNavigate, useLocation } from 'react-router-dom'
+import {useLocation } from 'react-router-dom'
 import axios from "axios"
 import FormContainer from '../../../Components/FormContainer'
 import InputText from '../../../Components/InputText'
@@ -21,7 +21,6 @@ import Dropdown from '../../../Components/Dropdown'
 var accesPermiss = sessionStorage.getItem("Access")
 
 export default function ShowAssetTypesByCategory() {
-    const navigate = useNavigate();
     const location = useLocation()    
     const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
     const [alertMessage, setAlertMessage] = useState(location.state ? location.state.alertMessage : null)
@@ -32,7 +31,6 @@ export default function ShowAssetTypesByCategory() {
     const [assetCategoryId, setAssetcategoryId] = useState(null)
     const [errorAssetTypes, setErrorAssetTypes] = useState(null)
     let errorsFromForm = null
-    const [assetType, setAssetType] = useState([]) 
     const [open, setOpen] = useState(showAlert)
     const [assetTypeId, setAssetTypeId] = useState(0)
     const [openToConfirm, setOpenToConfirm] = useState(false)
@@ -108,7 +106,7 @@ export default function ShowAssetTypesByCategory() {
         return errors     
     }
 
-    const handleSave = ({name,value,previousValue},id, categoryId) => {
+    const handleSave = ({value,previousValue},id, categoryId) => {
         if(value==previousValue || value=='') {
             window.location.reload()
         }      
@@ -204,7 +202,6 @@ export default function ShowAssetTypesByCategory() {
     if (errorUpdateAssetType) return ErrorPage(errorUpdateAssetType)
     if (!assetTypes) return null    
     if(!assetCategories) return null
-    if (!assetType)return <h1>ERROR: Tipo de activo fijo no encontrado en la base de datos</h1>
     let categoriesList = assetCategories.map( category =>  { return{
         label: category.category,
         value: category.id      
