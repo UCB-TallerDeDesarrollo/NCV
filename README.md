@@ -14,15 +14,15 @@
 
 #### Crear un proyecto con React Js
 
-npx create-react-app "Nombre de la aplicacion"
+    npx create-react-app "Nombre de la aplicacion"
 
 #### Abrir Visual studio Code y ejecutar el siguiente comando
 
-npm start
+    npm start
 
 #### Comandos adicionales en caso de que las rutas no funcionen
 
-npm i react-router-dom
+    npm i react-router-dom
 
 </details>
 
