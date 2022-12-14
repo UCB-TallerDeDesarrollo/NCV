@@ -70,6 +70,7 @@ const generatePassword=()=>{
     console.log(password)
     return password;
 }
+let pass=generatePassword()
 function CreateUser() {
     const  [passwordGenerate,generatePasswordChange]=useState('')
     var url = process.env.REACT_APP_BACKEND_URL + '/api/auth'
@@ -184,7 +185,7 @@ function CreateUser() {
         return errors;
 
     }
-    let pass=generatePassword()
+    
     data.password=pass
     data.confirmPassword=pass
     console.log(pass)
