@@ -11,6 +11,9 @@ import MenuItem from '@mui/material/MenuItem'
 import ButtonPrimary from '../../Components/MUI-Button'
 import Alert from '@mui/material/Alert'
 import emailjs from 'emailjs-com'
+import { getListUsers, getListEmails} from './API/getAxios'
+
+
 
 const user = {
     firstName: '',
@@ -71,7 +74,11 @@ const generatePassword=()=>{
     return password;
 }
 let pass=generatePassword()
+
 function CreateUser() {
+
+
+
     const  [passwordGenerate,generatePasswordChange]=useState('')
     var url = process.env.REACT_APP_BACKEND_URL + '/api/auth'
     //var url = 'http://localhost:5009/api/auth' 
@@ -80,7 +87,26 @@ function CreateUser() {
     const [data, setData] = useState(user)
     const [formErrors,setFormErrors] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
+    const [emails, setEmails] = useState([])
+
     
+
+
+    useEffect(() => {
+        getListEmails()
+            .then((json) =>
+                json.sort((a, b) => {
+                    return a.localeCompare(b)
+                })
+            )
+            .then((json) => {
+                setEmails(json)
+                return json
+            })
+    }, [])
+    console.log(emails)
+  
+
     const handleInputChange = (e) => {
         const { name, value } = e.target
         setOpen(false)
@@ -156,7 +182,18 @@ function CreateUser() {
             errors.email= "El correo es requerido!";
         }else if (!regex.test(datas.email)){
             errors.email = "Formato de correo incorrecto!"
+        }else{
+            for(var i=0; i<emails.length; i++){
+                console.log(emails[i]);
+                console.log(datas.email);
+                if(datas.email.localeCompare(emails[i],undefined,{sensitivity:'accent'})){
+                    console.log('xd')
+                    errors.email = "El correo ingresado ya esta registrado!"
+                }
+            }
         }
+
+        
 
         if(!datas.password){
             errors.password= "La contraseña es requerida";
@@ -202,7 +239,7 @@ function CreateUser() {
                 <FormContainer title="Registrar nuevo usuario">
                     <Collapse  in={open} sx={{ width: 1, pt: 2 }}>
                         <Alert severity="error"> 
-                            Todos los campos son requeridos                          
+                            Error al crear el usuario!                       
                         </Alert>
                     </Collapse>
 
