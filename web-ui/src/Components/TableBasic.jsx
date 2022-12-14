@@ -54,8 +54,16 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
     tableBody = (<TableBody>
       {data.map((row, rowIdx) => {
         let rowKeys = Object.keys(row);
-        rowKeys.shift(); // to delete the first elements: id , kidId
-        rowKeys.shift();
+
+        // to delete the elements: id , kidId -- case special for contacts
+        if(rowKeys.includes("kidId") && rowKeys.includes("id")){
+          rowKeys.shift();  
+          rowKeys.shift(); 
+        }
+        if(rowKeys.includes("id")){
+          rowKeys.shift(); 
+        }
+        
         return (<TableRow
           key={rowIdx}
           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
