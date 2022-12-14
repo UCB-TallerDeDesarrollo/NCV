@@ -70,7 +70,7 @@ function getResponse(url, jsonData=null, code=200, text=null){
     return response
 }
 
-describe('CRUD asset states', () => {  
+describe('CRUD asset states', () => {
    it('Shows all fixed asset responsibles available', async () => {
      act(()=>{
        renderWithRouter(<ShowAssetResponsibles/>,"/activos-fijos/estados","/activos-fijos/responsables" )
@@ -97,3 +97,4 @@ describe('CRUD asset states', () => {
       })  
   });
 })
+
