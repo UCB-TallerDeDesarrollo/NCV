@@ -191,7 +191,7 @@ function ChangePassword() {
                             <div className="pt-1 m-1">
                                 <ButtonLoading 
                                     id="input-verify-password" 
-                                    label="Camibar contraseña"
+                                    label="Cambiar contraseña"
                                     loading={isLoading} 
                                     type="submit"                            
                                 />  

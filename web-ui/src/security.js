@@ -67,7 +67,7 @@ export function issLoggin(obtainRole){
     return permiss
 }
 
-export function viewsAcces(access){
+export function getRouts(access){
     
 
     switch (access) {
