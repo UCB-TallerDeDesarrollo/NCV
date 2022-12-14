@@ -15,7 +15,7 @@ function LoginForm() {
     const [password, setPassword] = useState('')
 
     const [hasAnError, sethasAnError] = useState(false);
-    const [ setErrors] = useState([]);
+    const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
@@ -31,8 +31,8 @@ function LoginForm() {
         setIsLoading(true);
         event.preventDefault()
         const user = {
-            email,
-            password
+            email: email,
+            password: password
         }
         
         fetch(process.env.REACT_APP_BACKEND_URL + "/api/auth/Login", {
@@ -55,12 +55,12 @@ function LoginForm() {
                 window.location.href = '/inicio-ncv'
 
             } else {
+                sethasAnError(true);
                 if(data.error != null){
                     setErrors(data.errors.append(data.token));
                 } else {
                     setErrors([data.token]);
                 }                
-                sethasAnError(true);
             }
         })
         .catch((error) => {
