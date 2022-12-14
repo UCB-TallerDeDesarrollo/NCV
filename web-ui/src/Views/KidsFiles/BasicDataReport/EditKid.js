@@ -212,6 +212,11 @@ function EditKidFile() {
                         shrink: true,
                     }}
                 />
+                <Collapse in={ciValidation} sx={{width:1, pt:2}}>
+                    <Alert severity="error">
+                        {listAlerts.alertCI}
+                    </Alert>
+                </Collapse>
                 <InputText
                     required
                     id="birthDate"
