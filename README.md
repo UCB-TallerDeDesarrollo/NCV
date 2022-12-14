@@ -7,9 +7,10 @@
 
 #### Abrir una ventana de comandos CMD
 
-- Ejecutar los siguientes comandos para verificar la instalación
-  node --version
-  npm --version
+- Ejecutar los siguientes comandos para verificar la instalación.
+  
+      node --version
+      npm --version
 - _En caso de no tener instalado node entrar a : [Node js](https://nodejs.org/es/download/)_
 
 #### Crear un proyecto con React Js
@@ -20,14 +21,11 @@
 
     npm start
 
-#### Comandos adicionales en caso de que las rutas no funcionen
-
-    npm i react-router-dom
-
 </details>
 
 <details>
   <summary><strong>Comandos para Inicializar</strong></summary>
+Estos comando debe de ser ejecutado dentro la carpeta Web-ui.
 
 #### Comando para instalar Dependencias
 
@@ -38,6 +36,18 @@
     npm start
 
 - _Comienza a escuchar en el puerto [localhost 3000](http://localhost:3000/)_
+
+#### Comandos adicionales en caso de que las rutas no funcionen
+
+    npm i react-router-dom
+
+#### Comando para Ejecutar pruebas E2E
+
+    npm run cypress
+
+#### Comando para Ejecutar pruebas de unidad FrontEnd
+
+    npm run test
 
 </details>
 
@@ -58,11 +68,11 @@ Nos ofrece herramientas de Google para compilar infraestructuras de apps, mejora
 
 [![Azure](https://img.shields.io/badge/Azure-blue)](https://azure.microsoft.com/)
 
-Nos ofrece herramientas para el manejo de la base de datos
+Nos ofrece herramientas para el manejo de la base de datos y el deploy del Backend.
 
 [![Axios Version](https://img.shields.io/badge/Axios-0.27.2-red)](https://www.npmjs.com/package/axios)
 
-Cliente HTTP basado en promesas para el navegador
+Cliente HTTP basado en promesas para el navegador.
 
 [![JavaScript Version](https://img.shields.io/badge/Javascript-ECMA%206-inactive)](https://www.w3schools.com/js/js_es6.asp)
 
@@ -72,12 +82,19 @@ ECMAScript 2015 fue la segunda revisión importante de JavaScript.
 
 Una biblioteca de exportación a Excel creada con y para React.
 
+
+[![Cypress](https://img.shields.io/badge/Cypress-green)](https://www.cypress.io/)
+
+Es una herramienta para realizar testing e2e.
+
 </details>
 
 <details>
     <summary><strong>Estructura de Carpetas y Folders</strong></summary>
 
 - api
+  
+<img alt="EstructuraBack" align="center" src="./web-ui/src/Assets/img/mcv.jpeg" width="20%" />
 
   - NinosConValorAPI
 
@@ -112,10 +129,10 @@ Una biblioteca de exportación a Excel creada con y para React.
     - **Components**: El proyecto utilza componentes para poder reutilizarlos en varias vistas.
 
     - **Views**: En este folder se encuentran todas las vistas del proyecto.
-      - **FixedAssets** : En esta vista se manejan los activos fijos de la organizacion
-      - **HomePage**: La vista secundaria desde esta vista se redireccionan a las demas vistas si se inicio sesion correctamente
-      - **KidsFile**: Manejo de los files de niños
-      - **Login**: Vista principal de la pagina si no se inicia sesion no se podra acceder a las demas vistas
+      - **FixedAssets** : En esta vista se manejan los activos fijos de la organizacion.
+      - **HomePage**: La vista secundaria desde esta vista se redireccionan a las demas vistas si se inicio sesion correctamente.
+      - **KidsFile**: Manejo de los files de niños.
+      - **Login**: Vista principal de la pagina si no se inicia sesion no se podra acceder a las demas vistas.
       - **User**: En este archivo se gestiona todo lo relacionado con los usuarios.
 
   - .env
@@ -127,9 +144,10 @@ Una biblioteca de exportación a Excel creada con y para React.
 
 </details>
 
-### Pila de Tecnologia
+### Pila de Tecnología
 
 <code><img height="30" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/firebase/firebase.png"></code>
+<code><img height="30" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/150px-Microsoft_Azure.svg.png"></code>
 <code><img height="30" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/React.svg/250px-React.svg.png"></code>
 <code><img height="30" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Visual_Studio_Icon_2019.svg/125px-Visual_Studio_Icon_2019.svg.png"></code>
 <code><img height="30" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/visual-studio-code/visual-studio-code.png"></code>
