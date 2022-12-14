@@ -56,6 +56,11 @@ function checkData(dataToCheck){
         check = false;
     }
 
+    if(dataToCheck.ci==''){
+        listCheck.checkCI=false;
+        check=false;
+    }
+
     let actualDate = new Date();
     var selectedYear = dataToCheck.birthDate[0] + dataToCheck.birthDate[1] + dataToCheck.birthDate[2] + dataToCheck.birthDate[3];
     var selectedMonth = dataToCheck.birthDate[5] + dataToCheck.birthDate[6];
@@ -90,6 +95,7 @@ function EditKidFile() {
     const [firstNameValidation, setFirstNameValidation] = useState(false)
     const [lastNameValidation, setLastNameValidation] = useState(false)
     const [birthDateValidation, setBirthDateValidation] = useState(false)
+    const [ciValidation, setCiValidation] = useState(false)
 
     const fetchBasicData = () => {
         var responseBasicKid = axios(urlKid);
@@ -119,6 +125,7 @@ function EditKidFile() {
         setFirstNameValidation(false);
         setLastNameValidation(false);
         setBirthDateValidation(false);
+        setCiValidation(false);
         if(checkData(kid) > 0){
             axios.put(urlKid, kid)
             .then(function (response) {
@@ -138,6 +145,7 @@ function EditKidFile() {
             if(listCheck.checkFirstName == false) setFirstNameValidation(true);
             if(listCheck.checkLastName == false) setLastNameValidation(true);
             if(listCheck.checkBirthDate == false) setBirthDateValidation(true);
+            if(listCheck.checkCI == false) setCiValidation(true);
         }
     }
     function handleClose() {
@@ -204,6 +212,11 @@ function EditKidFile() {
                         shrink: true,
                     }}
                 />
+                <Collapse in={ciValidation} sx={{width:1, pt:2}}>
+                    <Alert severity="error">
+                        {listAlerts.alertCI}
+                    </Alert>
+                </Collapse>
                 <InputText
                     required
                     id="birthDate"
