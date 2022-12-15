@@ -104,6 +104,7 @@ function ShowOneKidFile() {
         .then((response) => {
             if (response.status == 200){
                 navigate(`/ninos`,{state:{showAlert:true,alertMessage:"Registro Eliminado"}})
+                
             }
         })
         .catch(err=> console.log(err))
