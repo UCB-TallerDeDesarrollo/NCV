@@ -40,7 +40,10 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
 
   if (deleteAction != null){
     emptyHeader = <TableCell sx={{backgroundColor:'#CEECF2',fontWeight: 'fontWeightBold' }} key="emptyHeader" align={align}></TableCell>
-    insertDeleteIcon = (id) => { return ( <TableCell key="Deletebutton" align={align}> <ButtonPrimaryDeleteIcon onClick={()=>{deleteAction(id)}} sx={{marginLeft:1, alignSelf:'center'}} ></ButtonPrimaryDeleteIcon></TableCell> )}
+    insertDeleteIcon = (id) => {
+      if(id!=undefined){
+        return ( <TableCell key="Deletebutton" align={align}> <ButtonPrimaryDeleteIcon onClick={()=>{deleteAction(id)}} sx={{marginLeft:1, alignSelf:'center'}} ></ButtonPrimaryDeleteIcon></TableCell> )}
+      else { return ( <TableCell sx={{backgroundColor:'#F2F2F2'}} key="Emptyheader" align={align}></TableCell> ) }}
   }
 
 /*
@@ -53,7 +56,6 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
   if (data != null){
     tableBody = (<TableBody>
       {data.map((row, rowIdx) => {
-        console.log("wiwi 123", row);
         let rowKeys = Object.keys(row);
 
         // to delete the elements: id , kidId -- case special for contacts
@@ -72,6 +74,7 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
         {
           rowKeys.map((rk,i)=>{
             let backgroundColor = null
+            console.log("pepe estuvo aqui",rk)
             if (rk.includes('empty'))
               backgroundColor = '#f2f2f2'
             let cell = (<TableCell key={i} align={align} sx={{backgroundColor:backgroundColor}}>
