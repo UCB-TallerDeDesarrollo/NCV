@@ -8,10 +8,31 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../../Components/NavBar';
 import { Box } from '@mui/system';
-
+import MenuItem from '@mui/material/MenuItem';
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
+
+const kidFile = {
+    firstName: '',
+    lastName: '',
+    ci: '',
+    birthDate: '',
+    programHouse:'',
+    birthPlace: '',
+    gender: ''
+  }
+
+const genders = [
+    {
+      value: 'M',
+      label: 'M',
+    },
+    {
+      value: 'F',
+      label: 'F',
+    }
+  ];
 
 var listCheck = {
     checkFirstName: true,
@@ -90,7 +111,7 @@ function EditKidFile() {
     const navigate = useNavigate();
     const {kidId} = useParams()
     var urlKid = process.env.REACT_APP_BACKEND_URL + "/api/kids/"+ kidId 
-    const [kid, setKid] = useState([])
+    const [kid, setKid] = useState(kidFile)
     const [open, setOpen] = useState(false)
     const [firstNameValidation, setFirstNameValidation] = useState(false)
     const [lastNameValidation, setLastNameValidation] = useState(false)
@@ -260,6 +281,7 @@ function EditKidFile() {
                 />
                 <InputText
                     required
+                    select
                     id="gender"
                     name="gender"
                     type="text"
@@ -270,6 +292,11 @@ function EditKidFile() {
                         shrink: true,
                     }}
                 >
+                {genders.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                {option.label}
+                </MenuItem>
+                ))}
                 </InputText>
                 <Box sx={{display: 'inline'}}>
                     <ButtonSecondary label="Cancelar" onClick={handleClose}></ButtonSecondary>
