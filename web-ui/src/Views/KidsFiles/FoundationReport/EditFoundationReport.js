@@ -132,6 +132,9 @@ function EditFoundationReport() {
     function handleClose() {
         navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de estancia en fundacion sin modificaciones"}});
     }
+
+    // to fix format date to show in edit report
+    foundationRep.admissionDate = foundationRep.admissionDate.split("T")[0]
     
     return (
         <><Navbar /><div style={{marginTop: '3em', display:'flex', justifyContent:'center'}}>
