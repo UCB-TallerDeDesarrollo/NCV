@@ -1,3 +1,4 @@
+/*
 import {render, screen, waitFor} from '@testing-library/react'
 import ShowAssetResponsibles from './ShowAssetResponsibles'
 import {rest} from 'msw'
@@ -71,7 +72,6 @@ function getResponse(url, jsonData=null, code=200, text=null){
 }
 
 describe('CRUD asset states', () => {
-  /*  
    it('Shows all fixed asset responsibles available', async () => {
      act(()=>{
        renderWithRouter(<ShowAssetResponsibles/>,"/activos-fijos/estados","/activos-fijos/responsables" )
@@ -85,7 +85,7 @@ describe('CRUD asset states', () => {
          expect(screen.queryByText('Juan Pablo Carrasco')).toBeVisible
          expect(screen.queryByText('Pedro Marquez')).toBeVisible
        })  
-   })*/
+   })
    
   it('Shows error when api does not return any data. Should return error 500', async () => {
     const assetResponsiblesInternalServiceErrorResponse = getResponse(getAssetResponsiblesUrl, null, 500, "Lo sentimos, algo sucedió.")
@@ -98,3 +98,5 @@ describe('CRUD asset states', () => {
       })  
   });
 })
+
+*/
