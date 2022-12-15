@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
 import MenuItem from '@mui/material/MenuItem';
@@ -8,7 +8,6 @@ import ButtonPrimary from '../../../Components/MUI-Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../../Components/NavBar';
-
 
 const kidFile = {
   firstName: '',
@@ -60,7 +59,42 @@ function CreateFile() {
     const [lastNameValidation, setLastNameValidation] = useState(false)
     const [birthDateValidation, setBirthDateValidation] = useState(false)
 
-    
+    //ProgramHouses
+    const [programHouses, setProgramHouses] = useState([])
+    var urlProgramHouses = process.env.REACT_APP_BACKEND_URL + '/api/programHouses'
+    const fetchProgramHouses = () => {
+        var responseProgramHouses = axios(urlProgramHouses);
+        axios.all([responseProgramHouses]).then(
+            axios.spread((...allData) => {
+                var dataBK = allData[0].data
+                setProgramHouses(dataBK)
+            })
+    )}
+    useEffect(() => { 
+        fetchProgramHouses();
+    }, [])
+     
+
+    //console.log("programHouses: ",programHouses[0].name )
+    const listProgramHouses = [
+        {
+          value: 'Casa Residencial',
+          label: 'Casa Residencial',
+        },
+        {
+          value: 'Administración',
+          label: 'Administración',
+        },
+        {
+          value: 'Sendero de Esperanza',
+          label: 'Sendero de Esperanza',
+        },
+        {
+          value: 'Caminos Abiertos al Cambio',
+          label: 'Caminos Abiertos al Cambio',
+        }
+      ];
+
     const handleInputChange = (e)=>{
         const {name, value}=e.target
         setOpen(false)
@@ -219,13 +253,20 @@ function CreateFile() {
                 </Collapse>
                 <InputText
                     required
+                    select
                     id="programHouse"
                     name="programHouse"
                     label="Casa"
                     type="text"
                     value={data.programHouse}
                     onChange={handleInputChange}
-                />
+                >
+                {listProgramHouses.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                {option.label}
+                </MenuItem>
+                ))}
+                </InputText>
                 <InputText
                     required
                     id="birthPlace"
