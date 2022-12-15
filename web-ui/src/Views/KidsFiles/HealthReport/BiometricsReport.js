@@ -17,7 +17,14 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import ButtonPrimary from '../../../Components/MUI-Button';
+import ButtonPrimary, { ButtonDanger, ButtonSecondary }  from '../../../Components/MUI-Button';
+
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContentText from '@mui/material/DialogContentText'
+
 
 var accesPermiss = sessionStorage.getItem("Access")
 
@@ -39,7 +46,7 @@ const biometricsForm = {
 
 function AddRowWeightAndHeight({setBiometrics}){
     const {kidId} = useParams()
-    var url = process.env.REACT_APP_BACKEND_URL + "/api/kids/" + kidId +"/biometrics"
+    var url = process.env.REACT_APP_BACKEND_URL + "/api/kids/" + kidId + "/biometrics"
 
     const [biometricsData, setbiometricsData] = useState(biometricsForm)
     const [open, setOpen] = useState(false)
@@ -131,9 +138,40 @@ function getMaxOfArray(numArray) {
 }
 
 function WeightAndHeight({weightAndHeightData,setBiometrics}){
+    const {kidId} = useParams()
+    var urlBiometrics = process.env.REACT_APP_BACKEND_URL + "/api/kids/" + kidId + "/biometrics/"
+
     const [filteredBiometrics, setFilteredBiometrics] = useState([]);
     const [yearsSelected, setYearsSelected] = useState([]);
 
+    const [openToConfirm, setOpenToConfirm] = useState(false)
+    const [biometricsId, setBiometricsId] = useState(0)
+
+    function handleCloseToConfirm(event, reason) {
+        if (reason === 'clickaway') {
+            return
+        }
+        setOpenToConfirm(false)
+    }
+    const fetchDeleteBiometrics = () => {
+        
+        axios.delete(urlBiometrics + biometricsId)
+        .then(function (response){
+            if (response.status == 200){
+                console.log("Peso y talla eliminado")
+                axios.get(urlBiometrics)
+                .then((res) => {
+                    setBiometrics(res.data)
+                })
+                .catch((e)=>{
+                })
+            }
+        })
+        .catch(err => {
+            console.log("something happened with the endpoint")
+        })
+        handleCloseToConfirm()
+    }
     let availableYears = new Set([]);
     weightAndHeightData.slice().forEach((b)=>{
         availableYears.add(new Date(b["registerDate"]).getFullYear());
@@ -163,7 +201,7 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
                     finalFilteredBiometrics.push({'groupTitle':(new Date(b["registerDate"]).getFullYear()), 'empty1':'','empty2':''})
                     yearGroup = (new Date(b["registerDate"]).getFullYear())
                 }
-                finalFilteredBiometrics.push({"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
+                finalFilteredBiometrics.push({"id":b["id"], "registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
             })
             setFilteredBiometrics(finalFilteredBiometrics)
         }
@@ -178,7 +216,7 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
                     yearGroupIdx+=1;
                     yearGroup = availableYears[yearGroupIdx]
                 }
-                fb.push({"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
+                fb.push({"id":b["id"], "registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
             })
             setFilteredBiometrics(fb);
             //END OF DUPLICATED CODE
@@ -220,7 +258,7 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
                     finalFilteredBiometrics.push({'groupTitle':(new Date(b["registerDate"]).getFullYear()), 'empty1':'','empty2':''})
                     yearGroup = (new Date(b["registerDate"]).getFullYear())
                 }
-                finalFilteredBiometrics.push({"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
+                finalFilteredBiometrics.push({"id":b["id"],"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
             })
             setFilteredBiometrics(finalFilteredBiometrics)
         }
@@ -235,12 +273,24 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
                     yearGroupIdx+=1;
                     yearGroup = availableYears[yearGroupIdx]
                 }
-                fb.push({"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
+                fb.push({"id":b["id"],"registerDate":formatDate(b["registerDate"]), "weight":formatDecimals(b["weight"]), "height":formatDecimals(b["height"])});
             })
             setFilteredBiometrics(fb);
             //END OF DUPLICATED CODE
         }
     },[yearsSelected]);
+
+    const ToConfirmOpen = () => {
+        handleCloseToConfirm();
+        setOpenToConfirm(true);
+    }
+
+    const deleteAction = (id) => {
+        setBiometricsId(id)
+        handleCloseToConfirm()
+        ToConfirmOpen()
+        console.log("delete item of id: ",id)
+    }
 
     let yearComboBox = null;
     let weightAndHeightTitle = null;
@@ -262,7 +312,9 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
     if (weightAndHeightData != null && weightAndHeightData.length > 0){
         table = (<>
             <Box sx={{display:"flex", flexDirection:"row"}}>
-                <TableBasic align='center' columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
+                {(accesPermiss=="CompleteAccess") &&
+                    <TableBasic align='center' columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}} deleteAction={deleteAction}></TableBasic>
+                } 
             </Box>
         </>);
         yearComboBox = (<FormControl sx={{ m: 1, minWidth: 100, justifySelf:'right', alignSelf:'end'}}>
@@ -295,6 +347,18 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
         </Box>
         {table}
         <AddRowWeightAndHeight setBiometrics={setBiometrics}/>
+        <Dialog open={openToConfirm} onClose={handleCloseToConfirm} id="confirmation_popup" sx={{borderRadius:3 }}>
+                        <DialogTitle sx={{display:'flex', justifyContent:'center'}}>Eliminar Contacto</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                ¿Desea eliminar los datos de peso y talla?
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions sx={{display:'flex',flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                            <ButtonSecondary label="Cancelar" onClick={handleCloseToConfirm}></ButtonSecondary>
+                            <ButtonDanger label="Eliminar" id="confirm_delete_button" onClick={fetchDeleteBiometrics}></ButtonDanger>
+                        </DialogActions>
+                    </Dialog>
     </Box>);
 }
 

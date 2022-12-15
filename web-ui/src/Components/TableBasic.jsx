@@ -53,6 +53,7 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
   if (data != null){
     tableBody = (<TableBody>
       {data.map((row, rowIdx) => {
+        console.log("wiwi 123", row);
         let rowKeys = Object.keys(row);
 
         // to delete the elements: id , kidId -- case special for contacts
@@ -83,6 +84,7 @@ export default function TableBasic({columnHeaders=null, data=null, align="center
               
         }
         {insertDeleteIcon(row.id)}
+        
         </TableRow>
       )}
       )}
