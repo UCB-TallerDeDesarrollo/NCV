@@ -61,6 +61,7 @@ function CreateFile() {
 
     //ProgramHouses
     const [programHouses, setProgramHouses] = useState([])
+    const [listProgramHouses, setListProgramHouses] = useState([])
     var urlProgramHouses = process.env.REACT_APP_BACKEND_URL + '/api/programHouses'
     const fetchProgramHouses = () => {
         var responseProgramHouses = axios(urlProgramHouses);
@@ -73,27 +74,35 @@ function CreateFile() {
     useEffect(() => { 
         fetchProgramHouses();
     }, [])
+    useEffect(() => {
+        var l = [];
+        programHouses.forEach(element=>{
+            console.log(element);
+            l.push({value: element.name, label: element.acronym})
+        });
+        setListProgramHouses(l);
+    }, [programHouses]);
      
 
     //console.log("programHouses: ",programHouses[0].name )
-    const listProgramHouses = [
-        {
-          value: 'Casa Residencial',
-          label: 'Casa Residencial',
-        },
-        {
-          value: 'Administración',
-          label: 'Administración',
-        },
-        {
-          value: 'Sendero de Esperanza',
-          label: 'Sendero de Esperanza',
-        },
-        {
-          value: 'Caminos Abiertos al Cambio',
-          label: 'Caminos Abiertos al Cambio',
-        }
-      ];
+    // const listProgramHouses = [
+    //     {
+    //       value: 'Casa Residencial',
+    //       label: 'Casa Residencial',
+    //     },
+    //     {
+    //       value: 'Administración',
+    //       label: 'Administración',
+    //     },
+    //     {
+    //       value: 'Sendero de Esperanza',
+    //       label: 'Sendero de Esperanza',
+    //     },
+    //     {
+    //       value: 'Caminos Abiertos al Cambio',
+    //       label: 'Caminos Abiertos al Cambio',
+    //     }
+    //   ];
 
     const handleInputChange = (e)=>{
         const {name, value}=e.target

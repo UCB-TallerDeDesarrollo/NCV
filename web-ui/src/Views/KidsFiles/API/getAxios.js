@@ -9,6 +9,11 @@ export const getListKids = async () => {
     return response.data
 }
 
+export const getProgramHouses = async () => {
+    const response = await api.get('/api/programhouses')
+    return response.data
+}
+
 export const getKidBasicInfo = async (id) => {
     const url = 'api/kids/'+ id
     const response = await api.get(url)

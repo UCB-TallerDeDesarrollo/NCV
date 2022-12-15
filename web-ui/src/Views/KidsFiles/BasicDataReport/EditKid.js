@@ -108,25 +108,6 @@ function checkData(dataToCheck){
     return check;
 }
 
-const listProgramHouses = [
-    {
-      value: 'Casa Residencial',
-      label: 'Casa Residencial',
-    },
-    {
-      value: 'Administración',
-      label: 'Administración',
-    },
-    {
-      value: 'Sendero de Esperanza',
-      label: 'Sendero de Esperanza',
-    },
-    {
-      value: 'Caminos Abiertos al Cambio',
-      label: 'Caminos Abiertos al Cambio',
-    }
-  ];
-
 function EditKidFile() {
     const navigate = useNavigate();
     const {kidId} = useParams()
@@ -137,9 +118,19 @@ function EditKidFile() {
     const [lastNameValidation, setLastNameValidation] = useState(false)
     const [birthDateValidation, setBirthDateValidation] = useState(false)
     const [ciValidation, setCiValidation] = useState(false)
+    const [programHouses, setProgramHouses] = useState([])
+    const [listProgramHouses, setListProgramHouses] = useState([])
 
     var urlProgramHouses = process.env.REACT_APP_BACKEND_URL + '/api/programHouses'
-    const { apiData:programHouses, error:errorProgramHouses } = GetFromApi(urlProgramHouses) 
+
+    const fetchProgramHouses = () => {
+        var responseProgramHouses = axios(urlProgramHouses);
+        axios.all([responseProgramHouses]).then(
+            axios.spread((...allData) => {
+                var dataBK = allData[0].data
+                setProgramHouses(dataBK)
+            })
+    )}
 
     const fetchBasicData = () => {
         var responseBasicKid = axios(urlKid);
@@ -148,12 +139,27 @@ function EditKidFile() {
                 var dataBK = allData[0].data
                 setKid(dataBK)
             })
-    )}
+        )
+    }
 
     useEffect(() => {
-        fetchBasicData()
+        fetchBasicData();
+        fetchProgramHouses();
     }, [])
+
+    useEffect(() => {
+        var l = [];
+        programHouses.forEach(element=>{
+            console.log(element);
+            l.push({value: element.name, label: element.acronym})
+        });
+        setListProgramHouses(l);
+    }, [programHouses]);
+
     console.log("kid json: ",kid )
+    
+    
+    console.log('program houses: ',listProgramHouses);
 
     const handleInputChange = (e)=>{
         const {name, value}=e.target
@@ -170,6 +176,11 @@ function EditKidFile() {
         setLastNameValidation(false);
         setBirthDateValidation(false);
         setCiValidation(false);
+        // programHousesList.forEach(element => {
+        //     if (kid.programHouse == element.acronym){
+        //         kid.programHouse = element.value;
+        //     }
+        // });
         if(checkData(kid) > 0){
             axios.put(urlKid, kid)
             .then(function (response) {
