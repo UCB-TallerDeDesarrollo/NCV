@@ -71,7 +71,6 @@ function getResponse(url, jsonData=null, code=200, text=null){
 }
 
 describe('CRUD asset states', () => {
-  /*
    it('Shows all fixed asset responsibles available', async () => {
      act(()=>{
        renderWithRouter(<ShowAssetResponsibles/>,"/activos-fijos/estados","/activos-fijos/responsables" )
@@ -97,6 +96,5 @@ describe('CRUD asset states', () => {
         expect(screen.getByText("ERROR 500: Lo sentimos, algo sucedió.").toBeVisible)
       })  
   });
-  */
 })
 
