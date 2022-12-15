@@ -42,7 +42,8 @@ export default function DropdownListUser({itemsHeader, itemsSubheader, isOpened 
     setIsVisible({...visibleItems})
     didChange.current = isOpened
   }
-  const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
+  let showAlert = location.state ? location.state.showAlert : false 
+  let alertMessage = location.state ? location.state.alertMessage : null 
   const [open, setOpen] = useState(showAlert)
   const [openToConfirmDelete, setOpenToConfirmDelete] = useState(false);
   const [selectedRow, setSelectedRow] = useState([])
@@ -70,12 +71,8 @@ const fetchDeleteUSer = () => {
     .then(function (response) {
         console.log(response)
         if (response.status == 200){
-            setShowAlert(true)
-            setAlertMessage("Usuario Eliminado")
-            setSeverity("success")
-            setOpen(true)
-            setOpenToConfirm(false)  
-            navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario eliminado exitosamente"}})                                        
+          window.location.reload()     
+            navigate(`/vista-usuarios`,{state:{showAlert:true,alertMessage:"Usuario Eliminado"}})                                
         }   
   })
   .catch(err=> {
