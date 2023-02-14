@@ -22,7 +22,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: "6.0.x"
           include-prerelease: true
       - run: |
           rm .\NinosConValorAPI\appsettings.json
@@ -39,7 +39,7 @@ jobs:
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
-  
+
   build-production:
     runs-on: windows-latest
     environment:
@@ -52,7 +52,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: "6.0.x"
           include-prerelease: true
       - run: |
           rm .\NinosConValorAPI\appsettings.json
@@ -87,11 +87,11 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'ncv-api-dev'
-          slot-name: 'production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A5B8F365EEF9445E89BFED0FDF2674BE }}
+          app-name: "ncv-api-dev2023"
+          slot-name: "production"
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F80DE4CAFCED4E7D9D784F21E882F8AE }}
           package: .
-  
+
   deploy-production:
     runs-on: windows-latest
     needs: [deploy-staging, build-production]
@@ -109,7 +109,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'ncv-api'
-          slot-name: 'Production'
+          app-name: "ncv-api"
+          slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FD10BD375E5D451EAC42BA243931DA16 }}
           package: .
