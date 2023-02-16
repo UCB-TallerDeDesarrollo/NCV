@@ -56,7 +56,7 @@ jobs:
           include-prerelease: true
       - run: |
           rm .\NinosConValorAPI\appsettings.json
-          echo '{ "ConnectionStrings": { "NinosConValorDB": "${{ secrets.DB_CONNECTION_STRING }}" },' >> .\NinosConValorAPI\appsettings.json
+          echo '{ "ConnectionStrings": { "ninosConValorDB": "${{ secrets.DB_CONNECTION_STRING }}" },' >> .\NinosConValorAPI\appsettings.json
           echo '"Logging": { "LogLevel": { "Default": "Information", "Microsoft.AspNetCore": "Warning" } }, "AllowedHosts": "*", "AuthSettings": { "Key": "SuperSecretKey123456 ", "Audience": "http://NinosConValor.net","Issuer": "http://NinosConValor.net"}}' >> .\NinosConValorAPI\appsettings.json
       - name: Build with dotnet
         run: dotnet build --configuration Release
