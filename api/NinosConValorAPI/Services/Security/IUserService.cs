@@ -21,7 +21,7 @@ namespace NinosConValorAPI.Services.Security
         //Roles
         Task<UserManagerResponse> RegisterUserRole(RegisterViewModel model, string role);
         Task<UserManagerResponse> ChangePassword(ChangePassword model);
-
+        Task<UserManagerResponse> RegisterSuperUserAsync(RegisterViewModel model);
 
 
 

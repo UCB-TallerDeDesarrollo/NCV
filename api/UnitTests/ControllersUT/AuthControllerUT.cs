@@ -26,7 +26,7 @@ namespace UnitTests.ControllersUT
             //ARRANGE
             var loginModel = new LoginViewModel()
             {
-                Email = "soprteNCV@gmail.com",
+                Email = "soprteNCV2@gmail.com",
                 Password = "Soporte!23"
             };
             var userResponseModel = new UserManagerResponse()

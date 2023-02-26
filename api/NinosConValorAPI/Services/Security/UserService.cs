@@ -393,5 +393,10 @@ namespace NinosConValorAPI.Services.Security
                 IsSuccess = false,
             };
         }
+
+        public async Task<UserManagerResponse> RegisterSuperUserAsync(RegisterViewModel model)
+        {
+            return await RegisterUserRole(model, "Soporte");
+        }
     }
 }
