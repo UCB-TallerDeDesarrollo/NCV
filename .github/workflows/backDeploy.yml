@@ -109,7 +109,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "ncv-api"
+          app-name: "ncv-api-dev2023"
           slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F80DE4CAFCED4E7D9D784F21E882F8AE }}
           package: .
