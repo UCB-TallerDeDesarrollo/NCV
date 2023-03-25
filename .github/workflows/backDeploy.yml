@@ -89,7 +89,7 @@ jobs:
         with:
           app-name: "ncv-api-dev2023"
           slot-name: "production"
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C02C9AC19CC24761B5884F35B1C13E3F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_NCV_API_STAGG20231 }}
           package: .
 
   deploy-production:
