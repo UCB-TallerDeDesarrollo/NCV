@@ -87,9 +87,9 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "ncv-api-stagg"
+          app-name: "ncv-api-staging"
           slot-name: "production"
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_NCV_API_STAGG20231 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_NCV_API_STAGING }}
           package: .
 
   deploy-production:
@@ -109,7 +109,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "ncv-api-dev2023"
+          app-name: "ncv-api-produccion"
           slot-name: "Production"
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AD0FBBFE10544E5B9EC43DE6E5A89272 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_NCV_API_PRODUCCION }}
           package: .
