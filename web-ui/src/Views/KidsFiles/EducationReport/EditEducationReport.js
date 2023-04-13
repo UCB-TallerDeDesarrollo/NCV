@@ -51,19 +51,36 @@ function EditEducationReport() {
         })
     }
 
+    function checkData(){
+        console.log("Checking...");
+        var check = true;
+        if(educationRep.school == ""){
+            setOpen(true);
+            check = false;
+        }
+        if(educationRep.rude == ""){
+            setOpen(true);
+            check = false;
+        }
+        
+        return check;
+    }
+
     function handleFormSubmit() {
-        axios.put(urlEducationReport, educationRep)
-          .then(function (response) {
-            if (response.status == 200){
-                navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de educación actualizado correctamente"}});
-            }
-          })
-          .catch(function (error) {
-            if (error.response){
-                if (error.response.status == 400 )
-                    setOpen(true)
-            }
-          });
+        if(checkData()){
+            axios.put(urlEducationReport, educationRep)
+            .then(function (response) {
+                if (response.status == 200){
+                    navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de educación actualizado correctamente"}});
+                }
+            })
+            .catch(function (error) {
+                if (error.response){
+                    if (error.response.status == 400 )
+                        setOpen(true)
+                }
+            });
+        }
     }
     function handleClose() {
         navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte de educación sin modificaciones"}});
@@ -81,12 +98,13 @@ function EditEducationReport() {
                     id="grade"
                     name="grade"
                     label="Grado"
-                    type="text"
+                    helperText="Opcional"
                     value={educationRep.grade}
                     onChange={handleInputChange}
                 >
                 </InputText>
                 <InputText
+                    required
                     id="school"
                     name="school"
                     label="Unidad Educativa"
@@ -95,6 +113,7 @@ function EditEducationReport() {
                     onChange={handleInputChange}
                 />
                 <InputText
+                    required
                     id="rude"
                     name="rude"
                     label="RUDE"
