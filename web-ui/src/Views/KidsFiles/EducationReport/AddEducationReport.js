@@ -67,7 +67,7 @@ function AddEducationReport() {
                     id="Grade"
                     name="grade"
                     label="Grado Escolar"
-                    type="text"
+                    helperText="Opcional"
                     value={formReport.grade}
                     onChange={handleInputChange}
                 />
