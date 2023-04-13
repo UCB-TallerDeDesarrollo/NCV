@@ -112,7 +112,6 @@ function ListUsers() {
     if (!users) return null*/
 
 
-    if (searchResult.length > 0) {
         const listElements = searchResult.map((el) => {
             return {
                 id: el.id,
@@ -263,6 +262,5 @@ function ListUsers() {
                 </Dialog>
             </>
         )
-    }
 }
 export default ListUsers
