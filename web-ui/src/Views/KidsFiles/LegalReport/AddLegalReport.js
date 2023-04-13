@@ -67,7 +67,7 @@ function AddLegalReport() {
         if(checkFields()){
             axios.post(url, formReport)
             .then(function (response) {
-                if (response.status == 201){
+                if (response.status == 200){
                     navigate(`/ninos/${kidId}`,{state:{showAlert:true,alertMessage:"Reporte Legal creado"}});
                 }
             })
@@ -104,7 +104,7 @@ function AddLegalReport() {
                     id="dna"
                     name="dna"
                     label="DNA"
-                    helperText="Opcional"
+                    type="text"
                     value={formReport.dna}
                     onChange={handleInputChange}
                 />
@@ -113,7 +113,7 @@ function AddLegalReport() {
                     id="nurej"
                     name="nurej"
                     label="NUREJ"
-                    helperText="Opcional"
+                    type="text"
                     value={formReport.nurej}
                     onChange={handleInputChange}
                 />
