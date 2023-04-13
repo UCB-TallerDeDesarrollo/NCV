@@ -153,6 +153,13 @@ function CreateFile() {
             setOpen(true);
         }
 
+        if(data.gender == "" || data.gender == null ){
+            console.log("Falta Genero");
+            errors = errors + " 'Genero' "; 
+            check = false;
+            setOpen(true);
+        }
+
         let actualDate = new Date();
         var selectedYear = dataToCheck.birthDate[0] + dataToCheck.birthDate[1] + dataToCheck.birthDate[2] + dataToCheck.birthDate[3];
         var selectedMonth = dataToCheck.birthDate[5] + dataToCheck.birthDate[6];
