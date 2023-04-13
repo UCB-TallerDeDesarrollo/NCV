@@ -86,18 +86,20 @@ function EditLegalReport() {
                     onChange={handleInputChange}
                 />
                 <InputText
+                    required
                     id="dna"
                     name="dna"
                     label="DNA"
-                    helperText="Opcional"
+                    type="text"
                     value={legalRep.dna}
                     onChange={handleInputChange}
                 />
                 <InputText
+                    required
                     id="nurej"
                     name="nurej"
                     label="NUREJ"
-                    helperText="Opcional"
+                    type="text"
                     value={legalRep.nurej}
                     onChange={handleInputChange}
                 />
