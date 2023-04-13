@@ -70,7 +70,7 @@ const generatePassword=()=>{
     for(let i=0;i<10; i++){
         password+= arrayCharacter[Math.floor(Math.random()* arrayCharacter.length)]
     }*/
-    console.log(password)
+    //console.log(password)
     return password;
 }
 let pass=generatePassword()
@@ -104,7 +104,7 @@ function CreateUser() {
                 return json
             })
     }, [])
-    console.log(emails)
+    //console.log(emails)
   
 
     const handleInputChange = (e) => {
@@ -168,6 +168,7 @@ function CreateUser() {
         const regexCharacter= /^.*[!@#$%^&*]/;
         if(!datas.firstName){
             errors.firstName= "El nombre es requerido!";
+            console.log(emails);
         }
 
         if(!datas.lastName){
@@ -186,7 +187,7 @@ function CreateUser() {
             for(var i=0; i<emails.length; i++){
                 console.log(emails[i]);
                 console.log(datas.email);
-                if(datas.email.localeCompare(emails[i],undefined,{sensitivity:'accent'})){
+                if((datas.email.localeCompare(emails[i]))==0){
                     console.log('xd')
                     errors.email = "El correo ingresado ya esta registrado!"
                 }
@@ -225,7 +226,7 @@ function CreateUser() {
     
     data.password=pass
     data.confirmPassword=pass
-    console.log(pass)
+    //console.log(pass)
     return (
         <>
             <Navbar />
