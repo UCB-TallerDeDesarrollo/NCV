@@ -135,7 +135,7 @@ function EditHealthReport() {
                     id="ciDiscapacidad"
                     name="ciDiscapacidad"
                     label="CI de Discapacidad"
-                    type="text"
+                    helperText="Opcional"
                     value={healthRep.ciDiscapacidad}
                     onChange={handleInputChange}
                 />
