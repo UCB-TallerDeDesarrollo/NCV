@@ -16,7 +16,8 @@ const kidFile = {
   birthDate: '',
   programHouse:'',
   birthPlace: '',
-  gender: ''
+  gender: '',
+  courtNumber: '',
 }
 
 var listCheck = {
@@ -58,6 +59,7 @@ function CreateFile() {
     const [firstNameValidation, setFirstNameValidation] = useState(false)
     const [lastNameValidation, setLastNameValidation] = useState(false)
     const [birthDateValidation, setBirthDateValidation] = useState(false)
+    const [birthPlaceValidation, setBirthPlaceValidation] = useState(false)
 
     //ProgramHouses
     const [programHouses, setProgramHouses] = useState([])
@@ -105,13 +107,12 @@ function CreateFile() {
     //   ];
 
     const handleInputChange = (e)=>{
-        const {name, value}=e.target
+        const {name, value} = e.target
         setOpen(false)
         setData({
             ...data,
             [name]:value
         })
-
     }
 
     function resetChecks(){
@@ -127,6 +128,8 @@ function CreateFile() {
     function checkData(dataToCheck){
         var check = true;
         var checkNumbers = /[0-9]/;
+        var errors = "";
+        
         if(dataToCheck.firstName.match(checkNumbers) != null){
             listCheck.checkFirstName = false;
             check = false;
@@ -135,6 +138,26 @@ function CreateFile() {
         if(dataToCheck.lastName.match(checkNumbers) != null){
             listCheck.checkLastName = false;
             check = false;
+        }
+
+        if(dataToCheck.birthPlace.match(checkNumbers) != null){
+            listCheck.checkBirthPlace = false;
+            check = false;
+        }
+
+        
+        if(data.birthPlace == "" || data.birthPlace == null ){
+            console.log("Falta Lugar de Nacimiento");
+            errors = errors + " 'Lugar de Nacimiento' "; 
+            check = false;
+            setOpen(true);
+        }
+
+        if(data.gender == "" || data.gender == null ){
+            console.log("Falta Genero");
+            errors = errors + " 'Genero' "; 
+            check = false;
+            setOpen(true);
         }
 
         let actualDate = new Date();
@@ -167,6 +190,7 @@ function CreateFile() {
         setFirstNameValidation(false);
         setLastNameValidation(false);
         setBirthDateValidation(false);
+        setBirthPlaceValidation(false);
         if(checkData(data) > 0){
             console.log("Form buenardo");
             axios.post(url, data)
@@ -187,9 +211,8 @@ function CreateFile() {
             if(listCheck.checkFirstName == false) setFirstNameValidation(true);
             if(listCheck.checkLastName == false) setLastNameValidation(true);
             if(listCheck.checkBirthDate == false) setBirthDateValidation(true);
+            if(listCheck.checkBirthPlace == false) setBirthPlaceValidation(true);
         }
-
-        
     }
 
     //const todayDate = ()=>{
@@ -285,6 +308,11 @@ function CreateFile() {
                     value={data.birthPlace}
                     onChange={handleInputChange}
                 />
+                <Collapse in={birthPlaceValidation} sx={{width:1, pt:2}}>
+                    <Alert severity="error">
+                        {listAlerts.alertBirthPlace}
+                    </Alert>
+                </Collapse>
                 <InputText
                     required
                     select
@@ -296,11 +324,11 @@ function CreateFile() {
                     onChange={handleInputChange}
                 >
                 {genders.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                    </MenuItem>
+                <MenuItem key={option.value} value={option.value}>
+                {option.label}
+                </MenuItem>
                 ))}
-                </InputText>
+                /</InputText>
                 <ButtonPrimary label={"Registrar"} onClick={handleFormSubmit}/>
             </FormContainer>
         </div></>
