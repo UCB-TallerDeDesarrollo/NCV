@@ -120,7 +120,7 @@ function AddHealthReport() {
                     id="CIDiscapacidad"
                     name="CIDiscapacidad"
                     label="CI de Discapacidad"
-                    type="text"
+                    helperText="Opcional"
                     value={formReport.CIDiscapacidad}
                     onChange={handleInputChange}
                 />
