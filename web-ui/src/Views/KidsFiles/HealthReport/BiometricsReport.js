@@ -314,7 +314,10 @@ function WeightAndHeight({weightAndHeightData,setBiometrics}){
             <Box sx={{display:"flex", flexDirection:"row"}}>
                 {(accesPermiss=="CompleteAccess") &&
                     <TableBasic align='center' columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}} deleteAction={deleteAction}></TableBasic>
-                } 
+                }
+                {(accesPermiss=="RestriccionAccess") &&
+                    <TableBasic align='center' columnHeaders={columnNames} data={filteredBiometrics} sxTableContainer={{width:1}}></TableBasic>
+                }
             </Box>
         </>);
         yearComboBox = (<FormControl sx={{ m: 1, minWidth: 100, justifySelf:'right', alignSelf:'end'}}>
