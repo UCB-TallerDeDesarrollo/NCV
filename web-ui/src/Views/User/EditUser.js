@@ -91,15 +91,27 @@ export function EditUser() {
     const handleInputChange = (e) => {
         const { name, value } = e.target
         setOpen(false)
-        setUser({
-            ...user,
+        setUser(prevState => ({
+            ...prevState,
             [name]: value
-        })
+        }))
     }
+
+    const [selectedRole, setSelectedRole] = useState('');
+
+    const handleRoleChange = (e) => {
+        const { value } = e.target;
+        setSelectedRole(value);
+        setUser(prevState => ({
+            ...prevState,
+            role: value
+        }));
+    }
+    
 
     function handleFormSubmit() {
         setFormErrors(validate(user));
-        user.role=user.rol
+        user.rol=user.role
         setIsSubmit(true)
         axios
             .put(url, user)
@@ -209,8 +221,8 @@ export function EditUser() {
                         name="rol"
                         label= {TranslateRole(user.role)}
                         type="text"
-                        value={user.rol}
-                        onChange={handleInputChange}
+                        value={selectedRole}
+                        onChange={handleRoleChange}
                     >
                         {roles.map((option) => (
                             <MenuItem key={option.value} value={option.value}>
