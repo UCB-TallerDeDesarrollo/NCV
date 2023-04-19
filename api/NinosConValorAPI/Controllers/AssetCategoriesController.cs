@@ -56,5 +56,27 @@ namespace NinosConValorAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió.");
             }
         }
+        [HttpPost]
+        public async Task<ActionResult<AssetCategoryModel>> CreateAssetCategoryAsync([FromBody] AssetCategoryModel assetCategory)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                Console.Write(assetCategory);
+                var newAssetCategory = await _assetCategoriesService.CreateAssetCategoryAsync(assetCategory);
+                Console.Write(newAssetCategory.Id);
+                return Created($"/api/assetCategories/{newAssetCategory.Id}", newAssetCategory);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió para ver xD.");                                
+            }
+        }
     }
 }

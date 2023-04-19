@@ -15,6 +15,7 @@ import ShowFixedAssets from './Views/FixedAssets/ShowFixedAssets'
 import { ShowFixedAsset } from './Views/FixedAssets/ShowOneFixedAsset'
 import UpdateFixedAssetForm from './Views/FixedAssets/UpdateFixedAsset'
 import ShowAssetStates from './Views/FixedAssets/AssetStates/ShowAssetStates'
+import ShowAssetCategory from './Views/FixedAssets/AssetCategory/ShowAssetCategory'
 import ShowAssetResponsibles from './Views/FixedAssets/AssetResponsibles/ShowAssetResponsibles'
 import ShowAssetTypesByCategory from './Views/FixedAssets/AssetTypes/ShowAssetTypesByCategory'
 
@@ -104,6 +105,10 @@ export function getRouts(access){
                         <Route
                             path="/activos-fijos/estados"
                             element={<ShowAssetStates />}
+                        ></Route>
+                        <Route
+                            path="/activos-fijos/categorias"
+                            element={<ShowAssetCategory />}
                         ></Route>
                         <Route
                             path="/activos-fijos/responsables"
