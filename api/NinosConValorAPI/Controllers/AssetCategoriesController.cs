@@ -75,7 +75,7 @@ namespace NinosConValorAPI.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió para ver xD.");                                
+                return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió");                                
             }
         }
     }
