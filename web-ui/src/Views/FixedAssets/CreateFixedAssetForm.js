@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
-import ErrorPage from '../../Components/ErrorPage'
+//import ErrorPage from '../../Components/ErrorPage'
 import FormContainer from '../../Components/FormContainer'
 import InputText from '../../Components/InputText'
 import Navbar from '../../Components/NavBar'
@@ -64,9 +64,9 @@ function CreateFixedAssetForm() {
     const [typesOptions, setTypesOptions] = useState([])
 
     // program Houses Options for DROPDOWN
-    if(errorProgramHouses){
-        return ErrorPage(errorProgramHouses)
-    }
+    //if(errorProgramHouses){
+    //    return ErrorPage(errorProgramHouses)
+    //}
     if (!programHouses) return null 
     let programHousesList = programHouses.map( programHouse =>  { return{
         label: programHouse.acronym,
@@ -75,9 +75,9 @@ function CreateFixedAssetForm() {
     const programHousesOptions = programHousesList 
     
     // categories options for DROPDOWN
-    if(errorCategory){
-        return ErrorPage(errorCategory)
-    }
+    //if(errorCategory){
+    //    return ErrorPage(errorCategory)
+    //}
     if (!categories) return null        
     let categoriesList = categories.map( category =>  { return{
         label: category.category,
@@ -86,9 +86,9 @@ function CreateFixedAssetForm() {
     const categoriesOptions = categoriesList  
 
     //states options for DROPDOWN
-    if(errorStates){
-        return ErrorPage(errorStates)
-    }
+    //if(errorStates){
+    //    return ErrorPage(errorStates)
+    //}
     if (!states) return null 
     let statesList = states.map( state =>  { return{
         label: state.state,
@@ -97,9 +97,9 @@ function CreateFixedAssetForm() {
     const stateOptions = statesList 
 
     //responsibles options for DROPDOWN
-    if(errorResponsibles){
-        return ErrorPage(errorResponsibles)
-    }
+    //if(errorResponsibles){
+    //    return ErrorPage(errorResponsibles)
+    //}
     if (!responsibles) return null 
     let responsiblesList = responsibles.map( responsible =>  { return{
         label: responsible.name,
@@ -121,11 +121,11 @@ function CreateFixedAssetForm() {
         setOpen(false)
     }
     
-    function checkError(){
-        if(error){
-            return ErrorPage(error)
-        }
-    }
+    //function checkError(){
+    //    if(error){
+    //        return ErrorPage(error)
+    //    }
+    //}
     function hasFormErrors(errorsFromForm){
         let hasErrors=true
         if(!errorsFromForm.Name && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Code && !errorsFromForm.AssetStateId && !errorsFromForm.AssetResponsibleId &&!errorsFromForm.AssetTypeId){
@@ -150,7 +150,7 @@ function CreateFixedAssetForm() {
         ).catch((e)=>{
             errorTypes=e
         })        
-        if(errorTypes) return ErrorPage(errorTypes)
+        //if(errorTypes) return ErrorPage(errorTypes)
         if(types==null) return null        
     }
 
@@ -158,13 +158,13 @@ function CreateFixedAssetForm() {
         const url = process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets/'
         getFixedAssets(url).then(
             response => {
-                if(response.name != "AxiosError"){
+                //if(response.name != "AxiosError"){
                     response.data.map((el)=>{
                         let splitCode = el.code.split("-")
                         assetsCodes.push(splitCode[splitCode.length-1]);
                         return response;
                     })
-                }
+                //}
             }
         )
     }
@@ -223,7 +223,7 @@ function CreateFixedAssetForm() {
                 }            
             }).catch ((apiError) => {
                 setError(apiError) 
-                checkError()                    
+                //checkError()                    
             })
         }
     }
@@ -291,10 +291,10 @@ function CreateFixedAssetForm() {
     }
     
 
-    if(error){
-        //setOpen(true)
-        return ErrorPage(error)
-    }
+    //if(error){
+    //    //setOpen(true)
+    //    return ErrorPage(error)
+    //}
     return (
         <><Navbar />
         <div style={{display:'flex', justifyContent:'center', marginTop: '3em'}}>
