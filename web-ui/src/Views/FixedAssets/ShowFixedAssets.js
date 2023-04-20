@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Box from '@mui/material/Box'
-import ErrorPage from '../../Components/ErrorPage'
+//import ErrorPage from '../../Components/ErrorPage'
 import GetFromApi, { getFixedAssets } from '../../Components/GetFromApi'
 import Navbar from '../../Components/NavBar'
 import ListContainer from "../../Components/ListContainer"
@@ -18,7 +18,7 @@ export default function ShowFixedAssets() {
     const [open, setOpen] = useState(null);
     const [fixedAssets, setFixedAssets] = useState()
     const [searchResult, setSearchResults] = useState([])
-    const [hasErrorWithFetch, setHasErrorWithFetch] = useState(null)
+    //const [hasErrorWithFetch, setHasErrorWithFetch] = useState(null)
     const [programHouseSelectedValue, setProgramHouseSelectedValue] = useState(0)
     const [fixedAssetsData, setFixedAssetsData] = useState([])
     const [stateSelectedValue, setStateSelectedValue] = useState(0)
@@ -98,12 +98,12 @@ export default function ShowFixedAssets() {
         fetchBasicData()
         getFixedAssets(url).then(
             response => {
-                if (response.name != "AxiosError") {
+                //if (response.name != "AxiosError") {
                     setFixedAssets(response.data)
                     setSearchResults(response.data)
                     return response
-                }
-                setHasErrorWithFetch(response)
+                //}
+                //setHasErrorWithFetch(response)
             }
         )
         setOpen(showAlert)
@@ -123,9 +123,9 @@ export default function ShowFixedAssets() {
         setOpen(false)
     }
 
-    if (hasErrorWithFetch != null) {
-        return ErrorPage(hasErrorWithFetch)
-    }
+    //if (hasErrorWithFetch != null) {
+    //    return ErrorPage(hasErrorWithFetch)
+    //}
     if (!fixedAssets || !assetCategories || !programHouses || haveErrorsInBasicData()) return null
 
     acronymsList.push("TODOS")
