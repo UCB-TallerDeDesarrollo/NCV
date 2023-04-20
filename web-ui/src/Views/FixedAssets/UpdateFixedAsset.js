@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
-import ErrorPage from '../../Components/ErrorPage'
+//import ErrorPage from '../../Components/ErrorPage'
 import FormContainer from '../../Components/FormContainer'
 import InputText from '../../Components/InputText'
 import Navbar from '../../Components/NavBar'
@@ -12,21 +12,21 @@ import Dropdown from '../../Components/Dropdown'
 import GetFromApi, {getFixedAssets} from '../../Components/GetFromApi'
 import axios from "axios"
 
-function hasErrors(errorCategory, errorStates, errorResponsibles){
-    // categories options for DROPDOWN
-    if(errorCategory){
-        return ErrorPage(errorCategory)
-    }     
-    //states options for DROPDOWN
-    if(errorStates){
-        return ErrorPage(errorStates)
-    }
-    //responsibles options for DROPDOWN
-    if(errorResponsibles){
-        return ErrorPage(errorResponsibles)
-    }
-    return null
-}   
+//function hasErrors(errorCategory, errorStates, errorResponsibles){
+//    // categories options for DROPDOWN
+//   if(errorCategory){
+//        return ErrorPage(errorCategory)
+//    }     
+//    //states options for DROPDOWN
+//    if(errorStates){
+//        return ErrorPage(errorStates)
+//    }
+//    //responsibles options for DROPDOWN
+//    if(errorResponsibles){
+//        return ErrorPage(errorResponsibles)
+//    }
+//    return null
+//}   
 
 function UpdateFixedAssetForm() {
     const {fixedAssetId} = useParams()
@@ -99,9 +99,9 @@ function UpdateFixedAssetForm() {
     const [typesOptions, setTypesOptions] = useState([])
 
     // program Houses Options for DROPDOWN
-    if(errorProgramHouses){
-        return ErrorPage(errorProgramHouses)
-    }
+    //if(errorProgramHouses){
+    //    return ErrorPage(errorProgramHouses)
+    //}
     if (!programHouses || !categories || !states || !responsibles) return null  
 let programHousesList = programHouses.map( programHouse =>  { return{
         label: programHouse.acronym,
@@ -136,11 +136,11 @@ let categoriesList = categories.map( category =>  { return{
         navigate(`/activos-fijos/${fixedAssetId}`,{state:{showAlert:true,alertMessage:"Información sin modificaciones"}});
     }
     
-    function checkError(){
-        if(error){
-            return ErrorPage(error)
-        }
-    }
+    //function checkError(){
+    //    if(error){
+    //        return ErrorPage(error)
+    //    }
+    //}
     function hasFormErrors(errorsFromForm){        
         let hasErrors=true
         if(!errorsFromForm.Name && !errorsFromForm.Price && !errorsFromForm.ProgramHouseId && !errorsFromForm.AssetCategoryId && !errorsFromForm.Code && !errorsFromForm.AssetStateId && !errorsFromForm.AssetResponsibleId &&!errorsFromForm.AssetTypeId){
@@ -166,7 +166,7 @@ let categoriesList = categories.map( category =>  { return{
         ).catch((e)=>{
             errorTypes=e
         })        
-        if(errorTypes) return ErrorPage(errorTypes)
+        //if(errorTypes) return ErrorPage(errorTypes)
         if(types==null) return null        
     }
 
@@ -174,13 +174,13 @@ let categoriesList = categories.map( category =>  { return{
         const url = process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets/'
         getFixedAssets(url).then(
             response => {
-                if(response.name != "AxiosError"){
+                //if(response.name != "AxiosError"){
                     response.data.map((el)=>{
                         let splitCode = el.code.split("-")
                         assetsCodes.push(splitCode[splitCode.length-1]);
                         return response;
                     })
-                }
+                //}
             }
         )
     }
@@ -239,7 +239,7 @@ let categoriesList = categories.map( category =>  { return{
                 }            
             }).catch ((apiError) => {
                 setError(apiError) 
-                checkError()                    
+                //checkError()                    
             })
         }
     }
@@ -306,9 +306,9 @@ let categoriesList = categories.map( category =>  { return{
     }
     
 
-    if(error){
-        return ErrorPage(error)
-    }
+    //if(error){
+    //   return ErrorPage(error)
+    //}
     
     return (
         <><Navbar />
