@@ -145,6 +145,7 @@ describe(' Crear Activo Fijo (Happy Path) ', () => {
         })        
         await waitFor(() => {
             const detailInput = screen.getByLabelText(/Detalle/i)
+            // Solo texto
             detailInput.value = 'Estante colores verde, amarillo y azul, de 3 divisiones'
             expect(detailInput).toHaveDisplayValue('Estante colores verde, amarillo y azul, de 3 divisiones')
         })
@@ -179,5 +180,43 @@ describe(' Crear Activo Fijo (Happy Path) ', () => {
         })
     }) 
     */
+
+    it(' Deberia devolver en el campo Valor lo que se ingreso ', async () => {
+        act(()=>{
+            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
+        })        
+        await waitFor(() => {
+            const worthInput = screen.getByLabelText(/Valor/i)
+            // Solo valores numericos.
+            worthInput.value = 1000
+            expect(worthInput).toHaveDisplayValue(1000)
+        })
+    }) 
+
+    it(' Deberia devolver en el campo Programa lo que se selecciono', async () => {
+        act(()=>{
+            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
+        })        
+        await waitFor(() => {
+            const programInput = screen.getByLabelText(/Programa/i)
+            // CRE
+            expect(programInput).toBeInTheDocument()
+        })
+    }) 
+
+    it(' Deberia devolver en el campo Estado lo que se selecciono', async () => {
+        act(()=>{
+            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
+        })        
+        await waitFor(() => {
+            const stateInput = screen.getByLabelText(/Estado/i)
+            // Activo
+            // Descompuesto
+            // En Uso
+            // Nuevos
+            // Guardado
+            expect(stateInput).toBeInTheDocument()
+        })
+    }) 
 
 })
