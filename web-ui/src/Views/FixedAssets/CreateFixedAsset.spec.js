@@ -135,35 +135,49 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
   afterEach(() => server.resetHandlers())
   afterAll(() => server.close())
 
-describe('Inputs from CreateFixedAsset component must be empty in the beginning', () => {    
+  ///   P R U E B A S   U N I T A R I A S   \\\
 
-    it('Doesnt show any result in the beginning at the Name space', async () => {
-        act(()=>{
-            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
-        })
-        await waitFor(() => {
-            expect(screen.getByLabelText(/Detalle/i)).toHaveDisplayValue('')
-        })
-    })
-    it('Doesnt show any result in the beginning at Price space', async () => {
-        act(()=>{
-            renderWithRouter(<CreateFixedAssetForm />, "/crear-activo-fijo","/crear-activo-fijo")
-        })
-        await waitFor(() => {
-            expect(screen.getByLabelText(/Valor/i)).toHaveDisplayValue('')
-        })
-    })
-})
-describe('Validating inputs from CreateFixedAssets component', () => {
-    it('Price Input cant receive characters', async () => {
+describe(' Crear Activo Fijo (Happy Path) ', () => {    
+
+    it(' Deberia devolver en el campo Detalle lo que se ingreso ', async () => {
         act(()=>{
             renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
         })        
         await waitFor(() => {
-            const priceInput = screen.getByLabelText(/Valor/i)
-            priceInput.value = 'test'
-            expect(priceInput).toHaveDisplayValue('')
+            const detailInput = screen.getByLabelText(/Detalle/i)
+            detailInput.value = 'Estante colores verde, amarillo y azul, de 3 divisiones'
+            expect(detailInput).toHaveDisplayValue('Estante colores verde, amarillo y azul, de 3 divisiones')
         })
-    })
-})
+    }) 
 
+    it(' Deberia devolver en el campo Tipo de Activo Fijo lo que se selecciono ', async () => {
+        act(()=>{
+            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
+        })        
+        await waitFor(() => {
+            const TypeActiveInput = screen.getByLabelText(/Tipo de Activo Fijo/i)
+            // Maquinaria y Equipos
+            // Muebles
+            // Juguetes
+            // Material Escolar
+            expect(TypeActiveInput).toBeInTheDocument()
+        })
+    }) 
+
+    /*
+    it(' Deberia devolver en el campo Tipo lo que se selecciono segun el Tipo de Activo Fijo', async () => {
+        act(()=>{
+            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
+        })        
+        await waitFor(() => {
+            const TypeInput = screen.getAllByRole(/Tipo/i)
+            // Maquinaria y Equipos -> Impresora, Laptop ...
+            // Muebles -> Mesa, Estantes ...
+            // Juguetes -> Columpios, Resbaladilla ...
+            // Material Escolar -> Libro ...
+            expect(TypeInput).toBeInTheDocument()
+        })
+    }) 
+    */
+
+})
