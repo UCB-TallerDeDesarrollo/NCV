@@ -10,6 +10,7 @@ namespace NinosConValorAPI.Data.Entity
         
         [Required]
         public string Category { get; set; }
+        public string Code { get; set; }
 
         public ICollection<AssetTypeEntity>? AssetTypes { get; set; }
         

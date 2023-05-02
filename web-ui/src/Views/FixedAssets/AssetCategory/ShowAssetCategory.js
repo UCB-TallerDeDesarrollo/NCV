@@ -41,16 +41,17 @@ export default function ShowFixedAssets() {
     })
 
     const [formErrors, setFormErrors] = useState({})
-    let assetStatesComponent = null   
+    let assetStatesComponent = null
 
     function getAssetStates(){
-        axios.get(urlAssetStates).then(            
+        axios.get(urlAssetStates).then(               
             (res) => {
                 setAssetStates(res.data)
             }
         ).catch((e)=>{
             setErrorAssetStates(e)
         })
+        console.log(res)
     }
 
     useEffect(() => {
@@ -159,10 +160,12 @@ export default function ShowFixedAssets() {
     if (errorCreateAssetState) return ErrorPage(errorCreateAssetState)
     if (errorUpdateAssetState) return ErrorPage(errorUpdateAssetState)
     if (!assetStates) return null
-    const assetStatesListElements = assetStates.map((assetState)=>{
+    const assetStatesListElements = assetStates.map((assetState)=>{        
+        console.log(urlAssetStates)
+        console.log(assetStates)
         return {
             id:assetState.id, 
-            title: assetState.category,     
+            title: assetState.code,
             description: ''       
         }
     })
