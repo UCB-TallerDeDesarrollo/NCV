@@ -164,12 +164,7 @@ describe(' Crear Activo Fijo (Happy Path) ', () => {
             // Seleccion 2
             TypeActiveInput.querySelector = 'Muebles'
             expect(TypeActiveInput).toBeInTheDocument()
-            // Seleccion 3
-            TypeActiveInput.querySelector = 'Juguetes'
-            expect(TypeActiveInput).toBeInTheDocument()
-            // Seleccion 4
-            TypeActiveInput.querySelector = 'Material Escolar'
-            expect(TypeActiveInput).toBeInTheDocument()
+            ...
             */
         })
     }) 
@@ -187,12 +182,7 @@ describe(' Crear Activo Fijo (Happy Path) ', () => {
             // Muebles -> Mesa, Estantes ...
             TypeInput.querySelector = 'Mesa'
             expect(TypeInput).toBeInTheDocument()
-            // Juguetes -> Columpios, Resbaladilla ...
-            TypeInput.querySelector = 'Columpios'
-            expect(TypeInput).toBeInTheDocument()
-            // Material Escolar -> Libro ...
-            TypeInput.querySelector = 'Libro'
-            expect(TypeInput).toBeInTheDocument()
+            ...
         })
     })
     */
@@ -233,16 +223,50 @@ describe(' Crear Activo Fijo (Happy Path) ', () => {
             // Seleccion 2
             stateInput.querySelector = 'Descompuesto'
             expect(stateInput).toBeInTheDocument()
-            // Seleccion 3
-            stateInput.querySelector = 'En Uso'
-            expect(stateInput).toBeInTheDocument()
-            // Seleccion 4
-            stateInput.querySelector = 'Nuevos'
-            expect(stateInput).toBeInTheDocument()
-            // Seleccion 5
-            stateInput.querySelector = 'Guardado'
-            expect(stateInput).toBeInTheDocument()
+            ...
             */
+        })
+    }) 
+
+    it(' Deberia devolver en el campo Responsable lo que se selecciono ', async () => {
+        act(()=>{
+            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
+        })        
+        await waitFor(() => {
+            const responsibleInput = screen.getByLabelText(/Responsable/i)
+            // Seleccion 1
+            responsibleInput.querySelector = 'Andre Perez'
+            expect(responsibleInput).toBeInTheDocument()
+            /*
+            // Seleccion 2
+            responsibleInput.querySelector = 'Roberto Ricaldez'
+            expect(responsibleInput).toBeInTheDocument()
+            ...
+            */
+        })
+    })
+    
+    it(' Deberia devolver en el campo Ubicacion lo que se ingreso ', async () => {
+        act(()=>{
+            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
+        })        
+        await waitFor(() => {
+            const locationInput = screen.getByLabelText(/Ubicación/i)
+            // Solo texto
+            locationInput.value = 'ucato'
+            expect(locationInput).toHaveDisplayValue('ucato')
+        })
+    }) 
+
+    it(' Deberia devolver en el campo Codigo lo que se ingreso ', async () => {
+        act(()=>{
+            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
+        })        
+        await waitFor(() => {
+            const codeInput = screen.getByLabelText(/Código/i)
+            // Solo texto
+            codeInput.value = 'F-CRE-MU-dksl'
+            expect(codeInput).toHaveDisplayValue('F-CRE-MU-dksl')
         })
     }) 
 
