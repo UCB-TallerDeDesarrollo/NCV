@@ -135,22 +135,20 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
   afterEach(() => server.resetHandlers())
   afterAll(() => server.close())
 
+
   ///   P R U E B A S      U N I T A R I A S   \\\
-
-describe(' Crear Activo Fijo (Happy Path) ', () => {    
-
+describe(' CREAR ACTIVO FIJO (HAPPY PATH) ', () => {    
     it(' Deberia devolver en el campo Detalle lo que se ingreso ', async () => {
         act(()=>{
             renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
         })        
         await waitFor(() => {
             const detailInput = screen.getByLabelText(/Detalle/i)
-            // Solo texto
+            // Solo texto \\
             detailInput.value = 'Estante colores verde, amarillo y azul, de 3 divisiones'
             expect(detailInput).toHaveDisplayValue('Estante colores verde, amarillo y azul, de 3 divisiones')
         })
     }) 
-
     it(' Deberia devolver en el campo Tipo de Activo Fijo lo que se selecciono ', async () => {
         act(()=>{
             renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
@@ -168,7 +166,6 @@ describe(' Crear Activo Fijo (Happy Path) ', () => {
             */
         })
     }) 
-    
     /*
     it(' Deberia devolver en el campo Tipo lo que se selecciono segun el Tipo de Activo Fijo', async () => {
         act(()=>{
@@ -186,19 +183,17 @@ describe(' Crear Activo Fijo (Happy Path) ', () => {
         })
     })
     */
-
     it(' Deberia devolver en el campo Valor lo que se ingreso ', async () => {
         act(()=>{
             renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
         })        
         await waitFor(() => {
             const worthInput = screen.getByLabelText(/Valor/i)
-            // Solo valores numericos.
+            // Solo valores numericos \\
             worthInput.value = 1000
             expect(worthInput).toHaveDisplayValue(1000)
         })
     }) 
-
     it(' Deberia devolver en el campo Programa lo que se selecciono', async () => {
         act(()=>{
             renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
@@ -209,7 +204,6 @@ describe(' Crear Activo Fijo (Happy Path) ', () => {
             expect(programInput).toBeInTheDocument()
         })
     }) 
-
     it(' Deberia devolver en el campo Estado lo que se selecciono', async () => {
         act(()=>{
             renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
@@ -227,7 +221,6 @@ describe(' Crear Activo Fijo (Happy Path) ', () => {
             */
         })
     }) 
-
     it(' Deberia devolver en el campo Responsable lo que se selecciono ', async () => {
         act(()=>{
             renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
@@ -245,29 +238,62 @@ describe(' Crear Activo Fijo (Happy Path) ', () => {
             */
         })
     })
-    
     it(' Deberia devolver en el campo Ubicacion lo que se ingreso ', async () => {
         act(()=>{
             renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
         })        
         await waitFor(() => {
             const locationInput = screen.getByLabelText(/Ubicación/i)
-            // Solo texto
+            // Solo texto \\
             locationInput.value = 'ucato'
             expect(locationInput).toHaveDisplayValue('ucato')
         })
     }) 
-
     it(' Deberia devolver en el campo Codigo lo que se ingreso ', async () => {
         act(()=>{
             renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
         })        
         await waitFor(() => {
             const codeInput = screen.getByLabelText(/Código/i)
-            // Solo texto
+            // Solo texto \\
             codeInput.value = 'F-CRE-MU-dksl'
             expect(codeInput).toHaveDisplayValue('F-CRE-MU-dksl')
         })
     }) 
+})
 
+describe(' LAS ENTRADAS DEL COMPONENTE CreateFixedAsset DEBEN ESTAR VACIAS AL PRINCIPIO ', () => { 
+    // NOTA: En campos seleccionables no se realizo UnitTest debido a que por defecto en sus Funciones estan vacios \\   
+    it(' No muestra ningún resultado al principio en el campo Detalle ', async () => {
+        act(()=>{
+            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
+        })
+        await waitFor(() => {
+            expect(screen.getByLabelText(/Detalle/i)).toHaveDisplayValue('')
+        })
+    })
+    it(' No muestra ningún resultado al principio en el campo Valor ', async () => {
+        act(()=>{
+            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
+        })
+        await waitFor(() => {
+            expect(screen.getByLabelText(/Valor/i)).toHaveDisplayValue('')
+        })
+    })
+    it(' No muestra ningún resultado al principio en el campo Ubicacion ', async () => {
+        act(()=>{
+            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
+        })
+        await waitFor(() => {
+            expect(screen.getByLabelText(/Ubicación/i)).toHaveDisplayValue('')
+        })
+    })
+    it(' No muestra ningún resultado al principio en el campo Codigo ', async () => {
+        act(()=>{
+            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
+        })
+        await waitFor(() => {
+            expect(screen.getByLabelText(/Código/i)).toHaveDisplayValue('')
+        })
+    })
 })
