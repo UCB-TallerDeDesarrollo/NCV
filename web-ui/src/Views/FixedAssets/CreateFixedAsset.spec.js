@@ -226,13 +226,24 @@ describe(' Crear Activo Fijo (Happy Path) ', () => {
         })        
         await waitFor(() => {
             const stateInput = screen.getByLabelText(/Estado/i)
-            // Activo
-            // Descompuesto
-            // En Uso
-            // Nuevos
-            // Guardado
+            // Seleccion 1
+            stateInput.querySelector = 'Activo'
             expect(stateInput).toBeInTheDocument()
+            /*
+            // Seleccion 2
+            stateInput.querySelector = 'Descompuesto'
+            expect(stateInput).toBeInTheDocument()
+            // Seleccion 3
+            stateInput.querySelector = 'En Uso'
+            expect(stateInput).toBeInTheDocument()
+            // Seleccion 4
+            stateInput.querySelector = 'Nuevos'
+            expect(stateInput).toBeInTheDocument()
+            // Seleccion 5
+            stateInput.querySelector = 'Guardado'
+            expect(stateInput).toBeInTheDocument()
+            */
         })
     }) 
-    
+
 })
