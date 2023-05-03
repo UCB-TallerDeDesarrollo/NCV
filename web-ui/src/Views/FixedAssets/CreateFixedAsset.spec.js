@@ -297,3 +297,16 @@ describe(' LAS ENTRADAS DEL COMPONENTE CreateFixedAsset DEBEN ESTAR VACIAS AL PR
         })
     })
 })
+
+describe(' VALIDACION DE ENTRADA TIPO NUMERICO DEL COMPONENTE CreateFixedAssets ', () => {
+    it(' Deberia el campo Precio no recibir caracteres ', async () => {
+        act(()=>{
+            renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
+        })        
+        await waitFor(() => {
+            const priceInput = screen.getByLabelText(/Valor/i)
+            priceInput.value = 'test'
+            expect(priceInput).toHaveDisplayValue('')
+        })
+    })  
+})
