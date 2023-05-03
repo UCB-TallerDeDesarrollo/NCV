@@ -135,7 +135,7 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
   afterEach(() => server.resetHandlers())
   afterAll(() => server.close())
 
-  ///   P R U E B A S   U N I T A R I A S   \\\
+  ///   P R U E B A S      U N I T A R I A S   \\\
 
 describe(' Crear Activo Fijo (Happy Path) ', () => {    
 
@@ -157,28 +157,44 @@ describe(' Crear Activo Fijo (Happy Path) ', () => {
         })        
         await waitFor(() => {
             const TypeActiveInput = screen.getByLabelText(/Tipo de Activo Fijo/i)
-            // Maquinaria y Equipos
-            // Muebles
-            // Juguetes
-            // Material Escolar
+            // Seleccion 1
+            TypeActiveInput.querySelector = 'Maquinaria y Equipos'
             expect(TypeActiveInput).toBeInTheDocument()
+            /*
+            // Seleccion 2
+            TypeActiveInput.querySelector = 'Muebles'
+            expect(TypeActiveInput).toBeInTheDocument()
+            // Seleccion 3
+            TypeActiveInput.querySelector = 'Juguetes'
+            expect(TypeActiveInput).toBeInTheDocument()
+            // Seleccion 4
+            TypeActiveInput.querySelector = 'Material Escolar'
+            expect(TypeActiveInput).toBeInTheDocument()
+            */
         })
     }) 
-
+    
     /*
     it(' Deberia devolver en el campo Tipo lo que se selecciono segun el Tipo de Activo Fijo', async () => {
         act(()=>{
             renderWithRouter(<CreateFixedAssetForm />,"/crear-activo-fijo","/crear-activo-fijo")
         })        
         await waitFor(() => {
-            const TypeInput = screen.getAllByRole(/Tipo/i)
+            const TypeInput = screen.getByLabelText(/Tipo/i)
             // Maquinaria y Equipos -> Impresora, Laptop ...
+            TypeInput.querySelector = 'Impresora'
+            expect(TypeInput).toBeInTheDocument()
             // Muebles -> Mesa, Estantes ...
+            TypeInput.querySelector = 'Mesa'
+            expect(TypeInput).toBeInTheDocument()
             // Juguetes -> Columpios, Resbaladilla ...
+            TypeInput.querySelector = 'Columpios'
+            expect(TypeInput).toBeInTheDocument()
             // Material Escolar -> Libro ...
+            TypeInput.querySelector = 'Libro'
             expect(TypeInput).toBeInTheDocument()
         })
-    }) 
+    })
     */
 
     it(' Deberia devolver en el campo Valor lo que se ingreso ', async () => {
@@ -218,5 +234,5 @@ describe(' Crear Activo Fijo (Happy Path) ', () => {
             expect(stateInput).toBeInTheDocument()
         })
     }) 
-
+    
 })
