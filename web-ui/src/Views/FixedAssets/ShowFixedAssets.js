@@ -77,20 +77,9 @@ export default function ShowFixedAssets() {
             axios.spread((...allData) => {
                 let dataFA = allData[0].data
                 let newDataFA = dataFA.map((data) => {
+                    console.log(data)
                     return {
-                        'N°': data.Cantidad,
-                        'DESCRIPCIÓN':data.id,
-                        'MEDIDAS': data.id,
-                        'ESTADO': data.assetStateState,       
-                        'PROGRAMA': data.programHouseName,
-                        'CÓDIGO': data.code,                        
-                        'FECHA': data.id,
-                        'DETALLE': capitalizeFirstLowerCase(data.name),                        
-                        'TIPO DE ACTIVO FIJO': data.assetTypeAssetCategoryCategory,
-                        'TIPO': data.assetTypeType,                        
-                        'RESPONSABLE': data.assetResponsibleName,
-                        'VALOR': data.price,                        
-                        'PRUEBA':data.price
+                       
                     }
                 })
                 .sort((lowName, highName) => { return compareSort(lowName, highName, 'DETALLE')})
