@@ -136,7 +136,7 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
   afterAll(() => server.close())
 
 
-  ///   P R U E B A S      U N I T A R I A S   \\\
+///   P R U E B A S      U N I T A R I A S   \\\
 describe(' CREAR ACTIVO FIJO (HAPPY PATH) ', () => {    
     it(' Deberia devolver en el campo Detalle lo que se ingreso ', async () => {
         act(()=>{
