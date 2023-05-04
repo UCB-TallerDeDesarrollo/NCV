@@ -58,7 +58,8 @@ namespace NinosConValorAPI.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Category = table.Column<string>(type: "text", nullable: false)
+                    Category = table.Column<string>(type: "text", nullable: false),
+                    Codigo = table.Column<string>(type: "text", nullable: false, maxLength: 5)                    
                 },
                 constraints: table =>
                 {

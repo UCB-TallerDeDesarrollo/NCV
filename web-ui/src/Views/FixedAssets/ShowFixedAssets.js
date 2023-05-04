@@ -77,15 +77,9 @@ export default function ShowFixedAssets() {
             axios.spread((...allData) => {
                 let dataFA = allData[0].data
                 let newDataFA = dataFA.map((data) => {
+                    console.log(data)
                     return {
-                        'DETALLE': capitalizeFirstLowerCase(data.name),
-                        'CÓDIGO': data.code,
-                        'TIPO DE ACTIVO FIJO': data.assetTypeAssetCategoryCategory,
-                        'TIPO': data.assetTypeType,
-                        'ESTADO': data.assetStateState,
-                        'RESPONSABLE': data.assetResponsibleName,
-                        'VALOR': data.price,
-                        'PROGRAMA': data.programHouseName
+                       
                     }
                 })
                 .sort((lowName, highName) => { return compareSort(lowName, highName, 'DETALLE')})
@@ -196,11 +190,13 @@ export default function ShowFixedAssets() {
         })
         let assetCategoriesComponent = <DropdownList itemsHeader={listCategories} itemsSubheader={listElements} isOpened={openList} />
         let assetStatesView = "/activos-fijos/estados"
+        let assetCategoriesView = "/activos-fijos/categorias"
         let assetResponsiblesView = "/activos-fijos/responsables"
         let assetTypesByCategoryView = "/activos-fijos/tipos-por-categoria"
         let nexFixedAsset = "/crear-activo-fijo"
         const buttonsList =
             <Box sx={{ display: 'flex' }}>
+                <ButtonPrimary label={"Crear Categoria"} onClick={() => navigate(assetCategoriesView)} />                    
                 <ButtonPrimary label={"Gestionar Estados"} onClick={() => navigate(assetStatesView)} />
                 <ButtonPrimary label={"Gestionar Tipos"} onClick={()=>navigate(assetTypesByCategoryView)}/>
                 <ButtonPrimary label={"Gestionar Responsables"} onClick={()=>navigate(assetResponsiblesView)}/>

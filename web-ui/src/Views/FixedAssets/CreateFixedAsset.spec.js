@@ -32,7 +32,7 @@ function renderWithRouter(componentToRender, pathToElement, mockedPath){
   [
       {
           id: 1,
-          acronym:"SDE"
+          acronym:"SDE" 
       },
       {
           id: 1,
