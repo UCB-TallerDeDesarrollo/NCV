@@ -3,7 +3,7 @@
 sessionStorage.setItem('Access',"CompleteAccess")
 
 describe(' Agregar pruebas de extremo a extremo de ACTIVOS FIJOS ', () => {
-  /*
+
     it(' Crea un activo fijo (HAPPY PATH) ', () => {
       cy.visit('/crear-activo-fijo')  
 
@@ -13,7 +13,7 @@ describe(' Agregar pruebas de extremo a extremo de ACTIVOS FIJOS ', () => {
       cy.get('#category-drop').click({force: true})
       cy.get("li[role='option']").each(function ($ele) {
         //cy.log($ele.text())
-        if ($ele.text() === 'Maquinaria y Equipos') {
+        if ($ele.text() === 'Material Escolar') {
           cy.log("Elemento encontrado")
           $ele.wrap($ele).click()
         }
@@ -25,7 +25,7 @@ describe(' Agregar pruebas de extremo a extremo de ACTIVOS FIJOS ', () => {
 
       cy.get('#type-drop').click({force: true})
       cy.get("[role='option']").each(function ($ele) {
-        if ($ele.text() === 'Impresora') {
+        if ($ele.text() === 'Libro') {
           $ele.wrap($ele).click()
         }
       })
@@ -44,7 +44,7 @@ describe(' Agregar pruebas de extremo a extremo de ACTIVOS FIJOS ', () => {
 
       cy.get('#estado-drop').click({force: true})
       cy.get("li[role='option']").each(function ($ele) {
-        if ($ele.text() === 'Activo') {
+        if ($ele.text() === 'Descompuesto') {
           $ele.wrap($ele).click()
         }
       })
@@ -52,7 +52,7 @@ describe(' Agregar pruebas de extremo a extremo de ACTIVOS FIJOS ', () => {
     
       cy.get('#responsable-drop').click({force: true})
       cy.get("li[role='option']").each(function ($ele) {
-        if ($ele.text() === 'Jose Arebalo') {
+        if ($ele.text() === 'Pepito Perez') {
           $ele.wrap($ele).click()
         }
       })
@@ -68,8 +68,7 @@ describe(' Agregar pruebas de extremo a extremo de ACTIVOS FIJOS ', () => {
       cy.clock()
       //cy.pause()
     });
-  */
- 
+
     it(' Validar mensaje de error al dejar vacio el Detalle (Obligatorio) ', () => {
       cy.visit('/crear-activo-fijo')
       cy.get('#Name').should('have.value', '');
@@ -81,9 +80,9 @@ describe(' Agregar pruebas de extremo a extremo de ACTIVOS FIJOS ', () => {
         }
       })
       */
+
       cy.get('#submit_button').click()
       cy.clock()
-      cy.wait(1000)
     });
 
     it(' Validar mensaje de error al dejar vacio el Valor (Obligatorio) ', () => {
@@ -100,7 +99,7 @@ describe(' Agregar pruebas de extremo a extremo de ACTIVOS FIJOS ', () => {
 
       cy.get('#submit_button').click()
       cy.clock()
-      cy.wait(10000)
+      cy.wait(5000)
     });
 
     it(' Validar mensaje de error al dejar vacio el Codigo (Obligatorio) ', () => {
@@ -117,6 +116,7 @@ describe(' Agregar pruebas de extremo a extremo de ACTIVOS FIJOS ', () => {
 
       cy.get('#submit_button').click()
       cy.clock()
-      cy.wait(10000)
+      cy.wait(5000)
+      
     });
   });
