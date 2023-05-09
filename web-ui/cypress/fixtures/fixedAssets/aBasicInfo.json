@@ -1,10 +1,21 @@
-{
-    "id":42,
-    "firstName":"Elizabeth",
-    "lastName":"Ortega Lara",
-    "ci":"79235642",
-    "birthDate":"2002-09-12T00:00:00",
-    "programHouse":"SDE",
-    "birthPlace":"Cochabamba - Cercado",
-    "gender":"F"
-}
+[
+    {
+        "id": 18,
+        "code": "F-CRE-EQ-121",
+        "name": "Estante colores verde, amarillo y azul, de 3 divisiones",
+        "price": 34567.00,
+        "location": null,
+        "programHouseId": 2,
+        "assetTypeAssetCategoryId": 3,
+        "assetTypeAssetCategoryCategory": "Juguetes",
+        "programHouseName": "Casa Residencial",
+        "programHouseAcronym": "CRE",
+        "assetStateId": 6,
+        "assetStateState": "Guardado",
+        "assetTypeId": 11,
+        "assetTypeType": "Resbaladilla",
+        "assetResponsibleId": 5,
+        "assetResponsibleName": "Sofia Zapata",
+        "deleted": false
+    }
+]
