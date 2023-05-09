@@ -39,7 +39,7 @@ namespace NinosConValorAPI.Controllers
             }
         }
 
-        [HttpGet("{categoryId:int}")]
+        [HttpGet("{assetCategoriesId:int}")]
         public async Task<ActionResult<AssetCategoryModel>> GetAssetCategoryAsync(int categoryId)
         {
             try
@@ -76,6 +76,44 @@ namespace NinosConValorAPI.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Lo sentimos, algo sucedió");                                
+            }
+        }
+        [HttpPut("{assetCategoriesId:int}")]
+        public async Task<IActionResult> UpdateAssetCategoryAsync(int assetCategoryId, [FromBody] AssetCategoryModel assetCategory)
+        {
+            try
+            {
+                return Ok(await _assetCategoriesService.UpdateAssetCategoryAsync(assetCategoryId, assetCategory));
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Lo sentimos, algo sucedió: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("{assetCategoriesId:int}")]
+        public async Task<ActionResult> DeleteAssetCategoriesAsync(int assetCategoryId)
+        {
+            try
+            {
+                await _assetCategoriesService.DeleteAssetCategoriesAsync(assetCategoryId);
+                return Ok();
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch(InvalidElementOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Lo sentimos, algo sucedió: {ex.Message}");
             }
         }
     }

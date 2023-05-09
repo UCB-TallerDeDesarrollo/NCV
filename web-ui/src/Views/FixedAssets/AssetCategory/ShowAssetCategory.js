@@ -196,7 +196,7 @@ export default function ShowFixedAssets() {
 
     function handle(e) {
         const newData = { ...data }
-        newData[e.target.id] = e.target.value
+        newData[e.target.category] = e.target.value
         setData(newData)
         setOpen(false)
     }
