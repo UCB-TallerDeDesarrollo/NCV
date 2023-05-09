@@ -25,6 +25,7 @@ yarn-error.log*
 
 # cypress
 web-ui/cypress/videos/*.*
+web-ui/cypress/screenshots/
 #======= END FRONT END ===========
 
 
