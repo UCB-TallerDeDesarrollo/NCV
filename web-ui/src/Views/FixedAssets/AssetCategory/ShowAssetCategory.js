@@ -131,7 +131,7 @@ export default function ShowFixedAssets() {
             axios.post(urlAssetState, data).then((res) => {
                 if (res.status == 201) {     
                     setShowAlert(true)
-                    setAlertMessage("Estado creado")
+                    setAlertMessage("Categoria creado")
                     setSeverity("success")
                     setOpen(true)
                     getAssetStates()
@@ -165,7 +165,7 @@ export default function ShowFixedAssets() {
         console.log(assetStates)
         return {
             id:assetState.id, 
-            title: assetState.code,
+            title: assetState.code + " - " + assetState.category,
             description: ''       
         }
     })
@@ -232,9 +232,20 @@ export default function ShowFixedAssets() {
         <FormContainer title="Crear Categoria">
             <InputText
                 required
-                id="state"
-                name="state"
-                value={data.category}
+                id="Code"
+                name="Code"
+                value={data.code}
+                label="Codigo Corto"
+                type="text"
+                onChange={(e) => {
+                    handle(e)            
+                }}
+            />
+            <InputText
+                required
+                id="Category"
+                name="Category"
+                value={data.Category}
                 label="Categoria"
                 type="text"
                 onChange={(e) => {
@@ -242,7 +253,7 @@ export default function ShowFixedAssets() {
                 }}
             />
             {formErrors.state? <Alert  sx={{ wieditdth: 1, pt: 1 }} severity="error"> 
-                {formErrors.state}                   
+                {formErrors.state}
             </Alert>:<p></p> }
             <ButtonPrimary label={"Crear Categoria"} id="submit_button" onClick={submitCreate}/>
             </FormContainer>

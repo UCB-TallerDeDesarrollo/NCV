@@ -79,7 +79,14 @@ export default function ShowFixedAssets() {
                 let newDataFA = dataFA.map((data) => {
                     console.log(data)
                     return {
-                       
+                        'DETALLE': capitalizeFirstLowerCase(data.name),
+                        'CÓDIGO': data.code,
+                        'TIPO DE ACTIVO FIJO': data.assetTypeAssetCategoryCategory,
+                        'TIPO': data.assetTypeType,
+                        'ESTADO': data.assetStateState,
+                        'RESPONSABLE': data.assetResponsibleName,
+                        'VALOR': data.price,
+                        'PROGRAMA': data.programHouseName
                     }
                 })
                 .sort((lowName, highName) => { return compareSort(lowName, highName, 'DETALLE')})
