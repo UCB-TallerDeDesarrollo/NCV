@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-
 jobs:
   ci:
     name: Unit and end-to-end tests
@@ -14,22 +13,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Install Dependencies with install
         run: npm install
-
       - name: Install Dependencies with ci
         run: npm ci
-
       - name: Install Eslint
         run: npm install -g eslint
-
       - name: Install Prettier
         run: npm i -g prettier
 
       - name: Run ESLint
         run: npm run lint
       
+
       - name: Preparing Build Directory
         run: npm run build
         env:
@@ -37,7 +33,15 @@ jobs:
 
       - name: Unit Tests
         run: npm test -- --watchAll=false  --passWithNoTests
-  
+
+
+      - name: E2E Tests
+        uses: cypress-io/github-action@v4
+        with:
+          start: npm start
+          wait-on: "http://localhost:3000"
+          working-directory: ./web-ui
+
   deploy-staging:
     name: Deploy to staging
     environment:
@@ -47,21 +51,19 @@ jobs:
     defaults:
       run:
         working-directory: ./web-ui
-
     steps:
       - uses: actions/checkout@v2
       - name: Install Dependencies
         run: npm install
       
+
       - name: Creating .env file
         run: |
           echo REACT_APP_BACKEND_URL=${{ secrets.REACT_APP_BACKEND_URL }} >> ./.env
-
       - name: Preparing Build Directory
         run: npm run build
         env:
           CI: false
-
       - name: Deployment on Firebase
         uses: w9jds/firebase-action@master
         with:
@@ -69,7 +71,6 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           PROJECT_PATH: ./web-ui
-
   deploy-production:
     name: Deploy to production
     environment:
@@ -79,21 +80,19 @@ jobs:
     defaults:
       run:
         working-directory: ./web-ui
-
     steps:
       - uses: actions/checkout@v2
       - name: Install Dependencies
         run: npm install
       
+
       - name: Creating .env file
         run: |
           echo REACT_APP_BACKEND_URL=${{ secrets.REACT_APP_BACKEND_URL }} >> ./.env
-
       - name: Preparing Build Directory
         run: npm run build
         env:
           CI: false
-
       - name: Deployment on Firebase
         uses: w9jds/firebase-action@master
         with:

@@ -13,21 +13,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Install Dependencies with install
         run: npm install
-
       - name: Install Dependencies with ci
         run: npm ci
-
       - name: Install Eslint
         run: npm install -g eslint
-
       - name: Install Prettier
         run: npm i -g prettier
-
       - name: Run ESLint
         run: npm run lint
 
       - name: Unit Tests
         run: npm test -- --watchAll=false  --passWithNoTests
+
+      - name: E2E Tests
+        uses: cypress-io/github-action@v4
+        with:
+          start: npm start
+          wait-on: "http://localhost:3000"
+          working-directory: ./web-ui
