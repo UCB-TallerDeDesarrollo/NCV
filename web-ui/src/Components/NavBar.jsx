@@ -151,6 +151,7 @@ function Navbar() {
                             )}
                             <Button
                                 sx={{ marginLeft: 5, textTransform: 'none' }}
+                                className="btn-perfil"
                                 color="inherit"
                                 onClick={handleClickProfile}
                             >
