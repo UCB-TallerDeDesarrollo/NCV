@@ -54,9 +54,6 @@ describe('Login', () => {
     cy.get('#alert-bad-user').children()
       .should('contain', 'Usuario y/o contraseña no validos')
       .and('be.visible')
-   })
-  
-  
-  
+   }) 
   
   });
