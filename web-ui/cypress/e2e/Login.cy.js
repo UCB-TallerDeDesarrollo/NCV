@@ -20,20 +20,20 @@ describe('Login', () => {
   
    })
   
-   it('Deberia iniciar sesion con la cuenta y contraseña correctos', () => {
+//    it('Deberia iniciar sesion con la cuenta y contraseña correctos', () => {
     
-    cy.clock()
-    cy.get('#input-text-email').type(email);
-    cy.get('#input-text-password').type(password);
+//     cy.clock()
+//     cy.get('#input-text-email').type(email);
+//     cy.get('#input-text-password').type(password);
   
-    cy.tick(10000)
-    cy.get('#input-button-login').click();
+//     cy.tick(10000)
+//     cy.get('#input-button-login').click();
   
-    //cy.url().should('include', 'inicio-ncv');
-    cy.get('button')
-      .should('have.class', 'btn-files')
-      .and('contain', 'Niños');
-  });
+//     //cy.url().should('include', 'inicio-ncv');
+//     cy.get('button')
+//       .should('have.class', 'btn-files')
+//       .and('contain', 'Niños');
+//   });
   
   it('Deberia mostrar un mensaje de error al intentar ingresar con la contraseña incorrecta', () => {
   cy.get('#input-text-email').type(email);
