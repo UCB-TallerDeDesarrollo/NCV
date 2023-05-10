@@ -28,8 +28,9 @@ describe('Login', () => {
   
     cy.tick(10000)
     cy.get('#input-button-login').click();
-  
-    cy.url().should('include', 'inicio-ncv');
+    cy.get('button')
+      .should('have.class', 'btn-files')
+      .and('contain', 'Niños');
   });
   
   it('Deberia mostrar un mensaje de error al intentar ingresar con la contraseña incorrecta', () => {
