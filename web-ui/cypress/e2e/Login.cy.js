@@ -28,6 +28,8 @@ describe('Login', () => {
   
     cy.tick(10000)
     cy.get('#input-button-login').click();
+  
+    //cy.url().should('include', 'inicio-ncv');
     cy.get('button')
       .should('have.class', 'btn-files')
       .and('contain', 'Niños');
@@ -56,6 +58,5 @@ describe('Login', () => {
       .should('contain', 'Usuario y/o contraseña no validos')
       .and('be.visible')
    }) 
-   //prueba 
   
   });
