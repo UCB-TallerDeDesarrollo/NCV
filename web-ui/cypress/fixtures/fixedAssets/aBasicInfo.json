@@ -1,21 +1,12 @@
-[
     {
-        "id": 18,
-        "code": "F-CRE-EQ-121",
-        "name": "Estante colores verde, amarillo y azul, de 3 divisiones",
-        "price": 34567.00,
-        "location": null,
-        "programHouseId": 2,
-        "assetTypeAssetCategoryId": 3,
-        "assetTypeAssetCategoryCategory": "Juguetes",
-        "programHouseName": "Casa Residencial",
-        "programHouseAcronym": "CRE",
-        "assetStateId": 6,
-        "assetStateState": "Guardado",
-        "assetTypeId": 11,
-        "assetTypeType": "Resbaladilla",
-        "assetResponsibleId": 5,
-        "assetResponsibleName": "Sofia Zapata",
-        "deleted": false
+        "Name": "Estante colores verde, amarillo y azul, de 3 divisiones",
+        "category-drop": "Juguetes",
+        "type-drop": "Resbaladilla",
+        "Price": 34567.00,
+        "programa-drop": "CRE",
+        "estado-drop": "Guardado",
+        "responsable-drop": "Sofia Zapata",
+        "Location": "",
+        "Code": "F-CRE-EQ-121"
     }
-]
+    
