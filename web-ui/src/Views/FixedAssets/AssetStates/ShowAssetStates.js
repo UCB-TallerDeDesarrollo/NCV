@@ -127,8 +127,10 @@ export default function ShowFixedAssets() {
         errorsFromForm = validate(data)
         setFormErrors(errorsFromForm)
         if(!hasFormErrors(errorsFromForm)){
+            console.log(urlAssetState, " el data es: ",data)
             axios.post(urlAssetState, data).then((res) => {
-                if (res.status == 201) {     
+                if (res.status == 201) {    
+                    console.log(res)
                     setShowAlert(true)
                     setAlertMessage("Estado creado")
                     setSeverity("success")
@@ -241,7 +243,7 @@ export default function ShowFixedAssets() {
             {formErrors.state? <Alert  sx={{ wieditdth: 1, pt: 1 }} severity="error"> 
                 {formErrors.state}                   
             </Alert>:<p></p> }
-            <ButtonPrimary label={"Crear estado"} id="submit_button" onClick={submitCreate}/>
+            <ButtonPrimary label={"Crear estado"} id="submit_button" onClick={submitCreate}/>            
             </FormContainer>
             </div>            
         </>                
