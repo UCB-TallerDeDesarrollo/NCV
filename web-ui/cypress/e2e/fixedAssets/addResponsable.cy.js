@@ -28,3 +28,4 @@ describe(' AGREGAR PRUEBAS DE EXTREMO A EXTREMO A ESTADO ', () => {
         cy.get('#name').not('have.value', 'El responsable no puede ser eliminado porque existen activos fijos asociados a el.');
     });
   });
+  
