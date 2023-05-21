@@ -107,6 +107,12 @@ function CreateFixedAssetForm() {
     }}) 
     const responsibleOptions = responsiblesList 
 
+    let shortCodeList = categories.map( category =>  { return{
+        label: category.code,
+        value: category.id
+    }}) 
+    const shortCodeOptions = shortCodeList
+
     function handle(e) {
         const newData = { ...data }
         newData[e.target.id] = e.target.value
@@ -180,24 +186,12 @@ function CreateFixedAssetForm() {
     }
 
     function getCategoryCode(categoryValue){
-        let categoryCode = ''
-        switch (categoryValue){
-            case 2:
-                categoryCode = '1'
-                break
-            case 3:
-                categoryCode = '2'
-                break
-            case 4:
-                categoryCode = '3'
-                break
-            case 5:
-                categoryCode = '4'
-                break
-            case 6:
-                categoryCode = '5' 
-                break
-        }
+        let categoryCode = ''        
+        shortCodeOptions.forEach(function (program){                    
+            if(categoryValue == program.value){                
+                categoryCode = program.label                
+            }
+        });        
         return categoryCode
     }
 
