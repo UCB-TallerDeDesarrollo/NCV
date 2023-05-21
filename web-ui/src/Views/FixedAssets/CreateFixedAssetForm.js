@@ -183,19 +183,19 @@ function CreateFixedAssetForm() {
         let categoryCode = ''
         switch (categoryValue){
             case 2:
-                categoryCode = 'VE'
+                categoryCode = '1'
                 break
             case 3:
-                categoryCode = 'MU'
+                categoryCode = '2'
                 break
             case 4:
-                categoryCode = 'EQ'
+                categoryCode = '3'
                 break
             case 5:
-                categoryCode = 'MA'
+                categoryCode = '4'
                 break
             case 6:
-                categoryCode = 'HE' 
+                categoryCode = '5' 
                 break
         }
         return categoryCode

@@ -45,11 +45,11 @@ export default function ShowFixedAssets() {
     let assetCategorysComponent = null
 
     function getassetCategorys(){
-        axios.get(urlassetCategorys).then(               
-            (res) => {
-                setassetCategorys(res.data)
+        axios.get(urlassetCategorys).then(                           
+            (res) => {                
+                setassetCategorys(res.data)                
             }
-        ).catch((e)=>{
+        ).catch((e)=>{            
             setErrorassetCategorys(e)
         })
         console.log(res)
@@ -83,21 +83,30 @@ export default function ShowFixedAssets() {
 
     function hasFormErrors(errorsFromForm){
         let hasErrors=true
+        console.log("categoria: ",errorsFromForm.category)
+        console.log("Code: ",errorsFromForm.code)
         if(!errorsFromForm.category && !errorsFromForm.code){
+            console.log("Entra al no errorFromForm")
             hasErrors = false
         }
         return hasErrors
     }
 
     const validate = (datas) => {      
+        console.log("Entra a la funcion validate")
         const errors = {
             category: '', // string            
             code:''
         }        
-        if(!datas.category||datas.category.length==0)
+        if(!datas.category||datas.category.length==0){
+            console.log("Error de category")
             errors.category= "La categoria es requerida!"
-        if(!datas.code||datas.code.length==0)
+        }
+        if(!datas.code||datas.code.length==0){
+            console.log("Error de code")
             errors.category= "El codigo corto es requerida!"
+        }
+        console.log(errors)
         return errors     
     }
 
@@ -121,7 +130,8 @@ export default function ShowFixedAssets() {
                 setAlertMessage("Estado actualizado")
                 setSeverity("success")
                 setOpen(true)                    
-                //getassetCategorys()                    
+                
+                getassetCategorys()                                    
             }            
         }).catch ((apiError) => {
             setErrorUpdateassetCategory(apiError)                    
@@ -129,36 +139,33 @@ export default function ShowFixedAssets() {
     }
 
     function submitCreate(){
-        errorsFromForm = validate(data)
         console.log(data)
+        errorsFromForm = validate(data)        
+        console.log(errorsFromForm)
         setFormErrors(errorsFromForm)
-        if(!hasFormErrors(errorsFromForm)){         
-            const formData = {         
-                id: 8,
-                category:data.category,
-                code:data.code,
-                assetTypes: [],
-                type: ""
-            };
-            
-             axios.post("https://ncv-api-staging.azurewebsites.net/api/assetCategories",formData).then((response) => {
-                 console.log('Creacion successful');
-            //     // Manejar la respuesta de la petición aquí
-                 console.log(response);
-            // axios.post("https://ncv-api-staging.azurewebsites.net/api/assetCategories",formData).then((res) => {                
-            // //axios.post(urlassetCategory, data).then((res) => {
-            //     console.log(res);
-            //     if (res.status == 201) {                                        
-            //         setShowAlert(true)
-            //         setAlertMessage("Categoria creado")
-            //         setSeverity("success")
-            //         setOpen(true)
-            //         getassetCategorys()
-            //         setData({
-            //             category:'',//string
-            //             code:''
-            //         })
-            //     }            
+        console.log(setFormErrors)
+        console.log("El error aca",hasFormErrors(errorsFromForm))
+        if(!hasFormErrors(errorsFromForm)){
+            // const formData = {
+            //     category:data.category,
+            //     code:data.code,
+            //     assetTypes: [],
+            //     type: ""
+            // };
+            //axios.post("https://ncv-api-staging.azurewebsites.net/api/assetCategories",formData).then((response) => {
+            axios.post(urlassetCategory,data).then((res) => {
+            //axios.post(urlassetCategory, data).then((res) => {
+            if (res.status == 201) {
+                setShowAlert(true)
+                setAlertMessage("Categoria creada")
+                setSeverity("success")
+                setOpen(true)
+                //getassetCategorys()                
+                setData({
+                    category: '',
+                    code:''
+                })
+            }
             }).catch ((apiError) => {                
                 setErrorCreateassetCategory(apiError) 
                 checkError()                    
@@ -210,11 +217,11 @@ export default function ShowFixedAssets() {
         setassetCategoryId(id)          
         handleCloseToConfirm()
         ToConfirmOpen()
-    }         
+    }
 
     function handle(e) {
         const newData = { ...data }
-        newData[e.target.id] = e.target.value        
+        newData[e.target.id] = e.target.value
         setData(newData)
         setOpen(false)
     }   
@@ -270,8 +277,8 @@ export default function ShowFixedAssets() {
                     handle(e)    
                 }}
             />}
-            {formErrors.state? <Alert  sx={{ wieditdth: 1, pt: 1 }} severity="error"> 
-                {formErrors.state}
+            {formErrors.category? <Alert  sx={{ wieditdth: 1, pt: 1 }} severity="error"> 
+                {formErrors.category}
             </Alert>:<p></p> }
             <ButtonPrimary label={"Crear Categoria"} id="submit_button" onClick={submitCreate}/>
             </FormContainer>
