@@ -146,14 +146,14 @@ export default function ShowFixedAssets() {
         console.log(setFormErrors)
         console.log("El error aca",hasFormErrors(errorsFromForm))
         if(!hasFormErrors(errorsFromForm)){
-            // const formData = {
-            //     category:data.category,
-            //     code:data.code,
-            //     assetTypes: [],
-            //     type: ""
-            // };
-            //axios.post("https://ncv-api-staging.azurewebsites.net/api/assetCategories",formData).then((response) => {
-            axios.post(urlassetCategory,data).then((res) => {
+            const formData = {
+                category:data.category,
+                code:data.code,
+                assetTypes: [],
+                type: ""
+            };
+            axios.post("https://ncv-api-staging.azurewebsites.net/api/assetCategories",formData).then((response) => {
+            //axios.post(urlassetCategory,data).then((res) => {
             //axios.post(urlassetCategory, data).then((res) => {
             if (res.status == 201) {
                 setShowAlert(true)
