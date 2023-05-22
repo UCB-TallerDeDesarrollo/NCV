@@ -1,7 +1,7 @@
 sessionStorage.setItem('Access', "CompleteAccess")
 
 describe('Edit users end to end tests', () => {
-  const urlVisit = '/vista-usuarios/0ea593a1-53a5-4850-8bb8-7ba34dc1d712'
+  const urlVisit = 'https://ncv-stagging.web.app/vista-usuarios/0ea593a1-53a5-4850-8bb8-7ba34dc1d712'
   const urlGETUsuario = 'https://ncv-api-staging.azurewebsites.net/api/auth/0ea593a1-53a5-4850-8bb8-7ba34dc1d712'
   const urlGHetAuth = 'https://ncv-api-staging.azurewebsites.net/api/auth'
   const urlPUTUsuario = 'https://ncv-api-staging.azurewebsites.net/api/auth/0ea593a1-53a5-4850-8bb8-7ba34dc1d712'
