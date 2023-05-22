@@ -109,7 +109,7 @@ describe('Edit users end to end tests', () => {
     cy.intercept('GET', urlGETUsuario, {
       fixture: 'Users/testUser.json'
     }).as('getBasicInfo',);
-    cy.intercept('PUT', 'https://ncv-api-staging.azurewebsites.net/api/0ea593a1-53a5-4850-8bb8-7ba34dc1d712', {
+    cy.intercept('PUT', 'https://ncv-api-staging.azurewebsites.net/api/sebas', {
       "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
       "title": "One or more validation errors occurred.",
       "status": 400,
