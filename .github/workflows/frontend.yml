@@ -39,5 +39,5 @@ jobs:
           CYPRESS_BASE_URL: https://ncv-api-staging.azurewebsites.net/
         with:
           start: npm start
-          wait-on: "http://localhost:3000"
+          wait-on: "https://ncv-stagging.web.app"
           working-directory: ./web-ui
