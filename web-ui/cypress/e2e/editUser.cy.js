@@ -1,13 +1,16 @@
 sessionStorage.setItem('Access', "CompleteAccess")
 
 describe('Edit users end to end tests', () => {
+  const urlGETUsuario = 'https://ncv-api-staging.azurewebsites.net/api/auth/Sebas'
+  const urlGHetAuth = 'https://ncv-api-staging.azurewebsites.net/api/auth'
+  const urlPUTUsuario = 'https://ncv-api-staging.azurewebsites.net/api/auth/Sebas'
   it('Verificar happy path (cambio de numero)', () => {
     const randomNumber = Math.floor(Math.random() * 100);
 
-    cy.intercept('GET', 'https://ncv-api-staging.azurewebsites.net/api/auth/Sebas', {
+    cy.intercept('GET', urlGETUsuario, {
       fixture: 'Users/testUser.json'
     }).as('getBasicInfo',);
-    cy.intercept('PUT', 'https://ncv-api-staging.azurewebsites.net/api/auth/Sebas', {
+    cy.intercept('PUT', urlPUTUsuario, {
       "email": "testUser@gmail.com",
       "cellPhone": randomNumber,
       "firstName": "User",
@@ -16,7 +19,7 @@ describe('Edit users end to end tests', () => {
       "rol": "Administrador"
     }).as('getBasicInfo',);
 
-    cy.intercept('GET', 'https://ncv-api-staging.azurewebsites.net/api/auth', [
+    cy.intercept('GET', urlGHetAuth, [
       {
         "email": "testUser@gmail.com",
         "firstName": "User",
@@ -38,10 +41,10 @@ describe('Edit users end to end tests', () => {
   });
 
   it('Verificar happy path (cambio de rol)', () => {
-    cy.intercept('GET', 'https://ncv-api-staging.azurewebsites.net/api/auth/Sebas', {
+    cy.intercept('GET', urlGETUsuario, {
       fixture: 'Users/testUser.json'
     }).as('getBasicInfo',);
-    cy.intercept('PUT', 'https://ncv-api-staging.azurewebsites.net/api/auth/Sebas', {
+    cy.intercept('PUT', urlPUTUsuario, {
       "email": "testUser@gmail.com",
       "cellPhone": "7777777",
       "firstName": "User",
@@ -50,7 +53,7 @@ describe('Edit users end to end tests', () => {
       "rol": "Administrador"
     }).as('getBasicInfo',);
 
-    cy.intercept('GET', 'https://ncv-api-staging.azurewebsites.net/api/auth', [
+    cy.intercept('GET', urlGHetAuth, [
       {
         "email": "testUser@gmail.com",
         "firstName": "User",
@@ -71,10 +74,10 @@ describe('Edit users end to end tests', () => {
   });
 
   it('Verificar happy path (sin cambiar nada)', () => {
-    cy.intercept('GET', 'https://ncv-api-staging.azurewebsites.net/api/auth/Sebas', {
+    cy.intercept('GET', urlGETUsuario, {
       fixture: 'Users/testUser.json'
     }).as('getBasicInfo',);
-    cy.intercept('PUT', 'https://ncv-api-staging.azurewebsites.net/api/auth/Sebas', {
+    cy.intercept('PUT', urlPUTUsuario, {
       "email": "testUser@gmail.com",
       "cellPhone": "7777777",
       "firstName": "User",
@@ -83,7 +86,7 @@ describe('Edit users end to end tests', () => {
       "rol": "Administrador"
     }).as('getBasicInfo',);
 
-    cy.intercept('GET', 'https://ncv-api-staging.azurewebsites.net/api/auth', [
+    cy.intercept('GET', urlGHetAuth, [
       {
         "email": "testUser@gmail.com",
         "firstName": "User",
@@ -102,7 +105,7 @@ describe('Edit users end to end tests', () => {
   });
 
   it('Verificar error campos vacios', () => {
-    cy.intercept('GET', 'https://ncv-api-staging.azurewebsites.net/api/auth/Sebas', {
+    cy.intercept('GET', urlGETUsuario, {
       fixture: 'Users/testUser.json'
     }).as('getBasicInfo',);
     cy.intercept('PUT', 'https://ncv-api-staging.azurewebsites.net/api/Sebas', {
