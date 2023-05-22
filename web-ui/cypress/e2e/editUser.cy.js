@@ -1,10 +1,10 @@
 sessionStorage.setItem('Access', "CompleteAccess")
 
 describe('Edit users end to end tests', () => {
-  const urlVisit = 'https://ncv-stagging.web.app/vista-usuarios/0ea593a1-53a5-4850-8bb8-7ba34dc1d712'
-  const urlGETUsuario = 'https://ncv-api-staging.azurewebsites.net/api/auth/0ea593a1-53a5-4850-8bb8-7ba34dc1d712'
+  const urlVisit = 'http://localhost:3000/vista-usuarios/sebas'
+  const urlGETUsuario = 'https://ncv-api-staging.azurewebsites.net/api/auth/sebas'
   const urlGHetAuth = 'https://ncv-api-staging.azurewebsites.net/api/auth'
-  const urlPUTUsuario = 'https://ncv-api-staging.azurewebsites.net/api/auth/0ea593a1-53a5-4850-8bb8-7ba34dc1d712'
+  const urlPUTUsuario = 'https://ncv-api-staging.azurewebsites.net/api/auth/sebas'
   it('Verificar happy path (cambio de numero)', () => {
     const randomNumber = Math.floor(Math.random() * 100);
 
