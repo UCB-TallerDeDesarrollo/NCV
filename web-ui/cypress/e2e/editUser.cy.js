@@ -1,9 +1,10 @@
 sessionStorage.setItem('Access', "CompleteAccess")
 
 describe('Edit users end to end tests', () => {
-  const urlGETUsuario = 'https://ncv-api-staging.azurewebsites.net/api/auth/Sebas'
+  const urlVisit = '/vista-usuarios/0ea593a1-53a5-4850-8bb8-7ba34dc1d712'
+  const urlGETUsuario = 'https://ncv-api-staging.azurewebsites.net/api/auth/0ea593a1-53a5-4850-8bb8-7ba34dc1d712'
   const urlGHetAuth = 'https://ncv-api-staging.azurewebsites.net/api/auth'
-  const urlPUTUsuario = 'https://ncv-api-staging.azurewebsites.net/api/auth/Sebas'
+  const urlPUTUsuario = 'https://ncv-api-staging.azurewebsites.net/api/auth/0ea593a1-53a5-4850-8bb8-7ba34dc1d712'
   it('Verificar happy path (cambio de numero)', () => {
     const randomNumber = Math.floor(Math.random() * 100);
 
@@ -29,7 +30,7 @@ describe('Edit users end to end tests', () => {
         "id": "Sebas"
       }
     ]).as('getBasicInfo',);
-    cy.visit('/vista-usuarios/Sebas');
+    cy.visit(urlVisit);
     cy.get('#cellPhone')
       .clear()
       .type(randomNumber)
@@ -63,7 +64,7 @@ describe('Edit users end to end tests', () => {
         "id": "Sebas"
       }
     ]).as('getBasicInfo',);
-    cy.visit('/vista-usuarios/Sebas');
+    cy.visit(urlVisit);
     cy.get('#rol').click();
     cy.contains('li', 'Equipo Tecnico').click();
     cy.get('button[type="input"][label="Guardar Cambios"]').click({ force: true });
@@ -96,7 +97,7 @@ describe('Edit users end to end tests', () => {
         "id": "Sebas"
       }
     ]).as('getBasicInfo',);
-    cy.visit('/vista-usuarios/Sebas');
+    cy.visit(urlVisit);
     cy.get('button[type="input"][label="Guardar Cambios"]').click({ force: true });
     cy.get('.MuiListItemText-primary').contains('Administrador').click()
     cy.get('ul.MuiList-root')
@@ -108,7 +109,7 @@ describe('Edit users end to end tests', () => {
     cy.intercept('GET', urlGETUsuario, {
       fixture: 'Users/testUser.json'
     }).as('getBasicInfo',);
-    cy.intercept('PUT', 'https://ncv-api-staging.azurewebsites.net/api/Sebas', {
+    cy.intercept('PUT', 'https://ncv-api-staging.azurewebsites.net/api/0ea593a1-53a5-4850-8bb8-7ba34dc1d712', {
       "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
       "title": "One or more validation errors occurred.",
       "status": 400,
@@ -122,7 +123,7 @@ describe('Edit users end to end tests', () => {
         ]
       }
     }).as('getBasicInfo',);
-    cy.visit('/vista-usuarios/Sebas');
+    cy.visit(urlVisit);
     cy.get('#cellPhone').clear()
     cy.get('#firstName').clear()
     cy.get('#lastName').clear()
