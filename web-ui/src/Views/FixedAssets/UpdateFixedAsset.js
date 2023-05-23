@@ -103,7 +103,7 @@ function UpdateFixedAssetForm() {
         return ErrorPage(errorProgramHouses)
     }
     if (!programHouses || !categories || !states || !responsibles) return null  
-let programHousesList = programHouses.map( programHouse =>  { return{
+    let programHousesList = programHouses.map( programHouse =>  { return{
         label: programHouse.acronym,
         value: programHouse.id      
     }}) 
@@ -114,7 +114,7 @@ let programHousesList = programHouses.map( programHouse =>  { return{
         return errorsFound
     }
 
-let categoriesList = categories.map( category =>  { return{
+    let categoriesList = categories.map( category =>  { return{
         label: category.category,
         value: category.id      
     }}) 
@@ -131,6 +131,12 @@ let categoriesList = categories.map( category =>  { return{
         value: responsible.id      
     }}) 
     const responsibleOptions = responsiblesList 
+
+    let shortCodeList = categories.map( category =>  { return{
+        label: category.code,
+        value: category.id
+    }}) 
+    const shortCodeOptions = shortCodeList
 
     function handleClose() {
         navigate(`/activos-fijos/${fixedAssetId}`,{state:{showAlert:true,alertMessage:"Información sin modificaciones"}});
@@ -196,24 +202,12 @@ let categoriesList = categories.map( category =>  { return{
     }
 
     function getCategoryCode(categoryValue){
-        let categoryCode = ''
-        switch (categoryValue){
-            case 1:
-                categoryCode = 'HER'
-                break;
-            case 2:
-                categoryCode = 'MUE'
-                break;
-            case 3:
-                categoryCode = 'MAQ'
-                break;
-            case 4:
-                categoryCode = 'EQC'
-                break;
-            case 5:
-                categoryCode = 'VEH' 
-                break;
-        }
+        let categoryCode = ''        
+        shortCodeOptions.forEach(function (program){                    
+            if(categoryValue == program.value){                
+                categoryCode = program.label                
+            }
+        });        
         return categoryCode
     }
 

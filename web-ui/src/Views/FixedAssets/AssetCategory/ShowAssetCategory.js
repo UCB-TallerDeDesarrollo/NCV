@@ -24,46 +24,47 @@ export default function ShowFixedAssets() {
     const [showAlert, setShowAlert] = useState(location.state ? location.state.showAlert : false)
     const [alertMessage, setAlertMessage] = useState(location.state ? location.state.alertMessage : null)
     const [severity, setSeverity] = useState(location.state ? location.state.severity : "success")
-    const urlAssetStates = process.env.REACT_APP_BACKEND_URL + '/api/assetCategories'
-    const urlAssetState = process.env.REACT_APP_BACKEND_URL + '/api/assetCategories/'
-    const [assetStates, setAssetStates] = useState(null)
-    const [errorAssetStates, setErrorAssetStates] = useState(null)
+    const urlassetCategorys = process.env.REACT_APP_BACKEND_URL + '/api/assetCategories'
+    const urlassetCategory = process.env.REACT_APP_BACKEND_URL + '/api/assetCategories/'
+    const [assetCategorys, setassetCategorys] = useState(null)
+    const [errorassetCategorys, setErrorassetCategorys] = useState(null)
     let errorsFromForm = null
     const [open, setOpen] = useState(showAlert)
-    const [assetStateId, setAssetStateId] = useState(0)
+    const [assetCategoryId, setassetCategoryId] = useState(0)
     const [openToConfirm, setOpenToConfirm] = useState(false)
-    const [errorAssetStateDelete, setErrorAssetStateDelete] = useState(null)
-    const [errorCreateAssetState, setErrorCreateAssetState] = useState(null)
-    const [errorUpdateAssetState, setErrorUpdateAssetState] = useState(null)
+    const [errorassetCategoryDelete, setErrorassetCategoryDelete] = useState(null)
+    const [errorCreateassetCategory, setErrorCreateassetCategory] = useState(null)
+    const [errorUpdateassetCategory, setErrorUpdateassetCategory] = useState(null)
     
     const [data, setData] = useState({
-        category:''//string
+        category:'',//string
+        code:''
     })
 
     const [formErrors, setFormErrors] = useState({})
-    let assetStatesComponent = null
+    let assetCategorysComponent = null
 
-    function getAssetStates(){
-        axios.get(urlAssetStates).then(               
-            (res) => {
-                setAssetStates(res.data)
+    function getassetCategorys(){
+        axios.get(urlassetCategorys).then(                           
+            (res) => {                
+                setassetCategorys(res.data)                
             }
-        ).catch((e)=>{
-            setErrorAssetStates(e)
+        ).catch((e)=>{            
+            setErrorassetCategorys(e)
         })
         console.log(res)
     }
 
     useEffect(() => {
-        axios.get(urlAssetStates).then(
-            res => setAssetStates(res.data)
+        axios.get(urlassetCategorys).then(
+            res => setassetCategorys(res.data)
         ).catch((e)=>{
-            setErrorAssetStates(e)
+            setErrorassetCategorys(e)
         })
     }, [])
     
-    const fetchDeleteAssetState = () => {    
-        axios.delete(urlAssetState + assetStateId)
+    const fetchDeleteassetCategory = () => {    
+        axios.delete(urlassetCategory + assetCategoryId)
         .then(function (response) {
             if (response.status == 200){
                 setShowAlert(true)
@@ -71,29 +72,41 @@ export default function ShowFixedAssets() {
                 setSeverity("success")
                 setOpen(true)
                 setOpenToConfirm(false) 
-                getAssetStates()                                          
+                getassetCategorys()                                          
             }
         })
         .catch(err=> {
-            setErrorAssetStateDelete(err)     
+            setErrorassetCategoryDelete(err)     
             setOpenToConfirm(false)        
         })
     }
 
     function hasFormErrors(errorsFromForm){
         let hasErrors=true
-        if(!errorsFromForm.state){
+        console.log("categoria: ",errorsFromForm.category)
+        console.log("Code: ",errorsFromForm.code)
+        if(!errorsFromForm.category && !errorsFromForm.code){
+            console.log("Entra al no errorFromForm")
             hasErrors = false
         }
         return hasErrors
     }
 
     const validate = (datas) => {      
+        console.log("Entra a la funcion validate")
         const errors = {
-            category: '' // string            
+            category: '', // string            
+            code:''
         }        
-        if(!datas.category||datas.category.length==0)
+        if(!datas.category||datas.category.length==0){
+            console.log("Error de category")
             errors.category= "La categoria es requerida!"
+        }
+        if(!datas.code||datas.code.length==0){
+            console.log("Error de code")
+            errors.category= "El codigo corto es requerida!"
+        }
+        console.log(errors)
         return errors     
     }
 
@@ -111,61 +124,73 @@ export default function ShowFixedAssets() {
     }
 
     function submitUpdate(id,updateData){
-        axios.put(urlAssetState + id, updateData).then((res) => {
+        axios.put(urlassetCategory + id, updateData).then((res) => {
             if (res.status == 200) {               
                 setShowAlert(true)
                 setAlertMessage("Estado actualizado")
                 setSeverity("success")
                 setOpen(true)                    
-                getAssetStates()                    
+                
+                getassetCategorys()                                    
             }            
         }).catch ((apiError) => {
-            setErrorUpdateAssetState(apiError)                    
+            setErrorUpdateassetCategory(apiError)                    
         })
     }
 
     function submitCreate(){
-        errorsFromForm = validate(data)
+        console.log(data)
+        errorsFromForm = validate(data)        
+        console.log(errorsFromForm)
         setFormErrors(errorsFromForm)
+        console.log(setFormErrors)
+        console.log("El error aca",hasFormErrors(errorsFromForm))
         if(!hasFormErrors(errorsFromForm)){
-            axios.post(urlAssetState, data).then((res) => {
-                if (res.status == 201) {     
-                    setShowAlert(true)
-                    setAlertMessage("Categoria creado")
-                    setSeverity("success")
-                    setOpen(true)
-                    getAssetStates()
-                    setData({
-                        category:''//string
-                    })
-                }            
-            }).catch ((apiError) => {
-                setErrorCreateAssetState(apiError) 
+            const formData = {
+                category:data.category,
+                code:data.code,
+                assetTypes: [],
+                type: ""
+            };
+            axios.post("https://ncv-api-staging.azurewebsites.net/api/assetCategories",formData).then((response) => {
+            //axios.post(urlassetCategory,data).then((res) => {
+            //axios.post(urlassetCategory, data).then((res) => {
+            if (res.status == 201) {
+                setShowAlert(true)
+                setAlertMessage("Categoria creada")
+                setSeverity("success")
+                setOpen(true)
+                //getassetCategorys()                
+                setData({
+                    category: '',
+                    code:''
+                })
+            }
+            }).catch ((apiError) => {                
+                setErrorCreateassetCategory(apiError) 
                 checkError()                    
             })
         }
     }
-    if (errorAssetStates) return ErrorPage(errorAssetStates)
-    if (errorAssetStateDelete){
-        if(errorAssetStateDelete.response.status==400 && errorAssetStateDelete.response.data=="El estado no puede ser eliminado porque existen activos fijos asociados a el."){
+    if (errorassetCategorys) return ErrorPage(errorassetCategorys)
+    if (errorassetCategoryDelete){
+        if(errorassetCategoryDelete.response.status==400 && errorassetCategoryDelete.response.data=="El estado no puede ser eliminado porque existen activos fijos asociados a el."){
             setShowAlert(true)
-            setAlertMessage(errorAssetStateDelete.response.data)
+            setAlertMessage(errorassetCategoryDelete.response.data)
             setSeverity("warning")
             setOpen(true)
-            setErrorAssetStateDelete(null)
+            setErrorassetCategoryDelete(null)
         }
         else
-            return ErrorPage(errorAssetStateDelete)
+            return ErrorPage(errorassetCategoryDelete)
     } 
-    if (errorCreateAssetState) return ErrorPage(errorCreateAssetState)
-    if (errorUpdateAssetState) return ErrorPage(errorUpdateAssetState)
-    if (!assetStates) return null
-    const assetStatesListElements = assetStates.map((assetState)=>{        
-        console.log(urlAssetStates)
-        console.log(assetStates)
+    if (errorCreateassetCategory) return ErrorPage(errorCreateassetCategory)
+    if (errorUpdateassetCategory) return ErrorPage(errorUpdateassetCategory)
+    if (!assetCategorys) return null
+    const assetCategorysListElements = assetCategorys.map((assetCategory)=>{        
         return {
-            id:assetState.id, 
-            title: assetState.code + " - " + assetState.category,
+            id:assetCategory.id, 
+            title: assetCategory.code + " - " + assetCategory.category,
             description: ''       
         }
     })
@@ -189,25 +214,25 @@ export default function ShowFixedAssets() {
     }
 
     let deleteAction = (id) => {
-        setAssetStateId(id)          
+        setassetCategoryId(id)          
         handleCloseToConfirm()
         ToConfirmOpen()
-    }         
+    }
 
     function handle(e) {
         const newData = { ...data }
-        newData[e.target.category] = e.target.value
+        newData[e.target.id] = e.target.value
         setData(newData)
         setOpen(false)
-    }
+    }   
     
-    assetStatesComponent = <ListGrid items={assetStatesListElements} withImage={false} editable={true} editActionOnSave={handleSave} withDeleteIcon={true} deleteAction={deleteAction}/>
+    assetCategorysComponent = <ListGrid items={assetCategorysListElements} withImage={false} editable={false} editActionOnSave={handleSave} withDeleteIcon={false} deleteAction={deleteAction}/>
     return (        
         <>        
             <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
             {accesPermiss=="CompleteAccess"&&
                 <ListContainer title="Lista de Categorias de Activos Fijos">
-                    {assetStatesComponent}
+                    {assetCategorysComponent}
                 </ListContainer>
             }   
             </Box>
@@ -225,35 +250,35 @@ export default function ShowFixedAssets() {
                 </DialogContent>
                 <DialogActions sx={{display:'flex',flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
                     <ButtonSecondary label="Cancelar" onClick={handleCloseToConfirm}></ButtonSecondary>
-                    <ButtonDanger label="Eliminar" id="confirm_delete_button" onClick={fetchDeleteAssetState}></ButtonDanger>
+                    <ButtonDanger label="Eliminar" id="confirm_delete_button" onClick={fetchDeleteassetCategory}></ButtonDanger>
                 </DialogActions>
             </Dialog>
             <div style={{display:'flex', justifyContent:'center'}}>
         <FormContainer title="Crear Categoria">
             <InputText
                 required
-                id="Code"
-                name="Code"
-                value={data.code}
-                label="Codigo Corto"
-                type="text"
-                onChange={(e) => {
-                    handle(e)            
-                }}
-            />
-            <InputText
-                required
-                id="Category"
-                name="Category"
-                value={data.Category}
+                id="category"
+                name="category"
+                value={data.category}
                 label="Categoria"
                 type="text"
                 onChange={(e) => {
                     handle(e)            
                 }}
             />
-            {formErrors.state? <Alert  sx={{ wieditdth: 1, pt: 1 }} severity="error"> 
-                {formErrors.state}
+            { <InputText
+                required
+                id="code"
+                name="code"
+                value={data.code}
+                label="Codigo Corto"
+                type="text"                
+                onChange={(e) => {
+                    handle(e)    
+                }}
+            />}
+            {formErrors.category? <Alert  sx={{ wieditdth: 1, pt: 1 }} severity="error"> 
+                {formErrors.category}
             </Alert>:<p></p> }
             <ButtonPrimary label={"Crear Categoria"} id="submit_button" onClick={submitCreate}/>
             </FormContainer>

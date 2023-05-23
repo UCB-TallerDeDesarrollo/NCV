@@ -203,7 +203,7 @@ export default function ShowFixedAssets() {
         let nexFixedAsset = "/crear-activo-fijo"
         const buttonsList =
             <Box sx={{ display: 'flex' }}>
-                <ButtonPrimary label={"Crear Categoria"} onClick={() => navigate(assetCategoriesView)} />                    
+                <ButtonPrimary label={"Gestionar Categorias"} onClick={() => navigate(assetCategoriesView)} />                    
                 <ButtonPrimary label={"Gestionar Estados"} onClick={() => navigate(assetStatesView)} />
                 <ButtonPrimary label={"Gestionar Tipos"} onClick={()=>navigate(assetTypesByCategoryView)}/>
                 <ButtonPrimary label={"Gestionar Responsables"} onClick={()=>navigate(assetResponsiblesView)}/>
