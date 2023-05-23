@@ -31,3 +31,13 @@ jobs:
 
       - name: Unit Tests
         run: npm test -- --watchAll=false  --passWithNoTests
+        
+      - name: E2E Tests
+        uses: cypress-io/github-action@v4
+        env:
+          CYPRESS_SESSION_STORAGE_KEY: CompleteAccess
+          CYPRESS_BASE_URL: https://ncv-api-staging.azurewebsites.net/
+        with:
+          start: npm start
+          wait-on: "https://ncv-stagging.web.app"
+          working-directory: ./web-ui
