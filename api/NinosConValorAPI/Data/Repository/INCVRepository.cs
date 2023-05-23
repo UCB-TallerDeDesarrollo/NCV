@@ -53,8 +53,8 @@ namespace NinosConValorAPI.Data.Repository
         void CreateAssetCategory(AssetCategoryEntity assetCategory);
         Task<IEnumerable<AssetCategoryEntity>> GetAssetCategoriesAsync(bool showAssets = false);
         Task<AssetCategoryEntity> GetAssetCategoryAsync(int categoryId);
-        Task<bool> UpdateAssetCategoryAsync(int categoryId, AssetStateEntity assetState);
-        Task DeleteAssetCategoryAsync(int categoryId);
+        //Task<bool> UpdateAssetCategoryAsync(int categoryId, AssetStateEntity assetState);
+        //Task DeleteAssetCategoryAsync(int categoryId);
 
         //ASSET STATES
         Task<AssetStateEntity> CreateAssetState(AssetStateEntity assetState);
