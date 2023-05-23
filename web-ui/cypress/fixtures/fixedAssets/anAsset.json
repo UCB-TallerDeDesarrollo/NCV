@@ -1,7 +1,12 @@
 {
-  "id":24,
-  "name":"Computadora cypress",
-  "price":2424.24,
-  "programHouseId":2,
-  "assetStateState":"Obsoleto"
+  "code": "F-CRE-EQC-F-CRE-MAQ-0913",
+  "name": "Principito",
+  "price": "50.00",
+  "location": "Cochabamba",
+  "assetTypeAssetCategoryCategory": "Material Escolar",
+  "programHouseName": "Casa Residencial",
+  "programHouseAcronym": "CRE",
+  "assetStateState": "Descompuesto",
+  "assetTypeType": "Libro",
+  "assetResponsibleName": "Pepito Pere"
 }

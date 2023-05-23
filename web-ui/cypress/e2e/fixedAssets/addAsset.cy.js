@@ -1,28 +1,88 @@
-/*sessionStorage.setItem('Access',"CompleteAccess")
+sessionStorage.setItem('Access', "CompleteAccess")
 
-describe('Add a fixed asset end to end tests', () => {
-    it('Creates a fixed asset', () => {
-      cy.intercept('GET', process.env.REACT_APP_BACKEND_URL + '/api/programHouses',{
-        fixture: 'programHouses/listOfProgramHouses.json',
-        statusCode: 200
-      }).as('programHouses',)     
-      cy.visit('/crear-activo-fijo')  
-      //cy.wait('@programHouses').its('response.statusCode').should('equal', 200)
-      cy.get('#Name').type('Teclado',{force: true})
-      cy.get('#Description').type('Es un teclado desde la prueba',{force: true})
-      cy.get('#EntryDate').type('2022-09-15',{force: true})
-      cy.get('#Price').type('500',{force: true})
-      cy.get('#Features').type('Marca Cypress',{force: true})
-      cy.get('#Quantity').type('10',{force: true})
+describe('Crear las pruebas de extremo a extremo de Activos Fijos', () => {
+  const formulario = '/crear-activo-fijo'
+  const urlGETActivoFijo = 'https://ncv-api-staging.azurewebsites.net/api/fixedAssets/37'
+  const urlGetLista = 'https://ncv-api-staging.azurewebsites.net/api/fixedAssets'
+  const urlPUTActivoFijo = 'https://ncv-api-staging.azurewebsites.net/api/fixedAssets/37'
   
-      cy.get('#submit_button').click()
-  
-      cy.clock()      
-      cy.intercept('POST', process.env.REACT_APP_BACKEND_URL + '/api/fixedAssets',{
-        fixture: 'fixedAssets/listOfAssets.json',
-        statusCode: 201
-      }).as('anAssetPost',)
-      cy.wait('@anAssetPost').its('response.statusCode').should('equal', 201)
-    });
+  it('Verificar happy path (crear activo fijo)', () => {
+    const precio = Math.floor(Math.random() * 100);
+
+    cy.intercept('GET', urlGETActivoFijo, {
+      fixture: 'fixedAssets/anAsset.json'
+    }).as('getBasicInfo',);
+    cy.intercept('PUT', urlPUTActivoFijo, {
+      "code": "123-ABC-000",
+      "name": "Silla de 3 patas",
+      "price": precio,
+      "location": "Cbba",
+      "assetTypeAssetCategoryCategory": "Juguetes",
+      "programHouseName": "Casa Residencial",
+      "programHouseAcronym": "CRE",
+      "assetStateState": "Nuevo",
+      "assetTypeType": "Chupadera",
+      "assetResponsibleName": "Andres Peredo"
+    }).as('getBasicInfo',);
+    cy.intercept('GET', urlGetLista, [
+      {
+        "id": "37",
+        "code": "123-ABC-000",
+        "name": "Silla de 3 patas",
+        "price": precio,
+        "location": "Cbba",
+        "assetTypeAssetCategoryCategory": "Juguetes",
+        "programHouseName": "Casa Residencial",
+        "programHouseAcronym": "CRE",
+        "assetStateState": "Nuevo",
+        "assetTypeType": "Chupadera",
+        "assetResponsibleName": "Andres Peredo"
+      }
+    ]).as('getBasicInfo',);
+
+    cy.visit(formulario);
+    cy.get('#Name').type('Silla de 3 patas',{force: true})
+    cy.get('#category-drop').click({force: true})
+    cy.get("li[role='option']").each(function ($ele) {
+      if ($ele.text() === 'Juguetes') {
+        $ele.wrap($ele).click()
+      }
+    })
+    cy.get('#type-drop').click({force: true})
+    cy.get("li[role='option']").each(function ($ele) {
+      if ($ele.text() === 'Chupadera') {
+        $ele.wrap($ele).click()
+      }
+    })
+    cy.get('#Price').type(50,{force: true})
+    cy.get('#programa-drop').click({force: true})
+    cy.get("li[role='option']").each(function ($ele) {
+      if ($ele.text() === 'CRE') {
+        $ele.wrap($ele).click()
+      }
+    })
+    cy.get('#estado-drop').click({force: true})
+    cy.get("li[role='option']").each(function ($ele) {
+      if ($ele.text() === 'Nuevo') {
+        $ele.wrap($ele).click()
+      }
+    })
+    cy.get('#responsable-drop').click({force: true})
+    cy.get("li[role='option']").each(function ($ele) {
+      if ($ele.text() === 'Andres Peredo') {
+        $ele.wrap($ele).click()
+      }
+    })
+    cy.get('#Location').type('Cbba',{force: true})
+    cy.get('#Code').type('123-ABC-000',{force: true})
+
+    cy.get('#submit_button').click()
+    cy.clock()
+    
+    cy.get('button[type="input"][label="Guardar Cambios"]').click();
+    cy.get('.MuiListItemText-primary').contains('Administrador').click()
+    cy.get('ul.MuiList-root')
+      .contains(precio)
+      .should('be.visible');
   });
-*/
+});
