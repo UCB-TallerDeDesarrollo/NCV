@@ -78,7 +78,7 @@
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
     "@types/react-edit-text": "^5.0.1",
-    "cypress": "^10.7.0",
+    "cypress": "^10.11.0",
     "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard": "^17.0.0",
