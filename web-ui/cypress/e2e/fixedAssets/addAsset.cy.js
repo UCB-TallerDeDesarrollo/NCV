@@ -54,6 +54,47 @@ describe('Crear las pruebas de extremo a extremo de Activos Fijos', () => {
         $ele.wrap($ele).click()
       }
     })
+    cy.get('#Price').type(precio,{force: true})
+    cy.get('#programa-drop').click({force: true})
+    cy.get("li[role='option']").each(function ($ele) {
+      if ($ele.text() === 'CRE') {
+        $ele.wrap($ele).click()
+      }
+    })
+    cy.get('#estado-drop').click({force: true})
+    cy.get("li[role='option']").each(function ($ele) {
+      if ($ele.text() === 'Nuevo') {
+        $ele.wrap($ele).click()
+      }
+    })
+    cy.get('#responsable-drop').click({force: true})
+    cy.get("li[role='option']").each(function ($ele) {
+      if ($ele.text() === 'Andres Peredo') {
+        $ele.wrap($ele).click()
+      }
+    })
+    cy.get('#Location').type('Cbba',{force: true})
+    cy.get('#Code').type('123-ABC-000',{force: true})
+
+    cy.get('#submit_button').click()
+    //Validamos.
+    cy.get('.MuiAlert-message').should('have.text', 'Activo Fijo creado exitosamente');
+  });
+
+  it(' Deberia mostrar multiples mensajes que los campos vacios son obligatorios! ', () => {
+    cy.visit(formulario);
+    cy.get('#category-drop').click({force: true})
+    cy.get("li[role='option']").each(function ($ele) {
+      if ($ele.text() === 'Juguetes') {
+        $ele.wrap($ele).click()
+      }
+    })
+    cy.get('#type-drop').click({force: true})
+    cy.get("li[role='option']").each(function ($ele) {
+      if ($ele.text() === 'Chupadera') {
+        $ele.wrap($ele).click()
+      }
+    })
     cy.get('#Price').type(50,{force: true})
     cy.get('#programa-drop').click({force: true})
     cy.get("li[role='option']").each(function ($ele) {
@@ -77,12 +118,7 @@ describe('Crear las pruebas de extremo a extremo de Activos Fijos', () => {
     cy.get('#Code').type('123-ABC-000',{force: true})
 
     cy.get('#submit_button').click()
-    cy.clock()
-    
-    cy.get('button[type="input"][label="Guardar Cambios"]').click();
-    cy.get('.MuiListItemText-primary').contains('Administrador').click()
-    cy.get('ul.MuiList-root')
-      .contains(precio)
-      .should('be.visible');
+    //Validamos.
+    cy.get('.MuiAlert-message').should('have.text', 'El Detalle del Activo Fijo es requerido!');
   });
 });
