@@ -257,15 +257,16 @@ export default function ShowFixedAssets() {
         <FormContainer title="Crear Categoria">
             <InputText
                 required
+                onChange={(e) => handle(e)}
                 id="category"
                 name="category"
                 value={data.category}
                 label="Categoria"
-                type="text"
-                onChange={(e) => {
-                    handle(e)            
-                }}
+                type="text"                
             />
+            {formErrors.category? <Alert  sx={{ wieditdth: 1, pt: 1 }} severity="error"> 
+                {formErrors.category}
+            </Alert>:<p></p> }
             { <InputText
                 required
                 id="code"
@@ -277,8 +278,8 @@ export default function ShowFixedAssets() {
                     handle(e)    
                 }}
             />}
-            {formErrors.category? <Alert  sx={{ wieditdth: 1, pt: 1 }} severity="error"> 
-                {formErrors.category}
+            {formErrors.code? <Alert  sx={{ wieditdth: 1, pt: 1 }} severity="error"> 
+                {formErrors.code}
             </Alert>:<p></p> }
             <ButtonPrimary label={"Crear Categoria"} id="submit_button" onClick={submitCreate}/>
             </FormContainer>
