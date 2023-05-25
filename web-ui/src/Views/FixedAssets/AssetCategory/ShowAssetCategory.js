@@ -35,24 +35,28 @@ export default function ShowFixedAssets() {
     const [errorassetCategoryDelete, setErrorassetCategoryDelete] = useState(null)
     const [errorCreateassetCategory, setErrorCreateassetCategory] = useState(null)
     const [errorUpdateassetCategory, setErrorUpdateassetCategory] = useState(null)
-    
+    const [typeSelectedValue, setTypeSelectedValue] = useState('')
+    const [typesOptions, setTypesOptions] = useState([])
+
     const [data, setData] = useState({
         category:'',//string
-        code:''
+        code:'',
+        AssetTypes: [],
+        Type:''
     })
 
     const [formErrors, setFormErrors] = useState({})
     let assetCategorysComponent = null
 
-    function getassetCategorys(){
-        axios.get(urlassetCategorys).then(                           
+    function getassetCategorys(){        
+        axios.get(urlassetCategorys).then(                                       
             (res) => {                
-                setassetCategorys(res.data)                
+                setassetCategorys(res.data)
             }
-        ).catch((e)=>{            
+        ).catch((e)=>{
             setErrorassetCategorys(e)
         })
-        console.log(res)
+        
     }
 
     useEffect(() => {
@@ -82,29 +86,23 @@ export default function ShowFixedAssets() {
     }
 
     function hasFormErrors(errorsFromForm){
-        let hasErrors=true
-        console.log("categoria: ",errorsFromForm.category)
-        console.log("Code: ",errorsFromForm.code)
-        if(!errorsFromForm.category && !errorsFromForm.code){
-            console.log("Entra al no errorFromForm")
+        let hasErrors=true        
+        if(!errorsFromForm.category && !errorsFromForm.code){            
             hasErrors = false
         }
         return hasErrors
     }
 
-    const validate = (datas) => {      
-        console.log("Entra a la funcion validate")
+    const validate = (datas) => {         
         const errors = {
             category: '', // string            
             code:''
         }        
-        if(!datas.category||datas.category.length==0){
-            console.log("Error de category")
+        if(!datas.category||datas.category.length==0){            
             errors.category= "La categoria es requerida!"
         }
-        if(!datas.code||datas.code.length==0){
-            console.log("Error de code")
-            errors.category= "El codigo corto es requerida!"
+        if(!datas.code||datas.code.length==0){            
+            errors.code= "El codigo corto es requerido!"
         }
         console.log(errors)
         return errors     
@@ -145,25 +143,19 @@ export default function ShowFixedAssets() {
         setFormErrors(errorsFromForm)
         console.log(setFormErrors)
         console.log("El error aca",hasFormErrors(errorsFromForm))
-        if(!hasFormErrors(errorsFromForm)){
-            const formData = {
-                category:data.category,
-                code:data.code,
-                assetTypes: [],
-                type: ""
-            };
-            axios.post("https://ncv-api-staging.azurewebsites.net/api/assetCategories",formData).then((response) => {
-            //axios.post(urlassetCategory,data).then((res) => {
-            //axios.post(urlassetCategory, data).then((res) => {
+        if(!hasFormErrors(errorsFromForm)){                        
+            axios.post(urlassetCategory,data).then((res) => {            
             if (res.status == 201) {
                 setShowAlert(true)
                 setAlertMessage("Categoria creada")
                 setSeverity("success")
                 setOpen(true)
-                //getassetCategorys()                
+                getassetCategorys()                
                 setData({
-                    category: '',
-                    code:''
+                    category:'',//string
+                    code:'',
+                    AssetTypes: [],
+                    Type:''
                 })
             }
             }).catch ((apiError) => {                
@@ -196,7 +188,7 @@ export default function ShowFixedAssets() {
     })
 
     function handleClose(event, reason) {
-        if (reason === 'clickaway') {            
+        if (reason === 'clickaway') {
             return
         }
         setOpen(false)        
@@ -221,12 +213,12 @@ export default function ShowFixedAssets() {
 
     function handle(e) {
         const newData = { ...data }
-        newData[e.target.id] = e.target.value
+        newData[e.target.id] = e.target.value        
         setData(newData)
         setOpen(false)
     }   
     
-    assetCategorysComponent = <ListGrid items={assetCategorysListElements} withImage={false} editable={false} editActionOnSave={handleSave} withDeleteIcon={false} deleteAction={deleteAction}/>
+    assetCategorysComponent = <ListGrid items={assetCategorysListElements} withImage={false} editable={true} editActionOnSave={handleSave} withDeleteIcon={true} deleteAction={deleteAction}/>
     return (        
         <>        
             <Navbar /><Box sx={{ display: 'flex', justifyContent: 'center' , marginTop:'15vh'}}>
@@ -255,31 +247,31 @@ export default function ShowFixedAssets() {
             </Dialog>
             <div style={{display:'flex', justifyContent:'center'}}>
         <FormContainer title="Crear Categoria">
-            <InputText
+        { <InputText
                 required
                 onChange={(e) => handle(e)}
+                id="code"
+                name="code"
+                value={data.code}
+                label="Codigo Corto"
+                type="text"                                
+            />}
+            {formErrors.code? <Alert  sx={{ wieditdth: 1, pt: 1 }} severity="error"> 
+                {formErrors.code}
+            </Alert>:<p></p> }
+            <InputText
+                required                
                 id="category"
                 name="category"
                 value={data.category}
                 label="Categoria"
                 type="text"                
-            />
-            {formErrors.category? <Alert  sx={{ wieditdth: 1, pt: 1 }} severity="error"> 
-                {formErrors.category}
-            </Alert>:<p></p> }
-            { <InputText
-                required
-                id="code"
-                name="code"
-                value={data.code}
-                label="Codigo Corto"
-                type="text"                
                 onChange={(e) => {
                     handle(e)    
                 }}
-            />}
-            {formErrors.code? <Alert  sx={{ wieditdth: 1, pt: 1 }} severity="error"> 
-                {formErrors.code}
+            />
+            {formErrors.category? <Alert  sx={{ wieditdth: 1, pt: 1 }} severity="error"> 
+                {formErrors.category}
             </Alert>:<p></p> }
             <ButtonPrimary label={"Crear Categoria"} id="submit_button" onClick={submitCreate}/>
             </FormContainer>
