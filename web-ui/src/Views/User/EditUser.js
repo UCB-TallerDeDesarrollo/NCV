@@ -110,28 +110,41 @@ export function EditUser() {
     
 
     function handleFormSubmit() {
-        setFormErrors(validate(user));
-        user.rol=user.role
-        setIsSubmit(true)
+        const errors = validate(user);
+      
+        if (!user.firstName && !user.lastName) {
+          errors.firstName = 'El nombre es requerido!';
+          errors.lastName = 'El apellido es requerido!';
+        }
+      
+        if (Object.keys(errors).length > 0) {
+          setFormErrors(errors);
+          return; // Evita enviar la solicitud a la API si hay errores
+        }
+      
+        setFormErrors({});
+        user.rol = user.role;
+        setIsSubmit(true);
+      
         axios
-            .put(url, user)
-            .then(function (response) {
-                if (response.status == 200) {
-                    navigate(`/vista-usuarios`, {
-                        state: {
-                            //showAlert: true,
-                            //alertMessage: 'Usuario editado correctamente'
-                        }
-                    })
-                }
-            })
-            .catch(function (error) {
-                if (error.response) {
-                    if (error.response.status >= 400|| error.response.status <= 500) 
-                        setOpen(true)
-                }
-            })
-    }
+          .put(url, user)
+          .then(function (response) {
+            if (response.status === 200) {
+              navigate(`/vista-usuarios`, {
+                state: {
+                  //showAlert: true,
+                  //alertMessage: 'Usuario editado correctamente'
+                },
+              });
+            }
+          })
+          .catch(function (error) {
+            if (error.response) {
+              if (error.response.status >= 400 || error.response.status <= 500) setOpen(true);
+            }
+          });
+      }
+      
 
     function handleClose() {
         navigate(`/vista-usuarios`);
