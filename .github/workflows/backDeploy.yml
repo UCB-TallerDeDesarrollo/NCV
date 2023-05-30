@@ -90,6 +90,7 @@ jobs:
           app-name: "ncv-api-staging"
           slot-name: "production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_NCV_API_STAGING }}
+          # comentario
           package: .
 
   deploy-production:
