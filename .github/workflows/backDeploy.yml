@@ -87,10 +87,9 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "ncv-api-staging"
+          app-name: "ncv-api"
           slot-name: "production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_NCV_API_STAGING }}
-          # comentario
           package: .
 
   deploy-production:
