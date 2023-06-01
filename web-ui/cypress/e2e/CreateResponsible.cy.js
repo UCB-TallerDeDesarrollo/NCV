@@ -1,3 +1,5 @@
+sessionStorage.setItem('Access', "CompleteAccess")
+
 const urlVisit = 'https://ncv-stagging.web.app/activos-fijos/responsables'
 const urlResponsables = 'https://ncv-api.azurewebsites.net/api/assetResponsibles'
 const urlPOST = 'https://ncv-api.azurewebsites.net/api/assetResponsibles/'
