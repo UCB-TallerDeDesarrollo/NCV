@@ -37,8 +37,9 @@ describe('Creación de Responsable de Activos Fijos', () => {
     cy.get('#submit_button').click();
   
     // Verificar que la respuesta del POST tiene el código de respuesta 200
-    cy.get('@createResponsible').should('have.property', 'response').and('have.property', 'statusCode', 200);
+    cy.wait('@createResponsible').its('response.statusCode').should('eq', 200);
   });
+  
   
   
 
