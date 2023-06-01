@@ -86,8 +86,6 @@ describe('Create User', () => {
   });
   
   it('deberia mostrar un mensaje que el campo apellido es requerido', () => {
-    // cy.get('button').contains('Usuarios').click()
-    // cy.get('button').contains('Registrar Usuario').click()
 
     cy.visit("registrarse-ncv");
 
@@ -105,5 +103,26 @@ describe('Create User', () => {
        cy.get('button[type="input"][label="Registrar"]').click({force: true});
        cy.get('.MuiAlert-message').should('have.text', 'Error al crear el usuario!El apellido es requerido!');
   });
+
+it('deberia mostrar un mensaje que el formato del correo electronico es incorrecto', () => {
+        // cy.get('button').contains('Usuarios').click()
+        // cy.get('button').contains('Registrar Usuario').click()
+    
+        cy.visit("registrarse-ncv");
+    
+        cy.get('#firstName')
+           .type("tia")
+        cy.get('#lastName')
+           .type('tia2')   
+        cy.get('#cellPhone')
+           .type('77659902')
+        cy.get('#email')
+           .type('sebas_ag97')
+        cy.get('#rol').click();
+           cy.contains('li', 'Equipo Tecnico').click();
+           cy.get('button[type="input"][label="Registrar"]').click({force: true});
+           cy.get('.MuiAlert-message').should('have.text', 'Error al crear el usuario!Formato de correo incorrecto!');
+           //cy.wait(5000000); 
+      });
 
   });
