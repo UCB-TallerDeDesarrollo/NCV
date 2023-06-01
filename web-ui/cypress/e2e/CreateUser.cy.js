@@ -1,15 +1,9 @@
-describe('Create User', () => {
-    const email = 'soporteNCV@gmail.com'
-    const password = 'Soporte123!'
-  
-   
-        beforeEach(() => {
-            sessionStorage.setItem('Access','');
-            cy.login(email, password)
-          });
+sessionStorage.setItem('Access', "CompleteAccess")
+const email = 'soporteNCV@gmail.com'
+const password = 'Soporte123!'
+const urlVisit = "https://ncv-stagging.web.app/registrarse-ncv";
 
-       
-  
+describe('Create User', () => {
    it('deberia crear un Usuario Exitosamente', () => {
     
 
@@ -36,7 +30,7 @@ describe('Create User', () => {
         }
       ]).as('getUsers');
 
-    cy.visit("https://ncv-stagging.web.app/registrarse-ncv");
+    cy.visit(urlVisit);
 
     cy.get('#firstName')
        .type('tia')
@@ -66,8 +60,8 @@ describe('Create User', () => {
 });
 
   it('deberia mostrar un mensaje que el campo nombre es requerido', () => {
-    cy.get('button').contains('Usuarios').click()
-    cy.get('button').contains('Registrar Usuario').click()
+    
+    cy.visit(urlVisit);
 
     cy.get('#firstName')
        .type("tia")
@@ -86,7 +80,7 @@ describe('Create User', () => {
   
   it('deberia mostrar un mensaje que el campo apellido es requerido', () => {
 
-    cy.visit("registrarse-ncv");
+    cy.visit(urlVisit);
 
     cy.get('#firstName')
        .type("tia")
@@ -104,10 +98,8 @@ describe('Create User', () => {
   });
 
 it('deberia mostrar un mensaje que el formato del correo electronico es incorrecto', () => {
-        // cy.get('button').contains('Usuarios').click()
-        // cy.get('button').contains('Registrar Usuario').click()
     
-        cy.visit("registrarse-ncv");
+        cy.visit(urlVisit);
     
         cy.get('#firstName')
            .type("tia")
