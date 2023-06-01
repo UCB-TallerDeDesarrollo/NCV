@@ -21,30 +21,25 @@ describe('Creación de Responsable de Activos Fijos', () => {
       }
     ]).as('getResponsibles');
   
-    // Esperar a que el elemento #name esté disponible
-    cy.get('#name')
-      .should(($name) => {
-        expect($name).to.exist; // Verificar que el elemento exista
-        expect($name).to.be.visible; // Verificar que el elemento sea visible
-      })
-      .then(($name) => {
-        // Interactuar con el elemento después de que esté disponible
-        cy.wrap($name).type('Test User 2');
+    // Esperar a que se complete la solicitud GET
+    cy.wait('@getResponsibles');
   
-        // Mockear la respuesta del POST al crear un nuevo responsable
-        cy.intercept('POST', urlPOST, {
-          "id": 28,
-          "name": "Test User 2",
-          "fixedAssets": []
-        }).as('createResponsible');
+    cy.get('#name').type('Test User 2');
   
-        // Hacer clic en el botón para crear el responsable
-        cy.get('#submit_button').click();
+    // Mockear la respuesta del POST al crear un nuevo responsable
+    cy.intercept('POST', urlPOST, {
+      "id": 28,
+      "name": "Test User 2",
+      "fixedAssets": []
+    }).as('createResponsible');
   
-        // Verificar que la respuesta del POST tiene el código de respuesta 200
-        cy.get('@createResponsible').should('have.property', 'response').and('have.property', 'statusCode', 200);
-      });
+    // Hacer clic en el botón para crear el responsable
+    cy.get('#submit_button').click();
+  
+    // Verificar que la respuesta del POST tiene el código de respuesta 200
+    cy.get('@createResponsible').should('have.property', 'response').and('have.property', 'statusCode', 200);
   });
+  
   
 
 
