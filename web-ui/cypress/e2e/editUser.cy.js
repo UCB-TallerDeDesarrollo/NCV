@@ -35,6 +35,8 @@ describe('Edit users end to end tests', () => {
       .clear()
       .type(randomNumber)
     cy.get('button[type="input"][label="Guardar Cambios"]').click();
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(2000)
     cy.get('.MuiListItemText-primary').contains('Administrador').click()
     cy.get('ul.MuiList-root')
       .contains(randomNumber)
