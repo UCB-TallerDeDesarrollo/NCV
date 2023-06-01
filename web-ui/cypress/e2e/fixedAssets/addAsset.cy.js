@@ -83,4 +83,12 @@ describe('Crear las pruebas de extremo a extremo de Activos Fijos', () => {
     cy.wait(2000)
     cy.get('.MuiAlert-message').should('have.text', 'Activo Fijo creado exitosamente');
   });
+
+  it('Deberia mostrar multiples mensajes que los campos vacios son obligatorios!', () => {
+    cy.visit(pathFormActivoFijo);
+    cy.get("div[role='alert']").should('not.exist');
+    cy.get('#submit_button').click();
+  
+    cy.get("div[role='alert']").should('have.length', 8);
+  });
 });
