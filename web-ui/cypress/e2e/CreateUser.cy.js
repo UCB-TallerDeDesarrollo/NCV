@@ -11,8 +11,7 @@ describe('Create User', () => {
        
   
    it('deberia crear un Usuario Exitosamente', () => {
-    cy.get('button').contains('Usuarios').click()
-    cy.get('button').contains('Registrar Usuario').click()
+    
 
         cy.intercept('GET', "https://ncv-api.azurewebsites.net/api/auth/", [
         {
@@ -37,7 +36,7 @@ describe('Create User', () => {
         }
       ]).as('getUsers');
 
-    cy.visit("registrarse-ncv");
+    cy.visit("https://ncv-stagging.web.app/registrarse-ncv");
 
     cy.get('#firstName')
        .type('tia')
