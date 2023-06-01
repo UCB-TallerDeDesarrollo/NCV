@@ -2,9 +2,9 @@ sessionStorage.setItem('Access', "CompleteAccess")
 //test2e2
 describe('Edit users end to end tests', () => {
   const urlVisit = 'https://ncv-stagging.web.app/vista-usuarios/sebas'
-  const urlGETUsuario = 'https://ncv-api-staging.azurewebsites.net/api/auth/sebas'
-  const urlGHetAuth = 'https://ncv-api-staging.azurewebsites.net/api/auth'
-  const urlPUTUsuario = 'https://ncv-api-staging.azurewebsites.net/api/auth/sebas'
+  const urlGETUsuario = 'https://ncv-api.azurewebsites.net/api/auth/sebas'
+  const urlGHetAuth = 'https://ncv-api.azurewebsites.net/api/auth'
+  const urlPUTUsuario = 'https://ncv-api.azurewebsites.net/api/auth/sebas'
   it('Verificar happy path (cambio de numero)', () => {
     const randomNumber = Math.floor(Math.random() * 100);
 
