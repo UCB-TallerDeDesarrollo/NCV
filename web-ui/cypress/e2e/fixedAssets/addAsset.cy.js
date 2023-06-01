@@ -1,4 +1,5 @@
 sessionStorage.setItem('Access', "CompleteAccess")
+sessionStorage.setItem('Access', "CompleteAccess")
 
 describe('Crear las pruebas de extremo a extremo de Activos Fijos', () => {
   const dato = {
