@@ -5,7 +5,6 @@ const urlPOST = 'https://ncv-api.azurewebsites.net/api/assetResponsibles/'
 describe('Creación de Responsable de Activos Fijos', () => {
   it('Crea un nuevo responsable y verifica codigo 200 de post', () => {
   
-    // Mockear la respuesta del GET inicial a la lista de responsables
     cy.intercept('GET', urlResponsables, [
       {
         id: 1,
@@ -18,20 +17,17 @@ describe('Creación de Responsable de Activos Fijos', () => {
         fixedAssets: []
       }
     ]).as('getResponsibles');
-  
-    cy.visit(urlVisit);
-    // Esperar a que se complete la solicitud GET
-    //cy.wait('@getResponsibles');
-    
-    cy.get('#name').type('Test User 2');
-  
-    // Mockear la respuesta del POST al crear un nuevo responsable
+
     cy.intercept('POST', urlPOST, {
       "id": 28,
       "name": "Test User 2",
       "fixedAssets": []
     }).as('createResponsible');
   
+    cy.visit(urlVisit);
+    cy.get('#name').should('exist').type('Test User 2');
+    cy.get('#name').type('Test User 2');
+    
     // Hacer clic en el botón para crear el responsable
     cy.get('#submit_button').click();
   
