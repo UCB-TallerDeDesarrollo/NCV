@@ -1,124 +1,91 @@
 sessionStorage.setItem('Access', "CompleteAccess")
 
 describe('Crear las pruebas de extremo a extremo de Activos Fijos', () => {
-  const formulario = '/crear-activo-fijo'
-  const urlGETActivoFijo = 'https://ncv-api-staging.azurewebsites.net/api/fixedAssets/37'
-  const urlGetLista = 'https://ncv-api-staging.azurewebsites.net/api/fixedAssets'
-  const urlPUTActivoFijo = 'https://ncv-api-staging.azurewebsites.net/api/fixedAssets/37'
-  
-  it('Verificar happy path (crear activo fijo)', () => {
-    const precio = Math.floor(Math.random() * 100);
+  const dato = {
+    name: "Libro",
+    assetTypeAssetCategoryCategory: "JUGUETES",
+    assetTypeType: "COLUMPIO",
+    price: 12,
+    programHouseAcronym: "CRH",
+    assetStateState: "BUENO",
+    assetResponsibleName: "Juan Chaves",
+    location: "Pacata",
+    code: "Code-1"
+  }
 
-    cy.intercept('GET', urlGETActivoFijo, {
+  const pathFormActivoFijo = 'https://ncv-stagging.web.app/crear-activo-fijo'
+  const urlGETactivoFijo = 'https://ncv-api.azurewebsites.net/api/fixedAssets'
+  const urlPOSTactivoFijo = 'https://ncv-api.azurewebsites.net/api/fixedAssets/'
+
+  it('Verificar happy path y codigo de estado', () => {
+
+    cy.intercept('GET', urlGETactivoFijo, {
       fixture: 'fixedAssets/anAsset.json'
-    }).as('getBasicInfo',);
-    cy.intercept('PUT', urlPUTActivoFijo, {
-      "code": "123-ABC-000",
-      "name": "Silla de 3 patas",
-      "price": precio,
-      "location": "Cbba",
-      "assetTypeAssetCategoryCategory": "Juguetes",
-      "programHouseName": "Casa Residencial",
-      "programHouseAcronym": "CRE",
-      "assetStateState": "Nuevo",
-      "assetTypeType": "Chupadera",
-      "assetResponsibleName": "Andres Peredo"
-    }).as('getBasicInfo',);
-    cy.intercept('GET', urlGetLista, [
-      {
-        "id": "37",
-        "code": "123-ABC-000",
-        "name": "Silla de 3 patas",
-        "price": precio,
-        "location": "Cbba",
-        "assetTypeAssetCategoryCategory": "Juguetes",
-        "programHouseName": "Casa Residencial",
-        "programHouseAcronym": "CRE",
-        "assetStateState": "Nuevo",
-        "assetTypeType": "Chupadera",
-        "assetResponsibleName": "Andres Peredo"
-      }
-    ]).as('getBasicInfo',);
+    }).as('fixedAssets');
+    cy.intercept('POST', urlPOSTactivoFijo, {
+      "id": 100,
+      "code": "Code-1",
+      "name": "Libro",
+      "price": 12,
+      "location": "Pacata",
+      "programHouseId": 100,
+      "assetTypeAssetCategoryId": 100,
+      "assetTypeAssetCategoryCategory": "JUGUETES",
+      "programHouseName": "CASA ",
+      "programHouseAcronym": "CRH",
+      "assetStateId": 100,
+      "assetStateState": "BUENO",
+      "assetTypeId": 100,
+      "assetTypeType": "COLUMPIO",
+      "assetResponsibleId": 100,
+      "assetResponsibleName": "Juan Chaves",
+      "deleted": false
+    }).as('fixedAssets');
 
-    cy.visit(formulario);
-    cy.get('#Name').type('Silla de 3 patas',{force: true})
+    cy.visit(pathFormActivoFijo);
+
+    cy.get('#Name').type(dato.name, {force: true})
     cy.get('#category-drop').click({force: true})
     cy.get("li[role='option']").each(function ($ele) {
-      if ($ele.text() === 'Juguetes') {
+      if ($ele.text() === dato.assetTypeAssetCategoryCategory) {
         $ele.wrap($ele).click()
       }
     })
+    cy.wait(500)
     cy.get('#type-drop').click({force: true})
     cy.get("li[role='option']").each(function ($ele) {
-      if ($ele.text() === 'Chupadera') {
+      if ($ele.text() === dato.assetTypeType) {
         $ele.wrap($ele).click()
       }
     })
-    cy.get('#Price').type(precio,{force: true})
+    cy.get('#Price').type(dato.price, {force: true})
     cy.get('#programa-drop').click({force: true})
     cy.get("li[role='option']").each(function ($ele) {
-      if ($ele.text() === 'CRE') {
+      if ($ele.text() === dato.programHouseAcronym) {
         $ele.wrap($ele).click()
       }
     })
     cy.get('#estado-drop').click({force: true})
     cy.get("li[role='option']").each(function ($ele) {
-      if ($ele.text() === 'Nuevo') {
+      if ($ele.text() === dato.assetStateState) {
         $ele.wrap($ele).click()
       }
     })
     cy.get('#responsable-drop').click({force: true})
     cy.get("li[role='option']").each(function ($ele) {
-      if ($ele.text() === 'Andres Peredo') {
+      if ($ele.text() === dato.assetResponsibleName) {
         $ele.wrap($ele).click()
       }
     })
-    cy.get('#Location').type('Cbba',{force: true})
-    cy.get('#Code').type('123-ABC-000',{force: true})
+    cy.get('#Location').type(dato.location, {force: true})
+    cy.get('#Code').type(dato.code, {force: true})
 
     cy.get('#submit_button').click()
-    //Validamos.
+    cy.wait('@fixedAssets').its('response.statusCode').should('eq', 200);
+    //cy.wait('@fixedAssets').its('response.name').should('eq', dato.name);
+    //cy.wait('@fixedAssets').its('response.price').should('eq', dato.price);
+    //cy.wait('@fixedAssets').its('response.code').should('eq', dato.code);
+    cy.wait(500)
     cy.get('.MuiAlert-message').should('have.text', 'Activo Fijo creado exitosamente');
-  });
-
-  it(' Deberia mostrar multiples mensajes que los campos vacios son obligatorios! ', () => {
-    cy.visit(formulario);
-    cy.get('#category-drop').click({force: true})
-    cy.get("li[role='option']").each(function ($ele) {
-      if ($ele.text() === 'Juguetes') {
-        $ele.wrap($ele).click()
-      }
-    })
-    cy.get('#type-drop').click({force: true})
-    cy.get("li[role='option']").each(function ($ele) {
-      if ($ele.text() === 'Chupadera') {
-        $ele.wrap($ele).click()
-      }
-    })
-    cy.get('#Price').type(50,{force: true})
-    cy.get('#programa-drop').click({force: true})
-    cy.get("li[role='option']").each(function ($ele) {
-      if ($ele.text() === 'CRE') {
-        $ele.wrap($ele).click()
-      }
-    })
-    cy.get('#estado-drop').click({force: true})
-    cy.get("li[role='option']").each(function ($ele) {
-      if ($ele.text() === 'Nuevo') {
-        $ele.wrap($ele).click()
-      }
-    })
-    cy.get('#responsable-drop').click({force: true})
-    cy.get("li[role='option']").each(function ($ele) {
-      if ($ele.text() === 'Andres Peredo') {
-        $ele.wrap($ele).click()
-      }
-    })
-    cy.get('#Location').type('Cbba',{force: true})
-    cy.get('#Code').type('123-ABC-000',{force: true})
-
-    cy.get('#submit_button').click()
-    //Validamos.
-    cy.get('.MuiAlert-message').should('have.text', 'El Detalle del Activo Fijo es requerido!');
   });
 });

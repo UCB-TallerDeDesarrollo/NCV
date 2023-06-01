@@ -1,12 +1,21 @@
-{
-  "code": "F-CRE-EQC-F-CRE-MAQ-0913",
-  "name": "Principito",
-  "price": "50.00",
-  "location": "Cochabamba",
-  "assetTypeAssetCategoryCategory": "Material Escolar",
-  "programHouseName": "Casa Residencial",
-  "programHouseAcronym": "CRE",
-  "assetStateState": "Descompuesto",
-  "assetTypeType": "Libro",
-  "assetResponsibleName": "Pepito Pere"
-}
+[
+  {
+      "id": 1,
+      "code": "F-CRH-MUE-1",
+      "name": "Libro2",
+      "price": 12,
+      "location": "Pacata",
+      "programHouseId": 1,
+      "assetTypeAssetCategoryId": 2,
+      "assetTypeAssetCategoryCategory": "Muebles",
+      "programHouseName": "CASA ",
+      "programHouseAcronym": "CRH",
+      "assetStateId": 1,
+      "assetStateState": "BUENO",
+      "assetTypeId": 6,
+      "assetTypeType": "Mesa",
+      "assetResponsibleId": 1,
+      "assetResponsibleName": "Juan Chaves",
+      "deleted": false
+  }
+]
