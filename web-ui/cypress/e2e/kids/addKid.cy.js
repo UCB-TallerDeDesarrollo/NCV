@@ -55,4 +55,12 @@ describe('Crear las pruebas de extremo a extremo de Ninos', () => {
     cy.wait('@kids').its('response.statusCode').should('eq', 200);
     cy.get('.MuiAlert-message').should('have.text', 'Archivo de niño creado exitosamente');
   });
+
+  it('Deberia mostrar multiples mensajes que los campos vacios son obligatorios!', () => {
+
+    cy.visit(pathFormNino);
+
+    cy.get('button[type="input"][label="Registrar"]').click();
+    cy.get("div[role='alert']").should('have.length', 5);
+  });
 });
