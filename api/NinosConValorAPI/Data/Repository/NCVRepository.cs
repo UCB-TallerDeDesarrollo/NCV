@@ -387,7 +387,21 @@ namespace NinosConValorAPI.Data.Repository
             var assetType = await query.FirstOrDefaultAsync(g => (g.Id == typeId));
             return assetType;
         }
-        
+        public async Task<bool> UpdateAssetCategoryAsync(int assetCategoryId, AssetCategoryEntity assetCategory)
+        {
+            var assetCategoryToUpdate = _dbContext.AssetCategories.FirstOrDefault(c => c.Id == assetCategory.Id);
+
+            _dbContext.Entry(assetCategoryToUpdate).CurrentValues.SetValues(assetCategory);
+            return true;
+        }
+
+        public async Task DeleteAssetCategoryAsync(int assetCategoryId)
+        {
+            IQueryable<AssetCategoryEntity> query = _dbContext.AssetCategories;
+            var assetCategoryToDelete = await query.FirstOrDefaultAsync(g => (g.Id == assetCategoryId));
+            _dbContext.Remove(assetCategoryToDelete);
+            //assetStateToDelete.Deleted = true;
+        }
         public async Task DeleteFixedAssetAsync(int fixedAssetId)
         {
             IQueryable<FixedAssetEntity> query = _dbContext.FixedAssets;
