@@ -33,6 +33,7 @@ describe('Creación de categorias de activos fijos', () => {
     }).as('createAssetCategory');
   
     cy.visit(urlVisit);
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(2000); 
     cy.get('#code').type('pr2');
     cy.get('#category').type('prueba');
