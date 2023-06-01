@@ -25,7 +25,9 @@ describe('Creación de Responsable de Activos Fijos', () => {
     }).as('createResponsible');
   
     cy.visit(urlVisit);
-    cy.get('#name').should('exist').type('Test User 2');
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(2000); // Esperar 2 segundos (ajusta el tiempo según sea necesario)
+
     cy.get('#name').type('Test User 2');
     
     // Hacer clic en el botón para crear el responsable
