@@ -77,7 +77,7 @@ describe('Edit users end to end tests', () => {
   it('Verificar happy path (sin cambiar nada)', () => {
     cy.intercept('GET', urlGETUsuario, {
       fixture: 'Users/testUser.json'
-    }).as('getBasicInfo',);
+    }).as('getBasicInfo');
     cy.intercept('PUT', urlPUTUsuario, {
       "email": "testUser@gmail.com",
       "cellPhone": "7777777",
@@ -85,8 +85,8 @@ describe('Edit users end to end tests', () => {
       "lastName": "Test",
       "role": "Administrador",
       "rol": "Administrador"
-    }).as('getBasicInfo',);
-
+    }).as('getBasicInfo');
+  
     cy.intercept('GET', urlGHetAuth, [
       {
         "email": "testUser@gmail.com",
@@ -96,14 +96,22 @@ describe('Edit users end to end tests', () => {
         "nameRole": "Administrador",
         "id": "Sebas"
       }
-    ]).as('getBasicInfo',);
+    ]).as('getBasicInfo');
+  
     cy.visit(urlVisit);
-    cy.get('button[type="input"][label="Guardar Cambios"]').click({ force: true });
-    cy.get('.MuiListItemText-primary').contains('Administrador').click()
+    
+    // Esperar a que los datos se carguen antes de hacer clic en el botón
+    cy.wait('@getBasicInfo');
+  
+    cy.get('button[type="input"][label="Guardar Cambios"]').click();
+  
+    cy.get('.MuiListItemText-primary').contains('Administrador').click();
+  
     cy.get('ul.MuiList-root')
       .contains('User Test')
       .should('be.visible');
   });
+  
 
   it('Verificar error campos vacios', () => {
     cy.intercept('GET', urlGETUsuario, {
