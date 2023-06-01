@@ -98,7 +98,7 @@ describe('Edit users end to end tests', () => {
       }
     ]).as('getBasicInfo',);
     cy.visit(urlVisit);
-    cy.get('button[type="input"][label="Guardar Cambios"]').click({ force: true });
+    cy.get('button[type="input"][label="Guardar Cambios"]').click();
     cy.get('.MuiListItemText-primary').contains('Administrador').click()
     cy.get('ul.MuiList-root')
       .contains('User Test')
