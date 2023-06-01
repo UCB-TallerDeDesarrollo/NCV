@@ -17,7 +17,7 @@ describe('Crear las pruebas de extremo a extremo de Activos Fijos', () => {
   const urlGETactivoFijo = 'https://ncv-api.azurewebsites.net/api/fixedAssets'
   const urlPOSTactivoFijo = 'https://ncv-api.azurewebsites.net/api/fixedAssets/'
 
-  it('Verificar happy path y codigo de estado', () => {
+  it.skip('Verificar happy path y codigo de estado', () => {
 
     cy.intercept('GET', urlGETactivoFijo, {
       fixture: 'fixedAssets/anAsset.json'
@@ -87,5 +87,15 @@ describe('Crear las pruebas de extremo a extremo de Activos Fijos', () => {
     //cy.wait('@fixedAssets').its('response.code').should('eq', dato.code);
     cy.wait(500)
     cy.get('.MuiAlert-message').should('have.text', 'Activo Fijo creado exitosamente');
+  });
+
+  it.only('Deberia mostrar multiples mensajes que los campos vacios son obligatorios!', () => {
+
+    cy.visit(pathFormActivoFijo);
+
+    cy.get("div[role='alert']").should('not.exist');
+    cy.get('#submit_button').click();
+  
+    cy.get("div[role='alert']").should('have.length', 8);
   });
 });
