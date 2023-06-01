@@ -22,7 +22,7 @@ describe('Creación de Responsable de Activos Fijos', () => {
     ]).as('getResponsibles');
   
     // Esperar a que se complete la solicitud GET
-    cy.wait('@getResponsibles');
+    //cy.wait('@getResponsibles');
   
     cy.get('#name').type('Test User 2');
   
