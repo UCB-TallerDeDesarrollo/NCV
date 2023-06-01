@@ -27,20 +27,20 @@ const user = {
 const roles = [
     {
         label: 'Tia',
-        value: 'Tia'
+        value: 'TIA'
     },
     {
         label: 'Administrador',
-        value: 'Administrador'
+        value: 'ADMINISTRADOR'
     },
     {
         label: 'Soporte',
-        value: 'Soporte'
+        value: 'SOPORTE'
     }
     ,
     {
         label: 'Equipo Tecnico',
-        value: 'Equipo Tecnico'
+        value: 'EQUIPO TECNICO'
     }
 ]
 
