@@ -52,7 +52,8 @@ describe('Crear las pruebas de extremo a extremo de Activos Fijos', () => {
         $ele.wrap($ele).click()
       }
     })
-    cy.wait(500)
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(2000)
     cy.get('#type-drop').click({force: true})
     cy.get("li[role='option']").each(function ($ele) {
       if ($ele.text() === dato.assetTypeType) {
@@ -86,7 +87,8 @@ describe('Crear las pruebas de extremo a extremo de Activos Fijos', () => {
     //cy.wait('@fixedAssets').its('response.name').should('eq', dato.name);
     //cy.wait('@fixedAssets').its('response.price').should('eq', dato.price);
     //cy.wait('@fixedAssets').its('response.code').should('eq', dato.code);
-    cy.wait(500)
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(2000)
     cy.get('.MuiAlert-message').should('have.text', 'Activo Fijo creado exitosamente');
   });
 
