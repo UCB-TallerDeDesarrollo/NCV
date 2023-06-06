@@ -81,7 +81,6 @@ export default function ShowFixedAssets() {
 
     function hasFormErrors(errorsFromForm){
         let hasErrors=true
-        console.log("El de estado:", errorsFromForm.state)
         if(!errorsFromForm.state){
             hasErrors = false
         }
@@ -128,7 +127,6 @@ export default function ShowFixedAssets() {
         errorsFromForm = validate(data)
         setFormErrors(errorsFromForm)
         if(!hasFormErrors(errorsFromForm)){
-            console.log(urlAssetState, " el data es: ",data)
             axios.post(urlAssetState, data).then((res) => {
                 if (res.status == 201) {    
                     console.log(res)
@@ -189,16 +187,14 @@ export default function ShowFixedAssets() {
     }
 
     let deleteAction = (id) => {
-        setAssetStateId(id)          
+        setAssetStateId(id)  
         handleCloseToConfirm()
         ToConfirmOpen()
     }         
 
     function handle(e) {
         const newData = { ...data }
-        console.log("El nuevo dato copiado es ", newData)
         newData[e.target.id] = e.target.value
-        console.log("El id nuevo es ", newData)
         setData(newData)
         setOpen(false)
     }

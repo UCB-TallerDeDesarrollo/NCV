@@ -2,8 +2,8 @@ sessionStorage.setItem('Access', "CompleteAccess")
 describe('Crear las pruebas de extremo a extremo de Activos Fijos', () => {
   const dato = {
     name: "Libro",
-    assetTypeAssetCategoryCategory: "JUGUETES",
-    assetTypeType: "COLUMPIO",
+    assetTypeAssetCategoryCategory: "Juguetes",
+    assetTypeType: "Computadora",
     price: 12,
     programHouseAcronym: "CRH",
     assetStateState: "BUENO",
@@ -26,13 +26,13 @@ describe('Crear las pruebas de extremo a extremo de Activos Fijos', () => {
       "location": "Pacata",
       "programHouseId": 100,
       "assetTypeAssetCategoryId": 100,
-      "assetTypeAssetCategoryCategory": "JUGUETES",
+      "assetTypeAssetCategoryCategory": "Juguetes",
       "programHouseName": "CASA ",
       "programHouseAcronym": "CRH",
       "assetStateId": 100,
       "assetStateState": "BUENO",
       "assetTypeId": 100,
-      "assetTypeType": "COLUMPIO",
+      "assetTypeType": "Computadora",
       "assetResponsibleId": 100,
       "assetResponsibleName": "Juan Chaves",
       "deleted": false

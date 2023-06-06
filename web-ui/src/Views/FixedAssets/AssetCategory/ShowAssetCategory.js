@@ -34,9 +34,7 @@ export default function ShowFixedAssets() {
     const [openToConfirm, setOpenToConfirm] = useState(false)
     const [errorassetCategoryDelete, setErrorassetCategoryDelete] = useState(null)
     const [errorCreateassetCategory, setErrorCreateassetCategory] = useState(null)
-    const [errorUpdateassetCategory, setErrorUpdateassetCategory] = useState(null)
-    const [typeSelectedValue, setTypeSelectedValue] = useState('')
-    const [typesOptions, setTypesOptions] = useState([])
+    const [errorUpdateassetCategory, setErrorUpdateassetCategory] = useState(null)  
 
     const [data, setData] = useState({
         category:'',//string
@@ -104,17 +102,21 @@ export default function ShowFixedAssets() {
         if(!datas.code||datas.code.length==0){            
             errors.code= "El codigo corto es requerido!"
         }
-        console.log(errors)
         return errors     
     }
 
-    const handleSave = ({value,previousValue},id) => {
+    const handleSave = ({value,previousValue},id) => {        
+        const separadorTextoGuion = /^(.*?)\s*-\s*(.*?)$/;
+        const matches  = value.match(separadorTextoGuion);   
         if(value==previousValue || value=='') {
             window.location.reload()
         }      
         else{
+            const categoriaNueva = matches[1].trim();
+            const codigoCorto = matches[2].trim();                    
             let updateData = {
-                category:value
+                category:codigoCorto,
+                code:categoriaNueva         
             }
             submitUpdate(id,updateData)
         }  
@@ -137,12 +139,8 @@ export default function ShowFixedAssets() {
     }
 
     function submitCreate(){
-        console.log(data)
         errorsFromForm = validate(data)        
-        console.log(errorsFromForm)
         setFormErrors(errorsFromForm)
-        console.log(setFormErrors)
-        console.log("El error aca",hasFormErrors(errorsFromForm))
         if(!hasFormErrors(errorsFromForm)){                        
             axios.post(urlassetCategory,data).then((res) => {            
             if (res.status == 201) {
@@ -165,9 +163,10 @@ export default function ShowFixedAssets() {
         }
     }
     if (errorassetCategorys) return ErrorPage(errorassetCategorys)
-    if (errorassetCategoryDelete){
-        if(errorassetCategoryDelete.response.status==400 && errorassetCategoryDelete.response.data=="El estado no puede ser eliminado porque existen activos fijos asociados a el."){
+    if (errorassetCategoryDelete){                
+        if(errorassetCategoryDelete.response.status==500 && errorassetCategoryDelete.response.data=="Lo sentimos, algo sucedió: An error occurred while saving the entity changes. See the inner exception for details."){            
             setShowAlert(true)
+            errorassetCategoryDelete.response.data = "El estado no puede ser eliminado porque existen activos fijos asociados a el."
             setAlertMessage(errorassetCategoryDelete.response.data)
             setSeverity("warning")
             setOpen(true)
@@ -206,7 +205,7 @@ export default function ShowFixedAssets() {
     }
 
     let deleteAction = (id) => {
-        setassetCategoryId(id)          
+        setassetCategoryId(id)     
         handleCloseToConfirm()
         ToConfirmOpen()
     }
