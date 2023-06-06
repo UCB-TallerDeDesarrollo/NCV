@@ -34,9 +34,7 @@ export default function ShowFixedAssets() {
     const [openToConfirm, setOpenToConfirm] = useState(false)
     const [errorassetCategoryDelete, setErrorassetCategoryDelete] = useState(null)
     const [errorCreateassetCategory, setErrorCreateassetCategory] = useState(null)
-    const [errorUpdateassetCategory, setErrorUpdateassetCategory] = useState(null)
-    const [typeSelectedValue, setTypeSelectedValue] = useState('')
-    const [typesOptions, setTypesOptions] = useState([])
+    const [errorUpdateassetCategory, setErrorUpdateassetCategory] = useState(null)  
 
     const [data, setData] = useState({
         category:'',//string
@@ -70,6 +68,8 @@ export default function ShowFixedAssets() {
     const fetchDeleteassetCategory = () => {    
         axios.delete(urlassetCategory + assetCategoryId)
         .then(function (response) {
+            alert("el id que tiene que mandar es el: ",assetCategoryId)
+            console.log(response)
             if (response.status == 200){
                 setShowAlert(true)
                 setAlertMessage("Registro Eliminado")
@@ -165,13 +165,10 @@ export default function ShowFixedAssets() {
         }
     }
     if (errorassetCategorys) return ErrorPage(errorassetCategorys)
-    if (errorassetCategoryDelete){
-        alert("Entra al if para ver el codigo y el estado")
-        console.log(errorassetCategoryDelete.response.category)
-        console.log(response.data)
-        if(errorassetCategoryDelete.response.category==400 && errorassetCategoryDelete.response.data=="El estado no puede ser eliminado porque existen activos fijos asociados a el."){
-            alert("Entra al segundo if")
+    if (errorassetCategoryDelete){                
+        if(errorassetCategoryDelete.response.status==500 && errorassetCategoryDelete.response.data=="Lo sentimos, algo sucedió: An error occurred while saving the entity changes. See the inner exception for details."){            
             setShowAlert(true)
+            errorassetCategoryDelete.response.data = "El estado no puede ser eliminado porque existen activos fijos asociados a el."
             setAlertMessage(errorassetCategoryDelete.response.data)
             setSeverity("warning")
             setOpen(true)
@@ -211,7 +208,6 @@ export default function ShowFixedAssets() {
 
     let deleteAction = (id) => {
         setassetCategoryId(id)     
-        alert("El id a borrar es el: ",id)
         handleCloseToConfirm()
         ToConfirmOpen()
     }
