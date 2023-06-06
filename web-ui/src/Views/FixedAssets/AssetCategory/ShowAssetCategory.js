@@ -68,8 +68,6 @@ export default function ShowFixedAssets() {
     const fetchDeleteassetCategory = () => {    
         axios.delete(urlassetCategory + assetCategoryId)
         .then(function (response) {
-            alert("el id que tiene que mandar es el: ",assetCategoryId)
-            console.log(response)
             if (response.status == 200){
                 setShowAlert(true)
                 setAlertMessage("Registro Eliminado")
