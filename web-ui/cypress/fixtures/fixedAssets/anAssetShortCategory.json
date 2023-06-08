@@ -1,8 +1,8 @@
 [
     {
         "id": 19,
-        "category": "pro",
-        "code": "pr",
+        "category": "test",
+        "code": "TEST",
         "assetTypes": [],
         "type": null
     }
