@@ -9,6 +9,9 @@ const pathFormShortCategory = 'https://ncv-stagging.web.app/activos-fijos/catego
 const urlGETshortCategory = 'https://ncv-api.azurewebsites.net/api/assetCategories'
 const urlPUTshortCategory = 'https://ncv-api.azurewebsites.net/api/assetCategories/'
 
+// it.only -> solo se ejecutan esta etiqueta.
+// it.skip -> solo se pasan esta etiqueta.
+
 describe(' Editar las pruebas de extremo a extremo de Categoria de Codigo Corto ', () => {
     it(' Verificar happy path (cambio de categoria corta) y codigo de estado ', () => {
         cy.intercept('GET', urlGETshortCategory, {
