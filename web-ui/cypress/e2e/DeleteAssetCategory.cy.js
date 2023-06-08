@@ -4,8 +4,8 @@ const urlVisit = 'https://ncv-stagging.web.app/activos-fijos/categorias'
 const urlResponsables = 'https://ncv-api.azurewebsites.net/api/assetResponsibles'
 const urlPOST = 'https://ncv-api.azurewebsites.net/api/assetResponsibles/'
 
-describe('Deberia eliminar una categoria sin ningun problema', () => {
-  it('Crear un tipo de categoria de manera exitosa', () => {
+describe('pruebas e2e para eliminar categoria con codigo corto', () => {
+  it('Deberia eliminar una categoria de manera exitosa', () => {
   
     cy.intercept('GET', "https://ncv-api.azurewebsites.net/api/assetCategories", [
       {
@@ -48,7 +48,7 @@ describe('Deberia eliminar una categoria sin ningun problema', () => {
     
   });  
 
-  it('no deberia borrar una categoria que tenga activos fijos', () => {
+  it('Deberia mostrar un error al querer eliminar una categoria que tenga activos fijos en ella', () => {
 
     cy.intercept('GET', "https://ncv-api.azurewebsites.net/api/assetCategories", [
         {
