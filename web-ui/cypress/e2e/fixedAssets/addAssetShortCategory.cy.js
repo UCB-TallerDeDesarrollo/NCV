@@ -1,6 +1,7 @@
 sessionStorage.setItem('Access', "CompleteAccess")
 
-const search = "div[id='19']"
+const search1 = "div[id='19']"
+const search2 = "div[id='13']"
 const newCode = "MUE"
 const newCategory = "Sillas"
 const summaryChar = newCode + " - " + newCategory
@@ -9,7 +10,7 @@ const urlGETshortCategory = 'https://ncv-api.azurewebsites.net/api/assetCategori
 const urlPUTshortCategory = 'https://ncv-api.azurewebsites.net/api/assetCategories/'
 
 describe(' Editar las pruebas de extremo a extremo de Categoria de Codigo Corto ', () => {
-    it.only(' Verificar happy path (cambio de categoria corta) y codigo de estado ', () => {
+    it(' Verificar happy path (cambio de categoria corta) y codigo de estado ', () => {
         cy.intercept('GET', urlGETshortCategory, {
           fixture: 'fixedAssets/anAssetShortCategory.json'
         }).as('shortCategory');
@@ -25,16 +26,16 @@ describe(' Editar las pruebas de extremo a extremo de Categoria de Codigo Corto 
         cy.visit(pathFormShortCategory)
 
         // Eliminacion de Campo \\
-        cy.get(search)
+        cy.get(search1)
                 .type('{selectall}{backspace}{enter}')
         // Edicion de Campo \\
-        cy.get(search).each(function ($newName) {
+        cy.get(search1).each(function ($newName) {
             cy.wrap($newName)
                 //.type("${summaryChar} {enter}")
                 .type('MUE - Sillas {enter}');
         })
         // Volver \\
-        cy.get(search).each(function ($oldName) {
+        cy.get(search1).each(function ($oldName) {
             cy.wrap($oldName)
                 .type('TEST - test {enter}')
         })
@@ -46,7 +47,12 @@ describe(' Editar las pruebas de extremo a extremo de Categoria de Codigo Corto 
         cy.get("[role='alert']").should('have.length', 1);
     });
 
-    it.skip(' Deberia mostrar un mensaje que no se puede dejar el campo de edicion vacio ', () => {
+    it(' Deberia mostrar la misma categoria anterior si se deja vacio el campo de edicion ', () => {
+        cy.visit(pathFormShortCategory)
+        cy.get(search2)
+            .type('{selectall}{backspace}{enter}')
         
+        cy.get(search2).should('have.value', '');
+        cy.get(search2).should('contain', 'MAQ - Maquinaria y Equipos');
     });
 });
