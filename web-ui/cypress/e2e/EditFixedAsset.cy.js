@@ -133,13 +133,13 @@ describe('Edit fixed asset', () => {
       "deleted": false
     }).as('putAsset');
 
-    cy.get('#category-drop').click();
+    cy.get('#category-drop').click().wait(1000);
     cy.contains('li', 'Maquinaria y Equipos').click();
-    cy.get('#type-drop').click();
+    cy.get('#type-drop').click().wait(1000);
     cy.contains('li', 'Prueba').click();
-    cy.get('#estado-drop').click();
+    cy.get('#estado-drop').click().wait(1000);
     cy.contains('li', 'USADO').click();
-    cy.get('#responsable-drop').click();
+    cy.get('#responsable-drop').click().wait(1000);
     cy.contains('li', 'Cypher').click();
 
     cy.contains('button', 'Guardar').click();
