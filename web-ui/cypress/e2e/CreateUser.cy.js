@@ -32,16 +32,12 @@ describe('Create User', () => {
 
     cy.visit(urlVisit);
 
-    cy.get('#firstName')
-       .type('tia')
-    cy.get('#lastName')
-       .type('tia2')   
-    cy.get('#cellPhone')
-       .type('77659902')
-    cy.get('#email')
-       .type('tiap@gmail.com')
+    cy.get('#firstName').type('tia', { force: true });
+    cy.get('#lastName').type('tia2', { force: true });  
+    cy.get('#cellPhone').type('77659902', { force: true });
+    cy.get('#email').type('tiap@gmail.com', { force: true });
     cy.get('#rol').click();
-       cy.contains('li', 'Tia').click();
+    cy.contains('li', 'Tia').click();
 
       cy.intercept('POST', "https://ncv-api.azurewebsites.net/api/auth/TIA", {
             id:3,
@@ -63,57 +59,42 @@ describe('Create User', () => {
     
     cy.visit(urlVisit);
 
-    cy.get('#firstName')
-       .type("tia")
-       .clear();
-    cy.get('#lastName')
-       .type('tia2')   
-    cy.get('#cellPhone')
-       .type('77659902')
-    cy.get('#email')
-       .type('tiap@gmail.com')
+    cy.get('#firstName').type("tia", { force: true }).clear();
+    cy.get('#lastName').type('tia2', { force: true });   
+    cy.get('#cellPhone').type('77659902', { force: true });
+    cy.get('#email').type('tiap@gmail.com', { force: true });
     cy.get('#rol').click();
-       cy.contains('li', 'Equipo Tecnico').click();
-       cy.get('button[type="input"][label="Registrar"]').click({force: true});
-       cy.get('.MuiAlert-message').should('have.text', 'Error al crear el usuario!El nombre es requerido!');
+    cy.contains('li', 'Equipo Tecnico').click();
+    cy.get('button[type="input"][label="Registrar"]').click({force: true});
+    cy.get('.MuiAlert-message').should('have.text', 'Error al crear el usuario!El nombre es requerido!');
   });
   
   it('deberia mostrar un mensaje que el campo apellido es requerido', () => {
 
     cy.visit(urlVisit);
 
-    cy.get('#firstName')
-       .type("tia")
-    cy.get('#lastName')
-       .type('tia2') 
-       .clear();  
-    cy.get('#cellPhone')
-       .type('77659902')
-    cy.get('#email')
-       .type('tiap@gmail.com')
+    cy.get('#firstName').type("tia", { force: true });
+    cy.get('#lastName').type('tia2', { force: true }).clear();  
+    cy.get('#cellPhone').type('77659902', { force: true });
+    cy.get('#email').type('tiap@gmail.com', { force: true });
     cy.get('#rol').click();
-       cy.contains('li', 'Equipo Tecnico').click();
-       cy.get('button[type="input"][label="Registrar"]').click({force: true});
-       cy.get('.MuiAlert-message').should('have.text', 'Error al crear el usuario!El apellido es requerido!');
+    cy.contains('li', 'Equipo Tecnico').click();
+    cy.get('button[type="input"][label="Registrar"]').click({force: true});
+    cy.get('.MuiAlert-message').should('have.text', 'Error al crear el usuario!El apellido es requerido!');
   });
 
 it('deberia mostrar un mensaje que el formato del correo electronico es incorrecto', () => {
     
         cy.visit(urlVisit);
     
-        cy.get('#firstName')
-           .type("tia")
-        cy.get('#lastName')
-           .type('tia2')   
-        cy.get('#cellPhone')
-           .type('77659902')
-        cy.get('#email')
-           .type('sebas_ag97')
+        cy.get('#firstName').type("tia", { force: true });
+        cy.get('#lastName').type('tia2', { force: true });   
+        cy.get('#cellPhone').type('77659902', { force: true });
+        cy.get('#email').type('sebas_ag97', { force: true });
         cy.get('#rol').click();
-           cy.contains('li', 'Equipo Tecnico').click();
-           cy.get('button[type="input"][label="Registrar"]').click({force: true});
-           cy.get('.MuiAlert-message').should('have.text', 'Error al crear el usuario!Formato de correo incorrecto!');
-           //cy.wait(5000000); 
+        cy.contains('li', 'Equipo Tecnico').click();
+        cy.get('button[type="input"][label="Registrar"]').click({force: true});
+        cy.get('.MuiAlert-message').should('have.text', 'Error al crear el usuario!Formato de correo incorrecto!'); 
       });
 
   });

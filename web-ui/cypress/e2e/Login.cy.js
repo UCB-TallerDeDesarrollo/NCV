@@ -26,6 +26,7 @@ describe('Login', () => {
   });
   
   it('Deberia mostrar un mensaje de error al intentar ingresar con la contraseña incorrecta', () => {
+    cy.visit(urlVisit);
     cy.get('#input-text-email').type(email,{ force: true });
     cy.get('#input-text-password').type("1234",{ force: true });
     cy.get('#input-button-login').click();
@@ -33,6 +34,7 @@ describe('Login', () => {
   })
   
   it('Deberia mostrar un mensaje de error al intentar ingresar con el email incorrecto', () => {
+    cy.visit(urlVisit);
     cy.get('#input-text-email').type("soporte",{ force: true });
     cy.get('#input-text-password').type(password,{ force: true });
     cy.get('#input-button-login').click();
