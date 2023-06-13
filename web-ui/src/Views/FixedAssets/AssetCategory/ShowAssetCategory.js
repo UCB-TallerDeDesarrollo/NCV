@@ -99,13 +99,26 @@ export default function ShowFixedAssets() {
         if(!datas.category||datas.category.length==0){            
             errors.category= "La categoria es requerida!"
         }
+        else{
+            if (!datas.category || datas.category.length>20){
+                errors.category="El campo Categoria debe ser menor o igual a 20 caracteres!";
+            }
+        }
         if(!datas.code||datas.code.length==0){            
             errors.code= "El codigo corto es requerido!"
         }
+        else{
+            if(!datas.code||datas.code.length>5){
+                errors.code="El campo Codigo Corto debe ser menor o igual a 5 caracteres!";
+            }
+        }
+
         return errors     
     }
 
-    const handleSave = ({value,previousValue},id) => {        
+    const handleSave = ({value,previousValue},id) => {      
+        const limCode = 5;
+        const limCategory = 20;    
         const separadorTextoGuion = /^(.*?)\s*-\s*(.*?)$/;
         const matches  = value.match(separadorTextoGuion);   
         if(value==previousValue || value=='') {
@@ -113,14 +126,15 @@ export default function ShowFixedAssets() {
         }      
         else{
             const categoriaNueva = matches[1].trim();
-            const codigoCorto = matches[2].trim();                    
+            const codigoCorto = matches[2].trim();     
+            const TrunkCode = categoriaNueva.substring(0, limCode);
+            const TrunkCategory = codigoCorto.substring(0, limCategory);         
             let updateData = {
-                category:codigoCorto,
-                code:categoriaNueva         
+                category:TrunkCategory,
+                code:TrunkCode         
             }
             submitUpdate(id,updateData)
         }  
-        
     }
 
     function submitUpdate(id,updateData){
@@ -129,12 +143,13 @@ export default function ShowFixedAssets() {
                 setShowAlert(true)
                 setAlertMessage("Estado actualizado")
                 setSeverity("success")
-                setOpen(true)                    
-                
+                setOpen(true)        
+
                 getassetCategorys()                                    
-            }            
+            }  
         }).catch ((apiError) => {
-            setErrorUpdateassetCategory(apiError)                    
+            //setErrorUpdateassetCategory(apiError)
+            window.location.reload()                    
         })
     }
 
