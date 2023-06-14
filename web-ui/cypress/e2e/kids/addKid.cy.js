@@ -6,7 +6,7 @@ describe('Crear las pruebas de extremo a extremo de Ninos', () => {
     lastName: "X",
     ci: "12345678",
     birthDate: "2023-06-01",
-    programHouse: "CRH",
+    programHouse: "CRE",
     birthPlace: "Cochabamba",
     gender: "M"
   }
@@ -26,7 +26,7 @@ describe('Crear las pruebas de extremo a extremo de Ninos', () => {
         "lastName": "X",
         "ci": "12345678",
         "birthDate": "2023-06-01",
-        "programHouse": "CRH",
+        "programHouse": "CRE",
         "birthPlace": "Cochabamba",
         "gender": "M"
     }).as('kids');
