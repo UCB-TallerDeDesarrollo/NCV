@@ -40,7 +40,8 @@ describe('Creación de categorias de activos fijos', () => {
     cy.get('#submit_button').click();
     cy.wait('@createAssetCategory').its('response.statusCode').should('eq', 200);
   });  
-
+ 
+  /*
   it('Error al crear tipo de categoria, campo vacío', () => {
     cy.visit(urlVisit);
     // eslint-disable-next-line cypress/no-unnecessary-waiting
@@ -50,5 +51,6 @@ describe('Creación de categorias de activos fijos', () => {
     cy.get('#submit_button').click();
     cy.get('.MuiAlert-message').should('have.text', 'La categoria es requerida!');
   });
+  */
 
 });

@@ -1,39 +1,41 @@
 sessionStorage.setItem('Access', "CompleteAccess")
 describe('Crear las pruebas de extremo a extremo de Activos Fijos', () => {
-  const dato = {
-    name: "Libro",
-    assetTypeAssetCategoryCategory: "Juguetes",
-    assetTypeType: "Computadora",
-    price: 12,
-    programHouseAcronym: "CRE",
-    assetStateState: "BUENO",
-    assetResponsibleName: "Juan Chaves",
-    location: "Pacata",
-    code: "Code-1"
-  }
   const pathFormActivoFijo = 'https://ncv-stagging.web.app/crear-activo-fijo'
   const urlGETactivoFijo = 'https://ncv-api.azurewebsites.net/api/fixedAssets'
   const urlPOSTactivoFijo = 'https://ncv-api.azurewebsites.net/api/fixedAssets/'
+  
   it('Verificar happy path y codigo de estado', () => {
+    const dato = {
+      name: "Libro2",
+      assetTypeAssetCategoryCategory: "Juguetes",
+      assetTypeType: "Computadora",
+      price: 12,
+      programHouseAcronym: "CRE",
+      assetStateState: "BUENO",
+      assetResponsibleName: "Juan Chaves",
+      location: "Pacata",
+      code: "F-CRH-JUG-1"
+    }
+
     cy.intercept('GET', urlGETactivoFijo, {
       fixture: 'fixedAssets/anAsset.json'
     }).as('fixedAssets');
     cy.intercept('POST', urlPOSTactivoFijo, {
-      "id": 100,
-      "code": "Code-1",
-      "name": "Libro",
+      "id": 1,
+      "code": "F-CRH-JUG-1",
+      "name": "Libro2",
       "price": 12,
       "location": "Pacata",
-      "programHouseId": 100,
-      "assetTypeAssetCategoryId": 100,
+      "programHouseId": 1,
+      "assetTypeAssetCategoryId": 1,
       "assetTypeAssetCategoryCategory": "Juguetes",
-      "programHouseName": "CASA ",
+      "programHouseName": "Frutillar",
       "programHouseAcronym": "CRE",
-      "assetStateId": 100,
+      "assetStateId": 1,
       "assetStateState": "BUENO",
-      "assetTypeId": 100,
+      "assetTypeId": 3,
       "assetTypeType": "Computadora",
-      "assetResponsibleId": 100,
+      "assetResponsibleId": 1,
       "assetResponsibleName": "Juan Chaves",
       "deleted": false
     }).as('fixedAssets');
@@ -76,14 +78,11 @@ describe('Crear las pruebas de extremo a extremo de Activos Fijos', () => {
     cy.get('#Code').type(dato.code, {force: true})
     cy.get('#submit_button').click()
     cy.wait('@fixedAssets').its('response.statusCode').should('eq', 200);
-    //cy.wait('@fixedAssets').its('response.name').should('eq', dato.name);
-    //cy.wait('@fixedAssets').its('response.price').should('eq', dato.price);
-    //cy.wait('@fixedAssets').its('response.code').should('eq', dato.code);
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(2000)
     cy.get('.MuiAlert-message').should('have.text', 'Activo Fijo creado exitosamente');
   });
-
+  
   it('Deberia mostrar multiples mensajes que los campos vacios son obligatorios!', () => {
     cy.visit(pathFormActivoFijo);
     cy.get("div[role='alert']").should('not.exist');
