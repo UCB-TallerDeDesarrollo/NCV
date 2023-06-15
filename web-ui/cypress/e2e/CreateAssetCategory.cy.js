@@ -42,14 +42,12 @@ describe('Creación de categorias de activos fijos', () => {
   });  
  
   
-  it('Error al crear tipo de categoria, campo vacío', () => {
+  it('Error al crear tipo de categoria, ambos campos vacios', () => {
     cy.visit(urlVisit);
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(2000);
-    cy.get('#code').type('pr2');
-    cy.get('#category').type('prueba').clear();
     cy.get('#submit_button').click();
-    cy.get('.MuiAlert-message').should('have.text', 'La categoria es requerida!');
+    cy.get('.MuiAlert-message').should('have.text', 'El codigo corto es requerido!La categoria es requerida!');
   });
   
 
