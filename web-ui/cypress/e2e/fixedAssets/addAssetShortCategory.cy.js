@@ -40,7 +40,7 @@ describe(' Editar las pruebas de extremo a extremo de Categoria de Codigo Corto 
         // Volver \\
         cy.get(search1).each(function ($oldName) {
             cy.wrap($oldName)
-                .type('TEST - test {enter}')
+                .type('CODE - Category {enter}')
         })
 
         cy.wait('@shortCategory').its('response.statusCode').should('eq', 200);
